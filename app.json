@@ -1,0 +1,12 @@
+{
+  "name": "goal-oasis",
+  "displayName": "goal-oasis",
+  "expo": {
+    "name": "goal-oasis",
+    "slug": "goal-oasis",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}

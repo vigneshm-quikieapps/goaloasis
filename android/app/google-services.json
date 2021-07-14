@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "307348158685",
+    "project_id": "goal-oasis-18cef",
+    "storage_bucket": "goal-oasis-18cef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:307348158685:android:7f8fde8fe91f319edb0334",
+        "android_client_info": {
+          "package_name": "com.goaloasis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "307348158685-jpo7qhnagedsjktpun92lulp149grsa2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuzfRSv0J2Gn7O7C2o9W-GLuJjoHqF4nI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "307348158685-jpo7qhnagedsjktpun92lulp149grsa2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
