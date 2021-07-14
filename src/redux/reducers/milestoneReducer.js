@@ -1,6 +1,6 @@
 import * as actionTypes from "../actionTypes"
 
-const initialState = {test: "Testing..."}
+const initialState = {test: "Testing...", firstTime: null}
 
 const milestoneReducer = (state = initialState, action) => {
 	switch (action.type) {
@@ -13,6 +13,11 @@ const milestoneReducer = (state = initialState, action) => {
 			return {
 				...state,
 				test: action.value,
+			}
+		case actionTypes.SET_FIRSTTIME:
+			return {
+				...state,
+				firstTime: action.value,
 			}
 		default:
 			return state

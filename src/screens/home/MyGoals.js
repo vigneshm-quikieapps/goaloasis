@@ -7,31 +7,26 @@ import ProgressCircle from "react-native-progress-circle"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import Constants from "expo-constants"
 import {connect} from "react-redux"
-import {setTestData} from "./../../redux/actions"
+import {setTestData, setFirstTime} from "./../../redux/actions"
 
-import {getFirstTimeUser} from "./../../utils/asyncStorage"
-import authContext from "../../../src/context/auth/authContext"
+import {getFirstTimeTaskTutorial} from "./../../utils/asyncStorage"
 
-const MyGoals = ({testData, setTestData}) => {
-	const AuthContext = useContext(authContext)
-	const {reload} = AuthContext
+const MyGoals = ({testData, setTestData, firstTime, setFirstTime}) => {
 	useEffect(() => {
 		console.log("check1", testData)
-
 		fetchData()
-	}, [testData, reload])
+	}, [testData, firstTime])
 
-	const [firstTime, setFirstTime] = useState()
-	console.log("TESTING--->", firstTime)
 	const fetchData = async () => {
-		const data = await getFirstTimeUser()
+		const data = await getFirstTimeTaskTutorial()
+		console.log("async check: ", data)
 		setFirstTime(data)
 	}
-	const temp = () => {
-		var data = testData == "tested" ? "testing..." : "tested"
-		console.log(data)
-		setTestData(data)
-	}
+	// const temp = () => {
+	// 	var data = testData == "tested" ? "testing..." : "tested"
+	// 	console.log(data)
+	// 	setTestData(data)
+	// }
 	const navigation = useNavigation()
 
 	const handleOpenNewGoal = () => {
@@ -54,7 +49,7 @@ const MyGoals = ({testData, setTestData}) => {
 		<StatusBarScreen style={styles.container}>
 			<TouchableOpacity
 				style={styles.titleContainer}
-				onPress={firstTime ? gotoTaskTutorial : gotoTodaysTask}
+				onPress={!firstTime ? gotoTaskTutorial : gotoTodaysTask}
 			>
 				<Text style={styles.mainTitle}>Today’s tasks</Text>
 			</TouchableOpacity>
@@ -121,6 +116,7 @@ const MyGoals = ({testData, setTestData}) => {
 const mapStateToProps = (state) => {
 	return {
 		testData: state.milestone.test,
+		firstTime: state.milestone.firstTime,
 	}
 }
 
@@ -128,6 +124,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		setTestData: (data) => {
 			dispatch(setTestData(data))
+		},
+		setFirstTime: (data) => {
+			dispatch(setFirstTime(data))
 		},
 	}
 }

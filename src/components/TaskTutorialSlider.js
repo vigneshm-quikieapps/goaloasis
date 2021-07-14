@@ -2,16 +2,14 @@ import React, {useContext} from "react"
 import {StyleSheet, Text, TouchableOpacity, View, ImageBackground} from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
-import {setFirstTimeUser} from "../utils/asyncStorage"
+import {setisFirstTimeTaskTutorial} from "../utils/asyncStorage"
 import authContext from "../context/auth/authContext"
 import StatusBarScreen from "../screens/MileStones/StatusBarScreen"
 import Constants from "expo-constants"
+import {connect} from "react-redux"
+import {setFirstTime} from "../redux/actions"
 
-const TaskTutorialSlider = ({data}) => {
-	console.log("Data from the TAsk Slider---->", data)
-	const AuthContext = useContext(authContext)
-	const {loadUser} = AuthContext
-
+const TaskTutorialSlider = ({data, setFirstTime}) => {
 	const navigation = useNavigation()
 	const {title, subTitle, color1, color2, screen, img} = data
 
@@ -25,8 +23,12 @@ const TaskTutorialSlider = ({data}) => {
 	}
 
 	const setLoggedIn = async () => {
-		await setFirstTimeUser()
-		loadUser()
+		await setisFirstTimeTaskTutorial()
+		setFirstTime("visited")
+		gotoTodaysTask()
+	}
+	const gotoTodaysTask = () => {
+		navigation.navigate("todaysTask")
 	}
 
 	let backImg = require("../assets/images/third.png")
@@ -42,7 +44,7 @@ const TaskTutorialSlider = ({data}) => {
 				<View></View>
 				{screen != 3 ? (
 					<View>
-						<TouchableOpacity onPress={() => navigation.navigate("todaysTask")}>
+						<TouchableOpacity onPress={setLoggedIn}>
 							<Text style={styles.SkipText}>Skip</Text>
 						</TouchableOpacity>
 					</View>
@@ -77,7 +79,7 @@ const TaskTutorialSlider = ({data}) => {
 				</View>
 				<View style={styles.btnContainer2}>
 					{screen === 1 ? (
-						<TouchableOpacity style={styles.btnStyling} onPress={setLoggedIn}>
+						<TouchableOpacity style={styles.btnStyling}>
 							<Text style={styles.btnText}>Long Press</Text>
 						</TouchableOpacity>
 					) : screen === 2 ? (
@@ -107,7 +109,20 @@ const TaskTutorialSlider = ({data}) => {
 	)
 }
 
-export default TaskTutorialSlider
+const mapStateToProps = (state) => {
+	return {
+		firstTime: state.milestone.firstTime,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setFirstTime: (data) => {
+			dispatch(setFirstTime(data))
+		},
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(TaskTutorialSlider)
 
 const styles = StyleSheet.create({
 	introContainer: {
