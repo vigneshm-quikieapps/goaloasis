@@ -37,3 +37,20 @@ export const getFirstTimeTaskTutorial = async (key) => {
 		console.log(error.message)
 	}
 }
+
+export const setisFirstTimeIndividual = async () => {
+	try {
+		await AsyncStorage.setItem("FirsttimeIndividual", "visited")
+	} catch (error) {
+		console.log(error.message)
+	}
+}
+
+export const getFirstTimeIndividual = async (key) => {
+	try {
+		const value = await AsyncStorage.getItem("FirsttimeIndividual")
+		return value
+	} catch (error) {
+		console.log(error.message)
+	}
+}

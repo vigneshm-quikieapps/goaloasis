@@ -1,6 +1,6 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {StyleSheet, Text, View, TouchableOpacity, Modal} from "react-native"
-import {MaterialCommunityIcons} from "@expo/vector-icons"
+import {MaterialCommunityIcons, AntDesign, MaterialIcons} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
 import ProgressCircle from "react-native-progress-circle"
 import AppButton from "./AppButton"
@@ -11,8 +11,29 @@ import StatusBarScreen from "./StatusBarScreen"
 import {LinearGradient} from "expo-linear-gradient"
 import RBBottomSheet from "./RBBottomSheet"
 import Swipeout from "rc-swipeout"
+import {setFirstTimeForIndividualGoal} from "./../../redux/actions"
+import {getFirstTimeIndividual, setisFirstTimeIndividual} from "./../../utils/asyncStorage"
+import {connect} from "react-redux"
 
 const IndividualGoal = (props) => {
+	useEffect(() => {
+		console.log("individual -> ", props.firstTimeIndividual)
+		getFirstTimeData()
+	}, [props.firstTimeIndividual])
+
+	const getFirstTimeData = async () => {
+		const data = await getFirstTimeIndividual()
+		props.setFirstTimeForIndividualGoal(data)
+		const isFirst = props.firstTimeIndividual == null ? true : false
+		setModalVisible(isFirst)
+		// setModalVisible(true) //testing modals
+	}
+
+	const closeModal = async () => {
+		await setisFirstTimeIndividual()
+		props.setFirstTimeForIndividualGoal("visited")
+		setModalVisible(false)
+	}
 	const navigation = useNavigation()
 	const dataText = ["Congrats! You're one step closer to your goal.", "", ""]
 	const buttonText = [
@@ -25,7 +46,9 @@ const IndividualGoal = (props) => {
 	const goBack = () => {
 		navigation.goBack()
 	}
-	const [modalVisible, setModalVisible] = useState(true)
+
+	const [modalVisible, setModalVisible] = useState(false)
+	const [isLongPressed, setLongPressed] = useState(false)
 	return (
 		<StatusBarScreen style={styles.introContainer}>
 			<View style={styles.titleContainer}>
@@ -85,7 +108,7 @@ const IndividualGoal = (props) => {
 										marginRight: 2,
 									}}
 								/>
-								<TouchableOpacity onPress={() => setModalVisible(false)}>
+								<TouchableOpacity onPress={() => closeModal()}>
 									<Text
 										style={{
 											color: "#707070",
@@ -141,20 +164,118 @@ const IndividualGoal = (props) => {
 									marginTop: page == 0 ? 20 : 50,
 								}}
 							>
-								<AppButton
-									title={buttonText[page]}
-									style={{
-										backgroundColor: "#7EC8C9",
-										fontSize: 15,
-										paddingTop: 13,
-										paddingBottom: 13,
-										color: "#333333",
-									}}
-								/>
+								{page == 0 ? (
+									<AppButton
+										title={buttonText[page]}
+										style={{
+											backgroundColor: "#7EC8C9",
+											fontSize: 15,
+											paddingTop: 13,
+											paddingBottom: 13,
+											color: "#333333",
+										}}
+									/>
+								) : page == 1 ? (
+									<Swipeout
+										left={[
+											{
+												text: "ADD",
+												onPress: () => {},
+												style: {backgroundColor: "#fff"},
+											},
+										]}
+										autoClose={true}
+										disabled={false}
+										style={{
+											borderRadius: 30,
+										}}
+									>
+										<View
+											style={{
+												justifyContent: "center",
+												paddingHorizontal: 20,
+												backgroundColor: "#7EC8C9",
+												width: 290,
+												height: 70,
+											}}
+										>
+											<Text style={styles.btnText}>{buttonText[page]}</Text>
+										</View>
+										{/* <AppButton
+											title={buttonText[page]}
+											style={{
+												backgroundColor: "#7EC8C9",
+												fontSize: 15,
+												paddingTop: 13,
+												paddingBottom: 13,
+												color: "#333333",
+											}}
+										/> */}
+									</Swipeout>
+								) : (
+									// <AppButton
+									// 	title={buttonText[page]}
+									// 	style={{
+									// 		backgroundColor: "#7EC8C9",
+									// 		fontSize: 15,
+									// 		paddingTop: 13,
+									// 		paddingBottom: 13,
+									// 		color: "#333333",
+									// 	}}
+									// />
+
+									<Swipeout
+										right={[
+											{
+												text: (
+													<View style={{flexDirection: "row"}}>
+														<View
+															style={{padding: 5, borderRightWidth: 1, borderRightColor: "#000"}}
+														>
+															<AntDesign name="delete" size={24} color="black" />
+														</View>
+														<View style={{padding: 5}}>
+															<MaterialIcons name="edit" size={24} color="black" />
+														</View>
+													</View>
+												),
+												onPress: () => {},
+												style: {backgroundColor: "#fff"},
+											},
+										]}
+										autoClose={true}
+										disabled={false}
+										style={{
+											borderRadius: 30,
+										}}
+									>
+										<View
+											style={{
+												justifyContent: "center",
+												paddingHorizontal: 20,
+												backgroundColor: "#7EC8C9",
+												width: 290,
+												height: 70,
+											}}
+										>
+											<Text style={[styles.btnText, {color: "#000"}]}>{buttonText[page]}</Text>
+										</View>
+										{/* <AppButton
+											title={buttonText[page]}
+											style={{
+												backgroundColor: "#7EC8C9",
+												fontSize: 15,
+												paddingTop: 13,
+												paddingBottom: 13,
+												color: "#333333",
+											}}
+										/> */}
+									</Swipeout>
+								)}
 								<AppButton
 									title="Next"
 									style={{backgroundColor: "#FDF9F2", color: "#333333"}}
-									onPress={() => (page === 2 ? setModalVisible(false) : setPageNo(page + 1))}
+									onPress={() => (page === 2 ? closeModal() : setPageNo(page + 1))}
 								/>
 							</View>
 						</View>
@@ -165,7 +286,6 @@ const IndividualGoal = (props) => {
 				{/* <Text style={styles.mainTitle}>Read 5 books</Text> */}
 				<RBBottomSheet />
 				<Text style={styles.subTitle}>I want to continue improve myself and my state of mind.</Text>
-
 				<View style={styles.trackingcont}>
 					<ProgressCircle
 						percent={5}
@@ -282,7 +402,7 @@ const IndividualGoal = (props) => {
 						]}
 						// onOpen={() => console.log("open")}
 						// onClose={() => console.log("close")}
-						autoClose={() => true}
+						autoClose={true}
 						disabled={false}
 					>
 						<View
@@ -309,8 +429,20 @@ const IndividualGoal = (props) => {
 		</StatusBarScreen>
 	)
 }
+const mapStateToProps = (state) => {
+	return {
+		firstTimeIndividual: state.milestone.firstTimeIndividual,
+	}
+}
 
-export default IndividualGoal
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setFirstTimeForIndividualGoal: (data) => {
+			dispatch(setFirstTimeForIndividualGoal(data))
+		},
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(IndividualGoal)
 
 const styles = StyleSheet.create({
 	introContainer: {
@@ -407,5 +539,17 @@ const styles = StyleSheet.create({
 		elevation: 5,
 		justifyContent: "center",
 		alignItems: "center",
+	},
+	swipeBtnStyling: {
+		justifyContent: "center",
+		paddingHorizontal: 20,
+		backgroundColor: "white",
+		width: 314,
+		height: 50,
+	},
+	btnText: {
+		fontSize: 19,
+		color: "#666666",
+		letterSpacing: 1.2,
 	},
 })
