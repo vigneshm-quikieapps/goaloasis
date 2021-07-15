@@ -7,26 +7,28 @@ import ProgressCircle from "react-native-progress-circle"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import Constants from "expo-constants"
 import {connect} from "react-redux"
-import {setTestData, setFirstTime} from "./../../redux/actions"
+import {
+	setTestData,
+	setFirstTime,
+	setFirstTimeForTimeLine,
+	setTestDataForTimeline,
+} from "./../../redux/actions"
 
-import {getFirstTimeTaskTutorial} from "./../../utils/asyncStorage"
+import {getFirstTimeTaskTutorial, getFirstTimeTimelineFlow} from "./../../utils/asyncStorage"
 
-const MyGoals = ({testData, setTestData, firstTime, setFirstTime}) => {
+const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimelineFlow}) => {
 	useEffect(() => {
-		console.log("check1", testData)
+		console.log("check1->", testData) // did not get
 		fetchData()
-	}, [testData, firstTime])
+	}, [testData, firstTime, firstTimeTimelineFlow])
 
 	const fetchData = async () => {
 		const data = await getFirstTimeTaskTutorial()
+		const data1 = await getFirstTimeTimelineFlow()
 		console.log("async check: ", data)
 		setFirstTime(data)
+		setFirstTimeForTimeLine(data1)
 	}
-	// const temp = () => {
-	// 	var data = testData == "tested" ? "testing..." : "tested"
-	// 	console.log(data)
-	// 	setTestData(data)
-	// }
 	const navigation = useNavigation()
 
 	const handleOpenNewGoal = () => {
@@ -43,6 +45,14 @@ const MyGoals = ({testData, setTestData, firstTime, setFirstTime}) => {
 	}
 	const gotoTodaysTask = () => {
 		navigation.navigate("todaysTask")
+	}
+
+	// Navigation for TimelineFlow
+	const gotoTimelineTutorial = () => {
+		navigation.navigate("timelineFlow1")
+	}
+	const gotoTimelineScreen = () => {
+		navigation.navigate("timeline")
 	}
 
 	return (
@@ -105,7 +115,10 @@ const MyGoals = ({testData, setTestData, firstTime, setFirstTime}) => {
 				</View>
 
 				<View style={styles.bottomBtnContainer}>
-					<TouchableOpacity style={styles.bottomBtn}>
+					<TouchableOpacity
+						style={styles.bottomBtn}
+						onPress={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
+					>
 						<MaterialCommunityIcons name="file-tree-outline" size={34} color="white" />
 					</TouchableOpacity>
 				</View>
@@ -117,16 +130,20 @@ const mapStateToProps = (state) => {
 	return {
 		testData: state.milestone.test,
 		firstTime: state.milestone.firstTime,
+		firstTimeTimelineFlow: state.milestone.firstTimeTimelineFlow,
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		setTestData: (data) => {
+		settingFirstTime: (data) => {
 			dispatch(setTestData(data))
 		},
 		setFirstTime: (data) => {
 			dispatch(setFirstTime(data))
+		},
+		setFirstTimeForTimeLine: (data) => {
+			dispatch(setFirstTimeForTimeLine(data))
 		},
 	}
 }

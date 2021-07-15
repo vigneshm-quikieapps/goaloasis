@@ -8,6 +8,8 @@ import {
 	TaskTutorialSlide2,
 	TaskTutorialSlide3,
 } from "./../screens/TaskTutorialFlow"
+
+import {TimelineFlow1, TimelineFlow2, TimelineFlow3} from "./../screens/TimelineFlow"
 import TodaysTask from "../screens/TodaysTask/TodaysTask"
 
 import {
@@ -25,15 +27,10 @@ import IndividualGoal from "../screens/MileStones/IndividualGoal"
 
 import AllMineStoneScreen from "../screens/MileStones/AllMileStoneScreen"
 // import {, , Helpmenu, , } from "../screens/Helpmenu"
-import {
-	Helpmenu,
-	MarkCompleted,
-	Timeline,
-	EditGoalhelp,
-	Deletegoal,
-	MonthTimeline,
-} from "../screens/Helpmenu"
+import {Helpmenu, MarkCompleted, Timeline, EditGoalhelp, Deletegoal} from "../screens/Helpmenu"
+
 import DParticularGoal from "../screens/particulargoal/DParticularGoal"
+import MonthTimeline from "../screens/Helpmenu/MonthTimeline"
 const Stack = createStackNavigator()
 const options = {
 	gestureEnabled: true, // If you want to swipe back like iOS on Android
@@ -72,8 +69,12 @@ const IntroStack = () => {
 			<Stack.Screen name="markcomplete" component={MarkCompleted} />
 			<Stack.Screen name="deletegoal" component={Deletegoal} />
 			<Stack.Screen name="timeline" component={Timeline} />
-			{/* <Stack.Screen name="monthTimeline" component={MonthTimeline} /> */}
+			<Stack.Screen name="monthTimeline" component={MonthTimeline} />
 			<Stack.Screen name="editgoal" component={EditGoalhelp} />
+			{/* TimelineFlow */}
+			<Stack.Screen name="timelineFlow1" component={TimelineFlow1} />
+			<Stack.Screen name="timelineFlow2" component={TimelineFlow2} />
+			<Stack.Screen name="timelineFlow3" component={TimelineFlow3} />
 		</Stack.Navigator>
 	)
 }

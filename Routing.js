@@ -5,6 +5,7 @@ import {NavigationContainer} from "@react-navigation/native"
 import {IntroStack, MainStack} from "./src/navigation"
 import {getFirstTimeUser} from "./src/utils/asyncStorage"
 import authContext from "./src/context/auth/authContext"
+import TimelineFlowSlider from "./src/components/TimelineFlowSlider"
 
 export default function Routing() {
 	const AuthContext = useContext(authContext)
@@ -25,6 +26,7 @@ export default function Routing() {
 			{/* <IntroStack /> */}
 			{firstTime === null ? <IntroStack /> : <MainStack />}
 			{/* <MainStack /> */}
+			{/* <TimelineFlowSlider /> */}
 			<StatusBar style="auto" />
 		</NavigationContainer>
 	)

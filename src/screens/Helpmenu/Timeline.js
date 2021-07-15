@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react"
+import React, {useRef, useState, useEffect} from "react"
 import {StyleSheet, Text, TouchableOpacity, View, TextInput, ImageBackground} from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
@@ -16,8 +16,6 @@ const IntroSlider = () => {
 	const refRBSheet = useRef()
 	const [date, setDate] = useState(new Date())
 
-	const tip = () => <Text style={{fontWeight: "bold"}}>Tip:</Text>
-	const [toggle, setToggle] = useState(false)
 	const data = [
 		{
 			time: "09:00",
@@ -168,7 +166,7 @@ const IntroSlider = () => {
 						backgroundColor: "#F8E6D3",
 						justifyContent: "center",
 					}}
-					// onPress={() => navigation.navigate("monthTimeline")}
+					onPress={() => navigation.navigate("monthTimeline")}
 				>
 					<MaterialCommunityIcons
 						name="plus"

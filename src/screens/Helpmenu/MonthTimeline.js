@@ -15,8 +15,7 @@ const MonthTimeline = () => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
 	const [date, setDate] = useState(new Date())
-	const [toggle, setToggle] = useState(false)
-	const tip = () => <Text style={{fontWeight: "bold"}}>Tip:</Text>
+
 	const data = [
 		{
 			time: "09:00",
@@ -185,7 +184,7 @@ const MonthTimeline = () => {
 						borderRadius: 25,
 						backgroundColor: "#F8E6D3",
 					}}
-					// onPress={() => navigation.navigate()}
+					onPress={() => navigation.navigate("timeline")}
 				>
 					<MaterialCommunityIcons
 						name="minus"

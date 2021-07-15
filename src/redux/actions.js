@@ -20,3 +20,19 @@ export const setFirstTime = (data) => {
 		value: data,
 	}
 }
+
+// for TimeLine Flow
+
+export const setFirstTimeForTimeLine = (data) => {
+	return {
+		type: actionTypes.SET_FIRSTTIME_TIMELINEFLOW,
+		value: data,
+	}
+}
+
+export const setTestDataForTimeline = (data) => {
+	return {
+		type: actionTypes.SET_TEST_DATA_TIMELINE_FLOW,
+		value: data,
+	}
+}

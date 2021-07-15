@@ -37,3 +37,21 @@ export const getFirstTimeTaskTutorial = async (key) => {
 		console.log(error.message)
 	}
 }
+
+// for TimeLine
+export const setisFirstTimeTimelineFlow = async () => {
+	try {
+		await AsyncStorage.setItem("FirsttimeTimelineFlow", "visited")
+	} catch (error) {
+		console.log(error.message)
+	}
+}
+
+export const getFirstTimeTimelineFlow = async (key) => {
+	try {
+		const value = await AsyncStorage.getItem("FirsttimeTimelineFlow")
+		return value
+	} catch (error) {
+		console.log(error.message)
+	}
+}
