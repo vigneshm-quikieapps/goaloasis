@@ -31,7 +31,7 @@ import {
 	Timeline,
 	EditGoalhelp,
 	Deletegoal,
-	// MonthTimeline,
+	MonthTimeline,
 } from "../screens/Helpmenu"
 import DParticularGoal from "../screens/particulargoal/DParticularGoal"
 const Stack = createStackNavigator()
@@ -74,7 +74,6 @@ const IntroStack = () => {
 			<Stack.Screen name="timeline" component={Timeline} />
 			{/* <Stack.Screen name="monthTimeline" component={MonthTimeline} /> */}
 			<Stack.Screen name="editgoal" component={EditGoalhelp} />
-			MonthTimeline
 		</Stack.Navigator>
 	)
 }

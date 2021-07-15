@@ -168,7 +168,7 @@ const IntroSlider = () => {
 						backgroundColor: "#F8E6D3",
 						justifyContent: "center",
 					}}
-					onPress={() => <MonthTimeline />}
+					// onPress={() => navigation.navigate("monthTimeline")}
 				>
 					<MaterialCommunityIcons
 						name="plus"

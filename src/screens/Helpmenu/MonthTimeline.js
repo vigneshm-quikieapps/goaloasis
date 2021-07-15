@@ -185,7 +185,7 @@ const MonthTimeline = () => {
 						borderRadius: 25,
 						backgroundColor: "#F8E6D3",
 					}}
-					onPress={() => <TimelineScreen />}
+					// onPress={() => navigation.navigate()}
 				>
 					<MaterialCommunityIcons
 						name="minus"
