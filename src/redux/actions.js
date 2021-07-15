@@ -36,3 +36,9 @@ export const setTestDataForTimeline = (data) => {
 		value: data,
 	}
 }
+export const setFirstTimeForIndividualGoal = (data) => {
+	return {
+		type: actionTypes.SET_FIRSTTIME_FOR_INDIVIDUAL_GOAL,
+		value: data,
+	}
+}

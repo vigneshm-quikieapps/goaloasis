@@ -13,7 +13,6 @@ import {
 	setFirstTimeForTimeLine,
 	setTestDataForTimeline,
 } from "./../../redux/actions"
-
 import {getFirstTimeTaskTutorial, getFirstTimeTimelineFlow} from "./../../utils/asyncStorage"
 
 const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimelineFlow}) => {
@@ -128,7 +127,6 @@ const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimel
 }
 const mapStateToProps = (state) => {
 	return {
-		testData: state.milestone.test,
 		firstTime: state.milestone.firstTime,
 		firstTimeTimelineFlow: state.milestone.firstTimeTimelineFlow,
 	}

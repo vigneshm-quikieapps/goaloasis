@@ -1,5 +1,12 @@
-import React, {useContext} from "react"
-import {StyleSheet, Text, TouchableOpacity, View, ImageBackground} from "react-native"
+import React, {useContext, useState} from "react"
+import {
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+	ImageBackground,
+	TouchableHighlight,
+} from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
 import {setisFirstTimeTaskTutorial} from "../utils/asyncStorage"
@@ -8,8 +15,15 @@ import StatusBarScreen from "../screens/MileStones/StatusBarScreen"
 import Constants from "expo-constants"
 import {connect} from "react-redux"
 import {setFirstTime} from "../redux/actions"
+import {LongPressGestureHandler} from "react-native-gesture-handler"
+import Swipeout from "rc-swipeout"
+import {MaterialCommunityIcons} from "@expo/vector-icons"
+import {SnoozeIcon} from "../assets/customIcons"
+import {AntDesign} from "@expo/vector-icons"
 
 const TaskTutorialSlider = ({data, setFirstTime}) => {
+	const [taskCompleted, setCompleted] = useState(false)
+	const [taskSnoozed, setSnoozed] = useState(false)
 	const navigation = useNavigation()
 	const {title, subTitle, color1, color2, screen, img} = data
 
@@ -20,6 +34,9 @@ const TaskTutorialSlider = ({data, setFirstTime}) => {
 		} else if (screen === 2) {
 			navigation.navigate("taskTutorialSlide3")
 		}
+	}
+	const completeTask = () => {
+		setCompleted(!taskCompleted)
 	}
 
 	const setLoggedIn = async () => {
@@ -79,17 +96,66 @@ const TaskTutorialSlider = ({data, setFirstTime}) => {
 				</View>
 				<View style={styles.btnContainer2}>
 					{screen === 1 ? (
-						<TouchableOpacity style={styles.btnStyling}>
-							<Text style={styles.btnText}>Long Press</Text>
-						</TouchableOpacity>
+						<View>
+							<TouchableOpacity style={styles.centerBtn} onLongPress={completeTask}>
+								<Text style={taskCompleted ? styles.btnTextCompleted : styles.btnText}>
+									{taskCompleted ? "Completed Task" : "Long Press"}
+								</Text>
+							</TouchableOpacity>
+						</View>
 					) : screen === 2 ? (
-						<TouchableOpacity style={styles.btnStyling} onPress={handleNavigateScreen}>
-							<Text style={styles.btnText}>Swipe Right</Text>
-						</TouchableOpacity>
+						<View style={styles.swipeButton}>
+							{taskSnoozed ? (
+								<View style={styles.centerBtn}>
+									<Text style={styles.btnText}>Snoozed Task</Text>
+								</View>
+							) : (
+								<Swipeout
+									left={[
+										{
+											text: <SnoozeIcon size={15} color={"#fff"} />,
+											// text: "Zz",
+											onPress: () => {
+												setSnoozed
+											},
+											style: {backgroundColor: "#7b9a95"},
+										},
+									]}
+									autoClose={true}
+									disabled={false}
+								>
+									<View style={styles.swipeBtnStyling}>
+										<Text style={styles.btnText}>Swipe right</Text>
+									</View>
+								</Swipeout>
+							)}
+						</View>
 					) : (
-						<TouchableOpacity style={styles.btnStyling} onPress={handleNavigateScreen}>
-							<Text style={styles.btnText}>Swipe Left</Text>
-						</TouchableOpacity>
+						// <TouchableOpacity style={styles.centerBtn}>
+						// 	<Text style={styles.btnText}>Swipe Right</Text>
+						// </TouchableOpacity>
+
+						<View style={styles.swipeButton}>
+							<Swipeout
+								right={[
+									{
+										text: <AntDesign name="delete" size={24} color="black" />,
+										// text: "Zz",
+										onPress: () => {},
+										style: {backgroundColor: "#7b9a95"},
+									},
+								]}
+								autoClose={() => true}
+								disabled={false}
+							>
+								<View style={styles.swipeBtnStyling}>
+									<Text style={styles.btnText}>Swipe left</Text>
+								</View>
+							</Swipeout>
+						</View>
+						// <TouchableOpacity style={styles.centerBtn}>
+						// 	<Text style={styles.btnText}>Swipe Left</Text>
+						// </TouchableOpacity>
 					)}
 				</View>
 				<View style={styles.btnContainer}>
@@ -200,9 +266,43 @@ const styles = StyleSheet.create({
 		height: 50,
 		borderRadius: 51,
 	},
+	swipeBtnStyling: {
+		justifyContent: "center",
+		paddingHorizontal: 20,
+		backgroundColor: "white",
+		width: 314,
+		height: 50,
+	},
+	centerBtn: {
+		justifyContent: "center",
+		alignItems: "flex-start",
+		paddingHorizontal: 20,
+		backgroundColor: "white",
+		width: 314,
+		height: 50,
+		borderRadius: 51,
+	},
 	btnText: {
 		fontSize: 19,
 		color: "#666666",
 		letterSpacing: 1.2,
+	},
+	btnTextCompleted: {
+		fontSize: 19,
+		color: "#666666",
+		letterSpacing: 1.2,
+		textDecorationLine: "line-through",
+		textDecorationStyle: "solid",
+	},
+	swipeButton: {
+		alignContent: "center",
+		borderRadius: 22,
+		backgroundColor: "#fff",
+		overflow: "hidden",
+		marginLeft: 21,
+		marginRight: 21,
+		justifyContent: "center",
+		marginTop: 50,
+		// shadowColor: "#00000029",
 	},
 })
