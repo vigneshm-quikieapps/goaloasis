@@ -13,3 +13,10 @@ export const setTestData = (data) => {
 		value: data,
 	}
 }
+
+export const setFirstTime = (data) => {
+	return {
+		type: actionTypes.SET_FIRSTTIME,
+		value: data,
+	}
+}
