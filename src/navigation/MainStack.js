@@ -16,7 +16,7 @@ import {
 	FirstMilestone,
 	FourthMilestone,
 	SecondAfterModal,
-	SecondIndividualGoal,
+	// SecondIndividualGoal,
 	SixthMilestone,
 	ThirdAfterModal,
 	ThirdMilestone,
@@ -25,7 +25,14 @@ import IndividualGoal from "../screens/MileStones/IndividualGoal"
 
 import AllMineStoneScreen from "../screens/MileStones/AllMileStoneScreen"
 // import {, , Helpmenu, , } from "../screens/Helpmenu"
-import {Helpmenu, MarkCompleted, Timeline, EditGoalhelp, Deletegoal} from "../screens/Helpmenu"
+import {
+	Helpmenu,
+	MarkCompleted,
+	Timeline,
+	EditGoalhelp,
+	Deletegoal,
+	// MonthTimeline,
+} from "../screens/Helpmenu"
 import DParticularGoal from "../screens/particulargoal/DParticularGoal"
 const Stack = createStackNavigator()
 const options = {
@@ -56,7 +63,7 @@ const IntroStack = () => {
 			<Stack.Screen name="FifthMilestone" component={FifthMilestone} />
 			<Stack.Screen name="SixthMilestone" component={SixthMilestone} />
 			<Stack.Screen name="IndividualGoal" component={IndividualGoal} />
-			<Stack.Screen name="SecondIndividualGoal" component={SecondIndividualGoal} />
+			{/* <Stack.Screen name="SecondIndividualGoal" component={SecondIndividualGoal} /> */}
 			<Stack.Screen name="AfterModal" component={AfterModal} />
 			<Stack.Screen name="SecondAfterModal" component={SecondAfterModal} />
 			<Stack.Screen name="ThirdAfterModal" component={ThirdAfterModal} />
@@ -65,7 +72,9 @@ const IntroStack = () => {
 			<Stack.Screen name="markcomplete" component={MarkCompleted} />
 			<Stack.Screen name="deletegoal" component={Deletegoal} />
 			<Stack.Screen name="timeline" component={Timeline} />
+			{/* <Stack.Screen name="monthTimeline" component={MonthTimeline} /> */}
 			<Stack.Screen name="editgoal" component={EditGoalhelp} />
+			MonthTimeline
 		</Stack.Navigator>
 	)
 }

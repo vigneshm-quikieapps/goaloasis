@@ -10,6 +10,7 @@ import Third from "../../modalSlides/third"
 import StatusBarScreen from "./StatusBarScreen"
 import {LinearGradient} from "expo-linear-gradient"
 import RBBottomSheet from "./RBBottomSheet"
+import Swipeout from "rc-swipeout"
 
 const IndividualGoal = (props) => {
 	const navigation = useNavigation()
@@ -221,7 +222,8 @@ const IndividualGoal = (props) => {
 							size={40}
 							color="#7EC8C9"
 							onPress={() => {
-								navigation.navigate("FirstMilestone")
+								// navigation.navigate("FirstMilestone")
+								navigation.navigate("DParticularGoal")
 							}}
 						/>
 					</View>
@@ -230,7 +232,7 @@ const IndividualGoal = (props) => {
 					</Text>
 				</View>
 
-				<TouchableOpacity
+				{/* <TouchableOpacity
 					onPress={() => {
 						navigation.navigate("SecondIndividualGoal")
 					}}
@@ -238,7 +240,8 @@ const IndividualGoal = (props) => {
 						height: "30%",
 						width: "80%",
 						borderRadius: 22,
-						backgroundColor: "#7EC8C9",
+						// backgroundColor: "#7EC8C9",
+						backgroundColor: "pink",
 						alignSelf: "center",
 						marginTop: 10,
 					}}
@@ -266,7 +269,36 @@ const IndividualGoal = (props) => {
 					>
 						Task:0/1
 					</Text>
-				</TouchableOpacity>
+				</TouchableOpacity> */}
+
+				<View style={styles.swipeButton}>
+					<Swipeout
+						left={[
+							{
+								text: <MaterialCommunityIcons name="plus" size={40} color="#77777B" />,
+								onPress: () => navigation.navigate("AfterModal"),
+								style: {backgroundColor: "#FDF9F2"},
+							},
+						]}
+						// onOpen={() => console.log("open")}
+						// onClose={() => console.log("close")}
+						autoClose={() => true}
+						disabled={false}
+					>
+						<View
+							style={{
+								flexDirection: "row",
+								alignItems: "center",
+								height: 100,
+								backgroundColor: "#7EC8C9",
+								justifyContent: "center",
+							}}
+						>
+							<Text style={styles.sliderText}>Read 1 Book</Text>
+							<Text style={styles.sliderText}>Task:0/1</Text>
+						</View>
+					</Swipeout>
+				</View>
 
 				<View style={styles.bottomBtnContainer}>
 					<TouchableOpacity style={styles.bottomBtn} onPress={goBack}>
@@ -308,6 +340,12 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 		flexDirection: "row",
 	},
+	sliderText: {
+		color: "#333333",
+		fontSize: 19,
+		fontWeight: "bold",
+		margin: 30,
+	},
 	trackingcont: {
 		marginHorizontal: 20,
 		marginVertical: 20,
@@ -315,6 +353,17 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between",
+	},
+	swipeButton: {
+		alignContent: "center",
+		borderRadius: 22,
+		backgroundColor: "pink",
+		overflow: "hidden",
+		marginLeft: 21,
+		marginRight: 21,
+		justifyContent: "center",
+		marginTop: 50,
+		// shadowColor: "#00000029",
 	},
 	percentageCont: {
 		height: 150,

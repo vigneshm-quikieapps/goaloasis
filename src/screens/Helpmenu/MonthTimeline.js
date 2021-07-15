@@ -9,15 +9,14 @@ import {AntDesign} from "@expo/vector-icons"
 import RBSheet from "react-native-raw-bottom-sheet"
 import {Calendar, LocaleConfig} from "react-native-calendars"
 import DatePicker from "react-native-date-picker"
-import MonthTimeline from "./MonthTimeline"
+import TimelineScreen from "./Timeline"
 
-const IntroSlider = () => {
+const MonthTimeline = () => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
 	const [date, setDate] = useState(new Date())
-
-	const tip = () => <Text style={{fontWeight: "bold"}}>Tip:</Text>
 	const [toggle, setToggle] = useState(false)
+	const tip = () => <Text style={{fontWeight: "bold"}}>Tip:</Text>
 	const data = [
 		{
 			time: "09:00",
@@ -75,7 +74,7 @@ const IntroSlider = () => {
 						fontWeight: "bold",
 					}}
 				>
-					Yearly Timeline
+					Monthly Timeline
 				</Text>
 				<Timeline
 					style={styles.list}
@@ -168,7 +167,6 @@ const IntroSlider = () => {
 						backgroundColor: "#F8E6D3",
 						justifyContent: "center",
 					}}
-					onPress={() => <MonthTimeline />}
 				>
 					<MaterialCommunityIcons
 						name="plus"
@@ -187,6 +185,7 @@ const IntroSlider = () => {
 						borderRadius: 25,
 						backgroundColor: "#F8E6D3",
 					}}
+					onPress={() => <TimelineScreen />}
 				>
 					<MaterialCommunityIcons
 						name="minus"
@@ -216,7 +215,7 @@ const IntroSlider = () => {
 	)
 }
 
-export default IntroSlider
+export default MonthTimeline
 
 const styles = StyleSheet.create({
 	introContainer: {
