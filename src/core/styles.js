@@ -11,6 +11,15 @@ export const colors = {
 	timelineSkinDarker: "#B3855C",
 }
 
+export const forGoals = {
+	first: "#588C8D",
+	second: "#553144",
+	third: "6A5593",
+	fourth: "#B3855C",
+	fifth: "#3F6E6A",
+	sixth: "#B8534F",
+}
+
 export const content = {
 	My_Milestone:
 		"It looks like you don’t have a plan to achieve your goal yet. Don’t worry! Tap (+) to add a milestone and get on your way.",

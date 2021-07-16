@@ -5,8 +5,9 @@ import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import DatePicker from "react-native-date-picker"
 import colors from "../../../colors"
+import AsyncStorage from "@react-native-community/async-storage"
 
-const GoalStep3 = () => {
+const GoalStep3 = ({route}) => {
 	const navigation = useNavigation()
 
 	const gotoHome = () => {
@@ -16,6 +17,22 @@ const GoalStep3 = () => {
 		navigation.goBack()
 	}
 	const [date, setDate] = useState(new Date())
+	const {name} = route.params
+	const {description} = route.params
+
+	// let asyncData = []
+	// asyncData.push(name)
+	// asyncData.push(description)
+	// asyncData.push(date.toISOString())
+
+	// async Task
+	const storeData = async (value) => {
+		try {
+			await AsyncStorage.setItem(name, name)
+		} catch (e) {
+			console.log(e)
+		}
+	}
 
 	return (
 		<View style={styles.introContainer}>
@@ -65,7 +82,10 @@ const GoalStep3 = () => {
 							<View>
 								<TouchableOpacity
 									style={[styles.btnStylingRight, styles.nextBtn]}
-									onPress={() => navigation.navigate("DParticularGoal")}
+									onPress={() => {
+										storeData()
+										navigation.navigate("mygoals")
+									}}
 								>
 									<MaterialCommunityIcons name="chevron-right" size={50} color="#7EC8C9" />
 								</TouchableOpacity>

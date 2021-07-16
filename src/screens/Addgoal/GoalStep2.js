@@ -1,14 +1,16 @@
-import React from "react"
+import React, {useState} from "react"
 import {StyleSheet, Text, TouchableOpacity, View, TextInput} from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 
-const GoalStep2 = () => {
+const GoalStep2 = ({route}) => {
 	const navigation = useNavigation()
+	const {name} = route.params
+	const [description, setDescription] = useState()
 
 	const nextScreen = () => {
-		navigation.navigate("goal3")
+		navigation.navigate("goal3", {name: name, description: description})
 	}
 	const goBack = () => {
 		navigation.goBack()
@@ -33,7 +35,13 @@ const GoalStep2 = () => {
 							Write out what this goal means to you and make sure it’s something important.
 						</Text>
 						<View style={styles.centerCont}>
-							<TextInput style={styles.textInput} placeholder="Type Here" />
+							<TextInput
+								style={styles.textInput}
+								placeholder="Type Here"
+								multiline={true}
+								numberOfLines={4}
+								onChangeText={(text) => setDescription(text)}
+							/>
 						</View>
 					</View>
 

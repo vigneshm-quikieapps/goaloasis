@@ -3,7 +3,6 @@ import AsyncStorage from "@react-native-community/async-storage"
 export const setFirstTimeUser = async () => {
 	try {
 		await AsyncStorage.setItem("Firsttime", "false")
-		console.log("We have set the token for the async storage")
 	} catch (error) {
 		console.log(error.message)
 	}

@@ -1,18 +1,20 @@
-import React from "react"
+import React, {useState} from "react"
 import {StyleSheet, Text, TouchableOpacity, View, TextInput, ImageBackground} from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {black} from "color-name"
+import GoalStep2 from "./GoalStep2"
 
 const NameGoal = () => {
 	const navigation = useNavigation()
+	const [goalName, setGoalName] = useState()
 
 	const gotoHome = () => {
 		navigation.goBack()
 	}
 	const nextScreen = () => {
-		navigation.navigate("goal2")
+		navigation.navigate("goal2", {name: goalName})
 	}
 	return (
 		<View style={styles.introContainer}>
@@ -36,7 +38,13 @@ const NameGoal = () => {
 							that you build on your momentum.
 						</Text>
 						<View style={styles.centerCont}>
-							<TextInput style={styles.textInput} placeholder="Type Here" />
+							<TextInput
+								style={styles.textInput}
+								placeholder="Type Here"
+								onChangeText={(text) => {
+									setGoalName(text)
+								}}
+							/>
 						</View>
 					</View>
 
@@ -56,6 +64,7 @@ const NameGoal = () => {
 									onPress={nextScreen}
 								>
 									<MaterialCommunityIcons name="chevron-right" size={50} color="#7EC8C9" />
+									{/* <GoalStep2 /> */}
 								</TouchableOpacity>
 							</View>
 						</View>

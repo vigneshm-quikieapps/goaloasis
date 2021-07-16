@@ -1,5 +1,13 @@
 import React, {useEffect, useContext, useState} from "react"
-import {StyleSheet, Text, View, TouchableOpacity, TouchableHighlight, StatusBar} from "react-native"
+import {
+	StyleSheet,
+	Text,
+	View,
+	TouchableOpacity,
+	TouchableHighlight,
+	StatusBar,
+	ScrollView,
+} from "react-native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {FontAwesome5} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
@@ -7,6 +15,8 @@ import ProgressCircle from "react-native-progress-circle"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import Constants from "expo-constants"
 import {connect} from "react-redux"
+import AsyncStorage from "@react-native-community/async-storage"
+
 import {
 	setTestData,
 	setFirstTime,
@@ -14,17 +24,16 @@ import {
 	setTestDataForTimeline,
 } from "./../../redux/actions"
 import {getFirstTimeTaskTutorial, getFirstTimeTimelineFlow} from "./../../utils/asyncStorage"
+import {forGoals} from "./../../core/styles"
 
 const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimelineFlow}) => {
 	useEffect(() => {
-		console.log("check1->", testData) // did not get
 		fetchData()
 	}, [testData, firstTime, firstTimeTimelineFlow])
 
 	const fetchData = async () => {
 		const data = await getFirstTimeTaskTutorial()
 		const data1 = await getFirstTimeTimelineFlow()
-		console.log("async check: ", data)
 		setFirstTime(data)
 		setFirstTimeForTimeLine(data1)
 	}
@@ -54,6 +63,40 @@ const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimel
 		navigation.navigate("timeline")
 	}
 
+	//async code
+	const [tasks, setTasks] = useState([])
+	let allTasks = []
+	const getData = async () => {
+		try {
+			const value = await AsyncStorage.getAllKeys()
+			if (value !== null) {
+				setTasks(value)
+			}
+		} catch (e) {
+			console.log(e)
+		}
+	}
+	tasks.map((task) => {
+		if (
+			task !== "FirsttimeIndividual" &&
+			task !== "FirsttimeTaskTutorial" &&
+			task !== "FirsttimeTimelineFlow" &&
+			task !== "Firsttime"
+		) {
+			allTasks.push(task)
+		}
+	})
+
+	const getColor = (index) => {
+		const a = (index + 1) % 6
+		return colorArray[a]
+	}
+	const colorArray = Object.values(forGoals)
+
+	useEffect(() => {
+		getData()
+	}, [allTasks])
+
 	return (
 		<StatusBarScreen style={styles.container}>
 			<TouchableOpacity
@@ -72,47 +115,50 @@ const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimel
 					<Text style={styles.myGoalsText}>My goals</Text>
 				</View>
 
-				<View style={styles.logoSpacing}>
-					<View>
-						<TouchableOpacity style={styles.logoContainer} onPress={handleOpenNewGoal}>
-							<ProgressCircle
-								percent={5}
-								radius={49}
-								borderWidth={5}
-								color="#588C8D"
-								shadowColor="#999"
-								bgColor="#FBF5E9"
-							>
-								<Text style={{fontSize: 18}}>{"5%"}</Text>
-							</ProgressCircle>
-							<Text style={styles.goalText}>Read five books</Text>
-						</TouchableOpacity>
+				<ScrollView>
+					<View style={styles.logoSpacing}>
+						{allTasks.map((task, index) => (
+							<View key={index}>
+								<TouchableOpacity style={styles.logoContainer} onPress={handleOpenNewGoal}>
+									<ProgressCircle
+										percent={0}
+										radius={49}
+										borderWidth={5}
+										color={getColor(index)}
+										shadowColor="#999"
+										bgColor="#FBF5E9"
+									>
+										<Text style={{fontSize: 22, color: getColor(index), fontWeight: "bold"}}>
+											{"0%"}
+										</Text>
+									</ProgressCircle>
+									<Text style={styles.goalText}>{task}</Text>
+								</TouchableOpacity>
 
-						{/* redux check  */}
-						{/* <Text style={styles.goalText}>{testData}</Text>
+								{/* redux check  */}
+								{/* <Text style={styles.goalText}>{testData}</Text>
 						<TouchableOpacity style={styles.logoContainer} onPress={temp}>
 							<Text style={styles.goalText}>test</Text>
 						</TouchableOpacity> */}
-						{/* redux check */}
-					</View>
-
-					<View>
-						<TouchableOpacity style={styles.logoContainer} onPress={gotoGoal}>
-							<View style={styles.circleLogo}>
-								<View style={styles.iconVertical}></View>
-								<View style={styles.iconHorizontal}></View>
+								{/* redux check */}
 							</View>
-							<TouchableOpacity onPress={gotoGoal}>
-								<View>
-									<Text style={styles.goalText}>Add Goal</Text>
+						))}
+
+						<View>
+							<TouchableOpacity style={styles.logoContainer} onPress={gotoGoal}>
+								<View style={styles.circleLogo}>
+									<View style={styles.iconVertical}></View>
+									<View style={styles.iconHorizontal}></View>
 								</View>
+								<TouchableOpacity onPress={gotoGoal}>
+									<View>
+										<Text style={styles.goalText}>Add Goal</Text>
+									</View>
+								</TouchableOpacity>
 							</TouchableOpacity>
-						</TouchableOpacity>
+						</View>
 					</View>
-
-					<View></View>
-				</View>
-
+				</ScrollView>
 				<View style={styles.bottomBtnContainer}>
 					<TouchableOpacity
 						style={styles.bottomBtn}
@@ -167,6 +213,9 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: "#FBF5E9",
 		borderTopRightRadius: 70,
+		// justifyContent: "center", //
+		// alignContent: "center",
+		// alignItems: "center",
 	},
 	viewTap: {
 		height: 6,
@@ -181,15 +230,19 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		color: "#588C8D",
 		marginHorizontal: 20,
+		marginBottom: 10,
 	},
 	logoSpacing: {
 		flex: 1,
 		flexDirection: "row",
-		marginTop: "8%",
+		flexWrap: "wrap",
+		// justifyContent: "center",
+		width: "100%",
 	},
 	logoContainer: {
-		alignItems: "center",
-		marginLeft: 47,
+		marginLeft: 75, //TODO
+		marginTop: 20,
+		// backgroundColor: "green",
 	},
 	circleLogo: {
 		height: 100,
@@ -232,5 +285,8 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		color: "#666666",
 		textAlign: "center",
+		maxWidth: 100,
+
+		// backgroundColor: "blue",
 	},
 })
