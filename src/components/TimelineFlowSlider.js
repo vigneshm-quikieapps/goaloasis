@@ -9,6 +9,7 @@ import {MaterialCommunityIcons, Fontisto, SimpleLineIcons} from "@expo/vector-ic
 import Constants from "expo-constants"
 import {connect} from "react-redux"
 import {setFirstTimeForTimeLine} from "../redux/actions"
+import {CommonStyles, sizeConstants} from "./../core/styles"
 
 const TimelineFlowSlider = ({data, setFirstTimeForTimeLine}) => {
 	const navigation = useNavigation()
@@ -64,48 +65,48 @@ const TimelineFlowSlider = ({data, setFirstTimeForTimeLine}) => {
 
 	return (
 		<ImageBackground
-			style={[styles.introContainer, styles.image]}
+			style={[CommonStyles.mainContainer, CommonStyles.image]}
 			source={backImg}
 			resizeMode="stretch"
 		>
 			{/* <LinearGradient colors={[color1, color2]} style={{flex: 1}}> */}
-			<View style={styles.headerMargin}>
+			<View style={CommonStyles.headerMargin}>
 				<View></View>
 				{screen != 3 ? (
 					<View>
 						<TouchableOpacity onPress={6}>
-							<Text style={styles.SkipText}>Skip</Text>
+							<Text style={CommonStyles.SkipText}>Skip</Text>
 						</TouchableOpacity>
 					</View>
 				) : null}
 			</View>
 			<View style={{flex: 1}}>
-				<View style={styles.progressContainer}>
+				<View style={[CommonStyles.progressContainer, {marginTop: sizeConstants.xl}]}>
 					{screen === 1 ? (
 						<>
-							<View style={styles.progress}></View>
-							<View style={styles.normalProgress}></View>
-							<View style={styles.normalProgress}></View>
+							<View style={CommonStyles.progress}></View>
+							<View style={CommonStyles.normalProgress}></View>
+							<View style={CommonStyles.normalProgress}></View>
 						</>
 					) : screen === 2 ? (
 						<>
-							<View style={styles.progress}></View>
-							<View style={styles.progress}></View>
-							<View style={styles.normalProgress}></View>
+							<View style={CommonStyles.progress}></View>
+							<View style={CommonStyles.progress}></View>
+							<View style={CommonStyles.normalProgress}></View>
 						</>
 					) : screen === 3 ? (
 						<>
-							<View style={styles.progress}></View>
-							<View style={styles.progress}></View>
-							<View style={styles.progress}></View>
+							<View style={CommonStyles.progress}></View>
+							<View style={CommonStyles.progress}></View>
+							<View style={CommonStyles.progress}></View>
 						</>
 					) : null}
 				</View>
 
-				<View style={styles.textContainer}>
-					<Text style={styles.title}>{title}</Text>
-					<Text style={styles.subTitle}>{subTitle1}</Text>
-					<Text style={styles.subTitle}> {subTitle2}</Text>
+				<View style={CommonStyles.textContainer}>
+					<Text style={CommonStyles.title}>{title}</Text>
+					<Text style={[CommonStyles.subTitle, {marginTop: sizeConstants.l}]}>{subTitle1}</Text>
+					<Text style={[CommonStyles.subTitle, {marginTop: sizeConstants.l}]}> {subTitle2}</Text>
 				</View>
 				<View style={{marginTop: screen == 2 ? 0 : 20}}>
 					<SimpleLineIcons name="arrow-up" size={20} color="white" style={{alignSelf: "center"}} />
@@ -198,14 +199,14 @@ const TimelineFlowSlider = ({data, setFirstTimeForTimeLine}) => {
 					</TouchableOpacity>
 				</View>
 
-				<View style={styles.btnContainer}>
+				<View style={[CommonStyles.btnContainer, {bottom: sizeConstants.sixty}]}>
 					{screen === 3 ? (
-						<TouchableOpacity style={styles.btnStyling} onPress={setLoggedIn}>
-							<Text style={styles.btnText}>Got it!</Text>
+						<TouchableOpacity style={CommonStyles.btnStyling} onPress={setLoggedIn}>
+							<Text style={CommonStyles.btnText}>Got it!</Text>
 						</TouchableOpacity>
 					) : (
-						<TouchableOpacity style={styles.btnStyling} onPress={handleNavigateScreen}>
-							<Text style={styles.btnText}>Next</Text>
+						<TouchableOpacity style={CommonStyles.btnStyling} onPress={handleNavigateScreen}>
+							<Text style={CommonStyles.btnText}>Next</Text>
 						</TouchableOpacity>
 					)}
 				</View>
@@ -229,86 +230,3 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(TimelineFlowSlider)
-
-const styles = StyleSheet.create({
-	introContainer: {
-		flex: 1,
-	},
-	headerMargin: {
-		marginTop: 97 - Constants.statusBarHeight,
-		flexDirection: "row",
-		justifyContent: "space-between",
-		marginHorizontal: 26,
-	},
-	SkipText: {
-		color: "#FDF9F2",
-		fontSize: 19,
-		textAlign: "left",
-	},
-	image: {
-		width: "100%",
-		height: "100%",
-	},
-	progressContainer: {
-		marginTop: 20,
-		flexDirection: "row",
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	progress: {
-		height: 5,
-		width: 60,
-		backgroundColor: "white",
-		borderRadius: 10,
-		marginHorizontal: 2,
-	},
-	normalProgress: {
-		height: 5,
-		width: 60,
-		backgroundColor: "rgba(255, 255, 255, 0.274)",
-		borderRadius: 10,
-		marginHorizontal: 2,
-	},
-	textContainer: {
-		marginTop: 50,
-		marginHorizontal: 21,
-	},
-	title: {
-		fontSize: 25,
-		textAlign: "left",
-		fontWeight: "bold",
-		color: "white",
-	},
-	subTitle: {
-		fontSize: 19,
-		letterSpacing: 0.7,
-		color: "rgba(255, 255, 255, 0.651)",
-		marginTop: 15,
-	},
-	btnContainer: {
-		position: "absolute",
-		bottom: 60,
-		width: "100%",
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	btnContainer2: {
-		marginTop: 50,
-		width: "100%",
-		justifyContent: "flex-start",
-		alignItems: "center",
-	},
-	btnStyling: {
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "white",
-		width: 314,
-		height: 50,
-		borderRadius: 51,
-	},
-	btnText: {
-		fontSize: 19,
-		color: "#666666",
-		letterSpacing: 1.2,
-	},
-})
