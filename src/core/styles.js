@@ -109,3 +109,93 @@ export const content = {
 	Your_Target_Date:
 		"When your goal is time-bound, it become measurable. Don’t stress over it if you are unsure about the exact date. You can always adjust later.",
 }
+export const CommonStyles = ScaledSheet.create({
+	// sliders common styles start
+
+	mainContainer: {
+		flex: 1,
+	},
+
+	SkipText: {
+		color: ColorConstants.faintWhite,
+		fontSize: sizeConstants.nineteen,
+		textAlign: "left",
+	},
+	progressContainer: {
+		marginTop: sizeConstants.seventy,
+		flexDirection: "row",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	progress: {
+		height: sizeConstants.s,
+		width: sizeConstants.sixty,
+		backgroundColor: ColorConstants.white,
+		borderRadius: sizeConstants.m,
+		marginHorizontal: sizeConstants.xs,
+	},
+
+	normalProgress: {
+		height: sizeConstants.s,
+		width: sizeConstants.sixty,
+		backgroundColor: "rgba(255, 255, 255, 0.274)",
+		borderRadius: sizeConstants.m,
+		marginHorizontal: sizeConstants.xs,
+	},
+
+	title: {
+		fontSize: 25,
+		textAlign: "left",
+		fontWeight: "bold",
+		color: ColorConstants.white,
+	},
+
+	subTitle: {
+		fontSize: 19,
+		letterSpacing: "0.7@ms",
+		color: "rgba(255, 255, 255, 0.651)",
+		marginTop: sizeConstants.thirty,
+	},
+
+	btnContainer: {
+		position: "absolute",
+		bottom: sizeConstants.hundred,
+		width: "100%",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+
+	btnStyling: {
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: ColorConstants.white,
+		width: sizeConstants.threeFourTeen,
+		height: sizeConstants.fifty,
+		borderRadius: sizeConstants.fifty,
+	},
+
+	btnText: {
+		fontSize: sizeConstants.nineteen,
+		color: ColorConstants.faintBlack2,
+		letterSpacing: "1.2@s",
+	},
+
+	textContainer: {
+		marginTop: sizeConstants.xxxl,
+		marginHorizontal: sizeConstants.xl,
+	},
+
+	image: {
+		width: "100%",
+		height: "100%",
+	},
+
+	headerMargin: {
+		marginTop: sizeConstants.ninetySeven - Constants.statusBarHeight,
+		flexDirection: "row",
+		justifyContent: "space-between",
+		marginHorizontal: sizeConstants.twentySix,
+	},
+
+	// sliders common styles ends
+})
