@@ -8,6 +8,7 @@ import {
 	ScrollView,
 	ImageBackground,
 } from "react-native"
+import {commonImages} from "./../../core/styles"
 
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
@@ -30,7 +31,7 @@ const FirstMilestone = () => {
 	return (
 		<ImageBackground
 			style={[styles.introContainer, styles.image]}
-			source={require("../../assets/images/second.png")}
+			source={commonImages.secondImage}
 			resizeMode="stretch"
 		>
 			<ScrollView style={styles.introContainer}>
@@ -114,8 +115,8 @@ const FirstMilestone = () => {
 							// Enable the option to swipe between months. Default = false
 							enableSwipeMonths={true}
 							theme={{
-								backgroundColor: "#588C8D",
-								calendarBackground: "#588C8D",
+								backgroundColor: "rgba(255,255,255,0)",
+								calendarBackground: "rgba(255,255,255,0)",
 								textSectionTitleColor: "#BDDFDB",
 								textSectionTitleDisabledColor: "#BDDFDB",
 								selectedDayBackgroundColor: "#BDDFDB",
@@ -139,8 +140,8 @@ const FirstMilestone = () => {
 								// textMonthFontSize: 16,
 								// textDayHeaderFontSize: 40,
 							}}
-							markedDates={{
-								"2012-05-31": {selected: true, marked: true, selectedColor: "#BDDFDB"},
+							style={{
+								backgroundColor: "rgba(255,255,255,0)",
 							}}
 						/>
 
@@ -166,7 +167,7 @@ export default FirstMilestone
 const styles = StyleSheet.create({
 	introContainer: {
 		flex: 1,
-		backgroundColor: "#588C8D",
+		// backgroundColor: "#588C8D",
 	},
 
 	mainTitle: {

@@ -68,6 +68,17 @@ export const sizeConstants = {
 	paddingHorizontal: moderateScale(15, 2),
 }
 
+export const commonImages = {
+	firstImage: require("././../assets/images/first.png"),
+	firstTimeLineImage: require("././../assets/images/firstTimeLine.png"),
+	secondImage: require("./../assets/images/second.png"),
+	secondTimeLineImage: require("././../assets/images/secondTimeLine.png"),
+	thirdImage: require("././../assets/images/third.png"),
+	thirdTimeLineImage: require("././../assets/images/thirdTimeLine.png"),
+	fourthImage: require("././../assets/images/fourth.png"),
+	timelineImage: require("././../assets/images/timeline.png"),
+}
+
 export const ColorConstants = {
 	faintWhite: "#FDF9F2",
 	darkBlue: "#76BBBC",
