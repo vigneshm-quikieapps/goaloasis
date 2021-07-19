@@ -1,5 +1,10 @@
-import {StyleSheet} from "react-native"
-import {scale, ScaledSheet, verticalScale, moderateScale} from "react-native-size-matters"
+import {
+	ScaledSheet,
+	verticalScale,
+	moderateScale,
+	scale,
+	moderateVerticalScale,
+} from "react-native-size-matters"
 import Constants from "expo-constants"
 import colors from "../../colors"
 
@@ -12,22 +17,38 @@ export const sizeConstants = {
 	zero: verticalScale(0),
 	one: verticalScale(1),
 	xs: verticalScale(2),
+	xsX: scale(2),
 	three: verticalScale(3),
 	four: verticalScale(4),
 	s: verticalScale(5),
+	five: moderateScale(5),
 	six: verticalScale(6),
 	seven: verticalScale(7),
 	eight: verticalScale(8),
+	eightX: scale(8),
+	eightMX: moderateScale(8),
 	m: verticalScale(10),
+	mX: scale(10),
 	twelve: verticalScale(12),
+	thirteen: verticalScale(13),
+	thirteenX: scale(13),
+	thirteenMX: moderateScale(13),
 	fourteen: verticalScale(14),
+	fourteenMX: moderateScale(14),
 	l: verticalScale(15),
+	fifteenX: scale(15),
+	fifteenMX: moderateScale(15),
 	sixteen: verticalScale(16),
+	sixteenX: scale(16),
 	seventeen: verticalScale(17),
 	eighteen: verticalScale(18),
 	nineteen: verticalScale(19),
+	nineteenX: moderateScale(19),
 	xl: verticalScale(20),
 	twentyOne: verticalScale(21),
+	twentyX: scale(20),
+	twentyMX: scale(20),
+	twentyOne: moderateScale(21),
 	twentyTwo: verticalScale(22),
 	twentyFour: verticalScale(24),
 	xxl: verticalScale(25),
@@ -35,6 +56,7 @@ export const sizeConstants = {
 	twentySeven: verticalScale(27),
 	twentyEight: verticalScale(28),
 	thirty: verticalScale(30),
+	mThirty: moderateScale(30),
 	thirtyOne: verticalScale(31),
 	thirtyTwo: verticalScale(32),
 	thirtyThree: verticalScale(33),
@@ -43,6 +65,7 @@ export const sizeConstants = {
 	thirtySix: verticalScale(36),
 	thirtyEight: verticalScale(38),
 	fourty: verticalScale(40),
+	fourtyMX: moderateScale(40),
 	fourtyFour: verticalScale(44),
 	fourtyFive: verticalScale(45),
 	fourtyEight: verticalScale(48),
@@ -50,22 +73,30 @@ export const sizeConstants = {
 	fifty: moderateScale(50),
 	fiftyFive: verticalScale(55),
 	sixty: verticalScale(60),
+	mSixty: moderateScale(60),
 	seventy: verticalScale(70),
 	seventyFive: verticalScale(75),
+	seventyFive: moderateScale(75),
 	eighty: verticalScale(80),
 	eightyFive: verticalScale(85),
 	ninety: verticalScale(90),
 	ninetySeven: verticalScale(97),
 	hundred: verticalScale(100),
+	hundredMX: moderateScale(100),
 	oneTen: verticalScale(110),
 	oneTwentyEight: verticalScale(128),
 	oneThirty: verticalScale(130),
+	oneThirtyFive: verticalScale(135),
+	oneThirtyFiveX: scale(135),
 	oneFourty: verticalScale(140),
 	oneFourtyFive: verticalScale(145),
 	oneFifty: verticalScale(150),
+	oneFiftyX: scale(150),
 	oneEighty: verticalScale(180),
 	twoHundred: verticalScale(200),
 	twoFifty: verticalScale(250),
+	twoSeventyMX: moderateScale(270),
+	twoNinetyMX: moderateScale(290),
 	threeHundred: verticalScale(300),
 	threeTen: verticalScale(310),
 	threeFourTeen: moderateScale(314),
@@ -86,6 +117,9 @@ export const commonImages = {
 export const ColorConstants = {
 	faintWhite: "#FDF9F2",
 	darkBlue: "#76BBBC",
+	lightestBlue: "#C0E5E4",
+	lighterBlue: "#7ec8c9",
+	whitishBlue: "#BDDFDB",
 	white: "#FFFFFF",
 	black: "#000000",
 	faintBlack1: "#333333",
@@ -94,10 +128,18 @@ export const ColorConstants = {
 	timelineSkinFaint: "#FFCB9C",
 	timelineSkinDark: "#E6AB76",
 	timelineSkinDarker: "#B3855C",
+	lightestYellow: "#FBF5E9",
+	blackOp60: "#000000aa",
+	darkGrey: "#707070",
+	darkFaintBlue: "#588C8D",
+	mediumFaintBlue: "#86C7C8",
+	transparent: "#00000000",
+	greyishBlue: "#538586",
+	gray: "gray",
 }
 
 export const forGoals = {
-	first: "#588C8D",
+	first: ColorConstants.darkFaintBlue,
 	second: "#553144",
 	third: "6A5593",
 	fourth: "#B3855C",
@@ -162,14 +204,14 @@ export const CommonStyles = ScaledSheet.create({
 		alignItems: "center",
 	},
 	title: {
-		fontSize: "25@s",
+		fontSize: sizeConstants.xxl,
 		textAlign: "left",
 		fontWeight: "bold",
 		color: ColorConstants.white,
 	},
 
 	subTitle: {
-		fontSize: "19@s",
+		fontSize: sizeConstants.nineteen,
 		letterSpacing: "0.7@ms",
 		color: "rgba(255, 255, 255, 0.651)",
 		marginTop: sizeConstants.thirty,
@@ -193,7 +235,7 @@ export const CommonStyles = ScaledSheet.create({
 	},
 
 	btnText: {
-		fontSize: sizeConstants.nineteen,
+		fontSize: sizeConstants.nineteenX,
 		color: ColorConstants.faintBlack2,
 		letterSpacing: "1.2@s",
 	},
@@ -333,10 +375,6 @@ export const CommonStyles = ScaledSheet.create({
 		marginTop: sizeConstants.l,
 		alignSelf: "center",
 	},
-	button: {
-		color: "black",
-		fontSize: "21@s",
-	},
 
 	firstSubTitle: {
 		fontSize: 25,
@@ -411,124 +449,283 @@ export const CommonStyles = ScaledSheet.create({
 	editOccuringText: {fontSize: "25@s", color: "#FDF9F2", fontWeight: "bold"},
 
 	reoccuringDateContainer: {
-		display: "flex",
-		justifyContent: "center",
-		alignItems: "center",
-		flexDirection: "row",
-		marginTop: sizeConstants.m,
-	},
-	reoccuringText: {
-		fontSize: "21@s",
-		alignSelf: "center",
-		marginLeft: scale(20),
-		color: "#FDF9F2",
-		marginTop: sizeConstants.m,
-	},
-	doneText: {
-		fontSize: "14@s",
-		color: "#FDF9F2",
-		position: "absolute",
-		left: sizeConstants.xxxl,
-	},
-	container: {
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "#588C8D",
-		borderColor: "#FDF9F2",
-		marginBottom: sizeConstants.xl,
-		borderEndWidth: sizeConstants.three,
-		borderStartWidth: sizeConstants.three,
-		borderTopWidth: sizeConstants.three,
-		borderBottomWidth: sizeConstants.three,
-		width: "70%",
-		padding: sizeConstants.eight,
-		borderRadius: sizeConstants.twentySix,
+		//modal styles starts
+
+		titleContainer: {
+			flex: 0.6,
+			justifyContent: "center",
+			backgroundColor: ColorConstants.faintWhite,
+		},
+
+		modalBottomBtn: {
+			justifyContent: "center",
+			paddingHorizontal: sizeConstants.twentyX,
+			backgroundColor: ColorConstants.lighterBlue,
+			width: sizeConstants.twoSeventyMX,
+			height: sizeConstants.seventy,
+		},
+		//modal styles ends
+
+		// common styles starts
+
+		bold: {fontWeight: "bold"},
+		fontW100: {fontWeight: "100"},
+		fontWBold: {fontWeight: "bold"},
+		bgWhite: {backgroundColor: ColorConstants.white},
+		borderRadius30: {
+			borderRadius: sizeConstants.mThirty,
+		},
+		borderRadius4: {
+			borderRadius: sizeConstants.four,
+		},
+		flexDirectionRow: {
+			flexDirection: "row",
+		},
+		MX10: {
+			marginHorizontal: sizeConstants.mX,
+		},
+		dotStyle: {
+			height: sizeConstants.eightX,
+			width: sizeConstants.eightX,
+		},
+		ML30: {
+			marginLeft: sizeConstants.mThirty,
+		},
+
+		pt10: {
+			paddingTop: sizeConstants.mX,
+		},
+		alignItemsCenter: {
+			alignItems: "center",
+		},
+		mt20: {
+			marginTop: sizeConstants.twentyMX,
+		},
+		pr10: {
+			paddingRight: sizeConstants.mX,
+		},
+		flexOne: {
+			flex: 1,
+		},
+		// common styles ends
+
+		// milestone starts
+		reoccuring: {color: ColorConstants.faintWhite, fontSize: sizeConstants.twentyOne},
+		milestoneText: {
+			fontSize: sizeConstants.sixteenX,
+			color: ColorConstants.faintWhite,
+			marginLeft: sizeConstants.twentyOne,
+			// marginTop: sizeConstants.twentyX,
+		},
+		container2: {
+			justifyContent: "center",
+			alignItems: "center",
+			backgroundColor: ColorConstants.faintWhite,
+			width: "70%",
+			padding: sizeConstants.eightMX,
+			borderRadius: sizeConstants.xxl,
+			flexDirection: "column",
+			marginVertical: sizeConstants.five,
+			marginTop: sizeConstants.fifteenX,
+			alignSelf: "center",
+		},
+
+		button: {
+			color: ColorConstants.black,
+			fontSize: sizeConstants.twentyOne,
+		},
+
+		subTitleMilestone: {
+			fontSize: sizeConstants.fifteenMX,
+			color: ColorConstants.faintWhite,
+			marginLeft: sizeConstants.twentyOne,
+			paddingLeft: sizeConstants.five,
+			paddingRight: sizeConstants.twentyMX,
+		},
+
+		calendarContainer: {
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "center",
+			flexDirection: "row",
+			marginTop: sizeConstants.m,
+		},
+		reoccuringText: {
+			fontSize: "21@s",
+			alignSelf: "center",
+			marginLeft: scale(20),
+			color: "#FDF9F2",
+			marginTop: sizeConstants.m,
+		},
+		doneText: {
+			fontSize: "14@s",
+			color: "#FDF9F2",
+			position: "absolute",
+			left: sizeConstants.xxxl,
+		},
+		container: {
+			justifyContent: "center",
+			alignItems: "center",
+			backgroundColor: "#588C8D",
+			borderColor: "#FDF9F2",
+			marginBottom: sizeConstants.xl,
+			// marginTop: sizeConstants.m,
+		},
+
+		targetDate: {
+			fontSize: sizeConstants.twentyOne,
+			color: ColorConstants.faintBlack1,
+			alignSelf: "center",
+			marginLeft: sizeConstants.twentyMX,
+			color: ColorConstants.faintWhite,
+			marginTop: sizeConstants.twentyMX,
+		},
+
+		done: {
+			fontSize: sizeConstants.fourteenMX,
+			color: ColorConstants.faintWhite,
+			position: "absolute",
+			left: sizeConstants.fifty,
+		},
+
+		containerMilestone: {
+			justifyContent: "center",
+			alignItems: "center",
+			backgroundColor: ColorConstants.darkFaintBlue,
+			borderColor: ColorConstants.faintWhite,
+			marginBottom: sizeConstants.twentyMX,
+			borderEndWidth: sizeConstants.three,
+			borderStartWidth: sizeConstants.three,
+			borderTopWidth: sizeConstants.three,
+			borderBottomWidth: sizeConstants.three,
+			width: "70%",
+			padding: sizeConstants.eight,
+			borderRadius: sizeConstants.twentySix,
+			flexDirection: "column",
+			marginVertical: sizeConstants.s,
+			marginTop: sizeConstants.l,
+			alignSelf: "center",
+		},
+
+		// MyGoals Home Screen
+		titleContainer: {
+			height: scale(90) - Constants.statusBarHeight,
+			backgroundColor: "#588C8D",
+			justifyContent: "center",
+		},
+		goalsContainer: {
+			flex: 1,
+			backgroundColor: "#FBF5E9",
+			borderTopRightRadius: sizeConstants.seventy,
+		},
+		viewTap: {
+			height: sizeConstants.six,
+			width: scale(60),
+			backgroundColor: "#588C8D",
+			marginVertical: sizeConstants.m,
+			borderRadius: sizeConstants.thirty,
+			opacity: 0.5,
+		},
+		myGoalsText: {
+			fontSize: "25@s",
+			fontWeight: "bold",
+			color: "#588C8D",
+			marginHorizontal: scale(20),
+			marginBottom: sizeConstants.m,
+		},
+		logoSpacing: {
+			flex: 1,
+			flexDirection: "row",
+			flexWrap: "wrap",
+			// justifyContent: "center",
+			width: "100%",
+		},
+		logoContainer: {
+			marginLeft: scale(65), //TODO
+			marginTop: sizeConstants.xl,
+			// backgroundColor: "green",
+		},
+		goalText: {
+			fontSize: "16@s",
+			color: "#666666",
+			textAlign: "center",
+			maxWidth: scale(100),
+
+			// backgroundColor: "blue",
+		},
+		circleLogo: {
+			height: sizeConstants.hundred,
+			width: sizeConstants.hundred,
+			borderRadius: sizeConstants.fifty,
+			borderWidth: sizeConstants.s,
+			borderColor: "#588C8D",
+			justifyContent: "center",
+			alignItems: "center",
+		},
+		iconVertical: {
+			height: sizeConstants.thirty,
+			width: scale(4),
+			backgroundColor: "#588C8D",
+		},
+		iconHorizontal: {
+			height: sizeConstants.four,
+			width: scale(30),
+			backgroundColor: "#588C8D",
+			position: "absolute",
+		},
+		bottomBtnContainer: {
+			width: "100%",
+			position: "absolute",
+			bottom: sizeConstants.fourtyFive,
+			justifyContent: "center",
+			alignItems: "center",
+		},
+		bottomBtn2: {
+			height: sizeConstants.seventyFive,
+			width: sizeConstants.seventyFive,
+			borderRadius: sizeConstants.seventyFive / sizeConstants.xs,
+			backgroundColor: "#7EC8C9",
+			elevation: sizeConstants.s,
+			justifyContent: "center",
+			alignItems: "center",
+		},
+		padding: sizeConstants.eightMX,
+		borderRadius: sizeConstants.xxl,
 		flexDirection: "column",
-		marginVertical: sizeConstants.s,
-		marginTop: sizeConstants.l,
+		// marginVertical: sizeConstants.five,
+		// marginTop: sizeConstants.fifteenX,
 		alignSelf: "center",
 	},
 
-	// MyGoals Home Screen
-	titleContainer: {
-		height: scale(90) - Constants.statusBarHeight,
-		backgroundColor: "#588C8D",
-		justifyContent: "center",
-	},
-	goalsContainer: {
+	introContainer: {
 		flex: 1,
-		backgroundColor: "#FBF5E9",
-		borderTopRightRadius: sizeConstants.seventy,
+		backgroundColor: ColorConstants.darkFaintBlue,
 	},
-	viewTap: {
-		height: sizeConstants.six,
-		width: scale(60),
-		backgroundColor: "#588C8D",
-		marginVertical: sizeConstants.m,
-		borderRadius: sizeConstants.thirty,
-		opacity: 0.5,
-	},
-	myGoalsText: {
-		fontSize: "25@s",
-		fontWeight: "bold",
-		color: "#588C8D",
-		marginHorizontal: scale(20),
-		marginBottom: sizeConstants.m,
-	},
-	logoSpacing: {
-		flex: 1,
-		flexDirection: "row",
-		flexWrap: "wrap",
-		// justifyContent: "center",
-		width: "100%",
-	},
-	logoContainer: {
-		marginLeft: scale(65), //TODO
-		marginTop: sizeConstants.xl,
-		// backgroundColor: "green",
-	},
-	goalText: {
-		fontSize: "16@s",
-		color: "#666666",
-		textAlign: "center",
-		maxWidth: scale(100),
 
-		// backgroundColor: "blue",
+	mainTitle: {
+		color: ColorConstants.faintWhite,
+		fontSize: sizeConstants.xxl,
+		marginLeft: sizeConstants.twentyOne,
 	},
-	circleLogo: {
-		height: sizeConstants.hundred,
-		width: sizeConstants.hundred,
-		borderRadius: sizeConstants.fifty,
-		borderWidth: sizeConstants.s,
-		borderColor: "#588C8D",
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	iconVertical: {
-		height: sizeConstants.thirty,
-		width: scale(4),
-		backgroundColor: "#588C8D",
-	},
-	iconHorizontal: {
-		height: sizeConstants.four,
-		width: scale(30),
-		backgroundColor: "#588C8D",
-		position: "absolute",
-	},
-	bottomBtnContainer: {
-		width: "100%",
-		position: "absolute",
-		bottom: sizeConstants.fourtyFive,
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	bottomBtn2: {
+
+	bottomBtnMilestone: {
+		marginBottom: sizeConstants.twentyMX,
 		height: sizeConstants.seventyFive,
 		width: sizeConstants.seventyFive,
-		borderRadius: sizeConstants.seventyFive / sizeConstants.xs,
-		backgroundColor: "#7EC8C9",
-		elevation: sizeConstants.s,
+		borderRadius: sizeConstants.seventyFive / 2,
+		backgroundColor: ColorConstants.faintWhite,
+		elevation: sizeConstants.five,
 		justifyContent: "center",
 		alignItems: "center",
+		alignSelf: "center",
 	},
+
+	cross: {
+		backgroundColor: ColorConstants.greyishBlue,
+		borderRadius: sizeConstants.twentyMX,
+		position: "absolute",
+		right: 0,
+		marginRight: sizeConstants.mX,
+	},
+	// milestone ends
 })

@@ -8,37 +8,30 @@ import colors from "../../../colors"
 import {Entypo} from "@expo/vector-icons"
 
 import Constants from "expo-constants"
+import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/styles"
 
 const SixthMilestone = () => {
 	const navigation = useNavigation()
 
 	const [date, setDate] = useState(new Date())
-	const tip = () => <Text style={{fontWeight: "bold"}}>Tip:</Text>
+	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 
 	return (
 		<ImageBackground
-			style={[styles.introContainer, styles.image]}
-			source={require("../../assets/images/second.png")}
+			style={[CommonStyles.introContainer, styles.image]}
+			source={commonImages.secondImage}
 			resizeMode="stretch"
 		>
-			<View style={{flexDirection: "row", marginTop: Constants.statusBarHeight}}>
-				<Text style={styles.mainTitle}>Read 5 books</Text>
+			<View style={styles.topHeadingContainer}>
+				<Text style={CommonStyles.mainTitle}>Read 5 books</Text>
 				<Entypo
 					name="cross"
-					color="#FDF9F2"
+					color={ColorConstants.faintWhite}
 					size={38}
-					style={{
-						backgroundColor: "#538586",
-						borderRadius: 20,
-						position: "absolute",
-						right: 0,
-						marginRight: 10,
-					}}
+					style={CommonStyles.cross}
 				/>
 			</View>
-			<Text style={{fontSize: 16, color: "#FDF9F2", marginLeft: 21, marginTop: 20}}>
-				Enter Milestone
-			</Text>
+			<Text style={[CommonStyles.milestoneText, CommonStyles.mt20]}>Enter Milestone</Text>
 			<View style={styles.centerCont}>
 				<TextInput style={styles.textInput} placeholder="Type Here" />
 			</View>
@@ -46,47 +39,24 @@ const SixthMilestone = () => {
 				{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
 			</Text>
 			<TouchableOpacity
-				style={{
-					justifyContent: "center",
-					alignItems: "center",
-					backgroundColor: "#588C8D",
-					borderColor: "#FDF9F2",
-					borderEndWidth: 3,
-					borderStartWidth: 3,
-					borderTopWidth: 3,
-					borderBottomWidth: 3,
-					width: "70%",
-					padding: 8,
-					borderRadius: 25,
-					flexDirection: "column",
-					marginVertical: 5,
-					marginTop: 35,
-					alignSelf: "center",
-				}}
+				style={styles.editBtntext}
 				onPress={() => navigation.navigate("SixthMilestone")}
 			>
-				<Text style={{color: "#FDF9F2", fontSize: 21}}>Edit Date</Text>
+				<Text style={CommonStyles.reoccuring}>Edit Date</Text>
 			</TouchableOpacity>
 			<Text style={styles.subTitle}>
 				{tip()} adding a target date will help you stay on track.Dont't worry!
 			</Text>
 			<Text style={styles.subTitle}> You can always change it.</Text>
 
-			<View
-				style={{
-					position: "absolute",
-					bottom: 30,
-					width: "100%",
-					justifyContent: "center",
-				}}
-			>
-				<View style={{flexDirection: "row", justifyContent: "space-around", marginBottom: 12}}>
+			<View style={styles.middleContainer}>
+				<View style={styles.middleInnerContainer}>
 					<View>
 						<TouchableOpacity style={[styles.btnStylingLeft, styles.nextBtn]}>
 							<MaterialCommunityIcons
 								name="chevron-left"
-								size={50}
-								color="#FDF9F2"
+								size={sizeConstants.fifty}
+								color={ColorConstants.faintWhite}
 								onPress={() => navigation.navigate("addgoal")}
 							/>
 						</TouchableOpacity>
@@ -95,17 +65,17 @@ const SixthMilestone = () => {
 						<TouchableOpacity style={[styles.btnStylingRight, styles.nextBtn]}>
 							<MaterialCommunityIcons
 								name="chevron-right"
-								size={50}
-								color="#7EC8C9"
+								size={sizeConstants.fifty}
+								color={ColorConstants.lighterBlue}
 								onPress={() => navigation.navigate("IndividualGoal")}
 							/>
 						</TouchableOpacity>
 					</View>
 				</View>
 
-				<View style={{alignItems: "center"}}>
+				<View style={CommonStyles.alignItemsCenter}>
 					<TouchableOpacity style={styles.btnStyling}>
-						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
+						<MaterialCommunityIcons name="home" size={44} color={ColorConstants.lighterBlue} />
 					</TouchableOpacity>
 				</View>
 			</View>
@@ -114,49 +84,39 @@ const SixthMilestone = () => {
 }
 export default SixthMilestone
 const styles = StyleSheet.create({
-	introContainer: {
-		flex: 1,
-		backgroundColor: "#588C8D",
-	},
-
 	subTitle: {
-		fontSize: 16,
-		color: "#FDF9F2",
-		marginLeft: 21,
-		marginRight: 10,
-		marginTop: 5,
+		fontSize: sizeConstants.fourteenMX,
+		color: ColorConstants.faintWhite,
+		marginLeft: sizeConstants.twentyMX,
+		marginRight: sizeConstants.mX,
+		marginTop: sizeConstants.s,
 	},
 
 	btnStyling: {
-		backgroundColor: "#FDF9F2",
-		width: 75,
-		height: 75,
-		borderRadius: 75 / 2,
+		backgroundColor: ColorConstants.faintWhite,
+		height: sizeConstants.seventyFive,
+		width: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive / 2,
 		right: 0,
-		marginTop: 150,
-		marginLeft: 70,
-		marginRight: 70,
+		marginTop: sizeConstants.oneFifty,
+		marginHorizontal: sizeConstants.seventyFive,
 	},
-	mainTitle: {
-		color: "#FDF9F2",
-		fontSize: 25,
-		marginLeft: 21,
-	},
+
 	nextBtn: {
-		width: 50,
-		height: 50,
-		borderRadius: 25,
+		width: sizeConstants.fifty,
+		height: sizeConstants.fifty,
+		borderRadius: sizeConstants.xxl,
 	},
 	textInput: {
-		width: 314,
-		height: 50,
-		backgroundColor: "#FDF9F2",
-		borderRadius: 50,
-		marginTop: 3,
-		paddingLeft: 20,
-		fontSize: 19,
-		color: "#666666",
-		elevation: 10,
+		width: sizeConstants.threeFourTeen,
+		height: sizeConstants.fifty,
+		backgroundColor: ColorConstants.faintWhite,
+		borderRadius: sizeConstants.fifty,
+		marginTop: sizeConstants.three,
+		paddingLeft: sizeConstants.twentyMX,
+		fontSize: sizeConstants.nineteenX,
+		color: ColorConstants.faintBlack2,
+		elevation: sizeConstants.mX,
 	},
 	centerCont: {
 		justifyContent: "center",
@@ -164,7 +124,7 @@ const styles = StyleSheet.create({
 	},
 	btnContainer: {
 		position: "absolute",
-		bottom: 20,
+		bottom: sizeConstants.twentyMX,
 		width: "100%",
 		justifyContent: "center",
 		alignItems: "center",
@@ -174,25 +134,57 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		backgroundColor: colors.faint,
-		width: 75,
-		height: 75,
-		borderRadius: 75 / 2,
+		width: sizeConstants.seventyFive,
+		height: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive / 2,
 	},
 	btnStylingLeft: {
 		justifyContent: "center",
 		alignItems: "center",
 		backgroundColor: colors.buttonBackGround,
-		width: 75,
-		height: 75,
-		borderRadius: 75 / 2,
+		width: sizeConstants.seventyFive,
+		height: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive / 2,
 	},
 
 	btnStyling: {
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "#FDF9F2",
-		width: 75,
-		height: 75,
-		borderRadius: 75 / 2,
+		backgroundColor: ColorConstants.faintWhite,
+		width: sizeConstants.seventyFive,
+		height: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive / 2,
+	},
+
+	topHeadingContainer: {flexDirection: "row", marginTop: Constants.statusBarHeight},
+
+	editBtntext: {
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: ColorConstants.darkFaintBlue,
+		borderColor: ColorConstants.faintWhite,
+		borderEndWidth: sizeConstants.three,
+		borderStartWidth: sizeConstants.three,
+		borderTopWidth: sizeConstants.three,
+		borderBottomWidth: sizeConstants.three,
+		width: "70%",
+		padding: sizeConstants.eightMX,
+		borderRadius: sizeConstants.xxl,
+		flexDirection: "column",
+		marginVertical: sizeConstants.s,
+		marginTop: sizeConstants.thirtyFive,
+		alignSelf: "center",
+	},
+
+	middleContainer: {
+		position: "absolute",
+		bottom: sizeConstants.mThirty,
+		width: "100%",
+		justifyContent: "center",
+	},
+	middleInnerContainer: {
+		flexDirection: "row",
+		justifyContent: "space-around",
+		marginBottom: sizeConstants.twelve,
 	},
 })

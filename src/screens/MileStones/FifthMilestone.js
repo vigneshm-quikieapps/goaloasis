@@ -8,6 +8,7 @@ import AppButton from "./AppButton"
 import {Calendar, LocaleConfig} from "react-native-calendars"
 import StatusBarScreen from "./StatusBarScreen"
 import {Entypo} from "@expo/vector-icons"
+import {ColorConstants, CommonStyles} from "../../core/styles"
 
 const FifthMilestone = () => {
 	const navigation = useNavigation()
@@ -20,66 +21,32 @@ const FifthMilestone = () => {
 	// }
 	const [value, onChange] = useState(new Date())
 	const [date, setDate] = useState(new Date())
-	const tip = () => <Text style={{fontWeight: "bold"}}>Tip:</Text>
+	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 
 	return (
-		<StatusBarScreen style={styles.introContainer}>
+		<StatusBarScreen style={CommonStyles.introContainer}>
 			<ScrollView>
-				<View style={{flex: 1}}>
-					<View style={{flexDirection: "row"}}>
-						<Text style={styles.mainTitle}>Read 5 books</Text>
-						<Entypo
-							name="cross"
-							color="#FDF9F2"
-							size={38}
-							style={{
-								backgroundColor: "#538586",
-								borderRadius: 20,
-								position: "absolute",
-								right: 0,
-								marginRight: 10,
-							}}
-						/>
+				<View style={CommonStyles.flexOne}>
+					<View style={CommonStyles.flexDirectionRow}>
+						<Text style={CommonStyles.mainTitle}>Read 5 books</Text>
+						<Entypo name="cross" color="#FDF9F2" size={38} style={CommonStyles.cross} />
 					</View>
-					<Text style={{fontSize: 16, color: "#FDF9F2", marginLeft: 21, marginTop: 20}}>
-						Enter Milestone
-					</Text>
-					<TouchableOpacity style={styles.container2}>
-						<Text style={styles.button}>Read One Book</Text>
+					<Text style={CommonStyles.milestoneText}>Enter Milestone</Text>
+					<TouchableOpacity style={CommonStyles.container2}>
+						<Text style={CommonStyles.button}>Read One Book</Text>
 					</TouchableOpacity>
-					<Text style={styles.subTitle}>
+					<Text style={CommonStyles.subTitleMilestone}>
 						{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
 					</Text>
 
-					<View
-						style={{
-							display: "flex",
-							justifyContent: "center",
-							alignItems: "center",
-							flexDirection: "row",
-							marginTop: 10,
-						}}
-					>
-						<Text
-							style={{
-								fontSize: 21,
-								color: "#333333",
-								alignSelf: "center",
-								marginLeft: 20,
-								color: "#FDF9F2",
-								marginTop: 20,
-							}}
-						>
-							Target Date
-						</Text>
+					<View style={CommonStyles.calendarContainer}>
+						<Text style={CommonStyles.targetDate}>Target Date</Text>
 						<TouchableOpacity
 							onPress={() => {
 								navigation.navigate("SixthMilestone")
 							}}
 						>
-							<Text style={{fontSize: 14, color: "#FDF9F2", position: "absolute", left: 50}}>
-								Done
-							</Text>
+							<Text style={CommonStyles.done}>Done</Text>
 						</TouchableOpacity>
 					</View>
 
@@ -136,20 +103,20 @@ const FifthMilestone = () => {
 						// Enable the option to swipe between months. Default = false
 						enableSwipeMonths={true}
 						theme={{
-							backgroundColor: "#588C8D",
-							calendarBackground: "#588C8D",
-							textSectionTitleColor: "#FDF9F2",
+							backgroundColor: ColorConstants.darkFaintBlue,
+							calendarBackground: ColorConstants.darkFaintBlue,
+							textSectionTitleColor: ColorConstants.faintWhite,
 							textSectionTitleDisabledColor: "#d9e1e8",
-							selectedDayBackgroundColor: "#FDF9F2",
-							selectedDayTextColor: "black",
+							selectedDayBackgroundColor: ColorConstants.faintWhite,
+							selectedDayTextColor: ColorConstants.black,
 							todayTextColor: "#00adf5",
-							dayTextColor: "#FDF9F2",
+							dayTextColor: ColorConstants.faintWhite,
 							textDisabledColor: "#d9e1e8",
-							dotColor: "#FDF9F2",
-							selectedDotColor: "#FDF9F2",
-							arrowColor: "#FDF9F2",
+							dotColor: ColorConstants.faintWhite,
+							selectedDotColor: ColorConstants.faintWhite,
+							arrowColor: ColorConstants.faintWhite,
 							disabledArrowColor: "#d9e1e8",
-							monthTextColor: "#FDF9F2",
+							monthTextColor: ColorConstants.faintWhite,
 							indicatorColor: "blue",
 							textDayFontFamily: "monospace",
 							textMonthFontFamily: "monospace",
@@ -163,13 +130,13 @@ const FifthMilestone = () => {
 						}}
 					/>
 					<TouchableOpacity
-						style={styles.container}
+						style={CommonStyles.containerMilestone}
 						onPress={() => navigation.navigate("SixthMilestone")}
 					>
-						<Text style={{color: "#FDF9F2", fontSize: 21}}>Set reoccuring</Text>
+						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
-						style={styles.bottomBtn}
+						style={CommonStyles.bottomBtnMilestone}
 						onPress={() => navigation.navigate("particulargoal")}
 					>
 						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
@@ -181,69 +148,3 @@ const FifthMilestone = () => {
 }
 
 export default FifthMilestone
-
-const styles = StyleSheet.create({
-	container: {
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "#588C8D",
-		borderColor: "#FDF9F2",
-		marginBottom: 20,
-		borderEndWidth: 3,
-		borderStartWidth: 3,
-		borderTopWidth: 3,
-		borderBottomWidth: 3,
-		width: "70%",
-		padding: 8,
-		borderRadius: 25,
-		flexDirection: "column",
-		marginVertical: 5,
-		marginTop: 15,
-		alignSelf: "center",
-	},
-	container2: {
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "#FDF9F2",
-
-		width: "70%",
-		padding: 8,
-		borderRadius: 25,
-		flexDirection: "column",
-		marginVertical: 5,
-		marginTop: 15,
-		alignSelf: "center",
-	},
-	button: {
-		color: "black",
-		fontSize: 21,
-	},
-	introContainer: {
-		flex: 1,
-		backgroundColor: "#588C8D",
-	},
-	mainTitle: {
-		color: "#FDF9F2",
-		fontSize: 25,
-		marginLeft: 21,
-	},
-	subTitle: {
-		fontSize: 16,
-		color: "#FDF9F2",
-		marginLeft: 21,
-		paddingLeft: 5,
-		paddingRight: 20,
-	},
-
-	bottomBtn: {
-		marginBottom: 20,
-		height: 75,
-		width: 75,
-		borderRadius: 75 / 2,
-		backgroundColor: "#FDF9F2",
-		elevation: 5,
-		justifyContent: "center",
-		alignItems: "center",
-		alignSelf: "center",
-	},
-})
