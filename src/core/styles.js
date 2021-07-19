@@ -70,10 +70,13 @@ export const sizeConstants = {
 	fourtyFive: verticalScale(45),
 	fourtyEight: verticalScale(48),
 	xxxl: verticalScale(50),
+
 	fifty: moderateScale(50),
+	fiftyHalf: scale(50.5),
 	fiftyFive: verticalScale(55),
 	sixty: verticalScale(60),
 	mSixty: moderateScale(60),
+	sixtyTwo: scale(62),
 	sixtyFive: verticalScale(65),
 
 	seventy: verticalScale(70),
@@ -420,7 +423,7 @@ export const CommonStyles = ScaledSheet.create({
 	bottomBtn: {
 		height: sizeConstants.seventyFive,
 		width: sizeConstants.seventyFive,
-		borderRadius: sizeConstants.seventyFive / sizeConstants.xs,
+		borderRadius: sizeConstants.seventyFive,
 		backgroundColor: "#FDF9F2",
 		elevation: scale(5),
 		justifyContent: "center",
@@ -651,7 +654,7 @@ export const CommonStyles = ScaledSheet.create({
 		width: "100%",
 	},
 	logoContainer: {
-		marginLeft: scale(65), //TODO
+		marginLeft: sizeConstants.sixtyTwo, //TODO
 		marginTop: sizeConstants.xl,
 		// backgroundColor: "green",
 	},
@@ -664,9 +667,9 @@ export const CommonStyles = ScaledSheet.create({
 		// backgroundColor: "blue",
 	},
 	circleLogo: {
-		height: sizeConstants.hundred,
-		width: sizeConstants.hundred,
-		borderRadius: sizeConstants.fifty,
+		height: sizeConstants.seventyFive,
+		width: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive,
 		borderWidth: sizeConstants.s,
 		borderColor: "#588C8D",
 		justifyContent: "center",

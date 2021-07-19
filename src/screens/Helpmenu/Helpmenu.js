@@ -52,12 +52,14 @@ const Helpmenu = () => {
 							<Text style={styles.btnText}>Timeline</Text>
 						</TouchableOpacity>
 					</View>
-				</View>
-
-				<View style={styles.bottomBtnContainer}>
-					<TouchableOpacity style={styles.bottomBtn} onPress={() => navigation.navigate("mygoals")}>
-						<MaterialCommunityIcons name="home" size={34} color="white" />
-					</TouchableOpacity>
+					<View style={styles.bottomBtnContainer}>
+						<TouchableOpacity
+							style={styles.bottomBtn}
+							onPress={() => navigation.navigate("mygoals")}
+						>
+							<MaterialCommunityIcons name="home" size={34} color="white" />
+						</TouchableOpacity>
+					</View>
 				</View>
 			</View>
 		</View>

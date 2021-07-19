@@ -2,6 +2,14 @@ import React, {useRef} from "react"
 import {StyleSheet, View, TouchableOpacity, Text} from "react-native"
 import RBSheet from "react-native-raw-bottom-sheet"
 import {useNavigation} from "@react-navigation/native"
+import {sizeConstants} from "./../../core/styles"
+import {
+	ScaledSheet,
+	verticalScale,
+	moderateScale,
+	scale,
+	moderateVerticalScale,
+} from "react-native-size-matters"
 
 const RBBottomSheet = ({flag = true}) => {
 	const navigation = useNavigation()
@@ -72,26 +80,26 @@ const styles = StyleSheet.create({
 	mainTitle: {
 		color: "#333333",
 		fontSize: 25,
-		marginLeft: 20,
+		marginLeft: sizeConstants.xl,
 	},
 	threeDots: {
+		backgroundColor: "#F4EFE7",
 		flexDirection: "row",
 		position: "absolute",
-		right: 0,
-		margin: 10,
-		backgroundColor: "#F4EFE7",
-		height: 35,
-		width: 42,
-		borderRadius: 30,
+		right: scale(0),
+		margin: scale(10),
+		height: sizeConstants.thirty,
+		width: scale(35),
+		borderRadius: scale(30),
 		alignItems: "center",
 		justifyContent: "center",
 	},
 	dots: {
 		backgroundColor: "black",
-		height: 8,
-		width: 8,
-		borderRadius: 4,
-		margin: 1,
+		height: sizeConstants.six,
+		width: scale(5),
+		borderRadius: sizeConstants.four,
+		margin: scale(1),
 	},
 	BottomTouch: {
 		height: 100,

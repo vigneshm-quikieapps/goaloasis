@@ -24,7 +24,7 @@ import {
 	setTestDataForTimeline,
 } from "./../../redux/actions"
 import {getFirstTimeTaskTutorial, getFirstTimeTimelineFlow} from "./../../utils/asyncStorage"
-import {CommonStyles, forGoals} from "./../../core/styles"
+import {CommonStyles, forGoals, sizeConstants} from "./../../core/styles"
 import firestore from "@react-native-firebase/firestore"
 
 const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimelineFlow}) => {
@@ -148,7 +148,7 @@ const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimel
 								> */}
 									<ProgressCircle
 										percent={0}
-										radius={49}
+										radius={sizeConstants.fiftyHalf}
 										borderWidth={5}
 										color={getColor(index)}
 										shadowColor="#999"
