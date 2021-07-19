@@ -74,8 +74,8 @@ const TimelineFlowSlider = ({data, setFirstTimeForTimeLine}) => {
 				<View></View>
 				{screen != 3 ? (
 					<View>
-						<TouchableOpacity onPress={6}>
-							<Text style={CommonStyles.SkipText}>Skip</Text>
+						<TouchableOpacity onPress={setLoggedIn}>
+							<Text style={CommonStyles.SkipText}>Skippp</Text>
 						</TouchableOpacity>
 					</View>
 				) : null}
@@ -202,7 +202,7 @@ const TimelineFlowSlider = ({data, setFirstTimeForTimeLine}) => {
 				<View style={[CommonStyles.btnContainer, {bottom: sizeConstants.sixty}]}>
 					{screen === 3 ? (
 						<TouchableOpacity style={CommonStyles.btnStyling} onPress={setLoggedIn}>
-							<Text style={CommonStyles.btnText}>Got it!</Text>
+							<Text style={CommonStyles.btnText}>Got it!!</Text>
 						</TouchableOpacity>
 					) : (
 						<TouchableOpacity style={CommonStyles.btnStyling} onPress={handleNavigateScreen}>

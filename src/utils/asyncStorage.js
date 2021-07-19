@@ -41,14 +41,7 @@ export const getFirstTimeTaskTutorial = async (key) => {
 export const setisFirstTimeTimelineFlow = async () => {
 	try {
 		await AsyncStorage.setItem("FirsttimeTimelineFlow", "visited")
-	} catch (error) {
-		console.log(error.message)
-	}
-}
-
-export const setisFirstTimeIndividual = async () => {
-	try {
-		await AsyncStorage.setItem("FirsttimeIndividual", "visited")
+		console.log("FirsttimeTimelineFlow visited")
 	} catch (error) {
 		console.log(error.message)
 	}
@@ -58,6 +51,14 @@ export const getFirstTimeTimelineFlow = async (key) => {
 	try {
 		const value = await AsyncStorage.getItem("FirsttimeTimelineFlow")
 		return value
+	} catch (error) {
+		console.log(error.message)
+	}
+}
+
+export const setisFirstTimeIndividual = async () => {
+	try {
+		await AsyncStorage.setItem("FirsttimeIndividual", "visited")
 	} catch (error) {
 		console.log(error.message)
 	}

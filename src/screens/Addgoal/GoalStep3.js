@@ -6,7 +6,11 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import DatePicker from "react-native-date-picker"
 import colors from "../../../colors"
 import AsyncStorage from "@react-native-community/async-storage"
-import {CommonStyles} from "../../core/styles"
+import {CommonStyles, forGoals} from "../../core/styles"
+
+import firestore from "@react-native-firebase/firestore"
+
+const colorArray = Object.values(forGoals)
 
 const GoalStep3 = ({route}) => {
 	const navigation = useNavigation()
@@ -27,14 +31,47 @@ const GoalStep3 = ({route}) => {
 	// asyncData.push(date.toISOString())
 
 	// async Task
-	const storeData = async (value) => {
+	const storeData = async () => {
 		try {
-			await AsyncStorage.setItem(name, name)
+			let data = {
+				name: name,
+				description: description,
+				targetDate: date.toISOString(),
+				createdAt: firestore.FieldValue.serverTimestamp(),
+				goalMilestone: [],
+				color: getColorForGoal(),
+			}
+			addGoalDataToFirestore(data)
 		} catch (e) {
 			console.log(e)
 		}
 	}
 
+	const getColorForGoal = () => {
+		const len = 0
+		firestore()
+			.collection("Goals")
+			.get()
+			.then((snap) => {
+				size = snap.size // will return the collection size
+				len = snap.size
+			})
+		const a = len % 6
+		return colorArray[a]
+	}
+
+	// adding data to firestore
+	const addGoalDataToFirestore = (data) => {
+		firestore()
+			.collection("Goals")
+			.add(data)
+			.then(() => {
+				addGoalDataToAsyncStoage()
+			})
+	}
+	const addGoalDataToAsyncStoage = async () => {
+		await AsyncStorage.setItem(name, name)
+	}
 	return (
 		<View style={styles.introContainer}>
 			<LinearGradient colors={["#588C8D", "#7EC8C9"]} style={{flex: 1}}>
