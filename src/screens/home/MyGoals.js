@@ -24,7 +24,7 @@ import {
 	setTestDataForTimeline,
 } from "./../../redux/actions"
 import {getFirstTimeTaskTutorial, getFirstTimeTimelineFlow} from "./../../utils/asyncStorage"
-import {forGoals} from "./../../core/styles"
+import {CommonStyles, forGoals} from "./../../core/styles"
 
 const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimelineFlow}) => {
 	useEffect(() => {
@@ -100,26 +100,30 @@ const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimel
 	return (
 		<StatusBarScreen style={styles.container}>
 			<TouchableOpacity
-				style={styles.titleContainer}
+				style={CommonStyles.titleContainer}
 				onPress={!firstTime ? gotoTaskTutorial : gotoTodaysTask}
 			>
-				<Text style={styles.mainTitle}>Today’s tasks</Text>
+				<Text style={CommonStyles.mainTitle}>Today’s tasks</Text>
 			</TouchableOpacity>
 
-			<View style={styles.goalsContainer}>
+			<View style={CommonStyles.goalsContainer}>
 				<View style={{justifyContent: "center", alignItems: "center"}}>
-					<View style={styles.viewTap}></View>
+					<View style={CommonStyles.viewTap}></View>
 				</View>
 
 				<View>
-					<Text style={styles.myGoalsText}>My goals</Text>
+					<Text style={CommonStyles.myGoalsText}>My goals</Text>
 				</View>
 
 				<ScrollView>
-					<View style={styles.logoSpacing}>
+					<View style={CommonStyles.logoSpacing}>
 						{allTasks.map((task, index) => (
 							<View key={index}>
-								<TouchableOpacity style={styles.logoContainer} onPress={handleOpenNewGoal}>
+								{/* <TouchableOpacity style={styles.logoContainer} onPress={handleOpenNewGoal}> */}
+								<TouchableOpacity
+									style={CommonStyles.logoContainer}
+									onPress={() => navigation.navigate("second")}
+								>
 									<ProgressCircle
 										percent={0}
 										radius={49}
@@ -132,7 +136,7 @@ const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimel
 											{"0%"}
 										</Text>
 									</ProgressCircle>
-									<Text style={styles.goalText}>{task}</Text>
+									<Text style={CommonStyles.goalText}>{task}</Text>
 								</TouchableOpacity>
 
 								{/* redux check  */}
@@ -145,23 +149,23 @@ const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimel
 						))}
 
 						<View>
-							<TouchableOpacity style={styles.logoContainer} onPress={gotoGoal}>
-								<View style={styles.circleLogo}>
-									<View style={styles.iconVertical}></View>
-									<View style={styles.iconHorizontal}></View>
+							<TouchableOpacity style={CommonStyles.logoContainer} onPress={gotoGoal}>
+								<View style={CommonStyles.circleLogo}>
+									<View style={CommonStyles.iconVertical}></View>
+									<View style={CommonStyles.iconHorizontal}></View>
 								</View>
 								<TouchableOpacity onPress={gotoGoal}>
 									<View>
-										<Text style={styles.goalText}>Add Goal</Text>
+										<Text style={CommonStyles.goalText}>Add Goal</Text>
 									</View>
 								</TouchableOpacity>
 							</TouchableOpacity>
 						</View>
 					</View>
 				</ScrollView>
-				<View style={styles.bottomBtnContainer}>
+				<View style={CommonStyles.bottomBtnContainer}>
 					<TouchableOpacity
-						style={styles.bottomBtn}
+						style={CommonStyles.bottomBtn2}
 						onPress={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
 					>
 						<MaterialCommunityIcons name="file-tree-outline" size={34} color="white" />
@@ -197,96 +201,5 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: "#588C8D",
-	},
-	titleContainer: {
-		height: 95 - Constants.statusBarHeight,
-		backgroundColor: "#588C8D",
-		justifyContent: "center",
-	},
-	mainTitle: {
-		color: "#FBF5E9",
-		fontSize: 25,
-		marginLeft: 20,
-		marginVertical: 30,
-	},
-	goalsContainer: {
-		flex: 1,
-		backgroundColor: "#FBF5E9",
-		borderTopRightRadius: 70,
-		// justifyContent: "center", //
-		// alignContent: "center",
-		// alignItems: "center",
-	},
-	viewTap: {
-		height: 6,
-		width: 60,
-		backgroundColor: "#588C8D",
-		marginVertical: 10,
-		borderRadius: 30,
-		opacity: 0.5,
-	},
-	myGoalsText: {
-		fontSize: 25,
-		fontWeight: "bold",
-		color: "#588C8D",
-		marginHorizontal: 20,
-		marginBottom: 10,
-	},
-	logoSpacing: {
-		flex: 1,
-		flexDirection: "row",
-		flexWrap: "wrap",
-		// justifyContent: "center",
-		width: "100%",
-	},
-	logoContainer: {
-		marginLeft: 75, //TODO
-		marginTop: 20,
-		// backgroundColor: "green",
-	},
-	circleLogo: {
-		height: 100,
-		width: 100,
-		borderRadius: 50,
-		borderWidth: 5,
-		borderColor: "#588C8D",
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	iconVertical: {
-		height: 30,
-		width: 4,
-		backgroundColor: "#588C8D",
-	},
-	iconHorizontal: {
-		height: 4,
-		width: 30,
-		backgroundColor: "#588C8D",
-		position: "absolute",
-	},
-
-	bottomBtnContainer: {
-		width: "100%",
-		position: "absolute",
-		bottom: 45,
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	bottomBtn: {
-		height: 75,
-		width: 75,
-		borderRadius: 75 / 2,
-		backgroundColor: "#7EC8C9",
-		elevation: 5,
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	goalText: {
-		fontSize: 16,
-		color: "#666666",
-		textAlign: "center",
-		maxWidth: 100,
-
-		// backgroundColor: "blue",
 	},
 })

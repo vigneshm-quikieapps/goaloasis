@@ -3,9 +3,10 @@ import {StyleSheet, Text, TouchableOpacity, View} from "react-native"
 
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
-import StatusBarScreen from "./StatusBarScreen"
 import RBSheet from "react-native-raw-bottom-sheet"
 import SwitchSelector from "react-native-switch-selector"
+import StatusBarScreen from "../MileStones/StatusBarScreen"
+import {CommonStyles} from "../../core/styles"
 
 const First = () => {
 	const navigation = useNavigation()
@@ -22,11 +23,11 @@ const First = () => {
 	return (
 		<StatusBarScreen style={styles.introContainer}>
 			<View style={{flexDirection: "row"}}>
-				<Text style={styles.mainTitle}>Read 5 books</Text>
-				<TouchableOpacity onPress={() => refRBSheet.current.open()} style={styles.threeDots}>
-					<View style={styles.dots}></View>
-					<View style={styles.dots}></View>
-					<View style={styles.dots}></View>
+				<Text style={CommonStyles.mainTitle}>Read 5 books</Text>
+				<TouchableOpacity onPress={() => refRBSheet.current.open()} style={CommonStyles.threeDots}>
+					<View style={CommonStyles.dots}></View>
+					<View style={CommonStyles.dots}></View>
+					<View style={CommonStyles.dots}></View>
 				</TouchableOpacity>
 			</View>
 			<RBSheet
@@ -43,43 +44,35 @@ const First = () => {
 					},
 				}}
 			>
-				<View style={{alignItems: "center", marginTop: 20, width: "100%"}}>
+				<View style={CommonStyles.bottomSheet}>
 					<TouchableOpacity
-						style={styles.BottomTouch}
+						style={CommonStyles.BottomTouch}
 						onPress={() => navigation.navigate("markcomplete")}
 					>
-						<Text style={styles.bottomText}>Mark Goal Complete</Text>
+						<Text style={CommonStyles.bottomText}>Mark Goal Complete</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
-						style={styles.BottomTouch}
+						style={CommonStyles.BottomTouch}
 						onPress={() => navigation.navigate("editgoal")}
 					>
-						<Text style={styles.bottomText}>Edit Goal</Text>
+						<Text style={CommonStyles.bottomText}>Edit Goal</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
-						style={styles.BottomTouch}
+						style={CommonStyles.BottomTouch}
 						onPress={() => navigation.navigate("deletegoal")}
 					>
-						<Text style={styles.bottomText}>Delete Goal</Text>
+						<Text style={CommonStyles.bottomText}>Delete Goal</Text>
 					</TouchableOpacity>
 					<TouchableOpacity style={styles.BottomTouch} onPress={() => navigation.navigate("help")}>
-						<Text style={styles.bottomText}>Tutorial</Text>
+						<Text style={CommonStyles.bottomText}>Tutorial</Text>
 					</TouchableOpacity>
 				</View>
 			</RBSheet>
-			<Text
-				style={{
-					fontSize: 16,
-					color: "#FDF9F2",
-					marginLeft: 21,
-				}}
-			>
-				Enter Task
-			</Text>
-			<TouchableOpacity style={styles.container2}>
-				<Text style={styles.button}>Read One Chapter</Text>
+			<Text style={CommonStyles.enterTask}>Enter Task</Text>
+			<TouchableOpacity style={CommonStyles.container2}>
+				<Text style={CommonStyles.button}>Read One Chapter</Text>
 			</TouchableOpacity>
-			<Text style={styles.subTitle}>Edit reoccuring</Text>
+			<Text style={CommonStyles.firstSubTitle}>Edit reoccuring</Text>
 
 			<SwitchSelector
 				style={{marginTop: 35, paddingLeft: 20, paddingRight: 20}}
@@ -98,98 +91,35 @@ const First = () => {
 				fontSize={27}
 			/>
 			{toggle == "Weekly" && (
-				<View style={{flexDirection: "row", alignSelf: "center", marginTop: 20}}>
-					<View
-						style={{
-							height: 40,
-							width: 40,
-							borderRadius: 20,
-							justifyContent: "center",
-							backgroundColor: "#76BBBC",
-							margin: 8,
-						}}
-					>
-						<Text style={{alignSelf: "center", fontSize: 20, color: "#FDF9F2"}}>S</Text>
+				<View style={CommonStyles.toggle}>
+					<View style={CommonStyles.days}>
+						<Text style={CommonStyles.daysText}>S</Text>
 					</View>
-					<View
-						style={{
-							height: 40,
-							width: 40,
-							borderRadius: 20,
-							justifyContent: "center",
-							backgroundColor: "#76BBBC",
-							margin: 8,
-						}}
-					>
-						<Text style={{alignSelf: "center", fontSize: 20, color: "#FDF9F2"}}>M</Text>
+					<View style={CommonStyles.days}>
+						<Text style={CommonStyles.daysText}>M</Text>
 					</View>
-					<View
-						style={{
-							height: 40,
-							width: 40,
-							borderRadius: 20,
-							justifyContent: "center",
-							backgroundColor: "#76BBBC",
-							margin: 8,
-						}}
-					>
-						<Text style={{alignSelf: "center", fontSize: 20, color: "#FDF9F2"}}>T</Text>
+					<View style={CommonStyles.days}>
+						<Text style={CommonStyles.daysText}>T</Text>
 					</View>
-					<View
-						style={{
-							height: 40,
-							width: 40,
-							borderRadius: 20,
-							justifyContent: "center",
-							backgroundColor: "#76BBBC",
-							margin: 8,
-						}}
-					>
-						<Text style={{alignSelf: "center", fontSize: 20, color: "#FDF9F2"}}>W</Text>
+					<View style={CommonStyles.days}>
+						<Text style={CommonStyles.daysText}>W</Text>
 					</View>
-					<View
-						style={{
-							height: 40,
-							width: 40,
-							borderRadius: 20,
-							justifyContent: "center",
-							backgroundColor: "#76BBBC",
-							margin: 8,
-						}}
-					>
-						<Text style={{alignSelf: "center", fontSize: 20, color: "#FDF9F2"}}>T</Text>
+					<View style={CommonStyles.days}>
+						<Text style={CommonStyles.daysText}>T</Text>
 					</View>
-					<View
-						style={{
-							height: 40,
-							width: 40,
-							borderRadius: 20,
-							justifyContent: "center",
-							backgroundColor: "#76BBBC",
-							margin: 8,
-						}}
-					>
-						<Text style={{alignSelf: "center", fontSize: 20, color: "#FDF9F2"}}>F</Text>
+					<View style={CommonStyles.days}>
+						<Text style={CommonStyles.daysText}>F</Text>
 					</View>
-					<View
-						style={{
-							height: 40,
-							width: 40,
-							borderRadius: 20,
-							justifyContent: "center",
-							backgroundColor: "#76BBBC",
-							margin: 8,
-						}}
-					>
-						<Text style={{alignSelf: "center", fontSize: 20, color: "#FDF9F2"}}>S</Text>
+					<View style={CommonStyles.days}>
+						<Text style={CommonStyles.daysText}>S</Text>
 					</View>
 				</View>
 			)}
 
-			<TouchableOpacity style={styles.container}>
-				<Text style={{color: "#FDF9F2", fontSize: 21}}>Cancel reoccuring</Text>
+			<TouchableOpacity style={CommonStyles.cancelReoccuring}>
+				<Text style={CommonStyles.cancelReoccuringText}>Cancel reoccuring</Text>
 			</TouchableOpacity>
-			<TouchableOpacity style={styles.bottomBtn}>
+			<TouchableOpacity style={CommonStyles.bottomBtn}>
 				<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 			</TouchableOpacity>
 		</StatusBarScreen>
@@ -199,101 +129,7 @@ const First = () => {
 export default First
 
 const styles = StyleSheet.create({
-	container: {
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "#588C8D",
-		borderColor: "#FDF9F2",
-		// borderEndColor: "#FDF9F2",
-		borderEndWidth: 3,
-		borderStartWidth: 3,
-		borderTopWidth: 3,
-		borderBottomWidth: 3,
-		width: "70%",
-		padding: 8,
-		borderRadius: 25,
-		flexDirection: "column",
-		marginVertical: 5,
-		marginTop: 15,
-		alignSelf: "center",
-	},
-	container2: {
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "#FDF9F2",
-
-		width: "70%",
-		padding: 8,
-		borderRadius: 25,
-		flexDirection: "column",
-		marginVertical: 5,
-		marginTop: 15,
-		alignSelf: "center",
-	},
-	mainTitle: {
-		color: "#FDF9F2",
-		fontSize: 25,
-		marginLeft: 21,
-	},
-	button: {
-		color: "black",
-		fontSize: 21,
-	},
 	introContainer: {
-		// flex: 1,
 		backgroundColor: "#588C8D",
-		// backgroundColor: "green",
-	},
-	threeDots: {
-		flexDirection: "row",
-		position: "absolute",
-		right: 0,
-		margin: 10,
-		backgroundColor: "#538586",
-		height: 35,
-		width: 42,
-		borderRadius: 30,
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	dots: {
-		backgroundColor: "black",
-		height: 8,
-		width: 8,
-		borderRadius: 4,
-		margin: 1,
-	},
-	BottomTouch: {
-		height: 100,
-		width: "100%",
-		borderWidth: 1,
-		borderLeftColor: "white",
-		borderRightColor: "white",
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	bottomText: {
-		fontSize: 24,
-		fontWeight: "bold",
-		color: "black",
-	},
-
-	subTitle: {
-		fontSize: 25,
-		color: "#FDF9F2",
-		marginLeft: 21,
-		fontWeight: "bold",
-		marginTop: 20,
-	},
-
-	bottomBtn: {
-		height: 75,
-		width: 75,
-		borderRadius: 75 / 2,
-		backgroundColor: "#FDF9F2",
-		elevation: 5,
-		justifyContent: "center",
-		alignItems: "center",
-		alignSelf: "center",
 	},
 })

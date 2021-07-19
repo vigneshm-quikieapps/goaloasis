@@ -31,6 +31,12 @@ import {Helpmenu, MarkCompleted, Timeline, EditGoalhelp, Deletegoal} from "../sc
 
 import DParticularGoal from "../screens/particulargoal/DParticularGoal"
 import MonthTimeline from "../screens/Helpmenu/MonthTimeline"
+import First from "../screens/RecurringFlow/first"
+import Second from "../screens/RecurringFlow/second"
+import Third from "../screens/RecurringFlow/third"
+
+// import {first, second, third} from "../screens/RecurringFlow/index"
+
 const Stack = createStackNavigator()
 const options = {
 	gestureEnabled: true, // If you want to swipe back like iOS on Android
@@ -75,6 +81,10 @@ const IntroStack = () => {
 			<Stack.Screen name="timelineFlow1" component={TimelineFlow1} />
 			<Stack.Screen name="timelineFlow2" component={TimelineFlow2} />
 			<Stack.Screen name="timelineFlow3" component={TimelineFlow3} />
+			{/* Reoccuring Flow */}
+			<Stack.Screen name="first" component={First} />
+			<Stack.Screen name="second" component={Second} />
+			<Stack.Screen name="third" component={Third} />
 		</Stack.Navigator>
 	)
 }

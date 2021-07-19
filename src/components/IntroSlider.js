@@ -9,7 +9,7 @@ import Constants from "expo-constants"
 import {CommonStyles, sizeConstants} from "./../core/styles"
 
 const IntroSlider = ({data}) => {
-	console.log("Data from the Intro Slider---->", data)
+	// console.log("Data from the Intro Slider---->", data)
 	const AuthContext = useContext(authContext)
 	const {loadUser} = AuthContext
 

@@ -1,6 +1,7 @@
 import {StyleSheet} from "react-native"
-import {ScaledSheet, verticalScale, moderateScale} from "react-native-size-matters"
+import {scale, ScaledSheet, verticalScale, moderateScale} from "react-native-size-matters"
 import Constants from "expo-constants"
+import colors from "../../colors"
 
 export const sizeConstants = {
 	negativeSeventy: verticalScale(-70),
@@ -15,6 +16,7 @@ export const sizeConstants = {
 	four: verticalScale(4),
 	s: verticalScale(5),
 	six: verticalScale(6),
+	seven: verticalScale(7),
 	eight: verticalScale(8),
 	m: verticalScale(10),
 	twelve: verticalScale(12),
@@ -25,6 +27,7 @@ export const sizeConstants = {
 	eighteen: verticalScale(18),
 	nineteen: verticalScale(19),
 	xl: verticalScale(20),
+	twentyOne: verticalScale(21),
 	twentyTwo: verticalScale(22),
 	twentyFour: verticalScale(24),
 	xxl: verticalScale(25),
@@ -48,6 +51,7 @@ export const sizeConstants = {
 	fiftyFive: verticalScale(55),
 	sixty: verticalScale(60),
 	seventy: verticalScale(70),
+	seventyFive: verticalScale(75),
 	eighty: verticalScale(80),
 	eightyFive: verticalScale(85),
 	ninety: verticalScale(90),
@@ -153,16 +157,19 @@ export const CommonStyles = ScaledSheet.create({
 		borderRadius: sizeConstants.m,
 		marginHorizontal: sizeConstants.xs,
 	},
-
+	centerCont: {
+		justifyContent: "center",
+		alignItems: "center",
+	},
 	title: {
-		fontSize: 25,
+		fontSize: "25@s",
 		textAlign: "left",
 		fontWeight: "bold",
 		color: ColorConstants.white,
 	},
 
 	subTitle: {
-		fontSize: 19,
+		fontSize: "19@s",
 		letterSpacing: "0.7@ms",
 		color: "rgba(255, 255, 255, 0.651)",
 		marginTop: sizeConstants.thirty,
@@ -209,4 +216,319 @@ export const CommonStyles = ScaledSheet.create({
 	},
 
 	// sliders common styles ends
+
+	// NameGoal
+	textInput: {
+		width: scale(314),
+		height: sizeConstants.fifty,
+		backgroundColor: "#FDF9F2",
+		borderRadius: sizeConstants.fifty,
+		marginTop: sizeConstants.fifty,
+		paddingLeft: moderateScale(20),
+		fontSize: "19@s",
+		color: "#666666",
+		elevation: "10@s",
+	},
+	homeAndRight: {
+		position: "absolute",
+		bottom: verticalScale(sizeConstants.fourtyFive),
+		width: "100%",
+		justifyContent: "center",
+	},
+	rightArrow: {
+		flexDirection: "row",
+		justifyContent: "space-around",
+		marginBottom: sizeConstants.fourteen,
+	},
+	nextBtn: {
+		width: sizeConstants.fifty,
+		height: sizeConstants.fifty,
+		borderRadius: moderateScale(50),
+		backgroundColor: "#FDF9F2",
+	},
+	homeContainer: {
+		alignItems: "center",
+	},
+	homeBtnStyling: {
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: "white",
+		width: sizeConstants.seventyFive,
+		height: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive / 2,
+	},
+	//GoalStep3
+
+	btnStylingLeft: {
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: colors.buttonBackGround,
+		width: sizeConstants.seventyFive,
+		height: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive / 2,
+	},
+	btnStylingRight: {
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: colors.faint,
+		width: sizeConstants.seventyFive,
+		height: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive / 2,
+	},
+
+	// Reoccuring Flow
+	// first
+	mainTitle: {
+		color: "#FDF9F2",
+		fontSize: "25@s",
+		marginLeft: verticalScale(21),
+	},
+	threeDots: {
+		flexDirection: "row",
+		position: "absolute",
+		right: scale(0),
+		margin: scale(10),
+		backgroundColor: "#538586",
+		height: sizeConstants.thirty,
+		width: scale(35),
+		borderRadius: scale(30),
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	dots: {
+		backgroundColor: "black",
+		height: sizeConstants.six,
+		width: scale(5),
+		borderRadius: sizeConstants.four,
+		margin: scale(1),
+	},
+	enterTask: {
+		fontSize: "16@s",
+		color: "#FDF9F2",
+		marginLeft: scale(21),
+	},
+	BottomTouch: {
+		height: sizeConstants.hundred,
+		width: "100%",
+		borderWidth: scale(1),
+		borderLeftColor: "white",
+		borderRightColor: "white",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	bottomText: {
+		fontSize: "24@s",
+		fontWeight: "bold",
+		color: "black",
+	},
+	container2: {
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: "#FDF9F2",
+		width: "70%",
+		padding: scale(8),
+		borderRadius: sizeConstants.twentyFour,
+		flexDirection: "column",
+		marginVertical: sizeConstants.s,
+		marginTop: sizeConstants.l,
+		alignSelf: "center",
+	},
+	button: {
+		color: "black",
+		fontSize: "21@s",
+	},
+
+	firstSubTitle: {
+		fontSize: 25,
+		color: "#FDF9F2",
+		marginLeft: scale(21),
+		fontWeight: "bold",
+		marginTop: sizeConstants.xl,
+	},
+	toggle: {flexDirection: "row", alignSelf: "center", marginTop: sizeConstants.xl},
+	days: {
+		height: sizeConstants.fourty,
+		width: sizeConstants.fourty,
+		borderRadius: sizeConstants.xl,
+		justifyContent: "center",
+		backgroundColor: "#76BBBC",
+		margin: sizeConstants.seven,
+	},
+	daysText: {alignSelf: "center", fontSize: "20@s", color: "#FDF9F2"},
+	cancelReoccuring: {
+		justifyContent: "center",
+		alignItems: "center",
+		// backgroundColor: "#588C8D",
+		borderColor: "#FDF9F2",
+
+		borderEndWidth: scale(3),
+		borderStartWidth: scale(3),
+		borderTopWidth: scale(3),
+		borderBottomWidth: scale(3),
+		width: "70%",
+		padding: scale(8),
+		borderRadius: scale(25),
+		flexDirection: "column",
+		marginVertical: sizeConstants.s,
+		marginTop: sizeConstants.l,
+		alignSelf: "center",
+	},
+	cancelReoccuringText: {
+		color: "#FDF9F2",
+		fontSize: "21@s",
+	},
+	bottomBtn: {
+		height: sizeConstants.seventyFive,
+		width: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive / sizeConstants.xs,
+		backgroundColor: "#FDF9F2",
+		elevation: scale(5),
+		justifyContent: "center",
+		alignItems: "center",
+		alignSelf: "center",
+
+		marginBottom: sizeConstants.m,
+	},
+	bottomSheet: {
+		alignItems: "center",
+		marginTop: sizeConstants.xl,
+		width: "100%",
+	},
+
+	//Reoccuring Flow
+	//second
+	cross: {
+		backgroundColor: "#538586",
+		borderRadius: sizeConstants.xl,
+		position: "absolute",
+		right: sizeConstants.zero,
+		marginRight: scale(10),
+	},
+	editContainer: {
+		marginTop: sizeConstants.m,
+		marginLeft: sizeConstants.twentyOne,
+	},
+	editOccuringText: {fontSize: "25@s", color: "#FDF9F2", fontWeight: "bold"},
+
+	reoccuringDateContainer: {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		flexDirection: "row",
+		marginTop: sizeConstants.m,
+	},
+	reoccuringText: {
+		fontSize: "21@s",
+		alignSelf: "center",
+		marginLeft: scale(20),
+		color: "#FDF9F2",
+		marginTop: sizeConstants.m,
+	},
+	doneText: {
+		fontSize: "14@s",
+		color: "#FDF9F2",
+		position: "absolute",
+		left: sizeConstants.xxxl,
+	},
+	container: {
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: "#588C8D",
+		borderColor: "#FDF9F2",
+		marginBottom: sizeConstants.xl,
+		borderEndWidth: sizeConstants.three,
+		borderStartWidth: sizeConstants.three,
+		borderTopWidth: sizeConstants.three,
+		borderBottomWidth: sizeConstants.three,
+		width: "70%",
+		padding: sizeConstants.eight,
+		borderRadius: sizeConstants.twentySix,
+		flexDirection: "column",
+		marginVertical: sizeConstants.s,
+		marginTop: sizeConstants.l,
+		alignSelf: "center",
+	},
+
+	// MyGoals Home Screen
+	titleContainer: {
+		height: scale(90) - Constants.statusBarHeight,
+		backgroundColor: "#588C8D",
+		justifyContent: "center",
+	},
+	goalsContainer: {
+		flex: 1,
+		backgroundColor: "#FBF5E9",
+		borderTopRightRadius: sizeConstants.seventy,
+	},
+	viewTap: {
+		height: sizeConstants.six,
+		width: scale(60),
+		backgroundColor: "#588C8D",
+		marginVertical: sizeConstants.m,
+		borderRadius: sizeConstants.thirty,
+		opacity: 0.5,
+	},
+	myGoalsText: {
+		fontSize: "25@s",
+		fontWeight: "bold",
+		color: "#588C8D",
+		marginHorizontal: scale(20),
+		marginBottom: sizeConstants.m,
+	},
+	logoSpacing: {
+		flex: 1,
+		flexDirection: "row",
+		flexWrap: "wrap",
+		// justifyContent: "center",
+		width: "100%",
+	},
+	logoContainer: {
+		marginLeft: scale(65), //TODO
+		marginTop: sizeConstants.xl,
+		// backgroundColor: "green",
+	},
+	goalText: {
+		fontSize: "16@s",
+		color: "#666666",
+		textAlign: "center",
+		maxWidth: scale(100),
+
+		// backgroundColor: "blue",
+	},
+	circleLogo: {
+		height: sizeConstants.hundred,
+		width: sizeConstants.hundred,
+		borderRadius: sizeConstants.fifty,
+		borderWidth: sizeConstants.s,
+		borderColor: "#588C8D",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	iconVertical: {
+		height: sizeConstants.thirty,
+		width: scale(4),
+		backgroundColor: "#588C8D",
+	},
+	iconHorizontal: {
+		height: sizeConstants.four,
+		width: scale(30),
+		backgroundColor: "#588C8D",
+		position: "absolute",
+	},
+	bottomBtnContainer: {
+		width: "100%",
+		position: "absolute",
+		bottom: sizeConstants.fourtyFive,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	bottomBtn2: {
+		height: sizeConstants.seventyFive,
+		width: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive / sizeConstants.xs,
+		backgroundColor: "#7EC8C9",
+		elevation: sizeConstants.s,
+		justifyContent: "center",
+		alignItems: "center",
+	},
 })

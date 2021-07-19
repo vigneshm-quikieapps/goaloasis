@@ -2,11 +2,10 @@ import React, {useState} from "react"
 import {StyleSheet, Text, TouchableOpacity, View, ScrollView} from "react-native"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
-import DatePicker from "react-native-date-picker"
-import AppButton from "./AppButton"
 import {Calendar} from "react-native-calendars"
-import StatusBarScreen from "./StatusBarScreen"
 import {Entypo} from "@expo/vector-icons"
+import StatusBarScreen from "../MileStones/StatusBarScreen"
+import {CommonStyles} from "../../core/styles"
 
 const Third = () => {
 	const navigation = useNavigation()
@@ -25,69 +24,20 @@ const Third = () => {
 			<ScrollView>
 				<View style={{flex: 1}}>
 					<View style={{flexDirection: "row"}}>
-						<Text style={styles.mainTitle}>Read 1 books</Text>
-						<Entypo
-							name="cross"
-							color="#FDF9F2"
-							size={38}
-							style={{
-								backgroundColor: "#538586",
-								borderRadius: 20,
-								position: "absolute",
-								right: 0,
-								marginRight: 10,
-							}}
-						/>
+						<Text style={CommonStyles.mainTitle}>Read 1 books</Text>
+						<Entypo name="cross" color="#FDF9F2" size={38} style={CommonStyles.cross} />
 					</View>
-					<Text
-						style={{
-							fontSize: 16,
-							color: "#FDF9F2",
-							marginLeft: 21,
-							marginTop: 20,
-						}}
-					>
-						Enter Task
-					</Text>
-					<TouchableOpacity style={styles.container2}>
-						<Text style={styles.button}>Read One Chapter</Text>
+					<Text style={CommonStyles.enterTask}>Enter Task</Text>
+					<TouchableOpacity style={CommonStyles.container2}>
+						<Text style={CommonStyles.button}>Read One Chapter</Text>
 					</TouchableOpacity>
-					<View style={{marginTop: 10, marginLeft: 21}}>
-						<Text style={{fontSize: 25, color: "#FDF9F2", fontWeight: "bold"}}>
-							Edit Target Date
-						</Text>
+					<View style={CommonStyles.editContainer}>
+						<Text style={CommonStyles.editOccuringText}>Edit Target Date</Text>
 					</View>
-					<View
-						style={{
-							display: "flex",
-							justifyContent: "center",
-							alignItems: "center",
-							flexDirection: "row",
-							marginTop: 10,
-						}}
-					>
-						<Text
-							style={{
-								fontSize: 21,
-								alignSelf: "center",
-								marginLeft: 20,
-								color: "#FDF9F2",
-								marginTop: 10,
-							}}
-						>
-							Reoccuring Date
-						</Text>
+					<View style={CommonStyles.reoccuringDateContainer}>
+						<Text style={CommonStyles.reoccuringText}>Reoccuring Date</Text>
 						<TouchableOpacity onPress={() => navigation.navigate("FifthMilestone")}>
-							<Text
-								style={{
-									fontSize: 14,
-									color: "#FDF9F2",
-									position: "absolute",
-									left: 50,
-								}}
-							>
-								Done
-							</Text>
+							<Text style={CommonStyles.doneText}>Done</Text>
 						</TouchableOpacity>
 					</View>
 
@@ -169,13 +119,13 @@ const Third = () => {
 						}}
 					/>
 					<TouchableOpacity
-						style={styles.container}
+						style={CommonStyles.container}
 						onPress={() => navigation.navigate("FifthMilestone")}
 					>
 						<Text style={{color: "#FDF9F2", fontSize: 21}}>Set reoccuring</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
-						style={styles.bottomBtn}
+						style={CommonStyles.bottomBtn}
 						onPress={() => navigation.navigate("particulargoal")}
 					>
 						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
@@ -189,69 +139,69 @@ const Third = () => {
 export default Third
 
 const styles = StyleSheet.create({
-	container: {
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "#588C8D",
-		borderColor: "#FDF9F2",
-		marginBottom: 20,
-		borderEndWidth: 3,
-		borderStartWidth: 3,
+	// container: {
+	// 	justifyContent: "center",
+	// 	alignItems: "center",
+	// 	backgroundColor: "#588C8D",
+	// 	borderColor: "#FDF9F2",
+	// 	marginBottom: 20,
+	// 	borderEndWidth: 3,
+	// 	borderStartWidth: 3,
 
-		borderTopWidth: 3,
-		borderBottomWidth: 3,
-		width: "70%",
-		padding: 8,
-		borderRadius: 25,
-		flexDirection: "column",
-		marginVertical: 5,
-		marginTop: 15,
-		alignSelf: "center",
-	},
-	container2: {
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "#FDF9F2",
+	// 	borderTopWidth: 3,
+	// 	borderBottomWidth: 3,
+	// 	width: "70%",
+	// 	padding: 8,
+	// 	borderRadius: 25,
+	// 	flexDirection: "column",
+	// 	marginVertical: 5,
+	// 	marginTop: 15,
+	// 	alignSelf: "center",
+	// },
+	// container2: {
+	// 	justifyContent: "center",
+	// 	alignItems: "center",
+	// 	backgroundColor: "#FDF9F2",
 
-		width: "70%",
-		padding: 8,
-		borderRadius: 25,
-		flexDirection: "column",
-		marginVertical: 5,
-		marginTop: 15,
-		alignSelf: "center",
-	},
-	mainTitle: {
-		color: "#FDF9F2",
-		fontSize: 25,
-		marginLeft: 21,
-	},
-	button: {
-		color: "black",
-		fontSize: 21,
-	},
+	// 	width: "70%",
+	// 	padding: 8,
+	// 	borderRadius: 25,
+	// 	flexDirection: "column",
+	// 	marginVertical: 5,
+	// 	marginTop: 15,
+	// 	alignSelf: "center",
+	// },
+	// mainTitle: {
+	// 	color: "#FDF9F2",
+	// 	fontSize: 25,
+	// 	marginLeft: 21,
+	// },
+	// button: {
+	// 	color: "black",
+	// 	fontSize: 21,
+	// },
 	introContainer: {
 		flex: 1,
 		backgroundColor: "#588C8D",
 	},
 
-	subTitle: {
-		fontSize: 17,
-		color: "#FDF9F2",
-		marginLeft: 21,
-		paddingLeft: 5,
-		paddingRight: 20,
-	},
+	// subTitle: {
+	// 	fontSize: 17,
+	// 	color: "#FDF9F2",
+	// 	marginLeft: 21,
+	// 	paddingLeft: 5,
+	// 	paddingRight: 20,
+	// },
 
-	bottomBtn: {
-		marginBottom: 20,
-		height: 75,
-		width: 75,
-		borderRadius: 75 / 2,
-		backgroundColor: "#FDF9F2",
-		elevation: 5,
-		justifyContent: "center",
-		alignItems: "center",
-		alignSelf: "center",
-	},
+	// bottomBtn: {
+	// 	marginBottom: 20,
+	// 	height: 75,
+	// 	width: 75,
+	// 	borderRadius: 75 / 2,
+	// 	backgroundColor: "#FDF9F2",
+	// 	elevation: 5,
+	// 	justifyContent: "center",
+	// 	alignItems: "center",
+	// 	alignSelf: "center",
+	// },
 })
