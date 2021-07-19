@@ -4,9 +4,6 @@ import {MaterialCommunityIcons, AntDesign, MaterialIcons} from "@expo/vector-ico
 import {useNavigation} from "@react-navigation/native"
 import ProgressCircle from "react-native-progress-circle"
 import AppButton from "./AppButton"
-import First from "../../modalSlides/first"
-import Second from "../../modalSlides/second"
-import Third from "../../modalSlides/third"
 import StatusBarScreen from "./StatusBarScreen"
 import {LinearGradient} from "expo-linear-gradient"
 import RBBottomSheet from "./RBBottomSheet"
@@ -14,6 +11,7 @@ import Swipeout from "rc-swipeout"
 import {setFirstTimeForIndividualGoal} from "./../../redux/actions"
 import {getFirstTimeIndividual, setisFirstTimeIndividual} from "./../../utils/asyncStorage"
 import {connect} from "react-redux"
+import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/styles"
 
 const IndividualGoal = (props) => {
 	useEffect(() => {
@@ -26,7 +24,6 @@ const IndividualGoal = (props) => {
 		props.setFirstTimeForIndividualGoal(data)
 		const isFirst = props.firstTimeIndividual == null ? true : false
 		setModalVisible(isFirst)
-		// setModalVisible(true) //testing modals
 	}
 
 	const closeModal = async () => {
@@ -50,109 +47,55 @@ const IndividualGoal = (props) => {
 	const [modalVisible, setModalVisible] = useState(false)
 	const [isLongPressed, setLongPressed] = useState(false)
 	return (
-		<StatusBarScreen style={styles.introContainer}>
-			<View style={styles.titleContainer}>
+		<StatusBarScreen
+			style={[CommonStyles.mainContainer, {backgroundColor: ColorConstants.faintWhite}]}
+		>
+			<View style={CommonStyles.titleContainer}>
 				{/* CREATING MODAL */}
 
 				<Modal animationType="slide" transparent={true} visible={modalVisible}>
-					<View
-						style={{
-							flex: 1,
-							backgroundColor: "#000000aa",
-						}}
-					>
-						<View
-							style={{
-								backgroundColor: "#BDE2E2",
-								marginBottom: 100,
-								marginTop: 100,
-								marginLeft: 30,
-								marginRight: 30,
-								borderRadius: 10,
-								flex: 1,
-							}}
-						>
-							<View
-								style={{
-									flexDirection: "row",
-									alignContent: "center",
-									justifyContent: "center",
-									marginTop: 10,
-								}}
-							>
+					<View style={[CommonStyles.mainContainer, styles.blackOp60]}>
+						<View style={styles.modalContainer}>
+							<View style={styles.modalInnerContainer}>
 								<View
-									style={{
-										height: 5,
-										width: 60,
-										marginTop: 10,
-										backgroundColor: page >= 0 ? "white" : "gray",
-										marginRight: 2,
-										marginLeft: 30,
-									}}
+									style={[
+										styles.modalCommonStyle,
+										CommonStyles.ML30,
+										{backgroundColor: page >= 0 ? "white" : "gray"},
+									]}
 								/>
 								<View
-									style={{
-										height: 5,
-										width: 60,
-										marginTop: 10,
-										backgroundColor: page >= 1 ? "white" : "gray",
-										marginRight: 2,
-									}}
+									style={[styles.modalCommonStyle, {backgroundColor: page >= 1 ? "white" : "gray"}]}
 								/>
 								<View
-									style={{
-										height: 5,
-										width: 60,
-										marginTop: 10,
-										backgroundColor: page >= 2 ? "white" : "gray",
-										marginRight: 2,
-									}}
+									style={[styles.modalCommonStyle, {backgroundColor: page >= 2 ? "white" : "gray"}]}
 								/>
 								<TouchableOpacity onPress={() => closeModal()}>
-									<Text
-										style={{
-											color: "#707070",
-											fontSize: 15,
-											marginLeft: 30,
-										}}
-									>
-										Skip
-									</Text>
+									<Text style={[styles.skipText, CommonStyles.ML30]}>Skip</Text>
 								</TouchableOpacity>
 							</View>
 
-							<View
-								style={{
-									justifyContent: "center",
-									alignContent: "center",
-									alignItems: "center",
-									paddingLeft: 20,
-									paddingRight: 20,
-									marginTop: page === 0 ? 30 : 0,
-								}}
-							>
-								<Text style={{fontSize: 20, marginBottom: 10, color: "#333333"}}>
-									{dataText[page]}
-								</Text>
+							<View style={[styles.modalContentContainer, {marginTop: page === 0 ? 30 : 0}]}>
+								<Text style={styles.dataTextStyle}>{dataText[page]}</Text>
 								{page == 0 ? (
-									<Text style={{fontWeight: "bold", fontSize: 20, color: "#333333"}}>
+									<Text style={[styles.contentText, CommonStyles.bold]}>
 										Long press
-										<Text style={{fontWeight: "100"}}> on the milestone when ready to </Text>
+										<Text style={CommonStyles.fontW100}> on the milestone when ready to </Text>
 										mark complete
 									</Text>
 								) : null}
 								{page == 1 ? (
-									<Text style={{fontWeight: "bold", fontSize: 20, color: "#333333"}}>
+									<Text style={[styles.contentText, CommonStyles.bold]}>
 										Swipe right
-										<Text style={{fontWeight: "100"}}> on the milestone if you want to </Text>
+										<Text style={CommonStyles.fontW100}> on the milestone if you want to </Text>
 										add a task
-										<Text style={{fontWeight: "100"}}> within the milestone.</Text>
+										<Text style={CommonStyles.fontW100}> within the milestone.</Text>
 									</Text>
 								) : null}
 								{page == 2 ? (
-									<Text style={{fontWeight: "bold", fontSize: 20}}>
+									<Text style={[{fontSize: sizeConstants.twentyX}, CommonStyles.bold]}>
 										Swipe left
-										<Text style={{fontWeight: "100"}}> if you want to </Text>
+										<Text style={CommonStyles.fontW100}> if you want to </Text>
 										delete or edit the milestone
 									</Text>
 								) : null}
@@ -165,52 +108,23 @@ const IndividualGoal = (props) => {
 								}}
 							>
 								{page == 0 ? (
-									<AppButton
-										title={buttonText[page]}
-										style={{
-											backgroundColor: "#7EC8C9",
-											fontSize: 15,
-											paddingTop: 13,
-											paddingBottom: 13,
-											color: "#333333",
-										}}
-									/>
+									<AppButton title={buttonText[page]} style={styles.appBtn} />
 								) : page == 1 ? (
 									<Swipeout
 										left={[
 											{
 												text: "ADD",
 												onPress: () => {},
-												style: {backgroundColor: "#fff"},
+												style: CommonStyles.bgWhite,
 											},
 										]}
 										autoClose={true}
 										disabled={false}
-										style={{
-											borderRadius: 30,
-										}}
+										style={CommonStyles.borderRadius30}
 									>
-										<View
-											style={{
-												justifyContent: "center",
-												paddingHorizontal: 20,
-												backgroundColor: "#7EC8C9",
-												width: 290,
-												height: 70,
-											}}
-										>
-											<Text style={styles.btnText}>{buttonText[page]}</Text>
+										<View style={CommonStyles.modalBottomBtn}>
+											<Text style={CommonStyles.btnText}>{buttonText[page]}</Text>
 										</View>
-										{/* <AppButton
-											title={buttonText[page]}
-											style={{
-												backgroundColor: "#7EC8C9",
-												fontSize: 15,
-												paddingTop: 13,
-												paddingBottom: 13,
-												color: "#333333",
-											}}
-										/> */}
 									</Swipeout>
 								) : (
 									// <AppButton
@@ -228,53 +142,36 @@ const IndividualGoal = (props) => {
 										right={[
 											{
 												text: (
-													<View style={{flexDirection: "row"}}>
-														<View
-															style={{padding: 5, borderRightWidth: 1, borderRightColor: "#000"}}
-														>
-															<AntDesign name="delete" size={24} color="black" />
+													<View style={CommonStyles.flexDirectionRow}>
+														<View style={styles.swipableBtnIconContainer}>
+															<AntDesign name="delete" size={24} color={ColorConstants.black} />
 														</View>
-														<View style={{padding: 5}}>
-															<MaterialIcons name="edit" size={24} color="black" />
+														<View style={styles.swipableBtnIconContainer}>
+															<MaterialIcons name="edit" size={24} color={ColorConstants.black} />
 														</View>
 													</View>
 												),
 												onPress: () => {},
-												style: {backgroundColor: "#fff"},
+												style: CommonStyles.bgWhite,
 											},
 										]}
 										autoClose={true}
 										disabled={false}
-										style={{
-											borderRadius: 30,
-										}}
+										style={CommonStyles.borderRadius30}
 									>
-										<View
-											style={{
-												justifyContent: "center",
-												paddingHorizontal: 20,
-												backgroundColor: "#7EC8C9",
-												width: 290,
-												height: 70,
-											}}
-										>
-											<Text style={[styles.btnText, {color: "#000"}]}>{buttonText[page]}</Text>
+										<View style={styles.btnTextContainer}>
+											<Text style={[CommonStyles.btnText, {color: ColorConstants.black}]}>
+												{buttonText[page]}
+											</Text>
 										</View>
-										{/* <AppButton
-											title={buttonText[page]}
-											style={{
-												backgroundColor: "#7EC8C9",
-												fontSize: 15,
-												paddingTop: 13,
-												paddingBottom: 13,
-												color: "#333333",
-											}}
-										/> */}
 									</Swipeout>
 								)}
 								<AppButton
 									title="Next"
-									style={{backgroundColor: "#FDF9F2", color: "#333333"}}
+									style={{
+										backgroundColor: ColorConstants.faintWhite,
+										color: ColorConstants.faintBlack1,
+									}}
 									onPress={() => (page === 2 ? closeModal() : setPageNo(page + 1))}
 								/>
 							</View>
@@ -291,37 +188,39 @@ const IndividualGoal = (props) => {
 						percent={5}
 						radius={86}
 						borderWidth={5}
-						color="#588C8D"
+						color={ColorConstants.darkFaintBlue}
 						shadowColor="#999"
-						bgColor="#FBF5E9"
+						bgColor={ColorConstants.lightestYellow}
 					>
 						<View style={styles.percentageCont}>
 							<Text>Target Date</Text>
-							<Text style={{fontWeight: "bold"}}>01/01/21</Text>
+							<Text style={CommonStyles.bold}>01/01/21</Text>
 						</View>
 					</ProgressCircle>
 
-					<View style={{flexDirection: "row"}}>
-						<View style={{marginHorizontal: 10}}>
+					<View style={CommonStyles.flexDirectionRow}>
+						<View style={CommonStyles.MX10}>
 							<Text style={styles.goalsText}>
 								<View
-									style={{
-										height: 8,
-										width: 8,
-										borderRadius: 8 / 2,
-										backgroundColor: "#588C8D",
-									}}
+									style={[
+										CommonStyles.dotStyle,
+										CommonStyles.borderRadius4,
+										{
+											backgroundColor: ColorConstants.darkFaintBlue,
+										},
+									]}
 								></View>
 								Goal
 							</Text>
 							<Text style={styles.goalsText}>
 								<View
-									style={{
-										height: 8,
-										width: 8,
-										borderRadius: 8 / 2,
-										backgroundColor: "#86C7C8",
-									}}
+									style={[
+										CommonStyles.dotStyle,
+										CommonStyles.borderRadius4,
+										{
+											backgroundColor: ColorConstants.mediumFaintBlue,
+										},
+									]}
 								></View>
 								Milestone
 							</Text>
@@ -334,22 +233,28 @@ const IndividualGoal = (props) => {
 				</View>
 			</View>
 
-			<LinearGradient colors={["#588C8D", "#7EC8C9"]} style={styles.goalsContainer}>
+			<LinearGradient
+				colors={[ColorConstants.darkFaintBlue, ColorConstants.lighterBlue]}
+				style={styles.goalsContainer}
+			>
 				<View style={styles.addMileStone}>
+					<View style={CommonStyles.MX10}>
+						<Text style={[{fontSize: sizeConstants.mThirty}, CommonStyles.bold]}>
+							My Milestones
+						</Text>
+					</View>
+
 					<View style={styles.viewTap}>
 						<MaterialCommunityIcons
 							name="plus"
 							size={40}
-							color="#7EC8C9"
+							color={ColorConstants.lighterBlue}
 							onPress={() => {
 								// navigation.navigate("FirstMilestone")
 								navigation.navigate("DParticularGoal")
 							}}
 						/>
 					</View>
-					<Text style={{right: 150, position: "absolute", fontSize: 30, fontWeight: "bold"}}>
-						My Milestones
-					</Text>
 				</View>
 
 				{/* <TouchableOpacity
@@ -367,25 +272,25 @@ const IndividualGoal = (props) => {
 					}}
 				>
 					<Text
-						style={{
+						style={[{
 							top: "35%",
 							color: "#333333",
 							fontSize: 20,
 							marginLeft: 20,
-							fontWeight: "bold",
-						}}
+							
+						},CommonStyles.bold]}
 					>
 						Read 1 Book
 					</Text>
 					<Text
-						style={{
+						style={[{
 							top: "35%",
 							color: "#333333",
 							fontSize: 20,
 							right: 20,
 							position: "absolute",
-							fontWeight: "bold",
-						}}
+						
+						},CommonStyles.bold]}
 					>
 						Task:0/1
 					</Text>
@@ -397,7 +302,7 @@ const IndividualGoal = (props) => {
 							{
 								text: <MaterialCommunityIcons name="plus" size={40} color="#77777B" />,
 								onPress: () => navigation.navigate("AfterModal"),
-								style: {backgroundColor: "#FDF9F2"},
+								style: {backgroundColor: ColorConstants.faintWhite},
 							},
 						]}
 						// onOpen={() => console.log("open")}
@@ -405,24 +310,16 @@ const IndividualGoal = (props) => {
 						autoClose={true}
 						disabled={false}
 					>
-						<View
-							style={{
-								flexDirection: "row",
-								alignItems: "center",
-								height: 100,
-								backgroundColor: "#7EC8C9",
-								justifyContent: "center",
-							}}
-						>
-							<Text style={styles.sliderText}>Read 1 Book</Text>
-							<Text style={styles.sliderText}>Task:0/1</Text>
+						<View style={styles.swipableBtnContainer}>
+							<Text style={[styles.sliderText, CommonStyles.bold]}>Read 1 Book</Text>
+							<Text style={[styles.sliderText, CommonStyles.bold]}>Task:0/1</Text>
 						</View>
 					</Swipeout>
 				</View>
 
-				<View style={styles.bottomBtnContainer}>
+				<View style={[CommonStyles.btnContainer, {bottom: sizeConstants.l}]}>
 					<TouchableOpacity style={styles.bottomBtn} onPress={goBack}>
-						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
+						<MaterialCommunityIcons name="home" size={44} color={ColorConstants.lighterBlue} />
 					</TouchableOpacity>
 				</View>
 			</LinearGradient>
@@ -445,111 +342,152 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(mapStateToProps, mapDispatchToProps)(IndividualGoal)
 
 const styles = StyleSheet.create({
-	introContainer: {
-		flex: 1,
-		backgroundColor: "#FDF9F2",
-	},
-
-	titleContainer: {
-		flex: 0.6,
-		justifyContent: "center",
-		backgroundColor: "#FDF9F2",
-	},
 	mainTitle: {
-		color: "#333333",
-		fontSize: 25,
-		marginLeft: 21,
+		color: ColorConstants.faintBlack1,
+		fontSize: sizeConstants.xxl,
+		marginLeft: sizeConstants.twentyOne,
 	},
 	subTitle: {
-		fontSize: 16,
-		color: "#333333",
-		marginLeft: 21,
+		fontSize: sizeConstants.sixteen,
+		color: ColorConstants.faintBlack1,
+		marginLeft: sizeConstants.twentyOne,
 	},
 
 	addMileStone: {
-		marginLeft: "auto",
-		marginRight: 50,
-		marginTop: 20,
+		// marginLeft: "auto",
+		paddingRight: sizeConstants.fifty,
+		marginTop: sizeConstants.xl,
 		flexDirection: "row",
+		alignItems: "flex-start",
+		justifyContent: "space-between",
 	},
 	sliderText: {
-		color: "#333333",
-		fontSize: 19,
-		fontWeight: "bold",
-		margin: 30,
+		color: sizeConstants.faintBlack1,
+		fontSize: sizeConstants.nineteen,
+		margin: sizeConstants.thirty,
 	},
 	trackingcont: {
-		marginHorizontal: 20,
-		marginVertical: 20,
-		marginTop: 10,
+		margin: sizeConstants.xl,
+		marginTop: sizeConstants.m,
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between",
 	},
 	swipeButton: {
 		alignContent: "center",
-		borderRadius: 22,
-		backgroundColor: "pink",
+		borderRadius: sizeConstants.twentyTwo,
 		overflow: "hidden",
-		marginLeft: 21,
-		marginRight: 21,
+		marginHorizontal: sizeConstants.twentyOne,
 		justifyContent: "center",
-		marginTop: 50,
+		marginTop: sizeConstants.fifty,
 		// shadowColor: "#00000029",
 	},
 	percentageCont: {
-		height: 150,
-		width: 150,
-		borderRadius: 150 / 2,
-		backgroundColor: "#FBF5E9",
-		borderWidth: 5,
-		borderColor: "#C0E5E4",
+		height: sizeConstants.oneThirtyFive,
+		width: sizeConstants.oneThirtyFiveX,
+		borderRadius: sizeConstants.seventyFive,
+		backgroundColor: ColorConstants.lightestYellow,
+		borderWidth: sizeConstants.five,
+		borderColor: ColorConstants.lightestBlue,
 		justifyContent: "center",
 		alignItems: "center",
 	},
 	goalsText: {
-		fontSize: 16,
+		fontSize: sizeConstants.sixteen,
 	},
 	goalsContainer: {
 		flex: 0.75,
-		borderTopRightRadius: 70,
+		borderTopRightRadius: sizeConstants.seventy,
 	},
 	viewTap: {
-		height: 50,
-		width: 50,
-		backgroundColor: "white",
-		marginVertical: 10,
-		borderRadius: 50 / 2,
+		height: sizeConstants.fifty,
+		width: sizeConstants.fifty,
+		backgroundColor: ColorConstants.white,
+		marginBottom: sizeConstants.m,
+		borderRadius: sizeConstants.fifty / 2,
 		justifyContent: "center",
 		alignItems: "center",
 	},
 
-	bottomBtnContainer: {
-		width: "100%",
-		position: "absolute",
-		bottom: 15,
-		justifyContent: "center",
-		alignItems: "center",
-	},
 	bottomBtn: {
-		height: 75,
-		width: 75,
-		borderRadius: 75 / 2,
-		backgroundColor: "white",
-		elevation: 5,
+		height: sizeConstants.seventyFive,
+		width: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive / 2,
+		backgroundColor: ColorConstants.white,
+		elevation: sizeConstants.five,
 		justifyContent: "center",
 		alignItems: "center",
 	},
 	swipeBtnStyling: {
 		justifyContent: "center",
-		paddingHorizontal: 20,
-		backgroundColor: "white",
-		width: 314,
-		height: 50,
+		paddingHorizontal: sizeConstants.xl,
+		backgroundColor: ColorConstants.white,
+		width: sizeConstants.threeFourTeen,
+		height: sizeConstants.fifty,
 	},
-	btnText: {
-		fontSize: 19,
-		color: "#666666",
-		letterSpacing: 1.2,
+
+	blackOp60: {backgroundColor: ColorConstants.blackOp60},
+
+	modalContainer: {
+		flex: 1,
+		backgroundColor: ColorConstants.lightestBlue,
+		marginVertical: sizeConstants.hundred,
+		marginHorizontal: sizeConstants.mThirty,
+		borderRadius: sizeConstants.m,
+	},
+	modalInnerContainer: {
+		flexDirection: "row",
+		alignContent: "center",
+		justifyContent: "center",
+		marginTop: sizeConstants.m,
+	},
+	modalCommonStyle: {
+		height: sizeConstants.five,
+		width: sizeConstants.sixty,
+		marginTop: sizeConstants.mX,
+		marginRight: sizeConstants.xsX,
+	},
+
+	skipText: {
+		color: ColorConstants.darkGrey,
+		fontSize: sizeConstants.fifteenX,
+	},
+	modalContentContainer: {
+		justifyContent: "center",
+		alignContent: "center",
+		alignItems: "center",
+		paddingHorizontal: sizeConstants.twentyX,
+	},
+
+	dataTextStyle: {
+		fontSize: sizeConstants.twentyX,
+		marginBottom: sizeConstants.m,
+		color: ColorConstants.faintBlack1,
+	},
+	contentText: {fontSize: sizeConstants.twentyX, color: ColorConstants.faintBlack1},
+	appBtn: {
+		backgroundColor: ColorConstants.lighterBlue,
+		fontSize: sizeConstants.fifteenMX,
+		paddingVertical: sizeConstants.thirteenMX,
+		color: ColorConstants.faintBlack1,
+	},
+	swipableBtnContainer: {
+		flexDirection: "row",
+		alignItems: "center",
+		height: sizeConstants.hundredMX,
+		backgroundColor: ColorConstants.lighterBlue,
+		justifyContent: "center",
+	},
+	swipableBtnIconContainer: {
+		padding: sizeConstants.s,
+		borderRightWidth: 1,
+		borderRightColor: ColorConstants.black,
+	},
+	btnTextContainer: {
+		justifyContent: "center",
+		paddingHorizontal: sizeConstants.twentyMX,
+		backgroundColor: ColorConstants.lighterBlue,
+		width: sizeConstants.twoSeventyMX,
+		height: sizeConstants.seventy,
 	},
 })

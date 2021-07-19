@@ -9,6 +9,7 @@ import colors from "../../../colors"
 
 import {Entypo} from "@expo/vector-icons"
 import Constants from "expo-constants"
+import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/styles"
 
 const ThirdMilestone = () => {
 	const navigation = useNavigation()
@@ -22,72 +23,52 @@ const ThirdMilestone = () => {
 	// 	navigation.goBack()
 	// }
 	const [date, setDate] = useState(new Date())
-	const tip = () => <Text style={{fontWeight: "bold"}}>Tip:</Text>
+	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 
 	return (
 		<ImageBackground
-			style={[styles.introContainer, styles.image]}
-			source={require("../../assets/images/second.png")}
+			style={[styles.introContainer, styles.image, CommonStyles.pr10]}
+			source={commonImages.secondImage}
 			resizeMode="stretch"
 		>
-			<View style={{flexDirection: "row", marginTop: Constants.statusBarHeight}}>
+			<View style={[CommonStyles.flexDirectionRow, {marginTop: Constants.statusBarHeight}]}>
 				<Text style={styles.mainTitle}>Read 5 books</Text>
-				<Entypo
-					name="cross"
-					color="#FDF9F2"
-					size={38}
-					style={{
-						backgroundColor: "#588C8D",
-						borderRadius: 20,
-						position: "absolute",
-						right: 0,
-						marginRight: 10,
-					}}
-				/>
+				<Entypo name="cross" color={ColorConstants.faintWhite} size={38} style={styles.cross} />
 			</View>
 
-			<Text style={{marginTop: 20, fontSize: 16, color: "#FDF9F2", marginLeft: 21}}>
-				Enter Milestone
-			</Text>
+			<Text style={styles.milestoneText}>Enter Milestone</Text>
 			<View style={styles.centerCont}>
 				<TextInput style={styles.textInput} placeholder="Type Here" />
 			</View>
 			<Text style={styles.subTitle}>
 				{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
 			</Text>
-			<View style={{display: "flex", alignItems: "center", marginTop: 20}}>
-				<AppButton
-					title="Edit Date"
-					onPress={FourthMileStone}
-					style={{backgroundColor: "white", color: "gray"}}
-				/>
+			<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter]}>
+				<AppButton title="Edit Date" onPress={FourthMileStone} style={styles.editButton} />
 			</View>
 			<Text style={styles.subTitle}>
 				{tip()} adding a target date will help you stay on track. Dont't worry! You can always
 				change it.
 			</Text>
 
-			<View
-				style={{
-					position: "absolute",
-					bottom: 30,
-					width: "100%",
-					justifyContent: "center",
-				}}
-			>
-				<View style={{flexDirection: "row", justifyContent: "space-around", marginBottom: 36}}>
+			<View style={styles.nextBtnContainer}>
+				<View style={styles.nextBtnInner}>
 					<View></View>
 					<View>
 						<TouchableOpacity
 							style={[styles.btnStylingRight, styles.nextBtn]}
 							onPress={() => navigation.navigate("FourthMilestone")}
 						>
-							<MaterialCommunityIcons name="chevron-right" size={50} color="#7EC8C9" />
+							<MaterialCommunityIcons
+								name="chevron-right"
+								size={sizeConstants.fifty}
+								color="#7EC8C9"
+							/>
 						</TouchableOpacity>
 					</View>
 				</View>
 
-				<View style={{alignItems: "center"}}>
+				<View style={CommonStyles.alignItemsCenter}>
 					<TouchableOpacity style={styles.btnStyling}>
 						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 					</TouchableOpacity>
@@ -100,35 +81,35 @@ export default ThirdMilestone
 const styles = StyleSheet.create({
 	introContainer: {
 		flex: 1,
-		backgroundColor: "#588C8D",
+		backgroundColor: ColorConstants.darkFaintBlue,
 	},
 
 	subTitle: {
-		fontSize: 16,
-		color: "#FDF9F2",
-		marginLeft: 21,
-		marginTop: 10,
-		paddingLeft: 3,
-		paddingRight: 2,
+		fontSize: sizeConstants.sixteenX,
+		color: ColorConstants.faintWhite,
+		marginLeft: sizeConstants.twentyOne,
+		marginTop: sizeConstants.m,
+		paddingLeft: sizeConstants.three,
+		paddingRight: sizeConstants.xs,
 	},
 	mainTitle: {
-		color: "#FDF9F2",
-		fontSize: 25,
-		marginLeft: 21,
+		color: ColorConstants.faintWhite,
+		fontSize: sizeConstants.xxl,
+		marginLeft: sizeConstants.twentyOne,
 	},
 	bottomBtnContainer: {
 		width: "100%",
 		position: "absolute",
-		bottom: 20,
+		bottom: sizeConstants.twentyX,
 		justifyContent: "center",
 		alignItems: "center",
 	},
 	bottomBtn: {
-		height: 75,
-		width: 75,
-		borderRadius: 75 / 2,
-		backgroundColor: "white",
-		elevation: 5,
+		height: sizeConstants.seventyFive,
+		width: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive / 2,
+		backgroundColor: ColorConstants.white,
+		elevation: sizeConstants.s,
 		justifyContent: "center",
 		alignItems: "center",
 	},
@@ -136,36 +117,61 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		backgroundColor: colors.faint,
-		width: 75,
-		height: 75,
-		borderRadius: 75 / 2,
+		width: sizeConstants.seventyFive,
+		height: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive / 2,
 	},
 	btnStyling: {
 		justifyContent: "center",
 		alignItems: "center",
 		backgroundColor: "white",
-		width: 75,
-		height: 75,
-		borderRadius: 75 / 2,
+		width: sizeConstants.seventyFive,
+		height: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive / 2,
 	},
 	nextBtn: {
-		width: 50,
-		height: 50,
-		borderRadius: 25,
+		width: sizeConstants.fifty,
+		height: sizeConstants.fifty,
+		borderRadius: sizeConstants.xxl,
 	},
 	textInput: {
-		width: 314,
-		height: 50,
-		backgroundColor: "#FDF9F2",
-		borderRadius: 50,
-		marginTop: 3,
-		paddingLeft: 20,
-		fontSize: 19,
-		color: "#666666",
-		elevation: 10,
+		width: sizeConstants.threeFourTeen,
+		height: sizeConstants.fifty,
+		backgroundColor: ColorConstants.faintWhite,
+		borderRadius: sizeConstants.fifty,
+		marginTop: sizeConstants.three,
+		paddingLeft: sizeConstants.twentyX,
+		fontSize: sizeConstants.nineteenX,
+		color: ColorConstants.faintBlack2,
+		elevation: sizeConstants.m,
 	},
 	centerCont: {
 		justifyContent: "center",
 		alignItems: "center",
+	},
+	cross: {
+		backgroundColor: ColorConstants.darkFaintBlue,
+		borderRadius: sizeConstants.twentyX,
+		position: "absolute",
+		right: 0,
+		marginRight: sizeConstants.m,
+	},
+	milestoneText: {
+		marginTop: sizeConstants.twentyX,
+		fontSize: sizeConstants.sixteenX,
+		color: ColorConstants.faintWhite,
+		marginLeft: sizeConstants.twentyOne,
+	},
+	editButton: {backgroundColor: ColorConstants.white, color: ColorConstants.gray},
+	nextBtnContainer: {
+		position: "absolute",
+		bottom: sizeConstants.mThirty,
+		width: "100%",
+		justifyContent: "center",
+	},
+	nextBtnInner: {
+		flexDirection: "row",
+		justifyContent: "space-around",
+		marginBottom: sizeConstants.thirtySix,
 	},
 })

@@ -8,7 +8,7 @@ import {
 	ScrollView,
 	ImageBackground,
 } from "react-native"
-import {commonImages} from "./../../core/styles"
+import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "./../../core/styles"
 
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
@@ -27,29 +27,23 @@ const FirstMilestone = () => {
 	// 	navigation.goBack()
 	// }
 	const [date, setDate] = useState(new Date())
-	const tip = () => <Text style={{fontWeight: "bold"}}>Tip:</Text>
+	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
 		<ImageBackground
-			style={[styles.introContainer, styles.image]}
+			style={[CommonStyles.mainContainer, styles.image, CommonStyles.pt10]}
 			source={commonImages.secondImage}
 			resizeMode="stretch"
 		>
-			<ScrollView style={styles.introContainer}>
+			<ScrollView style={CommonStyles.mainContainer}>
 				<StatusBarScreen>
-					<View style={{flex: 1}}>
-						<View style={{flexDirection: "row"}}>
+					<View style={CommonStyles.mainContainer}>
+						<View style={CommonStyles.flexDirectionRow}>
 							<Text style={styles.mainTitle}>Read 5 books</Text>
 							<Entypo
 								name="cross"
-								color="#FDF9F2"
+								color={ColorConstants.faintWhite}
 								size={30}
-								style={{
-									backgroundColor: "#538586",
-									borderRadius: 20,
-									position: "absolute",
-									right: 0,
-									marginRight: 10,
-								}}
+								style={CommonStyles.cross}
 							/>
 						</View>
 
@@ -115,20 +109,20 @@ const FirstMilestone = () => {
 							// Enable the option to swipe between months. Default = false
 							enableSwipeMonths={true}
 							theme={{
-								backgroundColor: "rgba(255,255,255,0)",
-								calendarBackground: "rgba(255,255,255,0)",
-								textSectionTitleColor: "#BDDFDB",
-								textSectionTitleDisabledColor: "#BDDFDB",
-								selectedDayBackgroundColor: "#BDDFDB",
-								selectedDayTextColor: "black",
+								backgroundColor: ColorConstants.transparent,
+								calendarBackground: ColorConstants.transparent,
+								textSectionTitleColor: ColorConstants.whitishBlue,
+								textSectionTitleDisabledColor: ColorConstants.whitishBlue,
+								selectedDayBackgroundColor: ColorConstants.whitishBlue,
+								selectedDayTextColor: ColorConstants.black,
 								todayTextColor: "#00adf5",
-								dayTextColor: "#BDDFDB",
-								textDisabledColor: "#BDDFDB",
-								dotColor: "#BDDFDB",
-								selectedDotColor: "#BDDFDB",
-								arrowColor: "#BDDFDB",
-								disabledArrowColor: "#BDDFDB",
-								monthTextColor: "#BDDFDB",
+								dayTextColor: ColorConstants.whitishBlue,
+								textDisabledColor: ColorConstants.whitishBlue,
+								dotColor: ColorConstants.whitishBlue,
+								selectedDotColor: ColorConstants.whitishBlue,
+								arrowColor: ColorConstants.whitishBlue,
+								disabledArrowColor: ColorConstants.whitishBlue,
+								monthTextColor: ColorConstants.whitishBlue,
 								indicatorColor: "blue",
 								textDayFontFamily: "monospace",
 								textMonthFontFamily: "monospace",
@@ -140,13 +134,15 @@ const FirstMilestone = () => {
 								// textMonthFontSize: 16,
 								// textDayHeaderFontSize: 40,
 							}}
-							style={{
-								backgroundColor: "rgba(255,255,255,0)",
-							}}
+							style={ColorConstants.transparent}
 						/>
 
 						<TouchableOpacity style={[styles.btnStyling, styles.nextBtn]} onPress={nextScreen}>
-							<MaterialCommunityIcons name="chevron-right" size={50} color="#7EC8C9" />
+							<MaterialCommunityIcons
+								name="chevron-right"
+								size={50}
+								color={ColorConstants.lighterBlue}
+							/>
 						</TouchableOpacity>
 
 						<View style={styles.bottomBtnContainer}>
@@ -154,7 +150,7 @@ const FirstMilestone = () => {
 								style={styles.bottomBtn}
 								onPress={() => navigation.navigate("particulargoal")}
 							>
-								<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
+								<MaterialCommunityIcons name="home" size={44} color={ColorConstants.lighterBlue} />
 							</TouchableOpacity>
 						</View>
 					</View>
@@ -165,22 +161,17 @@ const FirstMilestone = () => {
 }
 export default FirstMilestone
 const styles = StyleSheet.create({
-	introContainer: {
-		flex: 1,
-		// backgroundColor: "#588C8D",
-	},
-
 	mainTitle: {
-		color: "#FDF9F2",
-		fontSize: 25,
-		marginLeft: 20,
+		color: ColorConstants.faintWhite,
+		fontSize: sizeConstants.xxl,
+		marginLeft: sizeConstants.twentyMX,
 	},
 	subTitle: {
-		fontSize: 16,
-		color: "#FDF9F2",
-		paddingLeft: 21,
-		marginTop: 15,
-		paddingRight: 20,
+		fontSize: sizeConstants.sixteenX,
+		color: ColorConstants.faintWhite,
+		paddingLeft: sizeConstants.twentyOne,
+		marginTop: sizeConstants.l,
+		paddingRight: sizeConstants.twentyMX,
 	},
 
 	image: {
@@ -200,11 +191,11 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	bottomBtn: {
-		height: 75,
-		width: 75,
-		borderRadius: 75 / 2,
+		height: sizeConstants.seventyFive,
+		width: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive / 2,
 		backgroundColor: "white",
-		elevation: 5,
+		elevation: sizeConstants.s,
 		justifyContent: "center",
 		alignItems: "center",
 	},
@@ -212,40 +203,39 @@ const styles = StyleSheet.create({
 	btnStyling: {
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "#FDF9F2",
-		width: 75,
-		height: 75,
-		borderRadius: 75 / 2,
+		backgroundColor: ColorConstants.faintWhite,
+		width: sizeConstants.seventyFive,
+		height: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive / 2,
 		right: 0,
 		display: "flex",
-
 		alignSelf: "flex-end",
 	},
 	nextBtn: {
-		width: 50,
-		height: 50,
-		borderRadius: 25,
-		marginRight: 40,
-		marginBottom: 20,
-		marginTop: 10,
+		width: sizeConstants.fifty,
+		height: sizeConstants.fifty,
+		borderRadius: sizeConstants.xxl,
+		marginRight: sizeConstants.fourtyMX,
+		marginBottom: sizeConstants.twentyMX,
+		marginTop: sizeConstants.m,
 	},
 	textInput: {
-		width: 314,
-		height: 50,
-		backgroundColor: "#FDF9F2",
-		borderRadius: 50,
-		marginTop: 3,
-		paddingLeft: 20,
-		fontSize: 19,
-		color: "#666666",
-		elevation: 10,
+		width: sizeConstants.threeFourTeen,
+		height: sizeConstants.fifty,
+		backgroundColor: ColorConstants.faintWhite,
+		borderRadius: sizeConstants.fifty,
+		marginTop: sizeConstants.three,
+		paddingLeft: sizeConstants.twentyMX,
+		fontSize: sizeConstants.nineteenX,
+		color: ColorConstants.faintBlack2,
+		elevation: sizeConstants.m,
 	},
 
 	bigTitle: {
-		color: "#BDDFDB",
-		fontSize: 30,
-		marginLeft: 14,
+		color: ColorConstants.whitishBlue,
+		fontSize: sizeConstants.mThirty,
+		marginLeft: sizeConstants.fourteenMX,
 		fontWeight: "bold",
-		marginTop: 14,
+		marginTop: sizeConstants.fourteenMX,
 	},
 })

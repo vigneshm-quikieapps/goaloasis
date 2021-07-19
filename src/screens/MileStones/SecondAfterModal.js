@@ -7,6 +7,7 @@ import AppButton from "./AppButton"
 import colors from "../../../colors"
 import Constants from "expo-constants"
 import RBSheet from "react-native-raw-bottom-sheet"
+import {commonImages} from "../../core/styles"
 
 const SecondAfterModal = () => {
 	const navigation = useNavigation()
@@ -18,7 +19,7 @@ const SecondAfterModal = () => {
 	return (
 		<ImageBackground
 			style={[styles.introContainer, styles.image]}
-			source={require("../../assets/images/second.png")}
+			source={commonImages.secondImage}
 			resizeMode="stretch"
 		>
 			<View style={{flexDirection: "row", marginTop: Constants.statusBarHeight}}>
