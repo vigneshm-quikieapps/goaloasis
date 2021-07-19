@@ -27,7 +27,10 @@ const Deletegoal = () => {
 				</View>
 
 				<View style={styles.bottomBtnContainer}>
-					<TouchableOpacity style={styles.HelpBtn} onPress={() => navigation.navigate("mygoals")}>
+					<TouchableOpacity
+						style={styles.HelpBtn}
+						onPress={() => navigation.navigate("milestones")}
+					>
 						<Text style={styles.btnText}>Confirm</Text>
 					</TouchableOpacity>
 				</View>

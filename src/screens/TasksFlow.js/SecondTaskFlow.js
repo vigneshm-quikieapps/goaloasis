@@ -4,18 +4,16 @@ import {StyleSheet, Text, TouchableOpacity, View, TextInput, ImageBackground} fr
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 
-import AppButton from "./AppButton"
 import colors from "../../../colors"
 
 import {Entypo} from "@expo/vector-icons"
 import Constants from "expo-constants"
 import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/styles"
+import AppButton from "./../MileStones/AppButton"
 
-const ThirdMilestone = () => {
+const SecondTaskFlow = () => {
 	const navigation = useNavigation()
-	const FourthMileStone = () => {
-		navigation.navigate("FourthMilestone")
-	}
+
 	const particularGoal = () => {
 		navigation.navigate("particulargoal")
 	}
@@ -49,7 +47,7 @@ const ThirdMilestone = () => {
 				{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
 			</Text>
 			<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter]}>
-				<AppButton title="Edit Date" onPress={FourthMileStone} style={styles.editButton} />
+				<AppButton title="Edit Date" style={styles.editButton} />
 			</View>
 			<Text style={styles.subTitle}>
 				{tip()} adding a target date will help you stay on track. Dont't worry! You can always
@@ -62,7 +60,7 @@ const ThirdMilestone = () => {
 					<View>
 						<TouchableOpacity
 							style={[styles.btnStylingRight, styles.nextBtn]}
-							onPress={() => navigation.navigate("FourthMilestone")}
+							onPress={() => navigation.navigate("thirdtaskflow")}
 						>
 							<MaterialCommunityIcons
 								name="chevron-right"
@@ -82,7 +80,7 @@ const ThirdMilestone = () => {
 		</ImageBackground>
 	)
 }
-export default ThirdMilestone
+export default SecondTaskFlow
 const styles = StyleSheet.create({
 	introContainer: {
 		flex: 1,
@@ -112,7 +110,7 @@ const styles = StyleSheet.create({
 	bottomBtn: {
 		height: sizeConstants.seventyFive,
 		width: sizeConstants.seventyFive,
-		borderRadius: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive / 2,
 		backgroundColor: ColorConstants.white,
 		elevation: sizeConstants.s,
 		justifyContent: "center",
@@ -124,7 +122,7 @@ const styles = StyleSheet.create({
 		backgroundColor: colors.faint,
 		width: sizeConstants.seventyFive,
 		height: sizeConstants.seventyFive,
-		borderRadius: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive / 2,
 	},
 	btnStyling: {
 		justifyContent: "center",
@@ -132,7 +130,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 		width: sizeConstants.seventyFive,
 		height: sizeConstants.seventyFive,
-		borderRadius: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive / 2,
 	},
 	nextBtn: {
 		width: 50,

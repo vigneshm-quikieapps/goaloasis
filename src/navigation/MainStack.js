@@ -36,6 +36,9 @@ import Second from "../screens/RecurringFlow/second"
 import Third from "../screens/RecurringFlow/third"
 
 // import {first, second, third} from "../screens/RecurringFlow/index"
+import FirstTaskFlow from "./../screens/TasksFlow.js/FirstTaskFlow"
+import SecondTaskFlow from "./../screens/TasksFlow.js/SecondTaskFlow"
+import ThirdTaskFlow from "./../screens/TasksFlow.js/ThirdTaskFlow"
 
 const Stack = createStackNavigator()
 const options = {
@@ -85,6 +88,10 @@ const IntroStack = () => {
 			<Stack.Screen name="first" component={First} />
 			<Stack.Screen name="second" component={Second} />
 			<Stack.Screen name="third" component={Third} />
+			{/* Task Flow */}
+			<Stack.Screen name="firsttaskflow" component={FirstTaskFlow} />
+			<Stack.Screen name="secondtaskflow" component={SecondTaskFlow} />
+			<Stack.Screen name="thirdtaskflow" component={ThirdTaskFlow} />
 		</Stack.Navigator>
 	)
 }

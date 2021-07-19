@@ -15,13 +15,13 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {Entypo} from "@expo/vector-icons"
 
 import {Calendar} from "react-native-calendars"
-import StatusBarScreen from "./StatusBarScreen"
+import StatusBarScreen from "./../MileStones/StatusBarScreen"
 
-const FirstMilestone = () => {
+const FirstTaskFlow = () => {
 	const navigation = useNavigation()
 
 	const nextScreen = () => {
-		navigation.navigate("ThirdMileStone")
+		navigation.navigate("secondtaskflow")
 	}
 	// const goBack = () => {
 	// 	navigation.goBack()
@@ -159,7 +159,7 @@ const FirstMilestone = () => {
 		</ImageBackground>
 	)
 }
-export default FirstMilestone
+export default FirstTaskFlow
 const styles = StyleSheet.create({
 	mainTitle: {
 		color: ColorConstants.faintWhite,
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
 	bottomBtn: {
 		height: sizeConstants.seventyFive,
 		width: sizeConstants.seventyFive,
-		borderRadius: sizeConstants.seventyFive / 2,
+		borderRadius: sizeConstants.seventyFive,
 		backgroundColor: "white",
 		elevation: sizeConstants.s,
 		justifyContent: "center",
@@ -204,17 +204,17 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		backgroundColor: ColorConstants.faintWhite,
-		// width: 75,
-		// height: 75,
-		// borderRadius: 75 / 2,
+		height: sizeConstants.seventyFive,
+		width: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive,
 		right: 0,
 		display: "flex",
 		alignSelf: "flex-end",
 	},
 	nextBtn: {
-		width: sizeConstants.fifty,
-		height: sizeConstants.fifty,
-		borderRadius: sizeConstants.fifty,
+		width: 50,
+		height: 50,
+		borderRadius: 25,
 		marginRight: sizeConstants.fourtyMX,
 		marginBottom: sizeConstants.twentyMX,
 		marginTop: sizeConstants.m,

@@ -68,7 +68,9 @@ const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimel
 	let allTasks = []
 	const getData = async () => {
 		try {
-			const value = await AsyncStorage.getAllKeys()
+			const value = await AsyncStorage.getAllKeys().catch((e) => {
+				console.log(e)
+			})
 			if (value !== null) {
 				setTasks(value)
 			}
@@ -100,7 +102,7 @@ const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimel
 	return (
 		<StatusBarScreen style={styles.container}>
 			<TouchableOpacity
-				style={CommonStyles.titleContainer}
+				style={CommonStyles.titleContainer1}
 				onPress={!firstTime ? gotoTaskTutorial : gotoTodaysTask}
 			>
 				<Text style={CommonStyles.mainTitle}>Today’s tasks</Text>
@@ -119,11 +121,11 @@ const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimel
 					<View style={CommonStyles.logoSpacing}>
 						{allTasks.map((task, index) => (
 							<View key={index}>
-								{/* <TouchableOpacity style={styles.logoContainer} onPress={handleOpenNewGoal}> */}
-								<TouchableOpacity
+								<TouchableOpacity style={CommonStyles.logoContainer} onPress={handleOpenNewGoal}>
+									{/* <TouchableOpacity
 									style={CommonStyles.logoContainer}
-									onPress={() => navigation.navigate("second")}
-								>
+									onPress={() => navigation.navigate("third")}
+								> */}
 									<ProgressCircle
 										percent={0}
 										radius={49}

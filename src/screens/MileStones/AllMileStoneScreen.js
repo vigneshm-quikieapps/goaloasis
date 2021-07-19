@@ -40,7 +40,7 @@ const MyGoals = () => {
 							size={28}
 							color="#7EC8C9"
 							onPress={() => {
-								// navigation.navigate("FirstMilestone")
+								navigation.navigate("FirstMilestone")
 							}}
 						/>
 					</View>
@@ -56,7 +56,7 @@ const MyGoals = () => {
 							name="home"
 							size={34}
 							color="white"
-							// onPress={() => navigation.navigate("mygoals")}
+							onPress={() => navigation.navigate("mygoals")}
 						/>
 					</TouchableOpacity>
 				</View>

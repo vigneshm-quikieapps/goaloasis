@@ -15,14 +15,14 @@ import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../c
 
 const IndividualGoal = (props) => {
 	useEffect(() => {
-		console.log("individual -> ", props.firstTimeIndividual)
+		setModalVisible(false)
 		getFirstTimeData()
 	}, [props.firstTimeIndividual])
 
 	const getFirstTimeData = async () => {
 		const data = await getFirstTimeIndividual()
 		props.setFirstTimeForIndividualGoal(data)
-		const isFirst = props.firstTimeIndividual == null ? true : false
+		const isFirst = props.firstTimeIndividual === null ? true : false
 		setModalVisible(isFirst)
 	}
 
@@ -186,7 +186,7 @@ const IndividualGoal = (props) => {
 				<View style={styles.trackingcont}>
 					<ProgressCircle
 						percent={5}
-						radius={86}
+						radius={85}
 						borderWidth={5}
 						color={ColorConstants.darkFaintBlue}
 						shadowColor="#999"
@@ -251,7 +251,7 @@ const IndividualGoal = (props) => {
 							color={ColorConstants.lighterBlue}
 							onPress={() => {
 								// navigation.navigate("FirstMilestone")
-								navigation.navigate("DParticularGoal")
+								navigation.navigate("particulargoal")
 							}}
 						/>
 					</View>
@@ -382,16 +382,18 @@ const styles = StyleSheet.create({
 		marginTop: sizeConstants.fifty,
 		// shadowColor: "#00000029",
 	},
+
 	percentageCont: {
-		height: sizeConstants.oneThirtyFive,
-		width: sizeConstants.oneThirtyFiveX,
-		borderRadius: sizeConstants.seventyFive,
+		height: 160,
+		width: 160,
+		borderRadius: 80,
 		backgroundColor: ColorConstants.lightestYellow,
 		borderWidth: sizeConstants.five,
 		borderColor: ColorConstants.lightestBlue,
 		justifyContent: "center",
 		alignItems: "center",
 	},
+
 	goalsText: {
 		fontSize: sizeConstants.sixteen,
 	},

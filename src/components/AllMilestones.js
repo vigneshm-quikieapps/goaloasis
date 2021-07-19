@@ -1,6 +1,7 @@
 import React, {useState, useRef} from "react"
 import {StyleSheet, Text, View, TouchableOpacity, ScrollView} from "react-native"
 import {Feather} from "@expo/vector-icons"
+import {useNavigation} from "@react-navigation/native"
 
 const AllMilestones = () => {
 	const [upDown, setUpDown] = useState(false)
@@ -10,6 +11,7 @@ const AllMilestones = () => {
 	const [upDown3, setUpDown3] = useState(false)
 	const [upDown4, setUpDown4] = useState(false)
 	const panelRef = useRef(null)
+	const navigation = useNavigation()
 
 	return (
 		<>
@@ -31,7 +33,10 @@ const AllMilestones = () => {
 					</TouchableOpacity>
 
 					{upDown && (
-						<TouchableOpacity style={styles.accordian}>
+						<TouchableOpacity
+							style={styles.accordian}
+							onPress={() => navigation.navigate("firsttaskflow")}
+						>
 							<View>
 								<Text style={styles.mainTitle}>Read 5 books</Text>
 								<Text style={styles.subtitle}>Sat, Nov 14</Text>

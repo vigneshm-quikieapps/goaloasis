@@ -2,14 +2,12 @@ import React, {useState} from "react"
 import {StyleSheet, Text, TouchableOpacity, View, ScrollView} from "react-native"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
-import DatePicker from "react-native-date-picker"
-import AppButton from "./AppButton"
 import {Calendar} from "react-native-calendars"
-import StatusBarScreen from "./StatusBarScreen"
 import {Entypo} from "@expo/vector-icons"
 import {ColorConstants, CommonStyles, sizeConstants} from "../../core/styles"
+import StatusBarScreen from "./../MileStones/StatusBarScreen"
 
-const FourthMilestone = () => {
+const ThirdTaskFlow = () => {
 	const navigation = useNavigation()
 
 	// const gotoHome = () => {
@@ -39,12 +37,12 @@ const FourthMilestone = () => {
 						<Text style={CommonStyles.button}>Read One Book</Text>
 					</TouchableOpacity>
 					<Text style={CommonStyles.subTitleMilestone}>
-						{tip()} Think of milestones as a mini goalfdfdf that helps you reach your ultimate goal.
+						{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
 					</Text>
 
 					<View style={CommonStyles.calendarContainer}>
 						<Text style={CommonStyles.targetDate}>Target Date</Text>
-						<TouchableOpacity onPress={() => navigation.navigate("FifthMilestone")}>
+						<TouchableOpacity>
 							<Text style={CommonStyles.done}>Done</Text>
 						</TouchableOpacity>
 					</View>
@@ -134,7 +132,9 @@ const FourthMilestone = () => {
 					/>
 					<TouchableOpacity
 						style={CommonStyles.containerMilestone}
-						onPress={() => navigation.navigate("FifthMilestone")}
+						onPress={() => {
+							navigation.navigate("first")
+						}}
 					>
 						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
 					</TouchableOpacity>
@@ -150,4 +150,4 @@ const FourthMilestone = () => {
 	)
 }
 
-export default FourthMilestone
+export default ThirdTaskFlow

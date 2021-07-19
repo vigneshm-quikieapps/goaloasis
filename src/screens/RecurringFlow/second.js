@@ -33,10 +33,11 @@ const Second = () => {
 					<View style={CommonStyles.editContainer}>
 						<Text style={CommonStyles.editOccuringText}>Edit Reoccuring</Text>
 					</View>
-					<View style={CommonStyles.reoccuringDateContainer}>
-						<Text style={CommonStyles.reoccuringText}>Reoccuring Date</Text>
+					<View style={CommonStyles.calendarContainer}>
+						<Text style={CommonStyles.targetDate}>Reoccuring Date</Text>
+
 						<TouchableOpacity onPress={() => navigation.navigate("FifthMilestone")}>
-							<Text style={CommonStyles.doneText}>Done</Text>
+							<Text style={CommonStyles.done}>Done</Text>
 						</TouchableOpacity>
 					</View>
 
@@ -151,11 +152,12 @@ const Second = () => {
 						}}
 					/>
 					<TouchableOpacity
-						style={CommonStyles.container}
-						onPress={() => navigation.navigate("FifthMilestone")}
+						style={CommonStyles.containerMilestone}
+						onPress={() => navigation.navigate("third")}
 					>
-						<Text style={{color: "#FDF9F2", fontSize: 21}}>Set reoccuring</Text>
+						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
 					</TouchableOpacity>
+
 					<TouchableOpacity
 						style={CommonStyles.bottomBtn}
 						onPress={() => navigation.navigate("particulargoal")}

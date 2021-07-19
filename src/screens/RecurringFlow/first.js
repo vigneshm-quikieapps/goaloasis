@@ -63,7 +63,10 @@ const First = () => {
 					>
 						<Text style={CommonStyles.bottomText}>Delete Goal</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.BottomTouch} onPress={() => navigation.navigate("help")}>
+					<TouchableOpacity
+						style={CommonStyles.BottomTouch}
+						onPress={() => navigation.navigate("help")}
+					>
 						<Text style={CommonStyles.bottomText}>Tutorial</Text>
 					</TouchableOpacity>
 				</View>
@@ -119,7 +122,10 @@ const First = () => {
 			<TouchableOpacity style={CommonStyles.cancelReoccuring}>
 				<Text style={CommonStyles.cancelReoccuringText}>Cancel reoccuring</Text>
 			</TouchableOpacity>
-			<TouchableOpacity style={CommonStyles.bottomBtn}>
+			<TouchableOpacity
+				style={CommonStyles.bottomBtn}
+				onPress={() => navigation.navigate("mygoals")}
+			>
 				<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 			</TouchableOpacity>
 		</StatusBarScreen>

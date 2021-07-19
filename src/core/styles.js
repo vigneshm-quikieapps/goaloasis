@@ -74,6 +74,8 @@ export const sizeConstants = {
 	fiftyFive: verticalScale(55),
 	sixty: verticalScale(60),
 	mSixty: moderateScale(60),
+	sixtyFive: verticalScale(65),
+
 	seventy: verticalScale(70),
 	seventyFive: verticalScale(75),
 	seventyFive: moderateScale(75),
@@ -141,7 +143,7 @@ export const ColorConstants = {
 export const forGoals = {
 	first: ColorConstants.darkFaintBlue,
 	second: "#553144",
-	third: "6A5593",
+	third: "#6A5593",
 	fourth: "#B3855C",
 	fifth: "#3F6E6A",
 	sixth: "#B8534F",
@@ -433,15 +435,15 @@ export const CommonStyles = ScaledSheet.create({
 		width: "100%",
 	},
 
-	//Reoccuring Flow
-	//second
-	cross: {
-		backgroundColor: "#538586",
-		borderRadius: sizeConstants.xl,
-		position: "absolute",
-		right: sizeConstants.zero,
-		marginRight: scale(10),
-	},
+	// Reoccuring Flow
+	// second
+	// cross: {
+	// 	backgroundColor: "#538586",
+	// 	borderRadius: sizeConstants.xl,
+	// 	position: "absolute",
+	// 	right: sizeConstants.zero,
+	// 	marginRight: scale(10),
+	// },
 	editContainer: {
 		marginTop: sizeConstants.m,
 		marginLeft: sizeConstants.twentyOne,
@@ -450,245 +452,6 @@ export const CommonStyles = ScaledSheet.create({
 
 	reoccuringDateContainer: {
 		//modal styles starts
-
-		titleContainer: {
-			flex: 0.6,
-			justifyContent: "center",
-			backgroundColor: ColorConstants.faintWhite,
-		},
-
-		modalBottomBtn: {
-			justifyContent: "center",
-			paddingHorizontal: sizeConstants.twentyX,
-			backgroundColor: ColorConstants.lighterBlue,
-			width: sizeConstants.twoSeventyMX,
-			height: sizeConstants.seventy,
-		},
-		//modal styles ends
-
-		// common styles starts
-
-		bold: {fontWeight: "bold"},
-		fontW100: {fontWeight: "100"},
-		fontWBold: {fontWeight: "bold"},
-		bgWhite: {backgroundColor: ColorConstants.white},
-		borderRadius30: {
-			borderRadius: sizeConstants.mThirty,
-		},
-		borderRadius4: {
-			borderRadius: sizeConstants.four,
-		},
-		flexDirectionRow: {
-			flexDirection: "row",
-		},
-		MX10: {
-			marginHorizontal: sizeConstants.mX,
-		},
-		dotStyle: {
-			height: sizeConstants.eightX,
-			width: sizeConstants.eightX,
-		},
-		ML30: {
-			marginLeft: sizeConstants.mThirty,
-		},
-
-		pt10: {
-			paddingTop: sizeConstants.mX,
-		},
-		alignItemsCenter: {
-			alignItems: "center",
-		},
-		mt20: {
-			marginTop: sizeConstants.twentyMX,
-		},
-		pr10: {
-			paddingRight: sizeConstants.mX,
-		},
-		flexOne: {
-			flex: 1,
-		},
-		// common styles ends
-
-		// milestone starts
-		reoccuring: {color: ColorConstants.faintWhite, fontSize: sizeConstants.twentyOne},
-		milestoneText: {
-			fontSize: sizeConstants.sixteenX,
-			color: ColorConstants.faintWhite,
-			marginLeft: sizeConstants.twentyOne,
-			// marginTop: sizeConstants.twentyX,
-		},
-		container2: {
-			justifyContent: "center",
-			alignItems: "center",
-			backgroundColor: ColorConstants.faintWhite,
-			width: "70%",
-			padding: sizeConstants.eightMX,
-			borderRadius: sizeConstants.xxl,
-			flexDirection: "column",
-			marginVertical: sizeConstants.five,
-			marginTop: sizeConstants.fifteenX,
-			alignSelf: "center",
-		},
-
-		button: {
-			color: ColorConstants.black,
-			fontSize: sizeConstants.twentyOne,
-		},
-
-		subTitleMilestone: {
-			fontSize: sizeConstants.fifteenMX,
-			color: ColorConstants.faintWhite,
-			marginLeft: sizeConstants.twentyOne,
-			paddingLeft: sizeConstants.five,
-			paddingRight: sizeConstants.twentyMX,
-		},
-
-		calendarContainer: {
-			display: "flex",
-			justifyContent: "center",
-			alignItems: "center",
-			flexDirection: "row",
-			marginTop: sizeConstants.m,
-		},
-		reoccuringText: {
-			fontSize: "21@s",
-			alignSelf: "center",
-			marginLeft: scale(20),
-			color: "#FDF9F2",
-			marginTop: sizeConstants.m,
-		},
-		doneText: {
-			fontSize: "14@s",
-			color: "#FDF9F2",
-			position: "absolute",
-			left: sizeConstants.xxxl,
-		},
-		container: {
-			justifyContent: "center",
-			alignItems: "center",
-			backgroundColor: "#588C8D",
-			borderColor: "#FDF9F2",
-			marginBottom: sizeConstants.xl,
-			// marginTop: sizeConstants.m,
-		},
-
-		targetDate: {
-			fontSize: sizeConstants.twentyOne,
-			color: ColorConstants.faintBlack1,
-			alignSelf: "center",
-			marginLeft: sizeConstants.twentyMX,
-			color: ColorConstants.faintWhite,
-			marginTop: sizeConstants.twentyMX,
-		},
-
-		done: {
-			fontSize: sizeConstants.fourteenMX,
-			color: ColorConstants.faintWhite,
-			position: "absolute",
-			left: sizeConstants.fifty,
-		},
-
-		containerMilestone: {
-			justifyContent: "center",
-			alignItems: "center",
-			backgroundColor: ColorConstants.darkFaintBlue,
-			borderColor: ColorConstants.faintWhite,
-			marginBottom: sizeConstants.twentyMX,
-			borderEndWidth: sizeConstants.three,
-			borderStartWidth: sizeConstants.three,
-			borderTopWidth: sizeConstants.three,
-			borderBottomWidth: sizeConstants.three,
-			width: "70%",
-			padding: sizeConstants.eight,
-			borderRadius: sizeConstants.twentySix,
-			flexDirection: "column",
-			marginVertical: sizeConstants.s,
-			marginTop: sizeConstants.l,
-			alignSelf: "center",
-		},
-
-		// MyGoals Home Screen
-		titleContainer: {
-			height: scale(90) - Constants.statusBarHeight,
-			backgroundColor: "#588C8D",
-			justifyContent: "center",
-		},
-		goalsContainer: {
-			flex: 1,
-			backgroundColor: "#FBF5E9",
-			borderTopRightRadius: sizeConstants.seventy,
-		},
-		viewTap: {
-			height: sizeConstants.six,
-			width: scale(60),
-			backgroundColor: "#588C8D",
-			marginVertical: sizeConstants.m,
-			borderRadius: sizeConstants.thirty,
-			opacity: 0.5,
-		},
-		myGoalsText: {
-			fontSize: "25@s",
-			fontWeight: "bold",
-			color: "#588C8D",
-			marginHorizontal: scale(20),
-			marginBottom: sizeConstants.m,
-		},
-		logoSpacing: {
-			flex: 1,
-			flexDirection: "row",
-			flexWrap: "wrap",
-			// justifyContent: "center",
-			width: "100%",
-		},
-		logoContainer: {
-			marginLeft: scale(65), //TODO
-			marginTop: sizeConstants.xl,
-			// backgroundColor: "green",
-		},
-		goalText: {
-			fontSize: "16@s",
-			color: "#666666",
-			textAlign: "center",
-			maxWidth: scale(100),
-
-			// backgroundColor: "blue",
-		},
-		circleLogo: {
-			height: sizeConstants.hundred,
-			width: sizeConstants.hundred,
-			borderRadius: sizeConstants.fifty,
-			borderWidth: sizeConstants.s,
-			borderColor: "#588C8D",
-			justifyContent: "center",
-			alignItems: "center",
-		},
-		iconVertical: {
-			height: sizeConstants.thirty,
-			width: scale(4),
-			backgroundColor: "#588C8D",
-		},
-		iconHorizontal: {
-			height: sizeConstants.four,
-			width: scale(30),
-			backgroundColor: "#588C8D",
-			position: "absolute",
-		},
-		bottomBtnContainer: {
-			width: "100%",
-			position: "absolute",
-			bottom: sizeConstants.fourtyFive,
-			justifyContent: "center",
-			alignItems: "center",
-		},
-		bottomBtn2: {
-			height: sizeConstants.seventyFive,
-			width: sizeConstants.seventyFive,
-			borderRadius: sizeConstants.seventyFive / sizeConstants.xs,
-			backgroundColor: "#7EC8C9",
-			elevation: sizeConstants.s,
-			justifyContent: "center",
-			alignItems: "center",
-		},
 		padding: sizeConstants.eightMX,
 		borderRadius: sizeConstants.xxl,
 		flexDirection: "column",
@@ -697,22 +460,262 @@ export const CommonStyles = ScaledSheet.create({
 		alignSelf: "center",
 	},
 
+	titleContainer: {
+		flex: 0.6,
+		justifyContent: "center",
+		backgroundColor: ColorConstants.faintWhite,
+	},
+
+	modalBottomBtn: {
+		justifyContent: "center",
+		paddingHorizontal: sizeConstants.twentyX,
+		backgroundColor: ColorConstants.lighterBlue,
+		width: sizeConstants.twoSeventyMX,
+		height: sizeConstants.seventy,
+	},
+	//modal styles ends
+
+	// common styles starts
+
+	bold: {fontWeight: "bold"},
+	fontW100: {fontWeight: "100"},
+	fontWBold: {fontWeight: "bold"},
+	bgWhite: {backgroundColor: ColorConstants.white},
+	borderRadius30: {
+		borderRadius: sizeConstants.mThirty,
+	},
+	borderRadius4: {
+		borderRadius: sizeConstants.four,
+	},
+	flexDirectionRow: {
+		flexDirection: "row",
+	},
+	MX10: {
+		marginHorizontal: sizeConstants.mX,
+	},
+	dotStyle: {
+		height: sizeConstants.eightX,
+		width: sizeConstants.eightX,
+	},
+	ML30: {
+		marginLeft: sizeConstants.mThirty,
+	},
+
+	pt10: {
+		paddingTop: sizeConstants.mX,
+	},
+	alignItemsCenter: {
+		alignItems: "center",
+	},
+	mt20: {
+		marginTop: sizeConstants.twentyMX,
+	},
+	pr10: {
+		paddingRight: sizeConstants.mX,
+	},
+	flexOne: {
+		flex: 1,
+	},
+	// common styles ends
+
+	// milestone starts
+	reoccuring: {color: ColorConstants.faintWhite, fontSize: sizeConstants.twentyOne},
+	milestoneText: {
+		fontSize: sizeConstants.sixteenX,
+		color: ColorConstants.faintWhite,
+		marginLeft: sizeConstants.twentyOne,
+		// marginTop: sizeConstants.twentyX,
+	},
+	container2: {
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: ColorConstants.faintWhite,
+		width: "70%",
+		padding: sizeConstants.eightMX,
+		borderRadius: sizeConstants.xxl,
+		flexDirection: "column",
+		marginVertical: sizeConstants.five,
+		marginTop: sizeConstants.fifteenX,
+		alignSelf: "center",
+	},
+
+	button: {
+		color: ColorConstants.black,
+		fontSize: sizeConstants.twentyOne,
+	},
+
+	subTitleMilestone: {
+		fontSize: sizeConstants.fifteenMX,
+		color: ColorConstants.faintWhite,
+		marginLeft: sizeConstants.twentyOne,
+		paddingLeft: sizeConstants.five,
+		paddingRight: sizeConstants.twentyMX,
+	},
+
+	calendarContainer: {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		flexDirection: "row",
+		marginTop: sizeConstants.m,
+	},
+	reoccuringText: {
+		fontSize: "21@s",
+		alignSelf: "center",
+		marginLeft: scale(20),
+		color: "#FDF9F2",
+		marginTop: sizeConstants.m,
+	},
+	doneText: {
+		fontSize: "14@s",
+		color: "#FDF9F2",
+		// position: "absolute",
+		// right: 0,
+		// left: sizeConstants.xxxl,
+	},
+	container: {
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: "#588C8D",
+		borderColor: "#FDF9F2",
+		marginBottom: sizeConstants.xl,
+		marginTop: sizeConstants.m,
+	},
+
+	targetDate: {
+		fontSize: sizeConstants.twentyOne,
+		color: ColorConstants.faintBlack1,
+		alignSelf: "center",
+		marginLeft: sizeConstants.twentyMX,
+		color: ColorConstants.faintWhite,
+		marginTop: sizeConstants.twentyMX,
+	},
+
+	done: {
+		fontSize: sizeConstants.fourteenMX,
+		color: ColorConstants.faintWhite,
+		position: "absolute",
+		left: sizeConstants.fifty,
+	},
+
+	containerMilestone: {
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: ColorConstants.darkFaintBlue,
+		borderColor: ColorConstants.faintWhite,
+		marginBottom: sizeConstants.twentyMX,
+		borderEndWidth: sizeConstants.three,
+		borderStartWidth: sizeConstants.three,
+		borderTopWidth: sizeConstants.three,
+		borderBottomWidth: sizeConstants.three,
+		width: "70%",
+		padding: sizeConstants.eight,
+		borderRadius: sizeConstants.twentySix,
+		flexDirection: "column",
+		marginVertical: sizeConstants.s,
+		marginTop: sizeConstants.l,
+		alignSelf: "center",
+	},
+
+	// MyGoals Home Screen
+	titleContainer1: {
+		height: scale(90) - Constants.statusBarHeight,
+		backgroundColor: "#588C8D",
+		justifyContent: "center",
+	},
+	goalsContainer: {
+		flex: 1,
+		backgroundColor: "#FBF5E9",
+		borderTopRightRadius: sizeConstants.seventy,
+	},
+	viewTap: {
+		height: sizeConstants.six,
+		width: scale(60),
+		backgroundColor: "#588C8D",
+		marginVertical: sizeConstants.m,
+		borderRadius: sizeConstants.thirty,
+		opacity: 0.5,
+	},
+	myGoalsText: {
+		fontSize: "25@s",
+		fontWeight: "bold",
+		color: "#588C8D",
+		marginHorizontal: scale(20),
+		marginBottom: sizeConstants.m,
+	},
+	logoSpacing: {
+		flex: 1,
+		flexDirection: "row",
+		flexWrap: "wrap",
+		// justifyContent: "center",
+		width: "100%",
+	},
+	logoContainer: {
+		marginLeft: sizeConstants.sixtyFive, //TODO
+		marginTop: sizeConstants.xl,
+		// backgroundColor: "green",
+	},
+	goalText: {
+		fontSize: "16@s",
+		color: "#666666",
+		textAlign: "center",
+		maxWidth: scale(90),
+
+		// backgroundColor: "blue",
+	},
+	circleLogo: {
+		height: sizeConstants.hundred,
+		width: sizeConstants.hundred,
+		borderRadius: sizeConstants.hundred,
+		borderWidth: sizeConstants.s,
+		borderColor: "#588C8D",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	iconVertical: {
+		height: sizeConstants.thirty,
+		width: scale(4),
+		backgroundColor: "#588C8D",
+	},
+	iconHorizontal: {
+		height: sizeConstants.four,
+		width: scale(30),
+		backgroundColor: "#588C8D",
+		position: "absolute",
+	},
+	bottomBtnContainer: {
+		width: "100%",
+		position: "absolute",
+		bottom: sizeConstants.fourtyFive,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	bottomBtn2: {
+		height: sizeConstants.seventyFive,
+		width: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive,
+		backgroundColor: "#7EC8C9",
+		elevation: sizeConstants.s,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+
 	introContainer: {
 		flex: 1,
 		backgroundColor: ColorConstants.darkFaintBlue,
 	},
 
-	mainTitle: {
-		color: ColorConstants.faintWhite,
-		fontSize: sizeConstants.xxl,
-		marginLeft: sizeConstants.twentyOne,
-	},
+	// mainTitle: {
+	// 	color: ColorConstants.faintWhite,
+	// 	fontSize: sizeConstants.xxl,
+	// 	marginLeft: sizeConstants.twentyOne,
+	// },
 
 	bottomBtnMilestone: {
 		marginBottom: sizeConstants.twentyMX,
 		height: sizeConstants.seventyFive,
 		width: sizeConstants.seventyFive,
-		borderRadius: sizeConstants.seventyFive / 2,
+		borderRadius: sizeConstants.seventyFive,
 		backgroundColor: ColorConstants.faintWhite,
 		elevation: sizeConstants.five,
 		justifyContent: "center",

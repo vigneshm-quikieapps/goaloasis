@@ -96,16 +96,16 @@ const styles = StyleSheet.create({
 		backgroundColor: ColorConstants.faintWhite,
 		height: sizeConstants.seventyFive,
 		width: sizeConstants.seventyFive,
-		borderRadius: sizeConstants.seventyFive / 2,
+		borderRadius: sizeConstants.seventyFive,
 		right: 0,
 		marginTop: sizeConstants.oneFifty,
 		marginHorizontal: sizeConstants.seventyFive,
 	},
 
 	nextBtn: {
-		width: sizeConstants.fifty,
-		height: sizeConstants.fifty,
-		borderRadius: sizeConstants.xxl,
+		width: 50,
+		height: 50,
+		borderRadius: 25,
 	},
 	textInput: {
 		width: sizeConstants.threeFourTeen,

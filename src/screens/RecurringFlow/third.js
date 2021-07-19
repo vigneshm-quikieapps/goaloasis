@@ -34,10 +34,10 @@ const Third = () => {
 					<View style={CommonStyles.editContainer}>
 						<Text style={CommonStyles.editOccuringText}>Edit Target Date</Text>
 					</View>
-					<View style={CommonStyles.reoccuringDateContainer}>
-						<Text style={CommonStyles.reoccuringText}>Reoccuring Date</Text>
+					<View style={CommonStyles.calendarContainer}>
+						<Text style={CommonStyles.targetDate}>Reoccuring Date</Text>
 						<TouchableOpacity onPress={() => navigation.navigate("FifthMilestone")}>
-							<Text style={CommonStyles.doneText}>Done</Text>
+							<Text style={CommonStyles.done}>Done</Text>
 						</TouchableOpacity>
 					</View>
 
@@ -119,10 +119,10 @@ const Third = () => {
 						}}
 					/>
 					<TouchableOpacity
-						style={CommonStyles.container}
+						style={CommonStyles.containerMilestone}
 						onPress={() => navigation.navigate("FifthMilestone")}
 					>
-						<Text style={{color: "#FDF9F2", fontSize: 21}}>Set reoccuring</Text>
+						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={CommonStyles.bottomBtn}
@@ -139,69 +139,8 @@ const Third = () => {
 export default Third
 
 const styles = StyleSheet.create({
-	// container: {
-	// 	justifyContent: "center",
-	// 	alignItems: "center",
-	// 	backgroundColor: "#588C8D",
-	// 	borderColor: "#FDF9F2",
-	// 	marginBottom: 20,
-	// 	borderEndWidth: 3,
-	// 	borderStartWidth: 3,
-
-	// 	borderTopWidth: 3,
-	// 	borderBottomWidth: 3,
-	// 	width: "70%",
-	// 	padding: 8,
-	// 	borderRadius: 25,
-	// 	flexDirection: "column",
-	// 	marginVertical: 5,
-	// 	marginTop: 15,
-	// 	alignSelf: "center",
-	// },
-	// container2: {
-	// 	justifyContent: "center",
-	// 	alignItems: "center",
-	// 	backgroundColor: "#FDF9F2",
-
-	// 	width: "70%",
-	// 	padding: 8,
-	// 	borderRadius: 25,
-	// 	flexDirection: "column",
-	// 	marginVertical: 5,
-	// 	marginTop: 15,
-	// 	alignSelf: "center",
-	// },
-	// mainTitle: {
-	// 	color: "#FDF9F2",
-	// 	fontSize: 25,
-	// 	marginLeft: 21,
-	// },
-	// button: {
-	// 	color: "black",
-	// 	fontSize: 21,
-	// },
 	introContainer: {
 		flex: 1,
 		backgroundColor: "#588C8D",
 	},
-
-	// subTitle: {
-	// 	fontSize: 17,
-	// 	color: "#FDF9F2",
-	// 	marginLeft: 21,
-	// 	paddingLeft: 5,
-	// 	paddingRight: 20,
-	// },
-
-	// bottomBtn: {
-	// 	marginBottom: 20,
-	// 	height: 75,
-	// 	width: 75,
-	// 	borderRadius: 75 / 2,
-	// 	backgroundColor: "#FDF9F2",
-	// 	elevation: 5,
-	// 	justifyContent: "center",
-	// 	alignItems: "center",
-	// 	alignSelf: "center",
-	// },
 })
