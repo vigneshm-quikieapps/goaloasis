@@ -25,8 +25,27 @@ import {
 } from "./../../redux/actions"
 import {getFirstTimeTaskTutorial, getFirstTimeTimelineFlow} from "./../../utils/asyncStorage"
 import {CommonStyles, forGoals} from "./../../core/styles"
+import firestore from "@react-native-firebase/firestore"
 
 const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimelineFlow}) => {
+	const [test, setTest] = useState({})
+
+	// const testFire = () => {
+	// 	firestore()
+	// 		.collection("Goals/milestones")
+	// 		.add({
+	// 			name: "test1",
+	// 			description: "testing-1",
+	// 			targetDate: new Date("28-07-2021"),
+	// 			createdAt: firestore.FieldValue.serverTimestamp(),
+	// 			goalMilestone: [{}, {}, {}],
+	// 			color: "#ff0000",
+	// 		})
+	// 		.then(() => {
+	// 			console.log("Goal added!")
+	// 		})
+	// }
+
 	useEffect(() => {
 		fetchData()
 	}, [testData, firstTime, firstTimeTimelineFlow])
@@ -34,6 +53,7 @@ const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimel
 	const fetchData = async () => {
 		const data = await getFirstTimeTaskTutorial()
 		const data1 = await getFirstTimeTimelineFlow()
+		console.log("getFirstTimeTimelineFlow", !firstTimeTimelineFlow)
 		setFirstTime(data)
 		setFirstTimeForTimeLine(data1)
 	}

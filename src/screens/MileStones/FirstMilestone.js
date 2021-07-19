@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
 	bottomBtn: {
 		height: sizeConstants.seventyFive,
 		width: sizeConstants.seventyFive,
-		borderRadius: sizeConstants.seventyFive / 2,
+		borderRadius: sizeConstants.seventyFive,
 		backgroundColor: "white",
 		elevation: sizeConstants.s,
 		justifyContent: "center",
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
 		backgroundColor: ColorConstants.faintWhite,
 		width: sizeConstants.seventyFive,
 		height: sizeConstants.seventyFive,
-		borderRadius: sizeConstants.seventyFive / 2,
+		borderRadius: sizeConstants.seventyFive,
 		right: 0,
 		display: "flex",
 		alignSelf: "flex-end",

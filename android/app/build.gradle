@@ -1,5 +1,8 @@
 apply plugin: "com.android.application"
 
+//added by me
+apply plugin: 'com.google.gms.google-services'
+
 
 import com.android.build.OutputFile
 
@@ -198,8 +201,8 @@ android {
 
 dependencies {
     //added by me
-    implementation platform('com.google.firebase:firebase-bom:28.2.0')
-    implementation('com.google.firebase:firebase-analytics')
+    implementation platform('com.google.firebase:firebase-bom:28.2.1')
+  implementation 'com.google.firebase:firebase-analytics'
     //added by me ended
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
@@ -234,6 +237,3 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
-
-//added by me
-apply plugin: 'com.google.gms.google-services'
