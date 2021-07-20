@@ -72,3 +72,22 @@ export const getFirstTimeIndividual = async (key) => {
 		console.log(error.message)
 	}
 }
+
+export const addGoalDataToAsyncStorage = async (data) => {
+	try {
+		let stringObj = JSON.stringify(data)
+		await AsyncStorage.setItem(data.name, stringObj)
+		console.log("Async goal: ", stringObj)
+	} catch (error) {
+		console.log(error.message)
+	}
+}
+
+export const deleteGoalDataFromAsyncStorage = async (id) => {
+	try {
+		await AsyncStorage.removeItem(id)
+		console.log("Removed from Async Storage: ", id)
+	} catch (error) {
+		console.log(error.message)
+	}
+}

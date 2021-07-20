@@ -10,3 +10,6 @@ export const SET_FIRSTTIME_FOR_INDIVIDUAL_GOAL = "settingFirstTimeForIndividualG
 // Milestone Data
 export const ADD_NEW_MILESTONE = "addNewMilestone"
 export const EDIT_MILESTONE = "editMilestone"
+
+export const ADD_NEW_GOAL = "addNewGoal"
+export const SET_CURRENT_GOAL = "settingCurrentGoal"

@@ -51,3 +51,10 @@ export const setFirstTimeForIndividualGoal = (data) => {
 		value: data,
 	}
 }
+
+export const setCurrentGoal = (data) => {
+	return {
+		type: actionTypes.SET_CURRENT_GOAL,
+		value: data,
+	}
+}
