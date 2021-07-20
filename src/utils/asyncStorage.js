@@ -91,3 +91,14 @@ export const deleteGoalDataFromAsyncStorage = async (id) => {
 		console.log(error.message)
 	}
 }
+
+export const getClickedGoalFromAsyncStorage = async (key) => {
+	let value = null
+	try {
+		value = await AsyncStorage.getItem(key)
+		return value
+	} catch (error) {
+		console.log(error.message)
+	}
+	return value !== null ? value : ""
+}

@@ -652,7 +652,7 @@ export const CommonStyles = ScaledSheet.create({
 		width: "100%",
 	},
 	logoContainer: {
-		marginLeft: scale(65), //TODO
+		marginLeft: sizeConstants.fifty, //TODO
 		marginTop: sizeConstants.xl,
 		// backgroundColor: "green",
 	},
@@ -891,11 +891,7 @@ export const CommonStyles = ScaledSheet.create({
 		// justifyContent: "center",
 		width: "100%",
 	},
-	logoContainer: {
-		marginLeft: sizeConstants.sixtyFive, //TODO
-		marginTop: sizeConstants.xl,
-		// backgroundColor: "green",
-	},
+
 	goalText: {
 		fontSize: "16@s",
 		color: "#666666",

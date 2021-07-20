@@ -5,8 +5,9 @@ import {useNavigation} from "@react-navigation/native"
 import ProgressCircle from "react-native-progress-circle"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import RBBottomSheet from "../MileStones/RBBottomSheet"
+import {connect} from "react-redux"
 
-const DParticularGoals = () => {
+const DParticularGoals = ({clickedGoal}) => {
 	const navigation = useNavigation()
 
 	const goBack = () => {
@@ -15,7 +16,7 @@ const DParticularGoals = () => {
 	return (
 		<StatusBarScreen style={styles.container}>
 			<View style={styles.titleContainer}>
-				<RBBottomSheet />
+				<RBBottomSheet name={clickedGoal.name} />
 				<Text style={styles.subTitle}>I want to continue improve myself and my state of mind.</Text>
 
 				<View style={styles.trackingcont}>
@@ -88,7 +89,17 @@ const DParticularGoals = () => {
 	)
 }
 
-export default DParticularGoals
+const mapStateToProps = (state) => {
+	return {
+		clickedGoal: state.milestone.clickedGoal,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DParticularGoals)
 
 const styles = StyleSheet.create({
 	container: {

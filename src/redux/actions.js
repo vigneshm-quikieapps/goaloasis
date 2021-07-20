@@ -15,6 +15,13 @@ export const EditNewMilestone = (editMilestone) => {
 	}
 }
 
+export const setClickedGoal = (currentGoal) => {
+	return {
+		type: actionTypes.SET_CLICKED_GOAL,
+		value: currentGoal,
+	}
+}
+
 // For testing the first time User
 export const setTestData = (data) => {
 	return {

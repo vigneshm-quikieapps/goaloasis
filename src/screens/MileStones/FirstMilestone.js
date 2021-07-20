@@ -15,9 +15,11 @@ import {Entypo} from "@expo/vector-icons"
 import {Calendar} from "react-native-calendars"
 import StatusBarScreen from "./StatusBarScreen"
 import {connect} from "react-redux"
-import {addNewMilestone, EditNewMilestone} from "./../../redux/actions"
-const FirstMilestone = ({addNewMilestone, newMileStone}) => {
-	const [milestone, setMilestone] = useState([])
+import {addNewMilestone, EditNewMilestone, setClickedGoal} from "./../../redux/actions"
+import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
+
+const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
+	const [milestone, setMilestone] = useState("")
 	const [date, setDate] = useState()
 
 	console.log("Milestone", milestone)
@@ -26,12 +28,21 @@ const FirstMilestone = ({addNewMilestone, newMileStone}) => {
 	const navigation = useNavigation()
 
 	const nextScreen = () => {
+		let milestoneArr = [
+			{
+				milestone: milestone,
+				date: date,
+			},
+		]
+		// addNewMilestone(milestoneArr)
+		// addMilestoneToFirestore(clickedGoal, milestoneArr)
+		console.log("getAllGoalsFromFirestore", getAllGoalsFromFirestore())
+		return
 		navigation.navigate("ThirdMileStone")
 	}
 	// const goBack = () => {
 	// 	navigation.goBack()
 	// }
-	// const [date, setDate] = useState(new Date())
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
 		<ImageBackground
@@ -43,7 +54,7 @@ const FirstMilestone = ({addNewMilestone, newMileStone}) => {
 				<StatusBarScreen>
 					<View style={CommonStyles.flexOne}>
 						<View style={CommonStyles.flexDirectionRow}>
-							<Text style={CommonStyles.mainTitle}>Read 5 books</Text>
+							<Text style={CommonStyles.mainTitle}>{clickedGoal.name}</Text>
 							<Entypo
 								name="cross"
 								color={ColorConstants.faintWhite}
@@ -67,14 +78,14 @@ const FirstMilestone = ({addNewMilestone, newMileStone}) => {
 
 						<Calendar
 							// // Initially visible month. Default = Date()
-							current={"2012-05-31"}
+							current={new Date()}
 							// // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
 							minDate={"2001-05-10"}
 							// // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-							maxDate={"2020-05-30"}
+							maxDate={"2050-05-30"}
 							// // Handler which gets executed on day press. Default = undefined
 							onDayPress={(day) => {
-								addNewMilestone(day)
+								setDate(day.dateString)
 							}}
 							// // Handler which gets executed on day long press. Default = undefined
 							// onDayLongPress={(day) => {
@@ -143,7 +154,7 @@ const FirstMilestone = ({addNewMilestone, newMileStone}) => {
 								// textMonthFontSize: 16,
 								// textDayHeaderFontSize: 40,
 							}}
-							style={ColorConstants.transparent}
+							style={{backgroundColor: ColorConstants.transparent}}
 						/>
 
 						<TouchableOpacity style={[styles.btnStyling, styles.nextBtn]} onPress={nextScreen}>
@@ -151,9 +162,6 @@ const FirstMilestone = ({addNewMilestone, newMileStone}) => {
 								name="chevron-right"
 								size={50}
 								color={ColorConstants.lighterBlue}
-								onPress={() => {
-									addNewMilestone(milestone)
-								}}
 							/>
 						</TouchableOpacity>
 
@@ -177,6 +185,7 @@ const mapStateToProps = (state) => {
 
 	return {
 		newMileStone: state.milestone.newMileStone,
+		clickedGoal: state.milestone.clickedGoal,
 	}
 }
 
