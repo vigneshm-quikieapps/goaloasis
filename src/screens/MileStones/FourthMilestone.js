@@ -39,7 +39,7 @@ const FourthMilestone = () => {
 						<Text style={CommonStyles.button}>Read One Book</Text>
 					</TouchableOpacity>
 					<Text style={CommonStyles.subTitleMilestone}>
-						{tip()} Think of milestones as a mini goalfdfdf that helps you reach your ultimate goal.
+						{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
 					</Text>
 
 					<View style={CommonStyles.calendarContainer}>

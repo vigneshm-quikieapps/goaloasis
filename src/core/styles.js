@@ -678,12 +678,14 @@ export const CommonStyles = ScaledSheet.create({
 	iconVertical: {
 		height: sizeConstants.thirty,
 		width: scale(4),
-		backgroundColor: "#588C8D",
+		// backgroundColor: "#588C8D",
+		backgroundColor: "pink",
 	},
 	iconHorizontal: {
 		height: sizeConstants.four,
 		width: scale(30),
-		backgroundColor: "#588C8D",
+		// backgroundColor: "#588C8D",
+		backgroundColor: "blue",
 		position: "absolute",
 	},
 	bottomBtnContainer: {
