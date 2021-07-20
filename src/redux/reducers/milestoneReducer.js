@@ -8,11 +8,12 @@ const initialState = {
 	newMileStone: [], // similar to state objects in class component
 	editMileStone: [],
 	currentGoal: {},
+	clickedGoal: {},
 }
 
 const milestoneReducer = (state = initialState, action) => {
 	switch (action.type) {
-		// Adding new Milestone
+		// Adding new Milestones
 
 		case actionTypes.ADD_NEW_MILESTONE:
 			return {
@@ -20,7 +21,7 @@ const milestoneReducer = (state = initialState, action) => {
 				newMileStone: [
 					...state.newMileStone,
 					{
-						id: Math.random(),
+						goalName: action.value,
 						mileStoneData: action.value,
 					},
 				],
@@ -70,6 +71,14 @@ const milestoneReducer = (state = initialState, action) => {
 			return {
 				...state,
 				currentGoal: action.value,
+			}
+
+		// for current goal
+
+		case actionTypes.SET_CLICKED_GOAL:
+			return {
+				...state,
+				clickedGoal: action.value,
 			}
 		default:
 			return state

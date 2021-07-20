@@ -8,9 +8,9 @@ import colors from "../../../colors"
 import AsyncStorage from "@react-native-community/async-storage"
 import {CommonStyles, forGoals} from "../../core/styles"
 import firestore from "@react-native-firebase/firestore"
-import {addGoalToFirestore} from "./../../firebase"
 import {setCurrentGoal} from "./../../redux/actions"
-
+import {addGoalToFirestore} from "./../../firebase"
+import {connect} from "react-redux"
 const colorArray = Object.values(forGoals)
 
 const GoalStep3 = ({setCurrentGoal, currentGoal}) => {

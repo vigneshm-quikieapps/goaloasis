@@ -5,6 +5,7 @@ import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {CommonStyles} from "../../core/styles"
 import {setCurrentGoal} from "./../../redux/actions"
+import {connect} from "react-redux"
 
 const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 	const navigation = useNavigation()

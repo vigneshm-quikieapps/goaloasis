@@ -7,6 +7,7 @@ import {black} from "color-name"
 import GoalStep2 from "./GoalStep2"
 import {CommonStyles} from "../../core/styles"
 import {setCurrentGoal} from "./../../redux/actions"
+import {connect} from "react-redux"
 
 const NameGoal = ({setCurrentGoal, currentGoal}) => {
 	const navigation = useNavigation()

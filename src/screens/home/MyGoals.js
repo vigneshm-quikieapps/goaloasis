@@ -22,12 +22,24 @@ import {
 	setFirstTime,
 	setFirstTimeForTimeLine,
 	setTestDataForTimeline,
+	setClickedGoal,
 } from "./../../redux/actions"
-import {getFirstTimeTaskTutorial, getFirstTimeTimelineFlow} from "./../../utils/asyncStorage"
+import {
+	getClickedGoalFromAsyncStorage,
+	getFirstTimeTaskTutorial,
+	getFirstTimeTimelineFlow,
+} from "./../../utils/asyncStorage"
 import {CommonStyles, forGoals, sizeConstants} from "./../../core/styles"
 import firestore from "@react-native-firebase/firestore"
 
-const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimelineFlow}) => {
+const MyGoals = ({
+	testData,
+	setTestData,
+	firstTime,
+	setFirstTime,
+	firstTimeTimelineFlow,
+	setClickedGoal,
+}) => {
 	const [test, setTest] = useState({})
 
 	// const testFire = () => {
@@ -51,16 +63,18 @@ const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimel
 	}, [testData, firstTime, firstTimeTimelineFlow])
 
 	const fetchData = async () => {
-		const data = await getFirstTimeTaskTutorial()
-		const data1 = await getFirstTimeTimelineFlow()
+		const data = await getFirstTimeTaskTutorial().catch((err) => console.log(err))
+		const data1 = await getFirstTimeTimelineFlow().catch((err) => console.log(err))
 		console.log("getFirstTimeTimelineFlow", !firstTimeTimelineFlow)
 		setFirstTime(data)
 		setFirstTimeForTimeLine(data1)
 	}
 	const navigation = useNavigation()
 
-	const handleOpenNewGoal = () => {
+	const handleOpenNewGoal = (task) => {
 		navigation.navigate("DParticularGoal")
+		let clickedGoal = getClickedGoalFromAsyncStorage(task)
+		setClickedGoal(JSON.parse(clickedGoal))
 	}
 
 	const gotoGoal = () => {
@@ -85,6 +99,7 @@ const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimel
 
 	//async code
 	const [tasks, setTasks] = useState([])
+
 	let allTasks = []
 	const getData = async () => {
 		try {
@@ -141,7 +156,12 @@ const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimel
 					<View style={CommonStyles.logoSpacing}>
 						{allTasks.map((task, index) => (
 							<View key={index}>
-								<TouchableOpacity style={CommonStyles.logoContainer} onPress={handleOpenNewGoal}>
+								<TouchableOpacity
+									style={CommonStyles.logoContainer}
+									onPress={() => {
+										handleOpenNewGoal(task)
+									}}
+								>
 									{/* <TouchableOpacity
 									style={CommonStyles.logoContainer}
 									onPress={() => navigation.navigate("third")}
@@ -202,6 +222,7 @@ const mapStateToProps = (state) => {
 	return {
 		firstTime: state.milestone.firstTime,
 		firstTimeTimelineFlow: state.milestone.firstTimeTimelineFlow,
+		clickedGoal: state.milestone.clickedGoal,
 	}
 }
 
@@ -215,6 +236,10 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setFirstTimeForTimeLine: (data) => {
 			dispatch(setFirstTimeForTimeLine(data))
+		},
+
+		setClickedGoal: (data) => {
+			dispatch(setClickedGoal(data))
 		},
 	}
 }

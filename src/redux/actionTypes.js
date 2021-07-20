@@ -13,3 +13,5 @@ export const EDIT_MILESTONE = "editMilestone"
 
 export const ADD_NEW_GOAL = "addNewGoal"
 export const SET_CURRENT_GOAL = "settingCurrentGoal"
+//for current goal
+export const SET_CLICKED_GOAL = "settingClickedGoal"
