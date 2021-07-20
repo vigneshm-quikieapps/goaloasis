@@ -71,6 +71,7 @@ export const sizeConstants = {
 	fourtyEight: verticalScale(48),
 	xxxl: verticalScale(50),
 	fifty: moderateScale(50),
+	fiftyHalf: scale(50.5),
 	fiftyFive: verticalScale(55),
 	sixty: verticalScale(60),
 	mSixty: moderateScale(60),
