@@ -96,6 +96,7 @@ export const getClickedGoalFromAsyncStorage = async (key) => {
 	let value = null
 	try {
 		value = await AsyncStorage.getItem(key)
+		return value
 	} catch (error) {
 		console.log(error.message)
 	}

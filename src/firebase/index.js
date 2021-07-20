@@ -80,7 +80,8 @@ export const addGoalToFirestore = (data) => {
 }
 
 export const addMilestoneToFirestore = (target, milestoneArr) => {
-	let targetObj = JSON.parse(target)
+	// let targetObj = JSON.parse(target)
+	let targetObj = target
 	let updatedObj = {
 		...targetObj,
 		goalMilestone: milestoneArr,

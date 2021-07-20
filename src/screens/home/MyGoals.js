@@ -72,9 +72,13 @@ const MyGoals = ({
 	const navigation = useNavigation()
 
 	const handleOpenNewGoal = (task) => {
-		navigation.navigate("DParticularGoal")
-		let clickedGoal = getClickedGoalFromAsyncStorage(task)
-		setClickedGoal(JSON.parse(clickedGoal))
+		getClickedGoalFromAsyncStorage(task).then((data) => {
+			let clickedGoal = JSON.parse(data)
+			setClickedGoal(clickedGoal)
+			navigation.navigate("DParticularGoal")
+		})
+
+		// clickedGoal = JSON.parse(clickedGoal)
 	}
 
 	const gotoGoal = () => {
@@ -208,8 +212,8 @@ const MyGoals = ({
 				<View style={CommonStyles.bottomBtnContainer}>
 					<TouchableOpacity
 						style={CommonStyles.bottomBtn2}
-						// onPress={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
-						onPress={() => navigation.navigate("FirstMilestone")}
+						onPress={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
+						// onPress={() => navigation.navigate("particulargoal")}
 					>
 						<MaterialCommunityIcons name="file-tree-outline" size={34} color="white" />
 					</TouchableOpacity>

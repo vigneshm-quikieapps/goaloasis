@@ -11,7 +11,7 @@ import {
 	moderateVerticalScale,
 } from "react-native-size-matters"
 
-const RBBottomSheet = ({flag = true}) => {
+const RBBottomSheet = ({name = "Read 5 Books", flag = true}) => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
 	const goBack = () => {
@@ -20,7 +20,7 @@ const RBBottomSheet = ({flag = true}) => {
 	return (
 		<View style={styles.container}>
 			<View style={{flexDirection: "row"}}>
-				{flag && <Text style={styles.mainTitle}>Read 5 books</Text>}
+				{flag && <Text style={styles.mainTitle}>{name}</Text>}
 				<TouchableOpacity onPress={() => refRBSheet.current.open()} style={styles.threeDots}>
 					<View style={styles.dots}></View>
 					<View style={styles.dots}></View>

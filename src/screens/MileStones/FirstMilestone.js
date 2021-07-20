@@ -16,8 +16,10 @@ import {Calendar} from "react-native-calendars"
 import StatusBarScreen from "./StatusBarScreen"
 import {connect} from "react-redux"
 import {addNewMilestone, EditNewMilestone, setClickedGoal} from "./../../redux/actions"
+import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
+
 const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
-	const [milestone, setMilestone] = useState([])
+	const [milestone, setMilestone] = useState("")
 	const [date, setDate] = useState()
 
 	console.log("Milestone", milestone)
@@ -26,12 +28,20 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 	const navigation = useNavigation()
 
 	const nextScreen = () => {
+		let milestoneArr = [
+			{
+				milestone: milestone,
+				date: date,
+			},
+		]
+		addNewMilestone(milestoneArr)
+		addMilestoneToFirestore(clickedGoal, milestoneArr)
+		console.log("getAllGoalsFromFirestore", getAllGoalsFromFirestore())
 		navigation.navigate("ThirdMileStone")
 	}
 	// const goBack = () => {
 	// 	navigation.goBack()
 	// }
-	// const [date, setDate] = useState(new Date())
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
 		<ImageBackground
@@ -43,7 +53,8 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 				<StatusBarScreen>
 					<View style={CommonStyles.flexOne}>
 						<View style={CommonStyles.flexDirectionRow}>
-							<Text style={CommonStyles.mainTitle}>data</Text>
+							{/* <Text style={CommonStyles.mainTitle}>data</Text> */}
+							<Text style={CommonStyles.mainTitle}>{clickedGoal.name}</Text>
 							<Entypo
 								name="cross"
 								color={ColorConstants.faintWhite}
@@ -74,7 +85,7 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 							maxDate={"2050-05-30"}
 							// // Handler which gets executed on day press. Default = undefined
 							onDayPress={(day) => {
-								addNewMilestone(day)
+								setDate(day.dateString)
 							}}
 							// // Handler which gets executed on day long press. Default = undefined
 							// onDayLongPress={(day) => {
@@ -143,7 +154,7 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 								// textMonthFontSize: 16,
 								// textDayHeaderFontSize: 40,
 							}}
-							style={ColorConstants.transparent}
+							style={{backgroundColor: ColorConstants.transparent}}
 						/>
 
 						<TouchableOpacity style={[styles.btnStyling, styles.nextBtn]} onPress={nextScreen}>
@@ -151,9 +162,6 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 								name="chevron-right"
 								size={50}
 								color={ColorConstants.lighterBlue}
-								onPress={() => {
-									addNewMilestone(milestone)
-								}}
 							/>
 						</TouchableOpacity>
 
