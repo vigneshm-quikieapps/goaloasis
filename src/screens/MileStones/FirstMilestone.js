@@ -34,10 +34,9 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 				date: date,
 			},
 		]
-		// addNewMilestone(milestoneArr)
-		// addMilestoneToFirestore(clickedGoal, milestoneArr)
+		addNewMilestone(milestoneArr)
+		addMilestoneToFirestore(clickedGoal, milestoneArr)
 		console.log("getAllGoalsFromFirestore", getAllGoalsFromFirestore())
-		return
 		navigation.navigate("ThirdMileStone")
 	}
 	// const goBack = () => {
