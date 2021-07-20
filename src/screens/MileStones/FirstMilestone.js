@@ -43,7 +43,7 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 				<StatusBarScreen>
 					<View style={CommonStyles.flexOne}>
 						<View style={CommonStyles.flexDirectionRow}>
-							<Text style={CommonStyles.mainTitle}>{clickedGoal}</Text>
+							<Text style={CommonStyles.mainTitle}>data</Text>
 							<Entypo
 								name="cross"
 								color={ColorConstants.faintWhite}
