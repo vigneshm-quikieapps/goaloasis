@@ -5,16 +5,34 @@ const initialState = {
 	firstTime: null,
 	firstTimeTimelineFlow: null,
 	firstTimeIndividual: null,
+	newMileStone: [], // similar to state objects in class component
+	editMileStone: [],
 	currentGoal: {},
 }
 
 const milestoneReducer = (state = initialState, action) => {
 	switch (action.type) {
+		// Adding new Milestone
+
 		case actionTypes.ADD_NEW_MILESTONE:
 			return {
 				...state,
-				milestone: action.value,
+				newMileStone: [
+					...state.newMileStone,
+					{
+						id: Math.random(),
+						mileStoneData: action.value,
+					},
+				],
 			}
+
+		case actionTypes.EDIT_MILESTONE:
+			return {
+				...state,
+				editMileStone: action.value,
+			}
+
+		// Testing for the first time
 		case actionTypes.SET_TEST_DATA:
 			return {
 				...state,

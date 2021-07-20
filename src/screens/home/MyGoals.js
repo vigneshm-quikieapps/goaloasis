@@ -188,7 +188,8 @@ const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimel
 				<View style={CommonStyles.bottomBtnContainer}>
 					<TouchableOpacity
 						style={CommonStyles.bottomBtn2}
-						onPress={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
+						// onPress={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
+						onPress={() => navigation.navigate("FirstMilestone")}
 					>
 						<MaterialCommunityIcons name="file-tree-outline" size={34} color="white" />
 					</TouchableOpacity>
