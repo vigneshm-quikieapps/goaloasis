@@ -1,12 +1,21 @@
 import * as actionTypes from "./actionTypes"
 
-export const addNewMilestone = (milestone) => {
+// Adding new Milestone
+export const addNewMilestone = (newMilestone) => {
 	return {
 		type: actionTypes.ADD_NEW_MILESTONE,
-		value: milestone,
+		value: newMilestone,
 	}
 }
 
+export const EditNewMilestone = (editMilestone) => {
+	return {
+		type: actionTypes.EDIT_MILESTONE,
+		value: editMilestone,
+	}
+}
+
+// For testing the first time User
 export const setTestData = (data) => {
 	return {
 		type: actionTypes.SET_TEST_DATA,

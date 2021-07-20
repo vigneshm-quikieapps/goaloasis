@@ -2167,10 +2167,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.10.tgz#5dda643e19e587793bc2034dd9bf7398ad43d401"
   integrity sha512-rk4sWFsmtOw8oyx8SD3KSvawwaK7gRBSEIy2TAwURyGt+3TizssXP1r8nx3zY+R7v2vYYHXZ+k2/GULAT/bcaQ==
 
-"@react-native-firebase/analytics@^12.1.0":
-  version "12.1.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-12.1.0.tgz#fe748c89219b992487eceaf2a3317599f93ec488"
-  integrity sha512-n9UY50JeU4In0If+g9dEhIXYL14uPclqRxNK3tnUr24tmdY6Xbv76mdIELgcd8UW7npuU4st+kppmiyrIO7Qfw==
+"@react-native-firebase/analytics@^12.2.0":
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-12.2.0.tgz#ddee2f26c92c8f463542624a6d7789d745d19834"
+  integrity sha512-vgl5/t6DNWTigtuq1fnF6uHnVARjVWHhjd1Hr89aH9yuh0S/6ig/IevVbBXcvBWExsfH0dT7/y2Yvpa+sE6OrA==
 
 "@react-native-firebase/app@^12.2.0":
   version "12.2.0"

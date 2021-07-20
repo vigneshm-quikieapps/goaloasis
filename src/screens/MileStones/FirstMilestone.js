@@ -9,15 +9,20 @@ import {
 	ImageBackground,
 } from "react-native"
 import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "./../../core/styles"
-
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {Entypo} from "@expo/vector-icons"
-
 import {Calendar} from "react-native-calendars"
 import StatusBarScreen from "./StatusBarScreen"
+import {connect} from "react-redux"
+import {addNewMilestone, EditNewMilestone} from "./../../redux/actions"
+const FirstMilestone = ({addNewMilestone, newMileStone}) => {
+	const [milestone, setMilestone] = useState([])
+	const [date, setDate] = useState()
 
-const FirstMilestone = () => {
+	console.log("Milestone", milestone)
+	console.log("Date", date)
+
 	const navigation = useNavigation()
 
 	const nextScreen = () => {
@@ -26,7 +31,7 @@ const FirstMilestone = () => {
 	// const goBack = () => {
 	// 	navigation.goBack()
 	// }
-	const [date, setDate] = useState(new Date())
+	// const [date, setDate] = useState(new Date())
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
 		<ImageBackground
@@ -49,7 +54,11 @@ const FirstMilestone = () => {
 
 						<Text style={styles.subTitle}>Enter Milestone</Text>
 						<View style={styles.centerCont}>
-							<TextInput style={styles.textInput} placeholder="Type Here" />
+							<TextInput
+								style={styles.textInput}
+								placeholder="Type Here"
+								onChangeText={(text) => setMilestone(text)}
+							/>
 						</View>
 						<Text style={styles.subTitle}>
 							{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
@@ -65,18 +74,18 @@ const FirstMilestone = () => {
 							maxDate={"2020-05-30"}
 							// // Handler which gets executed on day press. Default = undefined
 							onDayPress={(day) => {
-								console.log("selected day", day)
+								addNewMilestone(day)
 							}}
 							// // Handler which gets executed on day long press. Default = undefined
-							onDayLongPress={(day) => {
-								console.log("selected day", day)
-							}}
+							// onDayLongPress={(day) => {
+							// 	console.log("selected day", day)
+							// }}
 							// // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
 							// // monthFormat={"yyyy MM"}
 							// // Handler which gets executed when visible month changes in calendar. Default = undefined
-							onMonthChange={(month) => {
-								console.log("month changed", month)
-							}}
+							// onMonthChange={(month) => {
+							// 	console.log("month changed", month)
+							// }}
 							// // Hide month navigation arrows. Default = false
 							hideArrows={false}
 							// // Replace default arrows with custom ones (direction can be 'left' or 'right')
@@ -142,6 +151,9 @@ const FirstMilestone = () => {
 								name="chevron-right"
 								size={50}
 								color={ColorConstants.lighterBlue}
+								onPress={() => {
+									addNewMilestone(milestone)
+								}}
 							/>
 						</TouchableOpacity>
 
@@ -159,7 +171,23 @@ const FirstMilestone = () => {
 		</ImageBackground>
 	)
 }
-export default FirstMilestone
+
+const mapStateToProps = (state) => {
+	console.log("Milestone", state.newMileStone)
+
+	return {
+		newMileStone: state.milestone.newMileStone,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		addNewMilestone: (milestone) => dispatch(addNewMilestone(milestone)),
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FirstMilestone)
+
 const styles = StyleSheet.create({
 	mainTitle: {
 		color: ColorConstants.faintWhite,
