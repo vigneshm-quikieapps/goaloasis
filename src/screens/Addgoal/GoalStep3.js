@@ -10,6 +10,7 @@ import {CommonStyles, forGoals} from "../../core/styles"
 import firestore from "@react-native-firebase/firestore"
 import {addGoalToFirestore} from "./../../firebase"
 import {setCurrentGoal} from "./../../redux/actions"
+import {connect} from "react-redux"
 
 const colorArray = Object.values(forGoals)
 
