@@ -7,12 +7,13 @@ import DatePicker from "react-native-date-picker"
 import colors from "../../../colors"
 import AsyncStorage from "@react-native-community/async-storage"
 import {CommonStyles, forGoals} from "../../core/styles"
-
 import firestore from "@react-native-firebase/firestore"
+import {addGoalToFirestore} from "./../../firebase"
+import {setCurrentGoal} from "./../../redux/actions"
 
 const colorArray = Object.values(forGoals)
 
-const GoalStep3 = ({route}) => {
+const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
 	const navigation = useNavigation()
 
 	const gotoHome = () => {
@@ -21,9 +22,20 @@ const GoalStep3 = ({route}) => {
 	const goBack = () => {
 		navigation.goBack()
 	}
+
+	const storeData = () => {
+		let currentGoalObj = {
+			...currentGoal,
+			targetDate: date.toISOString(),
+			createdAt: firestore.FieldValue.serverTimestamp(),
+			goalMilestone: [],
+			color: getColorForGoal(),
+		}
+		setCurrentGoal(currentGoalObj)
+		addGoalToFirestore(currentGoalObj)
+		navigation.navigate("mygoals")
+	}
 	const [date, setDate] = useState(new Date())
-	const {name} = route.params
-	const {description} = route.params
 
 	// let asyncData = []
 	// asyncData.push(name)
@@ -31,21 +43,6 @@ const GoalStep3 = ({route}) => {
 	// asyncData.push(date.toISOString())
 
 	// async Task
-	const storeData = async () => {
-		try {
-			let data = {
-				name: name,
-				description: description,
-				targetDate: date.toISOString(),
-				createdAt: firestore.FieldValue.serverTimestamp(),
-				goalMilestone: [],
-				color: getColorForGoal(),
-			}
-			addGoalDataToFirestore(data)
-		} catch (e) {
-			console.log(e)
-		}
-	}
 
 	const getColorForGoal = () => {
 		const len = 0
@@ -60,18 +57,6 @@ const GoalStep3 = ({route}) => {
 		return colorArray[a]
 	}
 
-	// adding data to firestore
-	const addGoalDataToFirestore = (data) => {
-		firestore()
-			.collection("Goals")
-			.add(data)
-			.then(() => {
-				addGoalDataToAsyncStoage()
-			})
-	}
-	const addGoalDataToAsyncStoage = async () => {
-		await AsyncStorage.setItem(name, name)
-	}
 	return (
 		<View style={styles.introContainer}>
 			<LinearGradient colors={["#588C8D", "#7EC8C9"]} style={{flex: 1}}>
@@ -116,10 +101,7 @@ const GoalStep3 = ({route}) => {
 							<View>
 								<TouchableOpacity
 									style={[CommonStyles.btnStylingRight, CommonStyles.nextBtn]}
-									onPress={() => {
-										storeData()
-										navigation.navigate("mygoals")
-									}}
+									onPress={storeData}
 								>
 									<MaterialCommunityIcons name="chevron-right" size={50} color="#7EC8C9" />
 								</TouchableOpacity>
@@ -138,7 +120,20 @@ const GoalStep3 = ({route}) => {
 	)
 }
 
-export default GoalStep3
+const mapStateToProps = (state) => {
+	return {
+		currentGoal: state.milestone.currentGoal,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setCurrentGoal: (data) => {
+			dispatch(setCurrentGoal(data))
+		},
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(GoalStep3)
 
 const styles = StyleSheet.create({
 	introContainer: {

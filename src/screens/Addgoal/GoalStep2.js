@@ -4,14 +4,19 @@ import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {CommonStyles} from "../../core/styles"
+import {setCurrentGoal} from "./../../redux/actions"
 
-const GoalStep2 = ({route}) => {
+const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 	const navigation = useNavigation()
-	const {name} = route.params
 	const [description, setDescription] = useState()
 
 	const nextScreen = () => {
-		navigation.navigate("goal3", {name: name, description: description})
+		let currentGoalObj = {
+			...currentGoal,
+			description: description,
+		}
+		setCurrentGoal(currentGoalObj)
+		navigation.navigate("goal3")
 	}
 	const goBack = () => {
 		navigation.goBack()
@@ -77,7 +82,20 @@ const GoalStep2 = ({route}) => {
 	)
 }
 
-export default GoalStep2
+const mapStateToProps = (state) => {
+	return {
+		currentGoal: state.milestone.currentGoal,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setCurrentGoal: (data) => {
+			dispatch(setCurrentGoal(data))
+		},
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(GoalStep2)
 
 const styles = StyleSheet.create({
 	introContainer: {

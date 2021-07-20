@@ -6,8 +6,9 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {black} from "color-name"
 import GoalStep2 from "./GoalStep2"
 import {CommonStyles} from "../../core/styles"
+import {setCurrentGoal} from "./../../redux/actions"
 
-const NameGoal = () => {
+const NameGoal = ({setCurrentGoal, currentGoal}) => {
 	const navigation = useNavigation()
 	const [goalName, setGoalName] = useState()
 
@@ -15,7 +16,12 @@ const NameGoal = () => {
 		navigation.goBack()
 	}
 	const nextScreen = () => {
-		navigation.navigate("goal2", {name: goalName})
+		let currentGoalObj = {
+			...currentGoal,
+			name: goalName,
+		}
+		setCurrentGoal(currentGoalObj)
+		navigation.navigate("goal2")
 	}
 	return (
 		<View style={styles.introContainer}>
@@ -73,7 +79,20 @@ const NameGoal = () => {
 	)
 }
 
-export default NameGoal
+const mapStateToProps = (state) => {
+	return {
+		currentGoal: state.milestone.currentGoal,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setCurrentGoal: (data) => {
+			dispatch(setCurrentGoal(data))
+		},
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(NameGoal)
 
 const styles = StyleSheet.create({
 	introContainer: {

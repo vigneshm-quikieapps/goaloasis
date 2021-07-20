@@ -137,7 +137,7 @@ const MyGoals = ({testData, setTestData, firstTime, setFirstTime, firstTimeTimel
 					<Text style={CommonStyles.myGoalsText}>My goals</Text>
 				</View>
 
-				<ScrollView>
+				<ScrollView contentContainerStyle={{paddingHorizontal: 0, marginHorizontal: 0}}>
 					<View style={CommonStyles.logoSpacing}>
 						{allTasks.map((task, index) => (
 							<View key={index}>

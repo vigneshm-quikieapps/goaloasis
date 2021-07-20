@@ -7,3 +7,6 @@ export const SET_FIRSTTIME = "settingFirstTime"
 // export const SET_TEST_DATA_TIMELINE_FLOW = "setTestData"
 export const SET_FIRSTTIME_TIMELINEFLOW = "settingFirstTimeTimelineFlow"
 export const SET_FIRSTTIME_FOR_INDIVIDUAL_GOAL = "settingFirstTimeForIndividualGoal"
+
+export const ADD_NEW_GOAL = "addNewGoal"
+export const SET_CURRENT_GOAL = "settingCurrentGoal"

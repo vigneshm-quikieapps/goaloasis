@@ -975,3 +975,7 @@ export const CommonStyles = ScaledSheet.create({
 	},
 	// milestone ends
 })
+
+export const firebaseConstants = {
+	GOALS_COLLECTION: "Goals",
+}

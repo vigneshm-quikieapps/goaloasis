@@ -5,6 +5,7 @@ const initialState = {
 	firstTime: null,
 	firstTimeTimelineFlow: null,
 	firstTimeIndividual: null,
+	currentGoal: {},
 }
 
 const milestoneReducer = (state = initialState, action) => {
@@ -46,6 +47,11 @@ const milestoneReducer = (state = initialState, action) => {
 			return {
 				...state,
 				firstTimeIndividual: action.value,
+			}
+		case actionTypes.SET_CURRENT_GOAL:
+			return {
+				...state,
+				currentGoal: action.value,
 			}
 		default:
 			return state
