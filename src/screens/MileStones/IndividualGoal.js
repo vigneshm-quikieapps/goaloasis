@@ -305,6 +305,13 @@ const IndividualGoal = (props) => {
 								style: {backgroundColor: ColorConstants.faintWhite},
 							},
 						]}
+						right={[
+							{
+								text: <MaterialCommunityIcons name="plus" size={40} color="#77777B" />,
+								onPress: () => navigation.navigate("AfterModal"),
+								style: {backgroundColor: ColorConstants.faintWhite},
+							},
+						]}
 						// onOpen={() => console.log("open")}
 						// onClose={() => console.log("close")}
 						autoClose={true}

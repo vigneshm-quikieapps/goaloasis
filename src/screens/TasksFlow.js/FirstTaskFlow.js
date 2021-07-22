@@ -16,18 +16,36 @@ import {Entypo} from "@expo/vector-icons"
 
 import {Calendar} from "react-native-calendars"
 import StatusBarScreen from "./../MileStones/StatusBarScreen"
+import {
+	addNewMilestone,
+	EditNewMilestone,
+	setClickedGoal,
+	setTaskFlowData,
+} from "./../../redux/actions"
+import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
+import {connect} from "react-redux"
 
-const FirstTaskFlow = () => {
+const FirstTaskFlow = ({setTaskFlowData, clickedGoal, newMileStone, taskFlowData}) => {
 	const navigation = useNavigation()
+	const [task, setTask] = useState()
+	const [date, setDate] = useState()
 
+	let mileStoneData = newMileStone
+	console.log("MILESTONE DATA FROM firstTASKFLOW", mileStoneData)
 	const nextScreen = () => {
+		let taskFlowDataArray = [
+			{
+				taskData: task,
+				date: date,
+			},
+		]
+		setTaskFlowData(taskFlowDataArray)
+		addMilestoneToFirestore(clickedGoal, mileStoneData, taskFlowDataArray)
 		navigation.navigate("secondtaskflow")
 	}
 	// const goBack = () => {
 	// 	navigation.goBack()
 	// }
-	const [task, setTask] = useState()
-	const [date, setDate] = useState()
 
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
@@ -40,7 +58,7 @@ const FirstTaskFlow = () => {
 				<StatusBarScreen>
 					<View style={CommonStyles.flexOne}>
 						<View style={CommonStyles.flexDirectionRow}>
-							<Text style={CommonStyles.mainTitle}>Read 5 books</Text>
+							<Text style={CommonStyles.mainTitle}>{clickedGoal.name}</Text>
 							<Entypo
 								name="cross"
 								color={ColorConstants.faintWhite}
@@ -165,7 +183,20 @@ const FirstTaskFlow = () => {
 		</ImageBackground>
 	)
 }
-export default FirstTaskFlow
+const mapStateToProps = (state) => {
+	console.log("TASK FLOW DATA", state.taskFlowData)
+	return {
+		taskFlowData: state.milestone.taskFlowData,
+		clickedGoal: state.milestone.clickedGoal,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setTaskFlowData: (task) => dispatch(setTaskFlowData(task)),
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(FirstTaskFlow)
 const styles = StyleSheet.create({
 	mainTitle: {
 		color: ColorConstants.faintWhite,

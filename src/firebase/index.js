@@ -4,6 +4,7 @@ import {firebaseConstants} from "./../core/styles"
 
 const {GOALS_COLLECTION} = firebaseConstants
 
+// Get All Goal Operation
 export const getAllGoalsFromFirestore = () => {
 	var allGoals = null
 	let getAllGoals = new Promise((resolve, reject) => {
@@ -28,6 +29,7 @@ export const getAllGoalsFromFirestore = () => {
 	if (allGoals) return allGoals
 }
 
+// Goal Delete Operation
 export const deleteGoalFromFirestore = (target) => {
 	let targetObj = JSON.parse(target)
 	let deleteGoal = new Promise((resolve, reject) => {
@@ -52,6 +54,7 @@ export const deleteGoalFromFirestore = (target) => {
 		})
 }
 
+// Goal Add Operation
 export const addGoalToFirestore = (data) => {
 	let addGoal = new Promise((resolve, reject) => {
 		firestore()
