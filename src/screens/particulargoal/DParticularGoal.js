@@ -6,6 +6,7 @@ import ProgressCircle from "react-native-progress-circle"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import RBBottomSheet from "../MileStones/RBBottomSheet"
 import {connect} from "react-redux"
+import {CommonStyles} from "../../core/styles"
 
 const DParticularGoals = ({clickedGoal}) => {
 	const navigation = useNavigation()
@@ -79,8 +80,8 @@ const DParticularGoals = ({clickedGoal}) => {
 					</Text>
 				</View>
 
-				<View style={styles.bottomBtnContainer}>
-					<TouchableOpacity style={styles.bottomBtn} onPress={goBack}>
+				<View style={CommonStyles.bottomBtnContainer}>
+					<TouchableOpacity style={CommonStyles.bottomBtn} onPress={goBack}>
 						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 					</TouchableOpacity>
 				</View>
@@ -189,13 +190,6 @@ const styles = StyleSheet.create({
 		lineHeight: 30,
 	},
 
-	bottomBtnContainer: {
-		width: "100%",
-		position: "absolute",
-		bottom: 40,
-		justifyContent: "center",
-		alignItems: "center",
-	},
 	bottomBtn: {
 		height: 75,
 		width: 75,

@@ -45,7 +45,7 @@ const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
 	// async Task
 
 	const getColorForGoal = () => {
-		const len = 0
+		let len = 0
 		firestore()
 			.collection("Goals")
 			.get()
@@ -53,7 +53,7 @@ const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
 				size = snap.size // will return the collection size
 				len = snap.size
 			})
-		const a = len % 6
+		let a = len % 6
 		return colorArray[a]
 	}
 

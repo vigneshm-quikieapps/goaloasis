@@ -421,14 +421,14 @@ export const CommonStyles = ScaledSheet.create({
 	bottomBtn: {
 		height: sizeConstants.seventyFive,
 		width: sizeConstants.seventyFive,
-		borderRadius: sizeConstants.seventyFive / sizeConstants.xs,
+		borderRadius: sizeConstants.seventyFive,
 		backgroundColor: "#FDF9F2",
-		elevation: scale(5),
+		// elevation: scale(5),
 		justifyContent: "center",
 		alignItems: "center",
-		alignSelf: "center",
+		// alignSelf: "center",
 
-		marginBottom: sizeConstants.m,
+		// marginBottom: sizeConstants.m,
 	},
 	bottomSheet: {
 		alignItems: "center",
@@ -468,13 +468,6 @@ export const CommonStyles = ScaledSheet.create({
 		backgroundColor: ColorConstants.faintWhite,
 	},
 
-	modalBottomBtn: {
-		justifyContent: "center",
-		paddingHorizontal: sizeConstants.twentyX,
-		backgroundColor: ColorConstants.lighterBlue,
-		width: sizeConstants.twoSeventyMX,
-		height: sizeConstants.seventy,
-	},
 	//modal styles ends
 
 	// common styles starts
@@ -683,22 +676,6 @@ export const CommonStyles = ScaledSheet.create({
 		width: scale(30),
 		backgroundColor: "#588C8D",
 		position: "absolute",
-	},
-	bottomBtnContainer: {
-		width: "100%",
-		position: "absolute",
-		bottom: sizeConstants.fourtyFive,
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	bottomBtn2: {
-		height: sizeConstants.seventyFive,
-		width: sizeConstants.seventyFive,
-		borderRadius: sizeConstants.seventyFive / sizeConstants.xs,
-		backgroundColor: "#7EC8C9",
-		elevation: sizeConstants.s,
-		justifyContent: "center",
-		alignItems: "center",
 	},
 
 	titleContainer: {
