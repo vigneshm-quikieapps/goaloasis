@@ -1,5 +1,6 @@
 import React from "react"
 import {TouchableOpacity, StyleSheet, Text} from "react-native"
+import {sizeConstants} from "./../../core/styles"
 
 function AppButton({title, onPress, style}) {
 	return (
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		backgroundColor: "#7EC8C9",
-		width: "70%",
+		width: sizeConstants.threeFourTeen,
 		padding: 8,
 		borderRadius: 25,
 		flexDirection: "column",

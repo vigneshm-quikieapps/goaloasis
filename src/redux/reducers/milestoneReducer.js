@@ -9,12 +9,14 @@ const initialState = {
 	editMileStone: [],
 	currentGoal: {},
 	clickedGoal: {},
+	taskFlow: {},
 }
 
+console.log("NEW MILESTONE DATA", initialState.newMileStone)
 const milestoneReducer = (state = initialState, action) => {
+	console.log("ACTION FROM THE ACTION FILE", action)
 	switch (action.type) {
 		// Adding new Milestones
-
 		case actionTypes.ADD_NEW_MILESTONE:
 			return {
 				...state,
@@ -79,6 +81,14 @@ const milestoneReducer = (state = initialState, action) => {
 			return {
 				...state,
 				clickedGoal: action.value,
+			}
+
+		// for Task Flow
+
+		case actionTypes.SET_TASK_FLOW_DATA:
+			return {
+				...state,
+				taskFlow: action.value,
 			}
 		default:
 			return state

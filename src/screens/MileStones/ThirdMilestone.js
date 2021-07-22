@@ -10,8 +10,12 @@ import colors from "../../../colors"
 import {Entypo} from "@expo/vector-icons"
 import Constants from "expo-constants"
 import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/styles"
+import StatusBarScreen from "./StatusBarScreen"
+import {addNewMilestone, EditNewMilestone, setClickedGoal} from "./../../redux/actions"
+import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
+import {connect} from "react-redux"
 
-const ThirdMilestone = () => {
+const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 	const navigation = useNavigation()
 	const FourthMileStone = () => {
 		navigation.navigate("FourthMilestone")
@@ -31,58 +35,75 @@ const ThirdMilestone = () => {
 			source={commonImages.secondImage}
 			resizeMode="stretch"
 		>
-			<View style={[CommonStyles.flexDirectionRow, {marginTop: Constants.statusBarHeight}]}>
-				<Text style={CommonStyles.mainTitle}>Read 5 books</Text>
-				<Entypo
-					name="cross"
-					color={ColorConstants.faintWhite}
-					size={38}
-					style={CommonStyles.cross}
-				/>
-			</View>
+			<StatusBarScreen>
+				<View style={CommonStyles.flexDirectionRow}>
+					<Text style={CommonStyles.mainTitle}>{clickedGoal.name}</Text>
+					<Entypo
+						name="cross"
+						color={ColorConstants.faintWhite}
+						size={38}
+						style={CommonStyles.cross}
+					/>
+				</View>
 
-			<Text style={styles.milestoneText}>Enter Milestone</Text>
-			<View style={styles.centerCont}>
-				<TextInput style={styles.textInput} placeholder="Type Here" />
-			</View>
-			<Text style={styles.subTitle}>
-				{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
-			</Text>
-			<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter]}>
-				<AppButton title="Edit Date" onPress={FourthMileStone} style={styles.editButton} />
-			</View>
-			<Text style={styles.subTitle}>
-				{tip()} adding a target date will help you stay on track. Dont't worry! You can always
-				change it.
-			</Text>
+				<Text style={styles.milestoneText}>Enter Milestone</Text>
+				<View style={styles.centerCont}>
+					<TextInput style={styles.textInput} placeholder="Type Here" />
+				</View>
+				<Text style={styles.subTitle}>
+					{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
+				</Text>
+				<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter]}>
+					<AppButton title="Edit Date" onPress={FourthMileStone} style={styles.editButton} />
+				</View>
+				<Text style={styles.subTitle}>
+					{tip()} adding a target date will help you stay on track. Dont't worry! You can always
+					change it.
+				</Text>
 
-			<View style={styles.nextBtnContainer}>
-				<View style={styles.nextBtnInner}>
-					<View></View>
-					<View>
-						<TouchableOpacity
-							style={[styles.btnStylingRight, styles.nextBtn]}
-							onPress={() => navigation.navigate("FourthMilestone")}
-						>
-							<MaterialCommunityIcons
-								name="chevron-right"
-								size={sizeConstants.fifty}
-								color="#7EC8C9"
-							/>
+				<View style={styles.nextBtnContainer}>
+					<View style={styles.nextBtnInner}>
+						<View></View>
+						<View>
+							<TouchableOpacity
+								style={[styles.btnStylingRight, styles.nextBtn]}
+								onPress={() => navigation.navigate("FourthMilestone")}
+							>
+								<MaterialCommunityIcons
+									name="chevron-right"
+									size={sizeConstants.fifty}
+									color="#7EC8C9"
+								/>
+							</TouchableOpacity>
+						</View>
+					</View>
+
+					<View style={CommonStyles.alignItemsCenter}>
+						<TouchableOpacity style={styles.btnStyling}>
+							<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 						</TouchableOpacity>
 					</View>
 				</View>
-
-				<View style={CommonStyles.alignItemsCenter}>
-					<TouchableOpacity style={styles.btnStyling}>
-						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
-					</TouchableOpacity>
-				</View>
-			</View>
+			</StatusBarScreen>
 		</ImageBackground>
 	)
 }
-export default ThirdMilestone
+const mapStateToProps = (state) => {
+	console.log("Milestone", state.newMileStone)
+
+	return {
+		newMileStone: state.milestone.newMileStone,
+		clickedGoal: state.milestone.clickedGoal,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		addNewMilestone: (milestone) => dispatch(addNewMilestone(milestone)),
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ThirdMilestone)
 const styles = StyleSheet.create({
 	introContainer: {
 		flex: 1,
@@ -167,7 +188,10 @@ const styles = StyleSheet.create({
 		color: ColorConstants.faintWhite,
 		marginLeft: sizeConstants.twentyOne,
 	},
-	editButton: {backgroundColor: ColorConstants.white, color: ColorConstants.gray},
+	editButton: {
+		backgroundColor: ColorConstants.white,
+		color: ColorConstants.gray,
+	},
 	nextBtnContainer: {
 		position: "absolute",
 		bottom: sizeConstants.mThirty,

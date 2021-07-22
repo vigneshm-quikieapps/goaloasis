@@ -73,9 +73,7 @@ const RBBottomSheet = ({name = "Read 5 Books", flag = true}) => {
 export default RBBottomSheet
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-	},
+	container: {},
 
 	mainTitle: {
 		color: "#333333",

@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
 		borderStartWidth: sizeConstants.three,
 		borderTopWidth: sizeConstants.three,
 		borderBottomWidth: sizeConstants.three,
-		width: "70%",
+		width: sizeConstants.threeFourTeen,
 		padding: sizeConstants.eightMX,
 		borderRadius: sizeConstants.xxl,
 		flexDirection: "column",

@@ -212,8 +212,11 @@ const MyGoals = ({
 				<View style={CommonStyles.bottomBtnContainer}>
 					<TouchableOpacity
 						style={CommonStyles.bottomBtn2}
-						onPress={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
-						// onPress={() => navigation.navigate("particulargoal")}
+						// onPress={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
+						// onPress={() => navigation.navigate("DParticularGoal")}
+						onPress={() => {
+							navigation.navigate("firsttaskflow")
+						}}
 					>
 						<MaterialCommunityIcons name="file-tree-outline" size={34} color="white" />
 					</TouchableOpacity>
