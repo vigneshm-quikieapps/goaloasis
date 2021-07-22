@@ -1,139 +1,53 @@
 import React, {useState, useRef} from "react"
-import {StyleSheet, Text, View, TouchableOpacity, ScrollView} from "react-native"
+import {StyleSheet, Text, View, TouchableOpacity, ScrollView, FlatList} from "react-native"
 import {Feather} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
+import MilestoneCards from "./MilestoneCards"
 
 const AllMilestones = () => {
 	const [upDown, setUpDown] = useState(false)
-
 	const [upDownTwo, setUpDownTwo] = useState(false)
-
 	const [upDown3, setUpDown3] = useState(false)
 	const [upDown4, setUpDown4] = useState(false)
 	const panelRef = useRef(null)
 	const navigation = useNavigation()
+	const [selectedId, setSelectedId] = useState(null)
+
+	const DATA = [
+		{
+			id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+			title: "First Item",
+		},
+		{
+			id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+			title: "Second Item",
+		},
+		{
+			id: "58694a0f-3da1-471f-bd96-145571e29d72",
+			title: "Third Item",
+		},
+		{
+			id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+			title: "First Item",
+		},
+		{
+			id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+			title: "Second Item",
+		},
+		{
+			id: "58694a0f-3da1-471f-bd96-145571e29d72",
+			title: "Third Item",
+		},
+	]
 
 	return (
 		<>
-			<ScrollView>
-				<View style={styles.mileStones}>
-					<TouchableOpacity
-						onLongPress={() => panelRef.current.togglePanel()}
-						style={styles.TouchContainer}
-						onPress={() => setUpDown(!upDown)}
-					>
-						<View>
-							<Text style={styles.mainTitle}>Read 5 books</Text>
-							<Text style={styles.subtitle}>Sat, Nov 14</Text>
-						</View>
-						<View style={{alignItems: "center"}}>
-							<Text style={{fontSize: 16}}>Task: 0/1</Text>
-							<Feather name={upDown ? "chevron-up" : "chevron-down"} size={25} color="black" />
-						</View>
-					</TouchableOpacity>
-
-					{upDown && (
-						<TouchableOpacity
-							style={styles.accordian}
-							onPress={() => navigation.navigate("firsttaskflow")}
-						>
-							<View>
-								<Text style={styles.mainTitle}>Read 5 books</Text>
-								<Text style={styles.subtitle}>Sat, Nov 14</Text>
-							</View>
-						</TouchableOpacity>
-					)}
-				</View>
-
-				<View style={styles.mileStones}>
-					<TouchableOpacity style={styles.TouchContainer} onPress={() => setUpDownTwo(!upDownTwo)}>
-						<View>
-							<Text style={styles.mainTitle}>Read 5 books</Text>
-							<Text style={styles.subtitle}>Sat, Nov 14</Text>
-						</View>
-						<View style={{alignItems: "center"}}>
-							<Text style={{fontSize: 16}}>Task: 0/1</Text>
-							<Feather name={upDownTwo ? "chevron-up" : "chevron-down"} size={25} color="black" />
-						</View>
-					</TouchableOpacity>
-
-					{upDownTwo && (
-						<>
-							<TouchableOpacity style={styles.accordian}>
-								<View>
-									<Text style={styles.mainTitle}>Read 5 books</Text>
-									<Text style={styles.subtitle}>Sat, Nov 14</Text>
-								</View>
-							</TouchableOpacity>
-
-							<TouchableOpacity style={styles.accordian}>
-								<View>
-									<Text style={styles.mainTitle}>Read 5 books</Text>
-									<Text style={styles.subtitle}>Sat, Nov 14</Text>
-								</View>
-							</TouchableOpacity>
-
-							<TouchableOpacity style={styles.accordian}>
-								<View>
-									<Text style={styles.mainTitle}>Read 5 books</Text>
-									<Text style={styles.subtitle}>Sat, Nov 14</Text>
-								</View>
-							</TouchableOpacity>
-
-							<TouchableOpacity style={styles.accordian}>
-								<View>
-									<Text style={styles.mainTitle}>Read 5 books</Text>
-									<Text style={styles.subtitle}>Sat, Nov 14</Text>
-								</View>
-							</TouchableOpacity>
-						</>
-					)}
-				</View>
-
-				<View style={styles.mileStones}>
-					<TouchableOpacity style={styles.TouchContainer} onPress={() => setUpDown3(!upDown3)}>
-						<View>
-							<Text style={styles.mainTitle}>Read 5 books</Text>
-							<Text style={styles.subtitle}>Sat, Nov 14</Text>
-						</View>
-						<View style={{alignItems: "center"}}>
-							<Text style={{fontSize: 16}}>Task: 0/1</Text>
-							<Feather name={upDown3 ? "chevron-up" : "chevron-down"} size={25} color="black" />
-						</View>
-					</TouchableOpacity>
-
-					{upDown3 && (
-						<TouchableOpacity style={styles.accordian}>
-							<View>
-								<Text style={styles.mainTitle}>Read 5 books</Text>
-								<Text style={styles.subtitle}>Sat, Nov 14</Text>
-							</View>
-						</TouchableOpacity>
-					)}
-				</View>
-
-				<View style={styles.mileStones}>
-					<TouchableOpacity style={styles.TouchContainer} onPress={() => setUpDown4(!upDown4)}>
-						<View>
-							<Text style={styles.mainTitle}>Read 5 books</Text>
-							<Text style={styles.subtitle}>Sat, Nov 14</Text>
-						</View>
-						<View style={{alignItems: "center"}}>
-							<Text style={{fontSize: 16}}>Task: 0/1</Text>
-							<Feather name={upDown4 ? "chevron-up" : "chevron-down"} size={25} color="black" />
-						</View>
-					</TouchableOpacity>
-
-					{upDown4 && (
-						<TouchableOpacity style={styles.accordian}>
-							<View>
-								<Text style={styles.mainTitle}>Read 5 books</Text>
-								<Text style={styles.subtitle}>Sat, Nov 14</Text>
-							</View>
-						</TouchableOpacity>
-					)}
-				</View>
-			</ScrollView>
+			<FlatList
+				data={DATA}
+				renderItem={() => <MilestoneCards />}
+				keyExtractor={(item) => item.id}
+				extraData={selectedId}
+			/>
 		</>
 	)
 }

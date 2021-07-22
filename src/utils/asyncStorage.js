@@ -102,3 +102,13 @@ export const getClickedGoalFromAsyncStorage = async (key) => {
 	}
 	return value !== null ? value : ""
 }
+
+// for handling the milestone Data
+// export const getMileStoneData = (async = (data) => {
+// 	try {
+// 		value = await AsyncStorage.setItem(data)
+// 		return value
+// 	} catch (error) {
+// 		console.log(error.message)
+// 	}
+// })

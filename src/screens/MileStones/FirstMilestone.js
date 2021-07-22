@@ -19,12 +19,9 @@ import {addNewMilestone, EditNewMilestone, setClickedGoal} from "./../../redux/a
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
 import Constants from "expo-constants"
 
-const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
+const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal, taskFlowData}) => {
 	const [milestone, setMilestone] = useState("")
 	const [date, setDate] = useState()
-
-	console.log("Milestone", milestone)
-	console.log("Date", date)
 
 	const navigation = useNavigation()
 
@@ -33,6 +30,7 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 			{
 				milestone: milestone,
 				date: date,
+				taskData: [],
 			},
 		]
 		addNewMilestone(milestoneArr)
@@ -168,7 +166,8 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 						<View style={styles.bottomBtnContainer}>
 							<TouchableOpacity
 								style={styles.bottomBtn}
-								onPress={() => navigation.navigate("particulargoal")}
+								// onPress={() => navigation.navigate("particulargoal")}
+								onPress={() => navigation.navigate("firsttaskflow")}
 							>
 								<MaterialCommunityIcons name="home" size={44} color={ColorConstants.lighterBlue} />
 							</TouchableOpacity>
@@ -181,7 +180,7 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 }
 
 const mapStateToProps = (state) => {
-	console.log("Milestone", state.newMileStone)
+	console.log("MILESTONE DATA", state.newMileStone)
 
 	return {
 		newMileStone: state.milestone.newMileStone,

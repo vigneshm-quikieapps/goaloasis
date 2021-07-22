@@ -9,7 +9,7 @@ const initialState = {
 	editMileStone: [],
 	currentGoal: {},
 	clickedGoal: {},
-	taskFlow: {},
+	taskFlowData: [],
 }
 
 console.log("NEW MILESTONE DATA", initialState.newMileStone)
@@ -88,8 +88,16 @@ const milestoneReducer = (state = initialState, action) => {
 		case actionTypes.SET_TASK_FLOW_DATA:
 			return {
 				...state,
-				taskFlow: action.value,
+				taskFlowData: [
+					...state.taskFlowData,
+					{
+						goalName: action.value,
+						mileStoneData: action.value,
+						taskFlowData: action.value,
+					},
+				],
 			}
+
 		default:
 			return state
 	}
