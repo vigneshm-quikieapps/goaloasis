@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
 	},
 
 	titleContainer: {
-		flex: 0.6,
+		flex: 0.5,
 		justifyContent: "center",
 	},
 	mainTitle: {
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 	},
 	trackingcont: {
-		marginTop: 30,
+		marginTop: 18,
 		marginVertical: 10,
 		marginHorizontal: 20,
 		flexDirection: "row",

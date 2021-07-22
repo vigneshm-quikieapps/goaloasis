@@ -120,7 +120,7 @@ const Third = () => {
 					/>
 					<TouchableOpacity
 						style={CommonStyles.containerMilestone}
-						onPress={() => navigation.navigate("FifthMilestone")}
+						onPress={() => navigation.navigate("firsttaskflow")}
 					>
 						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
 					</TouchableOpacity>

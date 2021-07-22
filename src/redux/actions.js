@@ -65,3 +65,10 @@ export const setCurrentGoal = (data) => {
 		value: data,
 	}
 }
+
+export const setTaskFlowData = (data) => {
+	return {
+		type: actionTypes.SET_TASK_FLOW_DATA,
+		value: data,
+	}
+}

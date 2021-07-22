@@ -26,7 +26,9 @@ const FirstTaskFlow = () => {
 	// const goBack = () => {
 	// 	navigation.goBack()
 	// }
-	const [date, setDate] = useState(new Date())
+	const [task, setTask] = useState()
+	const [date, setDate] = useState()
+
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
 		<ImageBackground
@@ -49,7 +51,11 @@ const FirstTaskFlow = () => {
 
 						<Text style={styles.subTitle}>Enter Milestone</Text>
 						<View style={styles.centerCont}>
-							<TextInput style={styles.textInput} placeholder="Type Here" />
+							<TextInput
+								style={styles.textInput}
+								placeholder="Type Here"
+								onChangeText={(text) => setTask(text)}
+							/>
 						</View>
 						<Text style={styles.subTitle}>
 							{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
@@ -65,18 +71,18 @@ const FirstTaskFlow = () => {
 							maxDate={"2020-05-30"}
 							// // Handler which gets executed on day press. Default = undefined
 							onDayPress={(day) => {
-								console.log("selected day", day)
+								setDate(day.dateString)
 							}}
 							// // Handler which gets executed on day long press. Default = undefined
-							onDayLongPress={(day) => {
-								console.log("selected day", day)
-							}}
+							// onDayLongPress={(day) => {
+							// 	console.log("selected day", day)
+							// }}
 							// // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
 							// // monthFormat={"yyyy MM"}
 							// // Handler which gets executed when visible month changes in calendar. Default = undefined
-							onMonthChange={(month) => {
-								console.log("month changed", month)
-							}}
+							// onMonthChange={(month) => {
+							// 	console.log("month changed", month)
+							// }}
 							// // Hide month navigation arrows. Default = false
 							hideArrows={false}
 							// // Replace default arrows with custom ones (direction can be 'left' or 'right')

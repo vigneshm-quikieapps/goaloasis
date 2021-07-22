@@ -119,15 +119,21 @@ const First = () => {
 				</View>
 			)}
 
-			<TouchableOpacity style={CommonStyles.cancelReoccuring}>
-				<Text style={CommonStyles.cancelReoccuringText}>Cancel reoccuring</Text>
-			</TouchableOpacity>
-			<TouchableOpacity
-				style={CommonStyles.bottomBtn}
-				onPress={() => navigation.navigate("mygoals")}
-			>
-				<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
-			</TouchableOpacity>
+			<View style={{bottom: -250}}>
+				<TouchableOpacity
+					style={CommonStyles.cancelReoccuring}
+					onPress={() => navigation.navigate("second")}
+				>
+					<Text style={CommonStyles.cancelReoccuringText}>Cancel reoccuring</Text>
+				</TouchableOpacity>
+
+				<TouchableOpacity
+					style={CommonStyles.bottomBtn}
+					onPress={() => navigation.navigate("mygoals")}
+				>
+					<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
+				</TouchableOpacity>
+			</View>
 		</StatusBarScreen>
 	)
 }

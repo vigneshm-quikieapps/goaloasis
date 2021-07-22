@@ -11,7 +11,11 @@ export const SET_FIRSTTIME_FOR_INDIVIDUAL_GOAL = "settingFirstTimeForIndividualG
 export const ADD_NEW_MILESTONE = "addNewMilestone"
 export const EDIT_MILESTONE = "editMilestone"
 
+//Add new goal
 export const ADD_NEW_GOAL = "addNewGoal"
 export const SET_CURRENT_GOAL = "settingCurrentGoal"
 //for current goal
 export const SET_CLICKED_GOAL = "settingClickedGoal"
+
+// for Task Flow
+export const SET_TASK_FLOW_DATA = "settingTaskFlow"

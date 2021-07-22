@@ -17,6 +17,7 @@ import StatusBarScreen from "./StatusBarScreen"
 import {connect} from "react-redux"
 import {addNewMilestone, EditNewMilestone, setClickedGoal} from "./../../redux/actions"
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
+import Constants from "expo-constants"
 
 const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 	const [milestone, setMilestone] = useState("")
@@ -51,9 +52,8 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 		>
 			<ScrollView style={CommonStyles.mainContainer}>
 				<StatusBarScreen>
-					<View style={CommonStyles.flexOne}>
+					<View>
 						<View style={CommonStyles.flexDirectionRow}>
-							{/* <Text style={CommonStyles.mainTitle}>data</Text> */}
 							<Text style={CommonStyles.mainTitle}>{clickedGoal.name}</Text>
 							<Entypo
 								name="cross"

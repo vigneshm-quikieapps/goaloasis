@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#FBF5E9",
 	},
 	titleContainer: {
-		flex: 0.6,
+		flex: 0.5,
 		justifyContent: "center",
 	},
 	mainTitle: {

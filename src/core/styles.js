@@ -393,7 +393,7 @@ export const CommonStyles = ScaledSheet.create({
 		borderRadius: sizeConstants.xl,
 		justifyContent: "center",
 		backgroundColor: "#76BBBC",
-		margin: sizeConstants.seven,
+		margin: sizeConstants.four,
 	},
 	daysText: {alignSelf: "center", fontSize: "20@s", color: "#FDF9F2"},
 	cancelReoccuring: {
@@ -421,14 +421,16 @@ export const CommonStyles = ScaledSheet.create({
 	bottomBtn: {
 		height: sizeConstants.seventyFive,
 		width: sizeConstants.seventyFive,
-		borderRadius: sizeConstants.seventyFive / sizeConstants.xs,
+		borderRadius: sizeConstants.seventyFive,
 		backgroundColor: "#FDF9F2",
 		elevation: scale(5),
 		justifyContent: "center",
 		alignItems: "center",
 		alignSelf: "center",
+		marginTop: sizeConstants.m,
+		bottom: sizeConstants.m,
 
-		marginBottom: sizeConstants.m,
+		// marginBottom: sizeConstants.m,
 	},
 	bottomSheet: {
 		alignItems: "center",
@@ -745,9 +747,7 @@ export const CommonStyles = ScaledSheet.create({
 	pt10: {
 		paddingTop: sizeConstants.mX,
 	},
-	alignItemsCenter: {
-		alignItems: "center",
-	},
+
 	mt20: {
 		marginTop: sizeConstants.twentyMX,
 	},
