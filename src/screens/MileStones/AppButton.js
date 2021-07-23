@@ -27,5 +27,6 @@ const styles = StyleSheet.create({
 	button: {
 		color: "white",
 		fontSize: 25,
+		alignSelf: "center",
 	},
 })

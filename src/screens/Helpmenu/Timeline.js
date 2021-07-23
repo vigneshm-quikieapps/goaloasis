@@ -10,6 +10,7 @@ import RBSheet from "react-native-raw-bottom-sheet"
 import {Calendar, LocaleConfig} from "react-native-calendars"
 import DatePicker from "react-native-date-picker"
 import MonthTimeline from "./MonthTimeline"
+import {CommonHomeButton} from "../../core/CommonComponents"
 
 const IntroSlider = () => {
 	const navigation = useNavigation()
@@ -197,9 +198,9 @@ const IntroSlider = () => {
 				</TouchableOpacity>
 			</View>
 			<View style={styles.bottomBtnContainer}>
-				<TouchableOpacity style={styles.bottomBtn} onPress={() => navigation.navigate("mygoals")}>
+				{/* <TouchableOpacity style={styles.bottomBtn} onPress={() => navigation.navigate("mygoals")}>
 					<MaterialCommunityIcons name="home" size={40} color="#E4AB76" />
-				</TouchableOpacity>
+				</TouchableOpacity> */}
 				<View
 					style={{
 						position: "absolute",
@@ -210,6 +211,11 @@ const IntroSlider = () => {
 					<AntDesign name="questioncircleo" size={53} color="white" />
 				</View>
 			</View>
+			<CommonHomeButton
+				click={() => navigation.navigate("mygoals")}
+				iconColor={"#E4AB76"}
+				size={40}
+			/>
 		</ImageBackground>
 	)
 }

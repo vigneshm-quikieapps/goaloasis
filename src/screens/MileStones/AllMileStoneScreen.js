@@ -16,6 +16,7 @@ import {ColorConstants, CommonStyles, sizeConstants} from "../../core/styles"
 import AppButton from "./AppButton"
 import {connect} from "react-redux"
 import Swipeout from "rc-swipeout"
+import {CommonHomeButton} from "../../core/CommonComponents"
 
 const AllMilestonesScreen = (props) => {
 	const [DATA, setData] = useState([])
@@ -183,7 +184,7 @@ const AllMilestonesScreen = (props) => {
 									]}
 									autoClose={true}
 									disabled={false}
-									style={CommonStyles.borderRadius30}
+									style={[CommonStyles.borderRadius30]}
 								>
 									<View style={styles.btnTextContainer}>
 										<Text style={[CommonStyles.btnText, {color: ColorConstants.black}]}>
@@ -197,6 +198,7 @@ const AllMilestonesScreen = (props) => {
 								style={{
 									backgroundColor: ColorConstants.faintWhite,
 									color: ColorConstants.faintBlack1,
+									width: "80%",
 								}}
 								onPress={() => (page === 2 ? closeModal() : setPageNo(page + 1))}
 							/>
@@ -209,7 +211,7 @@ const AllMilestonesScreen = (props) => {
 			<View style={styles.goalsContainer}>
 				<View style={{marginTop: 25, flexDirection: "row"}}>
 					<View>
-						<Text style={styles.myGoalsText}>My milestones</Text>
+						<Text style={styles.myGoalsText}>My milestoness</Text>
 					</View>
 					<View style={styles.viewTap}>
 						<MaterialCommunityIcons
@@ -227,7 +229,7 @@ const AllMilestonesScreen = (props) => {
 					<AllMilestones data={DATA} />
 				</View>
 
-				<View style={styles.bottomBtnContainer}>
+				{/* <View style={styles.bottomBtnContainer}>
 					<TouchableOpacity style={styles.bottomBtn}>
 						<MaterialCommunityIcons
 							name="home"
@@ -236,7 +238,12 @@ const AllMilestonesScreen = (props) => {
 							onPress={() => navigation.navigate("mygoals")}
 						/>
 					</TouchableOpacity>
-				</View>
+				</View> */}
+				<CommonHomeButton
+					iconColor={ColorConstants.white}
+					click={() => navigation.navigate("mygoals")}
+					bgColor={ColorConstants.lighterBlue}
+				/>
 			</View>
 			<RBSheet
 				height={500}
@@ -345,7 +352,7 @@ const styles = StyleSheet.create({
 		height: 75,
 		width: 75,
 		borderRadius: 75 / 2,
-		backgroundColor: "#7EC8C9",
+		backgroundColor: ColorConstants.lighterBlue,
 		elevation: 5,
 		justifyContent: "center",
 		alignItems: "center",
@@ -444,7 +451,9 @@ const styles = StyleSheet.create({
 	appBtn: {
 		backgroundColor: ColorConstants.lighterBlue,
 		fontSize: sizeConstants.fifteenMX,
-		paddingVertical: sizeConstants.thirteenMX,
+		paddingVertical: sizeConstants.thirteen,
+		paddingHorizontal: 0,
+		width: "80%",
 		color: ColorConstants.faintBlack1,
 	},
 

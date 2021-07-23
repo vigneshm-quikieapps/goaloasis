@@ -6,6 +6,7 @@ import ProgressCircle from "react-native-progress-circle"
 import MilestoneCards from "../../components/MilestoneCards"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import RBBottomSheet from "../MileStones/RBBottomSheet"
+import {CommonHomeButton} from "../../core/CommonComponents"
 
 const ParticularGoal = () => {
 	const navigation = useNavigation()
@@ -103,12 +104,13 @@ const ParticularGoal = () => {
 					</View>
 				</View>
 
-				<View style={styles.bottomBtnContainer}>
+				{/* <View style={styles.bottomBtnContainer}>
 					<TouchableOpacity style={styles.bottomBtn} onPress={goBack}>
 						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 					</TouchableOpacity>
-				</View>
+				</View> */}
 			</View>
+			<CommonHomeButton click={goBack} />
 		</StatusBarScreen>
 	)
 }

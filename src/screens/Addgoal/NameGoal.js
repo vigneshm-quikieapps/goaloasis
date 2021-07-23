@@ -8,6 +8,7 @@ import GoalStep2 from "./GoalStep2"
 import {CommonStyles} from "../../core/styles"
 import {setCurrentGoal} from "./../../redux/actions"
 import {connect} from "react-redux"
+import {CommonHomeButton, CommonPrevNextButton} from "../../core/CommonComponents"
 
 const NameGoal = ({setCurrentGoal, currentGoal}) => {
 	const navigation = useNavigation()
@@ -56,24 +57,26 @@ const NameGoal = ({setCurrentGoal, currentGoal}) => {
 						</View>
 					</View>
 
-					<View style={CommonStyles.homeAndRight}>
-						<View style={CommonStyles.rightArrow}>
+					{/* <View style={CommonStyles.homeAndRight}> */}
+					{/* <View style={CommonStyles.rightArrow}>
 							<View></View>
 							<View>
 								<TouchableOpacity style={CommonStyles.nextBtn} onPress={nextScreen}>
 									<MaterialCommunityIcons name="chevron-right" size={50} color="#7EC8C9" />
-									{/* <GoalStep2 /> */}
+									<GoalStep2 />
 								</TouchableOpacity>
 							</View>
-						</View>
+						</View> */}
 
-						<View style={CommonStyles.homeContainer}>
+					{/* <View style={CommonStyles.homeContainer}>
 							<TouchableOpacity style={CommonStyles.homeBtnStyling} onPress={gotoHome}>
 								<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 							</TouchableOpacity>
-						</View>
-					</View>
+						</View> */}
+					{/* </View> */}
 				</View>
+				<CommonPrevNextButton right={true} nextClick={nextScreen} />
+				<CommonHomeButton click={gotoHome} />
 			</LinearGradient>
 			{/* </ImageBackground> */}
 		</View>

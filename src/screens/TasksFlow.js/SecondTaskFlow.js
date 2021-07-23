@@ -10,6 +10,7 @@ import {Entypo} from "@expo/vector-icons"
 import Constants from "expo-constants"
 import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/styles"
 import AppButton from "./../MileStones/AppButton"
+import {CommonHomeButton, CommonPrevNextButton} from "../../core/CommonComponents"
 
 const SecondTaskFlow = () => {
 	const navigation = useNavigation()
@@ -57,7 +58,7 @@ const SecondTaskFlow = () => {
 			<View style={styles.nextBtnContainer}>
 				<View style={styles.nextBtnInner}>
 					<View></View>
-					<View>
+					{/* <View>
 						<TouchableOpacity
 							style={[styles.btnStylingRight, styles.nextBtn]}
 							onPress={() => navigation.navigate("thirdtaskflow")}
@@ -68,15 +69,18 @@ const SecondTaskFlow = () => {
 								color="#7EC8C9"
 							/>
 						</TouchableOpacity>
-					</View>
+					</View> */}
 				</View>
 
-				<View style={CommonStyles.alignItemsCenter}>
+				{/* <View style={CommonStyles.alignItemsCenter}>
 					<TouchableOpacity style={styles.btnStyling}>
 						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 					</TouchableOpacity>
-				</View>
+				</View> */}
+				<CommonPrevNextButton right={true} nextClick={() => navigation.navigate("thirdtaskflow")} />
 			</View>
+
+			<CommonHomeButton />
 		</ImageBackground>
 	)
 }

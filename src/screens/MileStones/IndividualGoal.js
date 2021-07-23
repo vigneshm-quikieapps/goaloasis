@@ -12,6 +12,7 @@ import {setFirstTimeForIndividualGoal} from "./../../redux/actions"
 import {getFirstTimeIndividual, setisFirstTimeIndividual} from "./../../utils/asyncStorage"
 import {connect} from "react-redux"
 import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/styles"
+import {CommonHomeButton} from "../../core/CommonComponents"
 
 const IndividualGoal = (props) => {
 	useEffect(() => {
@@ -324,11 +325,12 @@ const IndividualGoal = (props) => {
 					</Swipeout>
 				</View>
 
-				<View style={[CommonStyles.btnContainer, {bottom: sizeConstants.l}]}>
+				{/* <View style={[CommonStyles.btnContainer, {bottom: sizeConstants.l}]}>
 					<TouchableOpacity style={styles.bottomBtn} onPress={goBack}>
 						<MaterialCommunityIcons name="home" size={44} color={ColorConstants.lighterBlue} />
 					</TouchableOpacity>
-				</View>
+				</View> */}
+				<CommonHomeButton click={goBack} />
 			</LinearGradient>
 		</StatusBarScreen>
 	)

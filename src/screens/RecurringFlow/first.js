@@ -6,7 +6,8 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import RBSheet from "react-native-raw-bottom-sheet"
 import SwitchSelector from "react-native-switch-selector"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
-import {CommonStyles} from "../../core/styles"
+import {CommonStyles, sizeConstants} from "../../core/styles"
+import {CommonHomeButton} from "../../core/CommonComponents"
 
 const First = () => {
 	const navigation = useNavigation()
@@ -119,7 +120,7 @@ const First = () => {
 				</View>
 			)}
 
-			<View style={{bottom: -180}}>
+			<View style={{position: "absolute", bottom: sizeConstants.oneTen, alignSelf: "center"}}>
 				<TouchableOpacity
 					style={CommonStyles.cancelReoccuring}
 					onPress={() => navigation.navigate("second")}
@@ -127,13 +128,14 @@ const First = () => {
 					<Text style={CommonStyles.cancelReoccuringText}>Cancel reoccuring</Text>
 				</TouchableOpacity>
 
-				<TouchableOpacity
+				{/* <TouchableOpacity
 					style={CommonStyles.bottomBtn}
 					onPress={() => navigation.navigate("mygoals")}
 				>
 					<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
-				</TouchableOpacity>
+				</TouchableOpacity> */}
 			</View>
+			<CommonHomeButton click={() => navigation.navigate("mygoals")} />
 		</StatusBarScreen>
 	)
 }

@@ -5,6 +5,7 @@ import {useNavigation} from "@react-navigation/native"
 import MilestoneCards from "./MilestoneCards"
 import {connect} from "react-redux"
 import {getClickedGoalFromAsyncStorage} from "../utils/asyncStorage"
+import {sizeConstants} from "../core/styles"
 
 const AllMilestones = ({data}) => {
 	const [upDown, setUpDown] = useState(false)
@@ -16,7 +17,7 @@ const AllMilestones = ({data}) => {
 	const [selectedId, setSelectedId] = useState(null)
 
 	return (
-		<>
+		<View style={{paddingBottom: sizeConstants.eightyFiveMX}}>
 			<FlatList
 				data={data}
 				renderItem={(item) => {
@@ -30,7 +31,7 @@ const AllMilestones = ({data}) => {
 				keyExtractor={(item) => item.index}
 				extraData={selectedId}
 			/>
-		</>
+		</View>
 	)
 }
 

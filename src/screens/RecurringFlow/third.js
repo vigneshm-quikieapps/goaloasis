@@ -6,6 +6,7 @@ import {Calendar} from "react-native-calendars"
 import {Entypo} from "@expo/vector-icons"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import {CommonStyles} from "../../core/styles"
+import {CommonHomeButton} from "../../core/CommonComponents"
 
 const Third = () => {
 	const navigation = useNavigation()
@@ -124,14 +125,15 @@ const Third = () => {
 					>
 						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
 					</TouchableOpacity>
-					<TouchableOpacity
+					{/* <TouchableOpacity
 						style={CommonStyles.bottomBtn}
 						onPress={() => navigation.navigate("particulargoal")}
 					>
 						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
-					</TouchableOpacity>
+					</TouchableOpacity> */}
 				</View>
 			</ScrollView>
+			<CommonHomeButton click={() => navigation.navigate("particulargoal")} />
 		</StatusBarScreen>
 	)
 }

@@ -6,11 +6,12 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import DatePicker from "react-native-date-picker"
 import colors from "../../../colors"
 import AsyncStorage from "@react-native-community/async-storage"
-import {CommonStyles, forGoals} from "../../core/styles"
+import {ColorConstants, CommonStyles, forGoals} from "../../core/styles"
 import firestore from "@react-native-firebase/firestore"
 import {setCurrentGoal} from "./../../redux/actions"
 import {addGoalToFirestore} from "./../../firebase"
 import {connect} from "react-redux"
+import {CommonHomeButton, CommonPrevNextButton} from "../../core/CommonComponents"
 const colorArray = Object.values(forGoals)
 
 const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
@@ -88,7 +89,7 @@ const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
 						</View>
 					</View>
 
-					<View style={CommonStyles.homeAndRight}>
+					{/* <View style={CommonStyles.homeAndRight}>
 						<View style={CommonStyles.rightArrow}>
 							<View>
 								<TouchableOpacity
@@ -106,15 +107,24 @@ const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
 									<MaterialCommunityIcons name="chevron-right" size={50} color="#7EC8C9" />
 								</TouchableOpacity>
 							</View>
-						</View>
+						</View> */}
 
-						<View style={{alignItems: "center"}}>
+					{/* <View style={{alignItems: "center"}}>
 							<TouchableOpacity style={CommonStyles.homeBtnStyling} onPress={gotoHome}>
 								<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 							</TouchableOpacity>
-						</View>
-					</View>
+						</View> */}
+					{/* </View> */}
 				</View>
+				<CommonPrevNextButton
+					right={true}
+					left={true}
+					prevClick={goBack}
+					nextClick={storeData}
+					iconLeftColor={ColorConstants.lighterBlue}
+					iconRightColor={ColorConstants.lighterBlue}
+				/>
+				<CommonHomeButton click={gotoHome} />
 			</LinearGradient>
 		</View>
 	)

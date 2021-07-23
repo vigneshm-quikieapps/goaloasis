@@ -18,7 +18,7 @@ import {connect} from "react-redux"
 import {addNewMilestone, EditNewMilestone, setClickedGoal} from "./../../redux/actions"
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
 import Constants from "expo-constants"
-import {CommonHomeButton, CommonNextButton} from "../../core/CommonComponents"
+import {CommonHomeButton, CommonNextButton, CommonPrevNextButton} from "../../core/CommonComponents"
 
 const FirstMilestone = ({
 	addNewMilestone,
@@ -32,24 +32,24 @@ const FirstMilestone = ({
 	const navigation = useNavigation()
 
 	const nextScreen = () => {
-		// let milestoneArr = [
-		// 	...clickedGoal.goalMilestone,
-		// 	{
-		// 		milestone: milestone,
-		// 		date: date,
-		// 		taskData: [],
-		// 	},
-		// ]
+		let milestoneArr = [
+			...clickedGoal.goalMilestone,
+			{
+				milestone: milestone,
+				date: date,
+				taskData: [],
+			},
+		]
 
-		// let updatedObj = {
-		// 	...clickedGoal,
-		// 	goalMilestone: milestoneArr,
-		// }
-		// console.log("setttiiinngggClickedGoal(updatedObj)", updatedObj)
-		// setClickedGoal(updatedObj)
-		// console.log("setClickedGoal(updatedObj) donnee", updatedObj)
-		// addNewMilestone(milestoneArr)
-		// addMilestoneToFirestore(clickedGoal, milestoneArr)
+		let updatedObj = {
+			...clickedGoal,
+			goalMilestone: milestoneArr,
+		}
+		console.log("setttiiinngggClickedGoal(updatedObj)", updatedObj)
+		setClickedGoal(updatedObj)
+		console.log("setClickedGoal(updatedObj) donnee", updatedObj)
+		addNewMilestone(milestoneArr)
+		addMilestoneToFirestore(clickedGoal, milestoneArr)
 
 		navigation.navigate("ThirdMileStone")
 	}
@@ -106,6 +106,7 @@ const FirstMilestone = ({
 								onPressArrowRight={(addMonth) => addMonth()}
 								disableArrowLeft={false}
 								enableSwipeMonths={true}
+								selectedDayBackgroundColor={ColorConstants.white}
 								theme={{
 									backgroundColor: ColorConstants.transparent,
 									calendarBackground: ColorConstants.transparent,
@@ -134,11 +135,10 @@ const FirstMilestone = ({
 									// height: sizeConstants.twoSeventyMX,
 								}}
 							/>
-
-							<CommonNextButton click={nextScreen} size={50} />
 						</StatusBarScreen>
 					</ScrollView>
 				</View>
+				<CommonPrevNextButton right={true} nextClick={nextScreen} size={50} bottom={0} />
 				<CommonHomeButton click={handleHomeClick} size={44} />
 			</View>
 		</ImageBackground>

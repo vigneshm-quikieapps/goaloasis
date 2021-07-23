@@ -8,7 +8,7 @@ import {
 	StatusBar,
 	ScrollView,
 } from "react-native"
-import {MaterialCommunityIcons} from "@expo/vector-icons"
+import {MaterialCommunityIcons, AntDesign} from "@expo/vector-icons"
 import {FontAwesome5} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
 import ProgressCircle from "react-native-progress-circle"
@@ -29,8 +29,9 @@ import {
 	getFirstTimeTaskTutorial,
 	getFirstTimeTimelineFlow,
 } from "./../../utils/asyncStorage"
-import {CommonStyles, forGoals, sizeConstants} from "./../../core/styles"
+import {ColorConstants, CommonStyles, forGoals, sizeConstants} from "./../../core/styles"
 import firestore from "@react-native-firebase/firestore"
+import {CommonHomeButton} from "../../core/CommonComponents"
 
 const MyGoals = ({
 	testData,
@@ -181,7 +182,7 @@ const MyGoals = ({
 						))}
 
 						<View>
-							<TouchableOpacity style={CommonStyles.logoContainer} onPress={gotoGoal}>
+							{/* <TouchableOpacity style={CommonStyles.logoContainer} onPress={gotoGoal}>
 								<View style={CommonStyles.circleLogo}>
 									<View style={CommonStyles.iconVertical}></View>
 									<View style={CommonStyles.iconHorizontal}></View>
@@ -191,19 +192,44 @@ const MyGoals = ({
 										<Text style={CommonStyles.goalText}>Add Goal</Text>
 									</View>
 								</TouchableOpacity>
+							</TouchableOpacity> */}
+
+							<TouchableOpacity style={CommonStyles.logoContainer} onPress={gotoGoal}>
+								{/* <TouchableOpacity
+									style={CommonStyles.logoContainer}
+									onPress={() => navigation.navigate("third")}
+								> */}
+								<ProgressCircle
+									percent={100}
+									radius={sizeConstants.fiftyHalf}
+									borderWidth={5}
+									color={forGoals.fifth}
+									shadowColor="#999"
+									bgColor="#FBF5E9"
+								>
+									<AntDesign name="plus" size={sizeConstants.fiftyFive} color={forGoals.fifth} />
+								</ProgressCircle>
+								<Text style={CommonStyles.goalText}>Add Goal</Text>
 							</TouchableOpacity>
 						</View>
 					</View>
 				</ScrollView>
-				<View style={CommonStyles.bottomBtnContainer}>
+				{/* <View style={CommonStyles.bottomBtnContainer}>
 					<TouchableOpacity
 						style={CommonStyles.bottomBtn2}
 						onPress={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
 					>
 						<MaterialCommunityIcons name="file-tree-outline" size={34} color="white" />
 					</TouchableOpacity>
-				</View>
+				</View> */}
 			</View>
+			<CommonHomeButton
+				iconName={"file-tree-outline"}
+				size={34}
+				click={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
+				iconColor={ColorConstants.white}
+				bgColor={ColorConstants.lighterBlue}
+			/>
 		</StatusBarScreen>
 	)
 }

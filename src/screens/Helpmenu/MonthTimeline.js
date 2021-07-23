@@ -10,6 +10,7 @@ import RBSheet from "react-native-raw-bottom-sheet"
 import {Calendar, LocaleConfig} from "react-native-calendars"
 import DatePicker from "react-native-date-picker"
 import TimelineScreen from "./Timeline"
+import {CommonHomeButton} from "../../core/CommonComponents"
 
 const MonthTimeline = () => {
 	const navigation = useNavigation()
@@ -197,9 +198,9 @@ const MonthTimeline = () => {
 				</TouchableOpacity>
 			</View>
 			<View style={styles.bottomBtnContainer}>
-				<TouchableOpacity style={styles.bottomBtn} onPress={() => navigation.navigate("mygoals")}>
+				{/* <TouchableOpacity style={styles.bottomBtn} onPress={() => navigation.navigate("mygoals")}>
 					<MaterialCommunityIcons name="home" size={40} color="#E4AB76" />
-				</TouchableOpacity>
+				</TouchableOpacity> */}
 				<View
 					style={{
 						position: "absolute",
@@ -210,6 +211,11 @@ const MonthTimeline = () => {
 					<AntDesign name="questioncircleo" size={53} color="white" />
 				</View>
 			</View>
+			<CommonHomeButton
+				iconColor={"#E4AB76"}
+				size={40}
+				click={() => navigation.navigate("mygoals")}
+			/>
 		</ImageBackground>
 	)
 }

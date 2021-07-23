@@ -15,7 +15,7 @@ const MilestoneCards = ({data, setClickedMilestone, clickedMilestone}) => {
 
 	const emptyComponent = () => {
 		return (
-			<View>
+			<View style={styles.accordian}>
 				<Text style={{padding: 15, backgroundColor: ColorConstants.lightestBlue}}>
 					There are no tasks for this milestone
 				</Text>
@@ -30,8 +30,8 @@ const MilestoneCards = ({data, setClickedMilestone, clickedMilestone}) => {
 						{
 							text: <MaterialCommunityIcons name="plus" size={40} color="#77777B" />,
 							onPress: () => {
-								console.log("setting clicked milestone:", data.milestone)
-								setClickedMilestone(data.milestone)
+								console.log("setting clicked milestone:", data && data.milestone)
+								data && data.milestone && setClickedMilestone(data.milestone)
 								navigation.navigate("firsttaskflow")
 							},
 							style: {backgroundColor: ColorConstants.faintWhite},
@@ -52,8 +52,8 @@ const MilestoneCards = ({data, setClickedMilestone, clickedMilestone}) => {
 					<View style={styles.swipableBtnContainer}>
 						<TouchableOpacity style={styles.TouchContainer} onPress={() => setUpDown(!upDown)}>
 							<View>
-								<Text style={styles.mainTitle}>{data.milestone}</Text>
-								<Text style={styles.subtitle}>{data.date}</Text>
+								<Text style={styles.mainTitle}>{data && data.milestone}</Text>
+								<Text style={styles.subtitle}>{data && data.date}</Text>
 							</View>
 							<View style={{alignItems: "center"}}>
 								<Text style={{fontSize: 16}}>{`Task: 0/${
@@ -68,6 +68,11 @@ const MilestoneCards = ({data, setClickedMilestone, clickedMilestone}) => {
 			{upDown && (
 				<FlatList
 					data={data.taskData}
+					listKey={(item, index) => {
+						return (
+							this.props.index + "_" + index + "_" + item.id + "_" + moment().valueOf().toString()
+						)
+					}}
 					ListEmptyComponent={emptyComponent}
 					renderItem={(item) => {
 						console.log("FlatList", item)

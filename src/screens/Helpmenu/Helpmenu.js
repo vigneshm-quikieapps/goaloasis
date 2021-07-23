@@ -2,6 +2,8 @@ import React from "react"
 import {StyleSheet, Text, View, TouchableOpacity} from "react-native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
+import {CommonHomeButton} from "../../core/CommonComponents"
+import {ColorConstants} from "../../core/styles"
 
 const Helpmenu = () => {
 	const navigation = useNavigation()
@@ -52,16 +54,22 @@ const Helpmenu = () => {
 							<Text style={styles.btnText}>Timeline</Text>
 						</TouchableOpacity>
 					</View>
-					<View style={styles.bottomBtnContainer}>
+					{/* <View style={styles.bottomBtnContainer}>
 						<TouchableOpacity
 							style={styles.bottomBtn}
 							onPress={() => navigation.navigate("mygoals")}
 						>
 							<MaterialCommunityIcons name="home" size={34} color="white" />
 						</TouchableOpacity>
-					</View>
+					</View> */}
 				</View>
 			</View>
+			<CommonHomeButton
+				click={gotoHome}
+				size={34}
+				iconColor={ColorConstants.white}
+				bgColor={ColorConstants.lighterBlue}
+			/>
 		</View>
 	)
 }

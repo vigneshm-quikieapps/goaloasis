@@ -24,6 +24,7 @@ import {
 } from "./../../redux/actions"
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
 import {connect} from "react-redux"
+import {CommonHomeButton, CommonPrevNextButton} from "../../core/CommonComponents"
 
 const FirstTaskFlow = ({
 	setTaskFlowData,
@@ -176,25 +177,28 @@ const FirstTaskFlow = ({
 							style={ColorConstants.transparent}
 						/>
 
-						<TouchableOpacity style={[styles.btnStyling, styles.nextBtn]} onPress={nextScreen}>
+						{/* <TouchableOpacity style={[styles.btnStyling, styles.nextBtn]} onPress={nextScreen}>
 							<MaterialCommunityIcons
 								name="chevron-right"
 								size={50}
 								color={ColorConstants.lighterBlue}
 							/>
-						</TouchableOpacity>
+						</TouchableOpacity> */}
 
-						<View style={styles.bottomBtnContainer}>
+						{/* <View style={styles.bottomBtnContainer}>
 							<TouchableOpacity
 								style={styles.bottomBtn}
 								onPress={() => navigation.navigate("particulargoal")}
 							>
 								<MaterialCommunityIcons name="home" size={44} color={ColorConstants.lighterBlue} />
 							</TouchableOpacity>
-						</View>
+						</View> */}
+						<CommonPrevNextButton right={true} nextClick={nextScreen} bottom={sizeConstants.m} />
 					</View>
 				</StatusBarScreen>
 			</ScrollView>
+
+			<CommonHomeButton click={() => navigation.navigate("particulargoal")} />
 		</ImageBackground>
 	)
 }

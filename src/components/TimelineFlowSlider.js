@@ -75,7 +75,7 @@ const TimelineFlowSlider = ({data, setFirstTimeForTimeLine}) => {
 				{screen != 3 ? (
 					<View>
 						<TouchableOpacity onPress={setLoggedIn}>
-							<Text style={CommonStyles.SkipText}>Skippp</Text>
+							<Text style={CommonStyles.SkipText}>Skip</Text>
 						</TouchableOpacity>
 					</View>
 				) : null}
@@ -105,8 +105,8 @@ const TimelineFlowSlider = ({data, setFirstTimeForTimeLine}) => {
 
 				<View style={CommonStyles.textContainer}>
 					<Text style={CommonStyles.title}>{title}</Text>
-					<Text style={[CommonStyles.subTitle, {marginTop: sizeConstants.l}]}>{subTitle1}</Text>
-					<Text style={[CommonStyles.subTitle, {marginTop: sizeConstants.l}]}> {subTitle2}</Text>
+					<Text style={[CommonStyles.subTitle, {marginTop: sizeConstants.m}]}>{subTitle1}</Text>
+					<Text style={[CommonStyles.subTitle, {marginTop: sizeConstants.m}]}> {subTitle2}</Text>
 				</View>
 				<View style={{marginTop: screen == 2 ? 0 : 20}}>
 					<SimpleLineIcons name="arrow-up" size={20} color="white" style={{alignSelf: "center"}} />
