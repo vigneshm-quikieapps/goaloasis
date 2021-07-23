@@ -36,7 +36,7 @@ const Helpmenu = () => {
 						Help Menu
 					</Text>
 
-					<View style={{alignItems: "center"}}>
+					<View style={{alignItems: "center", marginBottom: 20}}>
 						<TouchableOpacity style={styles.HelpBtn}>
 							<Text style={styles.btnText}>Goal Screen</Text>
 						</TouchableOpacity>

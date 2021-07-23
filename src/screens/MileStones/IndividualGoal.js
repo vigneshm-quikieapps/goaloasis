@@ -30,6 +30,7 @@ const IndividualGoal = (props) => {
 		await setisFirstTimeIndividual()
 		props.setFirstTimeForIndividualGoal("visited")
 		setModalVisible(false)
+		// navigation.navigate("milestones")
 	}
 	const navigation = useNavigation()
 	const dataText = ["Congrats! You're one step closer to your goal.", "", ""]

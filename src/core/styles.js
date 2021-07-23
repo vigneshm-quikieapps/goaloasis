@@ -731,6 +731,9 @@ export const CommonStyles = ScaledSheet.create({
 	pr10: {
 		paddingRight: sizeConstants.mX,
 	},
+	pl10: {
+		paddingLeft: sizeConstants.mX,
+	},
 	flexOne: {
 		flex: 1,
 	},

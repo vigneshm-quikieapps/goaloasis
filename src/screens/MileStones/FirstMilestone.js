@@ -45,7 +45,7 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal, taskFlowDat
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
 		<ImageBackground
-			style={[CommonStyles.mainContainer, styles.image, CommonStyles.pt10]}
+			style={[CommonStyles.mainContainer, styles.image]}
 			source={commonImages.secondImage}
 			resizeMode="stretch"
 		>
@@ -59,9 +59,9 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal, taskFlowDat
 								color={ColorConstants.faintWhite}
 								size={38}
 								style={CommonStyles.cross}
+								onPress={() => navigation.navigate("ThirdMileStone")}
 							/>
 						</View>
-
 						<Text style={styles.subTitle}>Enter Milestone</Text>
 						<View style={styles.centerCont}>
 							<TextInput
@@ -74,7 +74,6 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal, taskFlowDat
 							{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
 						</Text>
 						<Text style={styles.bigTitle}>Edit target date</Text>
-
 						<Calendar
 							// // Initially visible month. Default = Date()
 							current={new Date()}
@@ -155,12 +154,12 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal, taskFlowDat
 							}}
 							style={{backgroundColor: ColorConstants.transparent}}
 						/>
-
 						<TouchableOpacity style={[styles.btnStyling, styles.nextBtn]} onPress={nextScreen}>
 							<MaterialCommunityIcons
 								name="chevron-right"
 								size={50}
 								color={ColorConstants.lighterBlue}
+								onPress={() => navigation.navigate("ThirdMileStone")}
 							/>
 						</TouchableOpacity>
 
@@ -239,9 +238,6 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		backgroundColor: ColorConstants.faintWhite,
-		// width: 75,
-		// height: 75,
-		// borderRadius: 75 / 2,
 		width: sizeConstants.seventyFive,
 		height: sizeConstants.seventyFive,
 		borderRadius: sizeConstants.seventyFive,

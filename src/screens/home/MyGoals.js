@@ -121,6 +121,7 @@ const MyGoals = ({
 
 	useEffect(() => {
 		getData()
+		// console.log("GOAL DATA", allTasks);
 	}, [allTasks])
 
 	return (
@@ -197,7 +198,8 @@ const MyGoals = ({
 				<View style={CommonStyles.bottomBtnContainer}>
 					<TouchableOpacity
 						style={CommonStyles.bottomBtn2}
-						onPress={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
+						// onPress={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
+						onPress={() => navigation.navigate("FirstMilestone")}
 					>
 						<MaterialCommunityIcons name="file-tree-outline" size={34} color="white" />
 					</TouchableOpacity>

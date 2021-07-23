@@ -31,7 +31,7 @@ const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 
 	return (
 		<ImageBackground
-			style={[styles.introContainer, styles.image, CommonStyles.pr10]}
+			style={[styles.introContainer, styles.image]}
 			source={commonImages.secondImage}
 			resizeMode="stretch"
 		>
@@ -46,20 +46,22 @@ const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 					/>
 				</View>
 
-				<Text style={styles.milestoneText}>Enter Milestone</Text>
-				<View style={styles.centerCont}>
-					<TextInput style={styles.textInput} placeholder="Type Here" />
+				<View>
+					<Text style={styles.milestoneText}>Enter Milestone</Text>
+					<View style={styles.centerCont}>
+						<TextInput style={styles.textInput} placeholder="Type Here" />
+					</View>
+					<Text style={styles.subTitle}>
+						{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
+					</Text>
+					<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter]}>
+						<AppButton title="Edit Date" onPress={FourthMileStone} style={styles.editButton} />
+					</View>
+					<Text style={styles.subTitle}>
+						{tip()} adding a target date will help you stay on track. Dont't worry! You can always
+						change it.
+					</Text>
 				</View>
-				<Text style={styles.subTitle}>
-					{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
-				</Text>
-				<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter]}>
-					<AppButton title="Edit Date" onPress={FourthMileStone} style={styles.editButton} />
-				</View>
-				<Text style={styles.subTitle}>
-					{tip()} adding a target date will help you stay on track. Dont't worry! You can always
-					change it.
-				</Text>
 
 				<View style={styles.nextBtnContainer}>
 					<View style={styles.nextBtnInner}>
@@ -67,7 +69,9 @@ const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 						<View>
 							<TouchableOpacity
 								style={[styles.btnStylingRight, styles.nextBtn]}
-								onPress={FourthMileStone}
+								// onPress={FourthMileStone}
+
+								onPress={() => navigation.navigate("milestones")}
 							>
 								<MaterialCommunityIcons
 									name="chevron-right"
