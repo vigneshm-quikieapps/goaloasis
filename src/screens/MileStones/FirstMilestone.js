@@ -18,25 +18,43 @@ import {connect} from "react-redux"
 import {addNewMilestone, EditNewMilestone, setClickedGoal} from "./../../redux/actions"
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
 import Constants from "expo-constants"
+import {CommonHomeButton, CommonNextButton} from "../../core/CommonComponents"
 
-const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal, taskFlowData}) => {
+const FirstMilestone = ({
+	addNewMilestone,
+	newMileStone,
+	clickedGoal,
+	taskFlowData,
+	setClickedGoal,
+}) => {
 	const [milestone, setMilestone] = useState("")
 	const [date, setDate] = useState()
-
 	const navigation = useNavigation()
 
 	const nextScreen = () => {
-		let milestoneArr = [
-			...clickedGoal.goalMilestone,
-			{
-				milestone: milestone,
-				date: date,
-				taskData: [],
-			},
-		]
-		addNewMilestone(milestoneArr)
-		addMilestoneToFirestore(clickedGoal, milestoneArr)
-		console.log("getAllGoalsFromFirestore", getAllGoalsFromFirestore())
+		// let milestoneArr = [
+		// 	...clickedGoal.goalMilestone,
+		// 	{
+		// 		milestone: milestone,
+		// 		date: date,
+		// 		taskData: [],
+		// 	},
+		// ]
+
+		// let updatedObj = {
+		// 	...clickedGoal,
+		// 	goalMilestone: milestoneArr,
+		// }
+		// console.log("setttiiinngggClickedGoal(updatedObj)", updatedObj)
+		// setClickedGoal(updatedObj)
+		// console.log("setClickedGoal(updatedObj) donnee", updatedObj)
+		// addNewMilestone(milestoneArr)
+		// addMilestoneToFirestore(clickedGoal, milestoneArr)
+
+		navigation.navigate("ThirdMileStone")
+	}
+
+	const handleHomeClick = () => {
 		navigation.navigate("ThirdMileStone")
 	}
 	// const goBack = () => {
@@ -44,138 +62,85 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal, taskFlowDat
 	// }
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
-		<ImageBackground
-			style={[CommonStyles.mainContainer, styles.image, CommonStyles.pt10]}
-			source={commonImages.secondImage}
-			resizeMode="stretch"
-		>
-			<ScrollView style={CommonStyles.mainContainer}>
-				<StatusBarScreen>
-					<View>
-						<View style={CommonStyles.flexDirectionRow}>
-							<Text style={CommonStyles.mainTitle}>{clickedGoal.name}</Text>
-							<Entypo
-								name="cross"
-								color={ColorConstants.faintWhite}
-								size={38}
-								style={CommonStyles.cross}
+		<ImageBackground style={[styles.image]} source={commonImages.secondImage} resizeMode="stretch">
+			<View style={{flex: 1}}>
+				<View>
+					<ScrollView>
+						<StatusBarScreen>
+							<View style={CommonStyles.flexDirectionRow}>
+								<Text style={CommonStyles.mainTitle}>{clickedGoal.name}</Text>
+								<Entypo
+									name="cross"
+									color={ColorConstants.faintWhite}
+									size={38}
+									style={CommonStyles.cross}
+								/>
+							</View>
+
+							<Text style={styles.subTitle}>Enter Milestone</Text>
+							<View style={styles.centerCont}>
+								<TextInput
+									style={styles.textInput}
+									placeholder="Type Here"
+									onChangeText={(text) => setMilestone(text)}
+								/>
+							</View>
+							<Text style={styles.subTitle}>
+								{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
+							</Text>
+							<Text style={styles.bigTitle}>Edit target date</Text>
+
+							<Calendar
+								current={new Date()}
+								minDate={"2001-05-10"}
+								maxDate={"2050-05-30"}
+								onDayPress={(day) => {
+									setDate(day.dateString)
+								}}
+								hideArrows={false}
+								hideExtraDays={true}
+								disableMonthChange={false}
+								hideDayNames={false}
+								showWeekNumbers={false}
+								onPressArrowLeft={(subtractMonth) => subtractMonth()}
+								onPressArrowRight={(addMonth) => addMonth()}
+								disableArrowLeft={false}
+								enableSwipeMonths={true}
+								theme={{
+									backgroundColor: ColorConstants.transparent,
+									calendarBackground: ColorConstants.transparent,
+									textSectionTitleColor: ColorConstants.whitishBlue,
+									textSectionTitleDisabledColor: ColorConstants.whitishBlue,
+									selectedDayBackgroundColor: ColorConstants.whitishBlue,
+									selectedDayTextColor: ColorConstants.black,
+									todayTextColor: "#00adf5",
+									dayTextColor: ColorConstants.whitishBlue,
+									textDisabledColor: ColorConstants.whitishBlue,
+									dotColor: ColorConstants.whitishBlue,
+									selectedDotColor: ColorConstants.whitishBlue,
+									arrowColor: ColorConstants.whitishBlue,
+									disabledArrowColor: ColorConstants.whitishBlue,
+									monthTextColor: ColorConstants.whitishBlue,
+									indicatorColor: "blue",
+									textDayFontFamily: "monospace",
+									textMonthFontFamily: "monospace",
+									textDayHeaderFontFamily: "monospace",
+									textDayFontWeight: "300",
+									textMonthFontWeight: "bold",
+									textDayHeaderFontWeight: "300",
+								}}
+								style={{
+									backgroundColor: ColorConstants.transparent,
+									// height: sizeConstants.twoSeventyMX,
+								}}
 							/>
-						</View>
 
-						<Text style={styles.subTitle}>Enter Milestone</Text>
-						<View style={styles.centerCont}>
-							<TextInput
-								style={styles.textInput}
-								placeholder="Type Here"
-								onChangeText={(text) => setMilestone(text)}
-							/>
-						</View>
-						<Text style={styles.subTitle}>
-							{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
-						</Text>
-						<Text style={styles.bigTitle}>Edit target date</Text>
-
-						<Calendar
-							// // Initially visible month. Default = Date()
-							current={new Date()}
-							// // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-							minDate={"2001-05-10"}
-							// // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-							maxDate={"2050-05-30"}
-							// // Handler which gets executed on day press. Default = undefined
-							onDayPress={(day) => {
-								setDate(day.dateString)
-							}}
-							// // Handler which gets executed on day long press. Default = undefined
-							// onDayLongPress={(day) => {
-							// 	console.log("selected day", day)
-							// }}
-							// // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-							// // monthFormat={"yyyy MM"}
-							// // Handler which gets executed when visible month changes in calendar. Default = undefined
-							// onMonthChange={(month) => {
-							// 	console.log("month changed", month)
-							// }}
-							// // Hide month navigation arrows. Default = false
-							hideArrows={false}
-							// // Replace default arrows with custom ones (direction can be 'left' or 'right')
-							// //   renderArrow={(direction) => (<Arrow/>)}
-							// // Do not show days of other months in month page. Default = false
-							hideExtraDays={true}
-							// // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
-							// // day from another month that is visible in calendar page. Default = false
-							disableMonthChange={false}
-							// // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
-							// firstDay={1}
-							// // Hide day names. Default = false
-							hideDayNames={false}
-							// // Show week numbers to the left. Default = false
-							showWeekNumbers={false}
-							// // Handler which gets executed when press arrow icon left. It receive a callback can go back month
-							onPressArrowLeft={(subtractMonth) => subtractMonth()}
-							// // Handler which gets executed when press arrow icon right. It receive a callback can go next month
-							onPressArrowRight={(addMonth) => addMonth()}
-							// // Disable left arrow. Default = false
-							disableArrowLeft={false}
-							// // Disable right arrow. Default = false
-							// disableArrowRight={false}
-							// // Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates
-							// disableAllTouchEventsForDisabledDays={false}
-							// // Replace default month and year title with custom one. the function receive a date as parameter.
-							// renderHeader={(date) => {
-							// 	/*Return JSX*/
-							// }}
-							// Enable the option to swipe between months. Default = false
-							enableSwipeMonths={true}
-							theme={{
-								backgroundColor: ColorConstants.transparent,
-								calendarBackground: ColorConstants.transparent,
-								textSectionTitleColor: ColorConstants.whitishBlue,
-								textSectionTitleDisabledColor: ColorConstants.whitishBlue,
-								selectedDayBackgroundColor: ColorConstants.whitishBlue,
-								selectedDayTextColor: ColorConstants.black,
-								todayTextColor: "#00adf5",
-								dayTextColor: ColorConstants.whitishBlue,
-								textDisabledColor: ColorConstants.whitishBlue,
-								dotColor: ColorConstants.whitishBlue,
-								selectedDotColor: ColorConstants.whitishBlue,
-								arrowColor: ColorConstants.whitishBlue,
-								disabledArrowColor: ColorConstants.whitishBlue,
-								monthTextColor: ColorConstants.whitishBlue,
-								indicatorColor: "blue",
-								textDayFontFamily: "monospace",
-								textMonthFontFamily: "monospace",
-								textDayHeaderFontFamily: "monospace",
-								textDayFontWeight: "300",
-								textMonthFontWeight: "bold",
-								textDayHeaderFontWeight: "300",
-								// textDayFontSize: 16,
-								// textMonthFontSize: 16,
-								// textDayHeaderFontSize: 40,
-							}}
-							style={{backgroundColor: ColorConstants.transparent}}
-						/>
-
-						<TouchableOpacity style={[styles.btnStyling, styles.nextBtn]} onPress={nextScreen}>
-							<MaterialCommunityIcons
-								name="chevron-right"
-								size={50}
-								color={ColorConstants.lighterBlue}
-							/>
-						</TouchableOpacity>
-
-						<View style={styles.bottomBtnContainer}>
-							<TouchableOpacity
-								style={styles.bottomBtn}
-								// onPress={() => navigation.navigate("particulargoal")}
-								onPress={() => navigation.navigate("ThirdMileStone")}
-							>
-								<MaterialCommunityIcons name="home" size={44} color={ColorConstants.lighterBlue} />
-							</TouchableOpacity>
-						</View>
-					</View>
-				</StatusBarScreen>
-			</ScrollView>
+							<CommonNextButton click={nextScreen} size={50} />
+						</StatusBarScreen>
+					</ScrollView>
+				</View>
+				<CommonHomeButton click={handleHomeClick} size={44} />
+			</View>
 		</ImageBackground>
 	)
 }
@@ -190,6 +155,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		addNewMilestone: (milestone) => dispatch(addNewMilestone(milestone)),
+		setClickedGoal: (data) => {
+			dispatch(setClickedGoal(data))
+		},
 	}
 }
 
@@ -219,6 +187,7 @@ const styles = StyleSheet.create({
 	},
 
 	bottomBtnContainer: {
+		flex: 1,
 		width: "100%",
 		position: "absolute",
 		bottom: 0,
@@ -233,15 +202,14 @@ const styles = StyleSheet.create({
 		elevation: sizeConstants.s,
 		justifyContent: "center",
 		alignItems: "center",
+		position: "absolute",
+		bottom: sizeConstants.sixteenX,
 	},
 
 	btnStyling: {
 		justifyContent: "center",
 		alignItems: "center",
 		backgroundColor: ColorConstants.faintWhite,
-		// width: 75,
-		// height: 75,
-		// borderRadius: 75 / 2,
 		width: sizeConstants.seventyFive,
 		height: sizeConstants.seventyFive,
 		borderRadius: sizeConstants.seventyFive,

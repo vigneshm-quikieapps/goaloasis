@@ -58,6 +58,7 @@ const MyGoals = ({
 	const handleOpenNewGoal = (task) => {
 		getClickedGoalFromAsyncStorage(task).then((data) => {
 			let clickedGoal = JSON.parse(data)
+			console.log("clicked goal from mygoals", clickedGoal)
 			setClickedGoal(clickedGoal)
 
 			clickedGoal && clickedGoal.goalMilestone.length

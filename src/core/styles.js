@@ -79,7 +79,7 @@ export const sizeConstants = {
 
 	seventy: verticalScale(70),
 	seventyFive: verticalScale(75),
-	// seventyFive: moderateScale(75),
+	seventyFiveMX: moderateScale(75),
 	eighty: verticalScale(80),
 	eightyFive: verticalScale(85),
 	ninety: verticalScale(90),
@@ -318,7 +318,7 @@ export const CommonStyles = ScaledSheet.create({
 		backgroundColor: colors.faint,
 		width: sizeConstants.seventyFive,
 		height: sizeConstants.seventyFive,
-		borderRadius: sizeConstants.seventyFive / 2,
+		borderRadius: sizeConstants.seventyFive,
 	},
 
 	// Reoccuring Flow
@@ -945,6 +945,43 @@ export const CommonStyles = ScaledSheet.create({
 		marginRight: sizeConstants.mX,
 	},
 	// milestone ends
+
+	// home button floating fixed
+	homeButtonContainer: {
+		flex: 1,
+		width: "100%",
+		position: "absolute",
+		bottom: 0,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+
+	homeTouchableOpacity: {
+		height: sizeConstants.seventyFive,
+		width: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive,
+		backgroundColor: "white",
+		elevation: sizeConstants.s,
+		justifyContent: "center",
+		alignItems: "center",
+		position: "absolute",
+		bottom: sizeConstants.sixteenX,
+	},
+
+	rightButton: {
+		width: sizeConstants.fifty,
+		height: sizeConstants.fifty,
+		marginRight: sizeConstants.fourtyMX,
+		marginBottom: sizeConstants.twentyMX,
+		marginTop: sizeConstants.m,
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: colors.faint,
+		borderRadius: sizeConstants.seventyFive,
+		right: 0,
+		top: 0,
+		alignSelf: "flex-end",
+	},
 })
 
 export const firebaseConstants = {

@@ -8,6 +8,7 @@ import {Calendar} from "react-native-calendars"
 import StatusBarScreen from "./StatusBarScreen"
 import {Entypo} from "@expo/vector-icons"
 import {ColorConstants, CommonStyles, sizeConstants} from "../../core/styles"
+import {CommonHomeButton} from "../../core/CommonComponents"
 
 const FourthMilestone = () => {
 	const navigation = useNavigation()
@@ -138,14 +139,15 @@ const FourthMilestone = () => {
 					>
 						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
 					</TouchableOpacity>
-					<TouchableOpacity
+					{/* <TouchableOpacity
 						style={CommonStyles.bottomBtnMilestone}
 						onPress={() => navigation.navigate("particulargoal")}
 					>
 						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
-					</TouchableOpacity>
+					</TouchableOpacity> */}
 				</View>
 			</ScrollView>
+			<CommonHomeButton click={() => navigation.navigate("particulargoal")} size={44} />
 		</StatusBarScreen>
 	)
 }
