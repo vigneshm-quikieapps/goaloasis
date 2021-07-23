@@ -42,22 +42,6 @@ const MyGoals = ({
 }) => {
 	const [test, setTest] = useState({})
 
-	// const testFire = () => {
-	// 	firestore()
-	// 		.collection("Goals/milestones")
-	// 		.add({
-	// 			name: "test1",
-	// 			description: "testing-1",
-	// 			targetDate: new Date("28-07-2021"),
-	// 			createdAt: firestore.FieldValue.serverTimestamp(),
-	// 			goalMilestone: [{}, {}, {}],
-	// 			color: "#ff0000",
-	// 		})
-	// 		.then(() => {
-	// 			console.log("Goal added!")
-	// 		})
-	// }
-
 	useEffect(() => {
 		fetchData()
 	}, [testData, firstTime, firstTimeTimelineFlow])
@@ -75,10 +59,11 @@ const MyGoals = ({
 		getClickedGoalFromAsyncStorage(task).then((data) => {
 			let clickedGoal = JSON.parse(data)
 			setClickedGoal(clickedGoal)
-			navigation.navigate("DParticularGoal")
-		})
 
-		// clickedGoal = JSON.parse(clickedGoal)
+			clickedGoal && clickedGoal.goalMilestone.length
+				? navigation.navigate("milestones")
+				: navigation.navigate("DParticularGoal")
+		})
 	}
 
 	const gotoGoal = () => {
@@ -212,15 +197,7 @@ const MyGoals = ({
 				<View style={CommonStyles.bottomBtnContainer}>
 					<TouchableOpacity
 						style={CommonStyles.bottomBtn2}
-						// onPress={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
-						// onPress={() => navigation.navigate("DParticularGoal")}
-						// onPress={() => {
-						// 	navigation.navigate("firsttaskflow")
-						// }}
-						// onPress={() => {
-						// 	navigation.navigate("FirstMilestone")
-						// }}
-						onPress={() => navigation.navigate("particulargoal")}
+						onPress={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
 					>
 						<MaterialCommunityIcons name="file-tree-outline" size={34} color="white" />
 					</TouchableOpacity>

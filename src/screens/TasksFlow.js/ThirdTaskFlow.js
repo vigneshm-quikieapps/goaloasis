@@ -133,7 +133,7 @@ const ThirdTaskFlow = () => {
 					<TouchableOpacity
 						style={CommonStyles.containerMilestone}
 						onPress={() => {
-							navigation.navigate("milestones")
+							navigation.navigate("first")
 						}}
 					>
 						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>

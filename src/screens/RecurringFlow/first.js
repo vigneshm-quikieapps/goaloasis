@@ -119,7 +119,7 @@ const First = () => {
 				</View>
 			)}
 
-			<View style={{bottom: -250}}>
+			<View style={{bottom: -180}}>
 				<TouchableOpacity
 					style={CommonStyles.cancelReoccuring}
 					onPress={() => navigation.navigate("second")}

@@ -67,7 +67,7 @@ const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 						<View>
 							<TouchableOpacity
 								style={[styles.btnStylingRight, styles.nextBtn]}
-								onPress={() => navigation.navigate("FourthMilestone")}
+								onPress={FourthMileStone}
 							>
 								<MaterialCommunityIcons
 									name="chevron-right"

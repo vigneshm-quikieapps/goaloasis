@@ -72,3 +72,10 @@ export const setTaskFlowData = (data) => {
 		value: data,
 	}
 }
+
+export const setClickedMilestone = (data) => {
+	return {
+		type: actionTypes.SET_CLICKED_MILESTONE,
+		value: data,
+	}
+}

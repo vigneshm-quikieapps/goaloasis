@@ -25,23 +25,38 @@ import {
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
 import {connect} from "react-redux"
 
-const FirstTaskFlow = ({setTaskFlowData, clickedGoal, newMileStone, taskFlowData}) => {
+const FirstTaskFlow = ({
+	setTaskFlowData,
+	clickedGoal,
+	newMileStone,
+	clickedMilestone,
+	taskFlowData,
+}) => {
 	const navigation = useNavigation()
 	const [task, setTask] = useState()
 	const [date, setDate] = useState()
 
-	let mileStoneData = newMileStone
-	console.log("MILESTONE DATA FROM firstTASKFLOW", mileStoneData)
 	const nextScreen = () => {
-		let taskFlowDataArray = [
-			{
-				taskData: task,
-				date: date,
-			},
-		]
-		setTaskFlowData(taskFlowDataArray)
-		addMilestoneToFirestore(clickedGoal, mileStoneData, taskFlowDataArray)
+		console.log("nextScreen1")
+
+		let newMilestoneItem = clickedGoal.goalMilestone.map((item) => {
+			if (item.milestone == clickedMilestone) {
+				return {
+					...item,
+					taskData: [
+						...item.taskData,
+						{
+							task: task,
+							date: date,
+						},
+					],
+				}
+			} else return item
+		})
+		addMilestoneToFirestore(clickedGoal, newMilestoneItem)
 		navigation.navigate("secondtaskflow")
+
+		console.log("nextScreen2")
 	}
 	// const goBack = () => {
 	// 	navigation.goBack()
@@ -188,6 +203,7 @@ const mapStateToProps = (state) => {
 	return {
 		taskFlowData: state.milestone.taskFlowData,
 		clickedGoal: state.milestone.clickedGoal,
+		clickedMilestone: state.milestone.clickedMilestone,
 	}
 }
 

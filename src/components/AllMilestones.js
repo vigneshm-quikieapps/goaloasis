@@ -1,10 +1,11 @@
-import React, {useState, useRef} from "react"
+import React, {useState, useRef, useEffect} from "react"
 import {StyleSheet, Text, View, TouchableOpacity, ScrollView, FlatList} from "react-native"
 import {Feather} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
 import MilestoneCards from "./MilestoneCards"
+import {connect} from "react-redux"
 
-const AllMilestones = () => {
+const AllMilestones = ({clickedGoal}) => {
 	const [upDown, setUpDown] = useState(false)
 	const [upDownTwo, setUpDownTwo] = useState(false)
 	const [upDown3, setUpDown3] = useState(false)
@@ -12,47 +13,41 @@ const AllMilestones = () => {
 	const panelRef = useRef(null)
 	const navigation = useNavigation()
 	const [selectedId, setSelectedId] = useState(null)
-
-	const DATA = [
-		{
-			id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-			title: "First Item",
-		},
-		{
-			id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-			title: "Second Item",
-		},
-		{
-			id: "58694a0f-3da1-471f-bd96-145571e29d72",
-			title: "Third Item",
-		},
-		{
-			id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-			title: "First Item",
-		},
-		{
-			id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-			title: "Second Item",
-		},
-		{
-			id: "58694a0f-3da1-471f-bd96-145571e29d72",
-			title: "Third Item",
-		},
-	]
+	const [DATA, setData] = useState([])
+	useEffect(() => {
+		setData(clickedGoal.goalMilestone)
+	}, [])
 
 	return (
 		<>
 			<FlatList
 				data={DATA}
-				renderItem={() => <MilestoneCards />}
-				keyExtractor={(item) => item.id}
+				renderItem={(item) => {
+					console.log("renderItem", item)
+					return (
+						<View>
+							<MilestoneCards data={item.item} />
+						</View>
+					)
+				}}
+				keyExtractor={(item) => item.index}
 				extraData={selectedId}
 			/>
 		</>
 	)
 }
 
-export default AllMilestones
+const mapStateToProps = (state) => {
+	return {
+		clickedGoal: state.milestone.clickedGoal,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllMilestones)
 
 const styles = StyleSheet.create({
 	mileStones: {

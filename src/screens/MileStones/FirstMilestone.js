@@ -27,6 +27,7 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal, taskFlowDat
 
 	const nextScreen = () => {
 		let milestoneArr = [
+			...clickedGoal.goalMilestone,
 			{
 				milestone: milestone,
 				date: date,
@@ -167,7 +168,7 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal, taskFlowDat
 							<TouchableOpacity
 								style={styles.bottomBtn}
 								// onPress={() => navigation.navigate("particulargoal")}
-								onPress={() => navigation.navigate("firsttaskflow")}
+								onPress={() => navigation.navigate("ThirdMileStone")}
 							>
 								<MaterialCommunityIcons name="home" size={44} color={ColorConstants.lighterBlue} />
 							</TouchableOpacity>
@@ -180,8 +181,6 @@ const FirstMilestone = ({addNewMilestone, newMileStone, clickedGoal, taskFlowDat
 }
 
 const mapStateToProps = (state) => {
-	console.log("MILESTONE DATA", state.newMileStone)
-
 	return {
 		newMileStone: state.milestone.newMileStone,
 		clickedGoal: state.milestone.clickedGoal,

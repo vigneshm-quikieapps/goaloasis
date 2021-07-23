@@ -1,66 +1,108 @@
 import React, {useState} from "react"
-import {StyleSheet, Text, View, TouchableOpacity} from "react-native"
+import {StyleSheet, Text, View, TouchableOpacity, FlatList} from "react-native"
 import {Feather} from "@expo/vector-icons"
 import Swipeout from "rc-swipeout"
 import {MaterialCommunityIcons, AntDesign, MaterialIcons} from "@expo/vector-icons"
 import {ColorConstants, sizeConstants} from "./../core/styles"
 import {useNavigation} from "@react-navigation/native"
+import {setClickedMilestone} from "./../redux/actions"
+import {connect} from "react-redux"
 
-const MilestoneCards = () => {
+const MilestoneCards = ({data, setClickedMilestone, clickedMilestone}) => {
 	const navigation = useNavigation()
 
 	const [upDown, setUpDown] = useState(false)
+
+	const emptyComponent = () => {
+		return (
+			<View>
+				<Text style={{padding: 15, backgroundColor: ColorConstants.lightestBlue}}>
+					There are no tasks for this milestone
+				</Text>
+			</View>
+		)
+	}
 	return (
-		<View style={styles.swipeButton}>
-			<Swipeout
-				left={[
-					{
-						text: <MaterialCommunityIcons name="plus" size={40} color="#77777B" />,
-						onPress: () => navigation.navigate("AfterModal"),
-						style: {backgroundColor: ColorConstants.faintWhite},
-					},
-				]}
-				right={[
-					{
-						text: <MaterialCommunityIcons name="plus" size={40} color="#77777B" />,
-						onPress: () => navigation.navigate("AfterModal"),
-						style: {backgroundColor: ColorConstants.faintWhite},
-					},
-				]}
-				// onOpen={() => console.log("open")}
-				// onClose={() => console.log("close")}
-				autoClose={true}
-				disabled={false}
-			>
-				<View style={styles.swipableBtnContainer}>
-					<TouchableOpacity style={styles.TouchContainer} onPress={() => setUpDown(!upDown)}>
-						<View>
-							<Text style={styles.mainTitle}>Read 5 books</Text>
-							<Text style={styles.subtitle}>Sat, Nov 14</Text>
-						</View>
-						<View style={{alignItems: "center"}}>
-							<Text style={{fontSize: 16}}>Task: 0/1</Text>
-							<Feather name={upDown ? "chevron-up" : "chevron-down"} size={25} color="black" />
-						</View>
-					</TouchableOpacity>
-				</View>
-			</Swipeout>
-			{upDown && (
-				<TouchableOpacity
-					style={styles.accordian}
-					onPress={() => navigation.navigate("firsttaskflow")}
+		<View>
+			<View style={styles.swipeButton}>
+				<Swipeout
+					left={[
+						{
+							text: <MaterialCommunityIcons name="plus" size={40} color="#77777B" />,
+							onPress: () => {
+								console.log("setting clicked milestone:", data.milestone)
+								setClickedMilestone(data.milestone)
+								navigation.navigate("firsttaskflow")
+							},
+							style: {backgroundColor: ColorConstants.faintWhite},
+						},
+					]}
+					right={[
+						{
+							text: <MaterialCommunityIcons name="plus" size={40} color="#77777B" />,
+							onPress: () => {},
+							style: {backgroundColor: ColorConstants.faintWhite},
+						},
+					]}
+					// onOpen={() => console.log("open")}
+					// onClose={() => console.log("close")}
+					autoClose={true}
+					disabled={false}
 				>
-					<View>
-						<Text style={styles.mainTitle}>Read 5 books</Text>
-						<Text style={styles.subtitle}>Sat, Nov 14</Text>
+					<View style={styles.swipableBtnContainer}>
+						<TouchableOpacity style={styles.TouchContainer} onPress={() => setUpDown(!upDown)}>
+							<View>
+								<Text style={styles.mainTitle}>{data.milestone}</Text>
+								<Text style={styles.subtitle}>{data.date}</Text>
+							</View>
+							<View style={{alignItems: "center"}}>
+								<Text style={{fontSize: 16}}>{`Task: 0/${
+									data.taskData && data.taskData.length
+								}`}</Text>
+								<Feather name={upDown ? "chevron-up" : "chevron-down"} size={25} color="black" />
+							</View>
+						</TouchableOpacity>
 					</View>
-				</TouchableOpacity>
+				</Swipeout>
+			</View>
+			{upDown && (
+				<FlatList
+					data={data.taskData}
+					ListEmptyComponent={emptyComponent}
+					renderItem={(item) => {
+						console.log("FlatList", item)
+						return (
+							<TouchableOpacity
+								style={styles.accordian}
+								onPress={() => navigation.navigate("firsttaskflow")}
+							>
+								<View>
+									<Text style={styles.mainTitle}>{item.item.task}</Text>
+									<Text style={styles.subtitle}>{item.item.date}</Text>
+								</View>
+							</TouchableOpacity>
+						)
+					}}
+					keyExtractor={(item) => item.milestone}
+					extraData={null}
+				/>
 			)}
 		</View>
 	)
 }
 
-export default MilestoneCards
+const mapStateToProps = (state) => {
+	return {
+		clickedMilestone: state.milestone.clickedMilestone,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setClickedMilestone: (task) => dispatch(setClickedMilestone(task)),
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(MilestoneCards)
 
 const styles = StyleSheet.create({
 	mileStones: {
@@ -74,10 +116,9 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 	},
 	TouchContainer: {
-		width: "90%",
+		width: "100%",
 		backgroundColor: "#FDF9F2",
-		height: 83,
-		borderRadius: 20,
+		height: sizeConstants.hundredMX,
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",

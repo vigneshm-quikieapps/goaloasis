@@ -6,7 +6,7 @@ import AllMilestones from "../../components/AllMilestones"
 import RBSheet from "react-native-raw-bottom-sheet"
 import StatusBarScreen from "./StatusBarScreen"
 
-const MyGoals = () => {
+const AllMilestonesScreen = () => {
 	const refRBSheet = useRef()
 
 	const navigation = useNavigation()
@@ -103,7 +103,7 @@ const MyGoals = () => {
 	)
 }
 
-export default MyGoals
+export default AllMilestonesScreen
 
 const styles = StyleSheet.create({
 	container: {

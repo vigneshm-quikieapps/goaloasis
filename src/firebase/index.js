@@ -103,7 +103,7 @@ export const addMilestoneToFirestore = (target, milestoneArr) => {
 	})
 	addMiletonesToGoal
 		.then((updated) => {
-			addGoalDataToAsyncStorage(updated) // adding data to Async Storage
+			addGoalDataToAsyncStorage(updated) // adding data to Async Storage//TODO update redux for clicked goals
 			console.log("FB milestone updated", updated)
 		})
 		.catch((err) => {

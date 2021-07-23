@@ -38,10 +38,7 @@ const SixthMilestone = () => {
 			<Text style={styles.subTitle}>
 				{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
 			</Text>
-			<TouchableOpacity
-				style={styles.editBtntext}
-				onPress={() => navigation.navigate("SixthMilestone")}
-			>
+			<TouchableOpacity style={styles.editBtntext} onPress={() => {}}>
 				<Text style={CommonStyles.reoccuring}>Edit Date</Text>
 			</TouchableOpacity>
 			<Text style={styles.subTitle}>
@@ -67,7 +64,7 @@ const SixthMilestone = () => {
 								name="chevron-right"
 								size={sizeConstants.fifty}
 								color={ColorConstants.lighterBlue}
-								onPress={() => navigation.navigate("IndividualGoal")}
+								onPress={() => navigation.navigate("milestones")}
 							/>
 						</TouchableOpacity>
 					</View>
