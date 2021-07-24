@@ -8,6 +8,7 @@ import {Calendar} from "react-native-calendars"
 import StatusBarScreen from "./StatusBarScreen"
 import RBSheet from "react-native-raw-bottom-sheet"
 import {CommonHomeButton} from "../../core/CommonComponents"
+import {ColorConstants} from "../../core/styles"
 
 const ThirdAfterModal = () => {
 	const navigation = useNavigation()
@@ -188,6 +189,26 @@ const ThirdAfterModal = () => {
 							}}
 							markedDates={{
 								"2012-03-11": {selected: true, marked: true, selectedColor: "#FDF9F2"},
+							}}
+							dayComponent={({date}) => {
+								return (
+									<TouchableOpacity
+										onPress={() => {
+											console.log("selected day", date)
+										}}
+									>
+										<Text
+											style={{
+												padding: 0,
+												margin: 0,
+												textAlign: "center",
+												color: ColorConstants.white,
+											}}
+										>
+											{date.day}
+										</Text>
+									</TouchableOpacity>
+								)
 							}}
 						/>
 					</TouchableOpacity>

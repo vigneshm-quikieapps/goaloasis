@@ -5,7 +5,7 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {Calendar} from "react-native-calendars"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import {Entypo} from "@expo/vector-icons"
-import {CommonStyles} from "../../core/styles"
+import {ColorConstants, CommonStyles} from "../../core/styles"
 import {CommonHomeButton} from "../../core/CommonComponents"
 
 const Second = () => {
@@ -150,6 +150,26 @@ const Second = () => {
 							"2012-05-30": {color: "#70d7c7", textColor: "white"},
 
 							"2012-05-31": {endingDay: true, color: "#70d7c7", textColor: "white"},
+						}}
+						dayComponent={({date}) => {
+							return (
+								<TouchableOpacity
+									onPress={() => {
+										console.log(date.dateString)
+									}}
+								>
+									<Text
+										style={{
+											padding: 0,
+											margin: 0,
+											textAlign: "center",
+											color: ColorConstants.white,
+										}}
+									>
+										{date.day}
+									</Text>
+								</TouchableOpacity>
+							)
 						}}
 					/>
 					<TouchableOpacity

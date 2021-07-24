@@ -94,9 +94,9 @@ const FirstMilestone = ({
 								current={new Date()}
 								minDate={"2001-05-10"}
 								maxDate={"2050-05-30"}
-								onDayPress={(day) => {
-									setDate(day.dateString)
-								}}
+								// onDayPress={(day) => {
+								// 	setDate(day.dateString)
+								// }}
 								hideArrows={false}
 								hideExtraDays={true}
 								disableMonthChange={false}
@@ -133,6 +133,26 @@ const FirstMilestone = ({
 								style={{
 									backgroundColor: ColorConstants.transparent,
 									// height: sizeConstants.twoSeventyMX,
+								}}
+								dayComponent={({date}) => {
+									return (
+										<TouchableOpacity
+											onPress={() => {
+												setDate(date.dateString)
+											}}
+										>
+											<Text
+												style={{
+													padding: 0,
+													margin: 0,
+													textAlign: "center",
+													color: ColorConstants.white,
+												}}
+											>
+												{date.day}
+											</Text>
+										</TouchableOpacity>
+									)
 								}}
 							/>
 						</StatusBarScreen>
