@@ -14,11 +14,12 @@ import StatusBarScreen from "./StatusBarScreen"
 import {addNewMilestone, EditNewMilestone, setClickedGoal} from "./../../redux/actions"
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
 import {connect} from "react-redux"
+import {CommonHomeButton, CommonNextButton} from "../../core/CommonComponents"
 
 const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 	const navigation = useNavigation()
 	const FourthMileStone = () => {
-		navigation.navigate("FourthMilestone")
+		navigation.navigate("milestones")
 	}
 	const particularGoal = () => {
 		navigation.navigate("particulargoal")
@@ -63,7 +64,7 @@ const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 					</Text>
 				</View>
 
-				<View style={styles.nextBtnContainer}>
+				{/* <View style={styles.nextBtnContainer}>
 					<View style={styles.nextBtnInner}>
 						<View></View>
 						<View>
@@ -79,16 +80,15 @@ const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 									color="#7EC8C9"
 								/>
 							</TouchableOpacity>
+							
 						</View>
 					</View>
 
-					<View style={CommonStyles.alignItemsCenter}>
-						<TouchableOpacity style={styles.btnStyling}>
-							<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
-						</TouchableOpacity>
-					</View>
-				</View>
+					<View style={CommonStyles.alignItemsCenter}></View>
+				</View> */}
+				<CommonNextButton click={FourthMileStone} size={50} />
 			</StatusBarScreen>
+			<CommonHomeButton click={() => {}} size={44} />
 		</ImageBackground>
 	)
 }
@@ -201,6 +201,7 @@ const styles = StyleSheet.create({
 		bottom: sizeConstants.mThirty,
 		width: "100%",
 		justifyContent: "center",
+		right: 0,
 	},
 	nextBtnInner: {
 		flexDirection: "row",

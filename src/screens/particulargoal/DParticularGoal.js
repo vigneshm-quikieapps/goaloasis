@@ -6,7 +6,8 @@ import ProgressCircle from "react-native-progress-circle"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import RBBottomSheet from "../MileStones/RBBottomSheet"
 import {connect} from "react-redux"
-import {CommonStyles} from "../../core/styles"
+import {ColorConstants, CommonStyles, sizeConstants} from "../../core/styles"
+import {moderateScale, scale, verticalScale} from "react-native-size-matters"
 
 const DParticularGoals = ({clickedGoal}) => {
 	const navigation = useNavigation()
@@ -16,11 +17,11 @@ const DParticularGoals = ({clickedGoal}) => {
 	}
 	return (
 		<StatusBarScreen style={styles.container}>
-			<View style={styles.titleContainer}>
+			<View style={CommonStyles.titleContainer}>
 				<RBBottomSheet name={clickedGoal.name} />
 				<Text style={styles.subTitle}>I want to continue improve myself and my state of mind.</Text>
 
-				<View style={styles.trackingcont}>
+				<View style={CommonStyles.trackingcont}>
 					<ProgressCircle
 						percent={5}
 						radius={86}
@@ -29,7 +30,7 @@ const DParticularGoals = ({clickedGoal}) => {
 						shadowColor="#999"
 						bgColor="#FBF5E9"
 					>
-						<View style={styles.percentageCont}>
+						<View style={CommonStyles.percentageCont}>
 							<Text style={{fontSize: 16, color: "#333333"}}>Target Date</Text>
 							<Text style={{fontWeight: "bold"}}>01/01/21</Text>
 						</View>
@@ -59,7 +60,7 @@ const DParticularGoals = ({clickedGoal}) => {
 			</View>
 
 			<View style={styles.goalsContainer}>
-				<View style={styles.addMileStone}>
+				<View style={CommonStyles.addMileStone}>
 					<View style={styles.viewTap}>
 						<MaterialCommunityIcons
 							name="plus"
@@ -105,98 +106,44 @@ export default connect(mapStateToProps, mapDispatchToProps)(DParticularGoals)
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#FDF9F2",
+		backgroundColor: ColorConstants.faintWhite,
 	},
 
-	titleContainer: {
-		flex: 0.5,
-		justifyContent: "center",
-	},
-	mainTitle: {
-		color: "#333333",
-		fontSize: 25,
-		marginLeft: 20,
-		fontWeight: "bold",
-	},
-	threeDots: {
-		flexDirection: "row",
-		position: "absolute",
-		right: 0,
-		margin: 10,
-		backgroundColor: "#F4EFE7",
-		height: 35,
-		width: 42,
-		borderRadius: 30,
-		alignItems: "center",
-		justifyContent: "center",
-	},
 	subTitle: {
-		fontSize: 16,
+		fontSize: sizeConstants.sixteen,
 		color: "#333333",
-		marginLeft: 20,
+		marginLeft: scale(20),
 	},
-	addMileStone: {
-		marginLeft: "auto",
-		marginRight: 50,
-		marginTop: 20,
-	},
-	trackingcont: {
-		marginTop: 18,
-		marginVertical: 10,
-		marginHorizontal: 20,
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between",
-	},
-	percentageCont: {
-		height: 150,
-		width: 150,
-		borderRadius: 150 / 2,
-		backgroundColor: "#FBF5E9",
-		borderWidth: 5,
-		borderColor: "#C0E5E4",
-		justifyContent: "center",
-		alignItems: "center",
-	},
+
 	goalsText: {
-		fontSize: 16,
+		fontSize: sizeConstants.sixteen,
 		color: "black",
 	},
 	goalsContainer: {
-		flex: 0.75,
+		flex: 0.75, //TODO
 		backgroundColor: "#588C8D",
-		borderTopRightRadius: 70,
+		borderTopRightRadius: sizeConstants.seventy,
 	},
 	viewTap: {
-		height: 50,
-		width: 50,
+		height: sizeConstants.xxxl,
+		width: sizeConstants.xxxl,
 		backgroundColor: "white",
-		marginVertical: 10,
-		borderRadius: 50 / 2,
+		marginVertical: sizeConstants.m,
+		borderRadius: sizeConstants.xxxl,
 		justifyContent: "center",
 		alignItems: "center",
 	},
 	myGoalsText: {
-		fontSize: 25,
+		fontSize: sizeConstants.xxl,
 		fontWeight: "bold",
 		color: "black",
-		marginHorizontal: 20,
+		marginHorizontal: verticalScale(20),
 	},
 	myGoalsubtext: {
 		fontSize: 16,
-		marginHorizontal: 20,
-		marginTop: 10,
+		marginHorizontal: verticalScale(20),
+		marginTop: sizeConstants.m,
 		color: "#333333",
-		lineHeight: 30,
-	},
-
-	bottomBtn: {
-		height: 75,
-		width: 75,
-		borderRadius: 75 / 2,
-		backgroundColor: "white",
-		elevation: 5,
-		justifyContent: "center",
-		alignItems: "center",
+		lineHeight: sizeConstants.thirty,
 	},
 })

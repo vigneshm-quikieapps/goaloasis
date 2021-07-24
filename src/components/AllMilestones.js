@@ -4,8 +4,9 @@ import {Feather} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
 import MilestoneCards from "./MilestoneCards"
 import {connect} from "react-redux"
+import {getClickedGoalFromAsyncStorage} from "../utils/asyncStorage"
 
-const AllMilestones = ({clickedGoal}) => {
+const AllMilestones = ({data}) => {
 	const [upDown, setUpDown] = useState(false)
 	const [upDownTwo, setUpDownTwo] = useState(false)
 	const [upDown3, setUpDown3] = useState(false)
@@ -13,15 +14,11 @@ const AllMilestones = ({clickedGoal}) => {
 	const panelRef = useRef(null)
 	const navigation = useNavigation()
 	const [selectedId, setSelectedId] = useState(null)
-	const [DATA, setData] = useState([])
-	useEffect(() => {
-		setData(clickedGoal.goalMilestone)
-	}, [])
 
 	return (
 		<>
 			<FlatList
-				data={DATA}
+				data={data}
 				renderItem={(item) => {
 					console.log("renderItem", item)
 					return (

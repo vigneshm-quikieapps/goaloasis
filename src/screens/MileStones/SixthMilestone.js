@@ -9,6 +9,12 @@ import {Entypo} from "@expo/vector-icons"
 
 import Constants from "expo-constants"
 import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/styles"
+import {
+	CommonHomeButton,
+	CommonNextButton,
+	CommonPrevButton,
+	CommonPrevNextButton,
+} from "../../core/CommonComponents"
 
 const SixthMilestone = () => {
 	const navigation = useNavigation()
@@ -46,9 +52,9 @@ const SixthMilestone = () => {
 			</Text>
 			<Text style={styles.subTitle}> You can always change it.</Text>
 
-			<View style={styles.middleContainer}>
-				<View style={styles.middleInnerContainer}>
-					<View>
+			{/* <View style={styles.middleContainer}>
+				<View style={styles.middleInnerContainer}> */}
+			{/* <View>
 						<TouchableOpacity style={[styles.btnStylingLeft, styles.nextBtn]}>
 							<MaterialCommunityIcons
 								name="chevron-left"
@@ -57,8 +63,19 @@ const SixthMilestone = () => {
 								onPress={() => navigation.navigate("addgoal")}
 							/>
 						</TouchableOpacity>
-					</View>
-					<View>
+					</View> */}
+			{/* <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+				<CommonPrevButton click={() => navigation.navigate("addgoal")} />
+				<CommonNextButton click={() => navigation.navigate("milestones")} />
+			</View> */}
+			<CommonPrevNextButton
+				right={true}
+				left={true}
+				nextClick={() => navigation.navigate("milestones")}
+				prevClick={() => navigation.navigate("addgoal")}
+			/>
+
+			{/* <View>
 						<TouchableOpacity style={[styles.btnStylingRight, styles.nextBtn]}>
 							<MaterialCommunityIcons
 								name="chevron-right"
@@ -67,19 +84,21 @@ const SixthMilestone = () => {
 								onPress={() => navigation.navigate("milestones")}
 							/>
 						</TouchableOpacity>
-					</View>
-				</View>
+					</View> */}
+			{/* </View> */}
 
-				<View style={CommonStyles.alignItemsCenter}>
+			{/* <View style={CommonStyles.alignItemsCenter}>
 					<TouchableOpacity style={styles.btnStyling}>
 						<MaterialCommunityIcons name="home" size={44} color={ColorConstants.lighterBlue} />
 					</TouchableOpacity>
-				</View>
-			</View>
+				</View> */}
+			{/* </View> */}
+			<CommonHomeButton click={() => {}} size={44} />
 		</ImageBackground>
 	)
 }
 export default SixthMilestone
+
 const styles = StyleSheet.create({
 	subTitle: {
 		fontSize: sizeConstants.fourteenMX,

@@ -77,6 +77,7 @@ const ParticularGoal = () => {
 						It looks like you don’t have a plan to achieve your goal yet. Don’t worry! Tap (+) to
 						add a milestone and get on your way.
 					</Text> */}
+
 					<MilestoneCards />
 					<View
 						style={{

@@ -6,7 +6,11 @@ import AllMilestones from "../../components/AllMilestones"
 import RBSheet from "react-native-raw-bottom-sheet"
 import StatusBarScreen from "./StatusBarScreen"
 import {setFirstTimeForIndividualGoal} from "./../../redux/actions"
-import {getFirstTimeIndividual, setisFirstTimeIndividual} from "./../../utils/asyncStorage"
+import {
+	getClickedGoalFromAsyncStorage,
+	getFirstTimeIndividual,
+	setisFirstTimeIndividual,
+} from "./../../utils/asyncStorage"
 import {StatusBar} from "expo-status-bar"
 import {ColorConstants, CommonStyles, sizeConstants} from "../../core/styles"
 import AppButton from "./AppButton"
@@ -14,11 +18,17 @@ import {connect} from "react-redux"
 import Swipeout from "rc-swipeout"
 
 const AllMilestonesScreen = (props) => {
+	const [DATA, setData] = useState([])
 	// Modal Code
 	useEffect(() => {
 		setModalVisible(false)
 		getFirstTimeData()
-	}, [props.firstTimeIndividual])
+		getClickedGoalFromAsyncStorage(props.clickedGoal.name).then((goal) => {
+			let goals = JSON.parse(goal)
+			setData(goals.goalMilestone)
+			console.log("all milesss", goals.goalMilestone)
+		})
+	}, [props.firstTimeIndividual, props.clickedGoal])
 
 	const getFirstTimeData = async () => {
 		const data = await getFirstTimeIndividual()
@@ -214,7 +224,7 @@ const AllMilestonesScreen = (props) => {
 				</View>
 
 				<View>
-					<AllMilestones />
+					<AllMilestones data={DATA} />
 				</View>
 
 				<View style={styles.bottomBtnContainer}>
@@ -272,6 +282,7 @@ const AllMilestonesScreen = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		firstTimeIndividual: state.milestone.firstTimeIndividual,
+		clickedGoal: state.milestone.clickedGoal,
 	}
 }
 

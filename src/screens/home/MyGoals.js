@@ -58,6 +58,7 @@ const MyGoals = ({
 	const handleOpenNewGoal = (task) => {
 		getClickedGoalFromAsyncStorage(task).then((data) => {
 			let clickedGoal = JSON.parse(data)
+			console.log("clicked goal from mygoals", clickedGoal)
 			setClickedGoal(clickedGoal)
 
 			clickedGoal && clickedGoal.goalMilestone.length
@@ -199,7 +200,7 @@ const MyGoals = ({
 					<TouchableOpacity
 						style={CommonStyles.bottomBtn2}
 						// onPress={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
-						onPress={() => navigation.navigate("FirstMilestone")}
+						onPress={() => navigation.navigate("DParticularGoal")}
 					>
 						<MaterialCommunityIcons name="file-tree-outline" size={34} color="white" />
 					</TouchableOpacity>

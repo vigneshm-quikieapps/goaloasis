@@ -42,7 +42,7 @@ const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 						</Text>
 						<View style={CommonStyles.centerCont}>
 							<TextInput
-								style={CommonStyles.textInput}
+								style={[CommonStyles.textInput, {height: 80, borderRadius: 30}]}
 								placeholder="Type Here"
 								multiline={true}
 								numberOfLines={4}
