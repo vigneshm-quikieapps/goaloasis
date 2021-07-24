@@ -12,12 +12,16 @@ import {setFirstTimeForIndividualGoal} from "./../../redux/actions"
 import {getFirstTimeIndividual, setisFirstTimeIndividual} from "./../../utils/asyncStorage"
 import {connect} from "react-redux"
 import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/styles"
+import {CommonHomeButton} from "../../core/CommonComponents"
+import MilestoneCards from "../../components/MilestoneCards"
 
 const IndividualGoal = (props) => {
+	const [DATA, setData] = useState([])
 	useEffect(() => {
 		setModalVisible(false)
 		getFirstTimeData()
-	}, [props.firstTimeIndividual])
+		setData(props.newMileStone)
+	}, [props.firstTimeIndividual, props.clickedGoal])
 
 	const getFirstTimeData = async () => {
 		const data = await getFirstTimeIndividual()
@@ -297,7 +301,7 @@ const IndividualGoal = (props) => {
 					</Text>
 				</TouchableOpacity> */}
 
-				<View style={styles.swipeButton}>
+				{/* <View style={styles.swipeButton}>
 					<Swipeout
 						left={[
 							{
@@ -323,13 +327,15 @@ const IndividualGoal = (props) => {
 							<Text style={[styles.sliderText, CommonStyles.bold]}>Task:0/1</Text>
 						</View>
 					</Swipeout>
-				</View>
+				</View> */}
+				<MilestoneCards style={{backgroundColor: ColorConstants.lighterBlue}} data={DATA} />
 
-				<View style={[CommonStyles.btnContainer, {bottom: sizeConstants.l}]}>
+				{/* <View style={[CommonStyles.btnContainer, {bottom: sizeConstants.l}]}>
 					<TouchableOpacity style={styles.bottomBtn} onPress={goBack}>
 						<MaterialCommunityIcons name="home" size={44} color={ColorConstants.lighterBlue} />
 					</TouchableOpacity>
-				</View>
+				</View> */}
+				<CommonHomeButton click={goBack} />
 			</LinearGradient>
 		</StatusBarScreen>
 	)
@@ -337,6 +343,8 @@ const IndividualGoal = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		firstTimeIndividual: state.milestone.firstTimeIndividual,
+		clickedGoal: state.milestone.clickedGoal,
+		newMileStone: state.milestone.newMileStone,
 	}
 }
 
@@ -410,11 +418,11 @@ const styles = StyleSheet.create({
 		borderTopRightRadius: sizeConstants.seventy,
 	},
 	viewTap: {
-		height: sizeConstants.fifty,
-		width: sizeConstants.fifty,
+		height: sizeConstants.fourty,
+		width: sizeConstants.fourty,
 		backgroundColor: ColorConstants.white,
 		marginBottom: sizeConstants.m,
-		borderRadius: sizeConstants.fifty / 2,
+		borderRadius: sizeConstants.fourty,
 		justifyContent: "center",
 		alignItems: "center",
 	},

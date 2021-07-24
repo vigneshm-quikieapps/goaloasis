@@ -8,6 +8,7 @@ import colors from "../../../colors"
 import Constants from "expo-constants"
 import RBSheet from "react-native-raw-bottom-sheet"
 import {commonImages} from "../../core/styles"
+import {CommonHomeButton} from "../../core/CommonComponents"
 
 const SecondAfterModal = () => {
 	const navigation = useNavigation()
@@ -125,12 +126,13 @@ const SecondAfterModal = () => {
 					</View>
 				</View>
 
-				<View style={{alignItems: "center"}}>
+				{/* <View style={{alignItems: "center"}}>
 					<TouchableOpacity style={styles.btnStyling}>
 						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 					</TouchableOpacity>
-				</View>
+				</View> */}
 			</View>
+			<CommonHomeButton />
 			{/* </LinearGradient> */}
 		</ImageBackground>
 	)

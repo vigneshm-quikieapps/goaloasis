@@ -3,13 +3,14 @@ import {StyleSheet, Text, TouchableOpacity, View, TextInput} from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
-import {CommonStyles} from "../../core/styles"
+import {ColorConstants, CommonStyles} from "../../core/styles"
 import {setCurrentGoal} from "./../../redux/actions"
 import {connect} from "react-redux"
+import {CommonHomeButton, CommonPrevNextButton} from "../../core/CommonComponents"
 
 const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 	const navigation = useNavigation()
-	const [description, setDescription] = useState()
+	const [description, setDescription] = useState("")
 
 	const nextScreen = () => {
 		let currentGoalObj = {
@@ -51,7 +52,7 @@ const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 						</View>
 					</View>
 
-					<View style={CommonStyles.homeAndRight}>
+					{/* <View style={CommonStyles.homeAndRight}>
 						<View style={CommonStyles.rightArrow}>
 							<View>
 								<TouchableOpacity
@@ -69,15 +70,46 @@ const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 									<MaterialCommunityIcons name="chevron-right" size={50} color="#7EC8C9" />
 								</TouchableOpacity>
 							</View>
-						</View>
+						</View> */}
 
-						<View style={{alignItems: "center"}}>
+					{/* <View style={{alignItems: "center"}}>
 							<TouchableOpacity style={CommonStyles.homeBtnStyling} onPress={gotoHome}>
 								<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 							</TouchableOpacity>
-						</View>
-					</View>
+						</View> */}
+					{/* </View> */}
 				</View>
+				{/* <CommonPrevNextButton
+					right={true}
+					left={true}
+					prevClick={goBack}
+					nextClick={nextScreen}
+					iconLeftColor={ColorConstants.lighterBlue}
+					iconRightColor={ColorConstants.lighterBlue}
+				/> */}
+
+				{description === "" ? (
+					<CommonPrevNextButton
+						right={true}
+						left={true}
+						// style={{backgroundColor: ColorConstants.whiteOp50}}
+						size={50}
+						prevClick={() => navigation.navigate("addgoal")}
+						iconLeftColor={ColorConstants.lighterBlue}
+						iconRightColor={ColorConstants.lighterBlue}
+					/>
+				) : (
+					<CommonPrevNextButton
+						right={true}
+						left={true}
+						nextClick={nextScreen}
+						prevClick={() => navigation.navigate("addgoal")}
+						size={50}
+						iconLeftColor={ColorConstants.lighterBlue}
+						iconRightColor={ColorConstants.lighterBlue}
+					/>
+				)}
+				<CommonHomeButton click={gotoHome} />
 			</LinearGradient>
 		</View>
 	)

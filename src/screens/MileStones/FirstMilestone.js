@@ -18,7 +18,7 @@ import {connect} from "react-redux"
 import {addNewMilestone, EditNewMilestone, setClickedGoal} from "./../../redux/actions"
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
 import Constants from "expo-constants"
-import {CommonHomeButton, CommonNextButton} from "../../core/CommonComponents"
+import {CommonHomeButton, CommonNextButton, CommonPrevNextButton} from "../../core/CommonComponents"
 
 const FirstMilestone = ({
 	addNewMilestone,
@@ -28,30 +28,32 @@ const FirstMilestone = ({
 	setClickedGoal,
 }) => {
 	const [milestone, setMilestone] = useState("")
-	const [date, setDate] = useState()
+	const [date, setDate] = useState("")
 	const navigation = useNavigation()
+	console.log("Solving the date issue", typeof date)
 
 	const nextScreen = () => {
-		// let milestoneArr = [
-		// 	...clickedGoal.goalMilestone,
-		// 	{
-		// 		milestone: milestone,
-		// 		date: date,
-		// 		taskData: [],
-		// 	},
-		// ]
+		let milestoneArr = [
+			...clickedGoal.goalMilestone,
+			{
+				milestone: milestone,
+				date: date,
+				taskData: [],
+			},
+		]
 
-		// let updatedObj = {
-		// 	...clickedGoal,
-		// 	goalMilestone: milestoneArr,
-		// }
-		// console.log("setttiiinngggClickedGoal(updatedObj)", updatedObj)
-		// setClickedGoal(updatedObj)
-		// console.log("setClickedGoal(updatedObj) donnee", updatedObj)
-		// addNewMilestone(milestoneArr)
-		// addMilestoneToFirestore(clickedGoal, milestoneArr)
+		let updatedObj = {
+			...clickedGoal,
+			goalMilestone: milestoneArr,
+		}
+		console.log("setttiiinngggClickedGoal(updatedObj)", updatedObj)
+		setClickedGoal(updatedObj)
+		console.log("setClickedGoal(updatedObj) donnee", updatedObj)
+		addNewMilestone(milestoneArr)
+		addMilestoneToFirestore(clickedGoal, milestoneArr)
 
-		navigation.navigate("ThirdMileStone")
+		// navigation.navigate("ThirdMileStone")
+		navigation.navigate("IndividualGoal")
 	}
 
 	const handleHomeClick = () => {
@@ -106,12 +108,14 @@ const FirstMilestone = ({
 								onPressArrowRight={(addMonth) => addMonth()}
 								disableArrowLeft={false}
 								enableSwipeMonths={true}
+								selectedDayBackgroundColor={ColorConstants.white}
 								theme={{
 									backgroundColor: ColorConstants.transparent,
 									calendarBackground: ColorConstants.transparent,
 									textSectionTitleColor: ColorConstants.whitishBlue,
 									textSectionTitleDisabledColor: ColorConstants.whitishBlue,
-									selectedDayBackgroundColor: ColorConstants.whitishBlue,
+									// selectedDayBackgroundColor: ColorConstants.whitishBlue,
+									selectedDayBackgroundColor: "pink",
 									selectedDayTextColor: ColorConstants.black,
 									todayTextColor: "#00adf5",
 									dayTextColor: ColorConstants.whitishBlue,
@@ -133,12 +137,24 @@ const FirstMilestone = ({
 									backgroundColor: ColorConstants.transparent,
 									// height: sizeConstants.twoSeventyMX,
 								}}
+								markedDates={{
+									date: {selected: true, marked: true, selectedColor: "blue"},
+								}}
 							/>
-
-							<CommonNextButton click={nextScreen} size={50} />
 						</StatusBarScreen>
 					</ScrollView>
 				</View>
+				{milestone === "" ? (
+					<CommonPrevNextButton
+						right={true}
+						style={{backgroundColor: ColorConstants.whiteOp50}}
+						size={50}
+						bottom={0}
+					/>
+				) : (
+					<CommonPrevNextButton right={true} nextClick={nextScreen} size={50} bottom={0} />
+				)}
+
 				<CommonHomeButton click={handleHomeClick} size={44} />
 			</View>
 		</ImageBackground>

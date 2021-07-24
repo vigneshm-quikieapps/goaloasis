@@ -1,25 +1,39 @@
-import React, {useRef} from "react"
-import {StyleSheet, Text, View, TouchableOpacity} from "react-native"
+import React, {useRef, useEffect} from "react"
+import {StyleSheet, Text, View, TouchableOpacity, ScrollView} from "react-native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
 import ProgressCircle from "react-native-progress-circle"
 import MilestoneCards from "../../components/MilestoneCards"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import RBBottomSheet from "../MileStones/RBBottomSheet"
+import {CommonHomeButton} from "../../core/CommonComponents"
+import {CommonStyles} from "../../core/styles"
+import {sizeConstants, ColorConstants} from "./../../core/styles"
+import {scale, verticalScale} from "react-native-size-matters"
+import {getClickedGoalFromAsyncStorage} from "./../../utils/asyncStorage"
 
-const ParticularGoal = () => {
+const ParticularGoal = ({clickedGoal}) => {
 	const navigation = useNavigation()
 
 	const goBack = () => {
 		navigation.goBack()
 	}
+	// useEffect(() => {
+	// 	// setModalVisible(false)
+	// 	getClickedGoalFromAsyncStorage(clickedGoal.name).then((goal) => {
+	// 		let goals = JSON.parse(goal)
+	// 		setData(goals.goalMilestone)
+	// 		console.log("all milesss", goals.goalMilestone)
+	// 	})
+	// }, [clickedGoal])
+
 	return (
 		<StatusBarScreen style={styles.container}>
-			<View style={styles.titleContainer}>
+			<View style={CommonStyles.titleContainer}>
 				{/* <Text style={styles.mainTitle}>Read 5 books</Text> */}
 				<RBBottomSheet />
 				<Text style={styles.subTitle}>I want to continue improve myself and my state of mind.</Text>
-				<View style={styles.trackingcont}>
+				<View style={CommonStyles.trackingcont}>
 					<ProgressCircle
 						percent={5}
 						radius={86}
@@ -28,7 +42,7 @@ const ParticularGoal = () => {
 						shadowColor="#999"
 						bgColor="#FBF5E9"
 					>
-						<View style={styles.percentageCont}>
+						<View style={CommonStyles.percentageCont}>
 							<Text>Target Date</Text>
 							<Text style={{fontWeight: "bold"}}>01/01/21</Text>
 						</View>
@@ -59,6 +73,7 @@ const ParticularGoal = () => {
 
 			<View style={styles.goalsContainer}>
 				<View style={styles.addMileStone}>
+					<Text style={styles.myGoalsText}>Add Milestones</Text>
 					<View style={styles.viewTap}>
 						<MaterialCommunityIcons
 							name="plus"
@@ -72,19 +87,19 @@ const ParticularGoal = () => {
 				</View>
 
 				<View>
-					<Text style={styles.myGoalsText}>Add Milestones</Text>
 					{/* <Text style={styles.myGoalsubtext}>
 						It looks like you don’t have a plan to achieve your goal yet. Don’t worry! Tap (+) to
 						add a milestone and get on your way.
 					</Text> */}
-
-					<MilestoneCards />
+					<ScrollView>
+						<MilestoneCards style={{marginTop: 0}} />
+					</ScrollView>
 					<View
 						style={{
 							alignItems: "center",
 							flexDirection: "row",
 							justifyContent: "space-around",
-							marginTop: 10,
+							marginTop: verticalScale(10),
 						}}
 					>
 						<View>
@@ -103,12 +118,13 @@ const ParticularGoal = () => {
 					</View>
 				</View>
 
-				<View style={styles.bottomBtnContainer}>
+				{/* <View style={styles.bottomBtnContainer}>
 					<TouchableOpacity style={styles.bottomBtn} onPress={goBack}>
 						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 					</TouchableOpacity>
-				</View>
+				</View> */}
 			</View>
+			<CommonHomeButton click={goBack} />
 		</StatusBarScreen>
 	)
 }
@@ -118,108 +134,152 @@ export default ParticularGoal
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#FBF5E9",
-	},
-	titleContainer: {
-		flex: 0.5,
-		justifyContent: "center",
-	},
-	mainTitle: {
-		color: "#333333",
-		fontSize: 25,
-		marginLeft: 20,
-		fontWeight: "bold",
+		backgroundColor: ColorConstants.faintWhite,
 	},
 
 	subTitle: {
-		fontSize: 16,
+		fontSize: sizeConstants.sixteen,
 		color: "#333333",
-		marginLeft: 20,
+		marginLeft: scale(20),
 	},
-	addMileStone: {
-		marginLeft: "auto",
-		marginRight: 40,
-		marginTop: 20,
-	},
-	trackingcont: {
-		//
-		marginHorizontal: 20,
-		marginVertical: 20,
-		flexDirection: "row",
-		marginTop: 20,
-		alignItems: "center",
-		justifyContent: "space-between",
-	},
-	percentageCont: {
-		height: 150,
-		width: 150,
-		borderRadius: 150 / 2,
-		backgroundColor: "#FBF5E9",
-		borderWidth: 5,
-		borderColor: "#C0E5E4",
-		justifyContent: "center",
-		alignItems: "center",
-	},
+
 	goalsText: {
-		fontSize: 16,
+		fontSize: sizeConstants.sixteen,
+		color: "black",
 	},
 	goalsContainer: {
-		flex: 0.75,
+		flex: 0.7,
 		backgroundColor: "#588C8D",
-		borderTopRightRadius: 70,
+		borderTopRightRadius: sizeConstants.seventy,
 	},
 	viewTap: {
-		height: 50,
-		width: 50,
+		height: sizeConstants.xxxl,
+		width: sizeConstants.xxxl,
 		backgroundColor: "white",
-		marginVertical: 10,
-		borderRadius: 50 / 2,
+		marginVertical: sizeConstants.m,
+		borderRadius: sizeConstants.xxxl,
 		justifyContent: "center",
 		alignItems: "center",
 	},
 	myGoalsText: {
-		fontSize: 25,
+		fontSize: sizeConstants.xxl,
 		fontWeight: "bold",
 		color: "black",
-		marginHorizontal: 20,
-		marginTop: -30,
-		marginBottom: 10,
+		marginHorizontal: verticalScale(20),
 	},
 	myGoalsubtext: {
 		fontSize: 16,
-		marginHorizontal: 20,
-		marginTop: 10,
+		marginHorizontal: verticalScale(20),
+		marginTop: sizeConstants.m,
 		color: "#333333",
-		lineHeight: 30,
-	},
-	bottomBtnContainer: {
-		width: "100%",
-		position: "absolute",
-		bottom: 10,
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	bottomBtn: {
-		height: 75,
-		width: 75,
-		borderRadius: 75 / 2,
-		backgroundColor: "white",
-		elevation: 5,
-		justifyContent: "center",
-		alignItems: "center",
+		lineHeight: sizeConstants.thirty,
 	},
 
 	btnStyling: {
 		justifyContent: "center",
 		alignItems: "center",
 		backgroundColor: "rgb(204, 217, 237)",
-		width: 75,
-		height: 75,
-		borderRadius: 75 / 2,
+		width: sizeConstants.seventyFive,
+		height: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive,
 	},
 	nextBtn: {
-		width: 50,
-		height: 50,
-		borderRadius: 25,
+		width: sizeConstants.fifty,
+		height: sizeConstants.fifty,
+		borderRadius: sizeConstants.fifty,
 	},
+	// container: {
+	// 	flex: 1,
+	// 	backgroundColor: "#FBF5E9",
+	// },
+	// titleContainer: {
+	// 	flex: 0.5,
+	// 	justifyContent: "center",
+	// },
+	// mainTitle: {
+	// 	color: "#333333",
+	// 	fontSize: 25,
+	// 	marginLeft: 20,
+	// 	fontWeight: "bold",
+	// },
+
+	// subTitle: {
+	// 	fontSize: 16,
+	// 	color: "#333333",
+	// 	marginLeft: 20,
+	// },
+	addMileStone: {
+		// marginLeft: "auto",
+		flexDirection: "row",
+		marginRight: 40,
+		marginTop: 20,
+		justifyContent: "space-between",
+	},
+	// trackingcont: {
+	// 	//
+	// 	marginHorizontal: 20,
+	// 	marginVertical: 20,
+	// 	flexDirection: "row",
+	// 	marginTop: 20,
+	// 	alignItems: "center",
+	// 	justifyContent: "space-between",
+	// },
+	// percentageCont: {
+	// 	height: 150,
+	// 	width: 150,
+	// 	borderRadius: 150 / 2,
+	// 	backgroundColor: "#FBF5E9",
+	// 	borderWidth: 5,
+	// 	borderColor: "#C0E5E4",
+	// 	justifyContent: "center",
+	// 	alignItems: "center",
+	// },
+	// goalsText: {
+	// 	fontSize: 16,
+	// },
+	// goalsContainer: {
+	// 	flex: 0.75,
+	// 	backgroundColor: "#588C8D",
+	// 	borderTopRightRadius: 70,
+	// },
+	// viewTap: {
+	// 	height: 50,
+	// 	width: 50,
+	// 	backgroundColor: "white",
+	// 	marginVertical: 10,
+	// 	borderRadius: 50 / 2,
+	// 	justifyContent: "center",
+	// 	alignItems: "center",
+	// },
+	// myGoalsText: {
+	// 	fontSize: 25,
+	// 	fontWeight: "bold",
+	// 	color: "black",
+	// 	marginHorizontal: 20,
+	// 	marginTop: -30,
+	// 	marginBottom: 10,
+	// },
+	// myGoalsubtext: {
+	// 	fontSize: 16,
+	// 	marginHorizontal: 20,
+	// 	marginTop: 10,
+	// 	color: "#333333",
+	// 	lineHeight: 30,
+	// },
+	// bottomBtnContainer: {
+	// 	width: "100%",
+	// 	position: "absolute",
+	// 	bottom: 10,
+	// 	justifyContent: "center",
+	// 	alignItems: "center",
+	// },
+	// bottomBtn: {
+	// 	height: 75,
+	// 	width: 75,
+	// 	borderRadius: 75 / 2,
+	// 	backgroundColor: "white",
+	// 	elevation: 5,
+	// 	justifyContent: "center",
+	// 	alignItems: "center",
+	// },
 })

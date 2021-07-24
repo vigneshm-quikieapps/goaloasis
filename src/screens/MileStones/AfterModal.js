@@ -9,6 +9,7 @@ import colors from "../../../colors"
 import StatusBarScreen from "./StatusBarScreen"
 
 import RBSheet from "react-native-raw-bottom-sheet"
+import {CommonHomeButton} from "../../core/CommonComponents"
 
 const AterModal = () => {
 	const navigation = useNavigation()
@@ -198,12 +199,13 @@ const AterModal = () => {
 				>
 					<MaterialCommunityIcons name="chevron-right" size={50} color="#7EC8C9" />
 				</TouchableOpacity>
-				<View style={styles.bottomBtnContainer}>
+				{/* <View style={styles.bottomBtnContainer}>
 					<TouchableOpacity style={styles.bottomBtn}>
 						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 					</TouchableOpacity>
-				</View>
+				</View> */}
 			</View>
+			<CommonHomeButton />
 		</StatusBarScreen>
 	)
 }

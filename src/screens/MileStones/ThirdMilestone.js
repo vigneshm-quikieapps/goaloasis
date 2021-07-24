@@ -14,7 +14,7 @@ import StatusBarScreen from "./StatusBarScreen"
 import {addNewMilestone, EditNewMilestone, setClickedGoal} from "./../../redux/actions"
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
 import {connect} from "react-redux"
-import {CommonHomeButton, CommonNextButton} from "../../core/CommonComponents"
+import {CommonHomeButton, CommonNextButton, CommonPrevNextButton} from "../../core/CommonComponents"
 
 const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 	const navigation = useNavigation()
@@ -86,8 +86,8 @@ const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 
 					<View style={CommonStyles.alignItemsCenter}></View>
 				</View> */}
-				<CommonNextButton click={FourthMileStone} size={50} />
 			</StatusBarScreen>
+			<CommonPrevNextButton right={true} nextClick={FourthMileStone} />
 			<CommonHomeButton click={() => {}} size={44} />
 		</ImageBackground>
 	)

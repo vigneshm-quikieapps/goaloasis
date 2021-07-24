@@ -119,6 +119,7 @@ export const commonImages = {
 
 export const ColorConstants = {
 	faintWhite: "#FDF9F2",
+	whiteOp50: "rgba(255, 255, 255, 0.5)",
 	darkBlue: "#76BBBC",
 	lightestBlue: "#C0E5E4",
 	lighterBlue: "#7ec8c9",
@@ -139,6 +140,7 @@ export const ColorConstants = {
 	transparent: "#00000000",
 	greyishBlue: "#538586",
 	gray: "gray",
+	backGroundTextDIsable: "#BFE4E4",
 }
 
 export const forGoals = {
@@ -554,7 +556,8 @@ export const CommonStyles = ScaledSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		flexDirection: "row",
-		marginTop: sizeConstants.m,
+
+		// marginTop: sizeConstants.m,
 	},
 	reoccuringText: {
 		fontSize: "21@s",
@@ -773,13 +776,6 @@ export const CommonStyles = ScaledSheet.create({
 		paddingRight: sizeConstants.twentyMX,
 	},
 
-	calendarContainer: {
-		display: "flex",
-		justifyContent: "center",
-		alignItems: "center",
-		flexDirection: "row",
-		marginTop: sizeConstants.m,
-	},
 	reoccuringText: {
 		fontSize: "21@s",
 		alignSelf: "center",
@@ -998,6 +994,20 @@ export const CommonStyles = ScaledSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between",
+	},
+	percentageCont: {
+		height: 150,
+		width: 150,
+		borderRadius: 150 / 2,
+		backgroundColor: "#FBF5E9",
+		borderWidth: 5,
+		borderColor: "#C0E5E4",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	textDisableBackgroundColor: {
+		backgroundColor: "#FDF9F2",
+		opacity: 0.5,
 	},
 })
 

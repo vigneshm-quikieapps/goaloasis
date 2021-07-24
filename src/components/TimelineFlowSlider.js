@@ -105,8 +105,8 @@ const TimelineFlowSlider = ({data, setFirstTimeForTimeLine}) => {
 
 				<View style={CommonStyles.textContainer}>
 					<Text style={CommonStyles.title}>{title}</Text>
-					<Text style={[CommonStyles.subTitle, {marginTop: sizeConstants.l}]}>{subTitle1}</Text>
-					<Text style={[CommonStyles.subTitle, {marginTop: sizeConstants.l}]}> {subTitle2}</Text>
+					<Text style={[CommonStyles.subTitle, {marginTop: sizeConstants.m}]}>{subTitle1}</Text>
+					<Text style={[CommonStyles.subTitle, {marginTop: sizeConstants.m}]}> {subTitle2}</Text>
 				</View>
 				<View>
 					<SimpleLineIcons name="arrow-up" size={20} color="white" style={{alignSelf: "center"}} />

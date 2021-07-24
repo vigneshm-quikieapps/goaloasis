@@ -1,22 +1,22 @@
 import React from "react"
-import {TouchableOpacity, StyleSheet, Text} from "react-native"
-import {sizeConstants} from "./../../core/styles"
+import {TouchableOpacity, StyleSheet, Text, View} from "react-native"
+import {ColorConstants, sizeConstants} from "./../../core/styles"
 
-function AppButton({title, onPress, style}) {
+function DisableAppButton({title, onPress, style}) {
 	return (
-		<TouchableOpacity onPress={onPress} style={[styles.container, style]}>
+		<View style={[styles.container, style]}>
 			<Text style={[styles.button, style]}>{title}</Text>
-		</TouchableOpacity>
+		</View>
 	)
 }
 
-export default AppButton
+export default DisableAppButton
 
 const styles = StyleSheet.create({
 	container: {
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "#7EC8C9",
+		backgroundColor: ColorConstants.lighterBlue,
 		width: sizeConstants.threeFourTeen,
 		padding: 8,
 		borderRadius: 25,

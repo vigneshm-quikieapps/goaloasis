@@ -8,6 +8,7 @@ import RBBottomSheet from "../MileStones/RBBottomSheet"
 import {connect} from "react-redux"
 import {ColorConstants, CommonStyles, sizeConstants} from "../../core/styles"
 import {moderateScale, scale, verticalScale} from "react-native-size-matters"
+import {CommonHomeButton} from "../../core/CommonComponents"
 
 const DParticularGoals = ({clickedGoal}) => {
 	const navigation = useNavigation()
@@ -81,12 +82,13 @@ const DParticularGoals = ({clickedGoal}) => {
 					</Text>
 				</View>
 
-				<View style={CommonStyles.bottomBtnContainer}>
+				{/* <View style={CommonStyles.bottomBtnContainer}>
 					<TouchableOpacity style={CommonStyles.bottomBtn} onPress={goBack}>
 						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 					</TouchableOpacity>
-				</View>
+				</View> */}
 			</View>
+			<CommonHomeButton click={goBack} />
 		</StatusBarScreen>
 	)
 }
@@ -120,7 +122,7 @@ const styles = StyleSheet.create({
 		color: "black",
 	},
 	goalsContainer: {
-		flex: 0.75, //TODO
+		flex: 0.6,
 		backgroundColor: "#588C8D",
 		borderTopRightRadius: sizeConstants.seventy,
 	},

@@ -7,6 +7,7 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {Calendar} from "react-native-calendars"
 import StatusBarScreen from "./StatusBarScreen"
 import RBSheet from "react-native-raw-bottom-sheet"
+import {CommonHomeButton} from "../../core/CommonComponents"
 
 const ThirdAfterModal = () => {
 	const navigation = useNavigation()
@@ -193,11 +194,12 @@ const ThirdAfterModal = () => {
 					<TouchableOpacity style={styles.container}>
 						<Text style={{color: "#FDF9F2", fontSize: 21}}>Set reoccuring</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.bottomBtn}>
+					{/* <TouchableOpacity style={styles.bottomBtn}>
 						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
-					</TouchableOpacity>
+					</TouchableOpacity> */}
 				</View>
 			</ScrollView>
+			<CommonHomeButton />
 		</StatusBarScreen>
 	)
 }

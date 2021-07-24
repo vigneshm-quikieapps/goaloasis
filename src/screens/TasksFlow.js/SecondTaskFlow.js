@@ -10,6 +10,8 @@ import {Entypo} from "@expo/vector-icons"
 import Constants from "expo-constants"
 import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/styles"
 import AppButton from "./../MileStones/AppButton"
+import {CommonHomeButton, CommonPrevNextButton} from "../../core/CommonComponents"
+import DisableAppButton from "../MileStones/DisableAppButton"
 
 const SecondTaskFlow = () => {
 	const navigation = useNavigation()
@@ -21,7 +23,9 @@ const SecondTaskFlow = () => {
 	// 	navigation.goBack()
 	// }
 	const [date, setDate] = useState(new Date())
+	const [taskData, setTaskData] = useState("")
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
+	console.log("taskDATA", taskData)
 
 	return (
 		<ImageBackground
@@ -39,16 +43,25 @@ const SecondTaskFlow = () => {
 				/>
 			</View>
 
-			<Text style={styles.milestoneText}>Enter Milestone</Text>
+			<Text style={styles.milestoneText}>Enter Task</Text>
 			<View style={styles.centerCont}>
-				<TextInput style={styles.textInput} placeholder="Type Here" />
+				<TextInput
+					style={styles.textInput}
+					placeholder="Type Here"
+					onChangeText={(text) => setTaskData(text)}
+				/>
 			</View>
-			<Text style={styles.subTitle}>
-				{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
-			</Text>
-			<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter]}>
-				<AppButton title="Edit Date" style={styles.editButton} />
-			</View>
+
+			{taskData === "" ? (
+				<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter]}>
+					<DisableAppButton title="Edit Date" style={{backgroundColor: "#C0E5E4"}} />
+				</View>
+			) : (
+				<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter]}>
+					<AppButton title="Edit Date" style={styles.editButton} />
+				</View>
+			)}
+
 			<Text style={styles.subTitle}>
 				{tip()} adding a target date will help you stay on track. Dont't worry! You can always
 				change it.
@@ -57,7 +70,7 @@ const SecondTaskFlow = () => {
 			<View style={styles.nextBtnContainer}>
 				<View style={styles.nextBtnInner}>
 					<View></View>
-					<View>
+					{/* <View>
 						<TouchableOpacity
 							style={[styles.btnStylingRight, styles.nextBtn]}
 							onPress={() => navigation.navigate("thirdtaskflow")}
@@ -68,15 +81,33 @@ const SecondTaskFlow = () => {
 								color="#7EC8C9"
 							/>
 						</TouchableOpacity>
-					</View>
+					</View> */}
 				</View>
 
-				<View style={CommonStyles.alignItemsCenter}>
+				{/* <View style={CommonStyles.alignItemsCenter}>
 					<TouchableOpacity style={styles.btnStyling}>
 						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 					</TouchableOpacity>
-				</View>
+				</View> */}
+				{/* <CommonPrevNextButton right={true} nextClick={() => navigation.navigate("thirdtaskflow")} /> */}
+				{taskData === "" ? (
+					<CommonPrevNextButton
+						right={true}
+						style={{backgroundColor: ColorConstants.whiteOp50}}
+						size={50}
+						bottom={0}
+					/>
+				) : (
+					<CommonPrevNextButton
+						right={true}
+						nextClick={() => navigation.navigate("thirdtaskflow")}
+						size={50}
+						bottom={0}
+					/>
+				)}
 			</View>
+
+			<CommonHomeButton />
 		</ImageBackground>
 	)
 }
@@ -165,7 +196,7 @@ const styles = StyleSheet.create({
 		color: ColorConstants.faintWhite,
 		marginLeft: sizeConstants.twentyOne,
 	},
-	editButton: {backgroundColor: ColorConstants.white, color: ColorConstants.gray},
+	editButton: {color: ColorConstants.gray, backgroundColor: ColorConstants.faintWhite},
 	nextBtnContainer: {
 		position: "absolute",
 		bottom: sizeConstants.mThirty,

@@ -24,6 +24,7 @@ import {
 } from "./../../redux/actions"
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
 import {connect} from "react-redux"
+import {CommonHomeButton, CommonPrevNextButton} from "../../core/CommonComponents"
 
 const FirstTaskFlow = ({
 	setTaskFlowData,
@@ -33,7 +34,7 @@ const FirstTaskFlow = ({
 	taskFlowData,
 }) => {
 	const navigation = useNavigation()
-	const [task, setTask] = useState()
+	const [task, setTask] = useState("")
 	const [date, setDate] = useState()
 
 	const nextScreen = () => {
@@ -82,7 +83,7 @@ const FirstTaskFlow = ({
 							/>
 						</View>
 
-						<Text style={styles.subTitle}>Enter Milestone</Text>
+						<Text style={styles.subTitle}>Enter Task</Text>
 						<View style={styles.centerCont}>
 							<TextInput
 								style={styles.textInput}
@@ -90,10 +91,14 @@ const FirstTaskFlow = ({
 								onChangeText={(text) => setTask(text)}
 							/>
 						</View>
-						<Text style={styles.subTitle}>
-							{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
-						</Text>
 						<Text style={styles.bigTitle}>Edit target date</Text>
+
+						<View style={CommonStyles.calendarContainer}>
+							<Text style={CommonStyles.targetDate}>Target Date</Text>
+							<TouchableOpacity onPress={() => {}}>
+								<Text style={CommonStyles.done}>Done</Text>
+							</TouchableOpacity>
+						</View>
 
 						<Calendar
 							// // Initially visible month. Default = Date()
@@ -176,25 +181,37 @@ const FirstTaskFlow = ({
 							style={ColorConstants.transparent}
 						/>
 
-						<TouchableOpacity style={[styles.btnStyling, styles.nextBtn]} onPress={nextScreen}>
+						{/* <TouchableOpacity style={[styles.btnStyling, styles.nextBtn]} onPress={nextScreen}>
 							<MaterialCommunityIcons
 								name="chevron-right"
 								size={50}
 								color={ColorConstants.lighterBlue}
 							/>
-						</TouchableOpacity>
+						</TouchableOpacity> */}
 
-						<View style={styles.bottomBtnContainer}>
+						{/* <View style={styles.bottomBtnContainer}>
 							<TouchableOpacity
 								style={styles.bottomBtn}
 								onPress={() => navigation.navigate("particulargoal")}
 							>
 								<MaterialCommunityIcons name="home" size={44} color={ColorConstants.lighterBlue} />
 							</TouchableOpacity>
-						</View>
+						</View> */}
+						{task === "" ? (
+							<CommonPrevNextButton
+								right={true}
+								style={{backgroundColor: ColorConstants.whiteOp50}}
+								size={50}
+								bottom={0}
+							/>
+						) : (
+							<CommonPrevNextButton right={true} nextClick={nextScreen} size={50} bottom={0} />
+						)}
 					</View>
 				</StatusBarScreen>
 			</ScrollView>
+
+			<CommonHomeButton click={() => navigation.navigate("particulargoal")} />
 		</ImageBackground>
 	)
 }
