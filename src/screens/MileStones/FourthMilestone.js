@@ -58,9 +58,9 @@ const FourthMilestone = () => {
 						// // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
 						maxDate={"2020-05-30"}
 						// // Handler which gets executed on day press. Default = undefined
-						onDayPress={(day) => {
-							console.log("selected day", day)
-						}}
+						// onDayPress={(day) => {
+						// 	console.log("selected day", day)
+						// }}
 						// // Handler which gets executed on day long press. Default = undefined
 						onDayLongPress={(day) => {
 							console.log("selected day", day)
@@ -131,6 +131,26 @@ const FourthMilestone = () => {
 								marked: true,
 								selectedColor: ColorConstants.faintWhite,
 							},
+						}}
+						dayComponent={({date}) => {
+							return (
+								<TouchableOpacity
+									onPress={() => {
+										setDate(date.dateString)
+									}}
+								>
+									<Text
+										style={{
+											padding: 0,
+											margin: 0,
+											textAlign: "center",
+											color: ColorConstants.white,
+										}}
+									>
+										{date.day}
+									</Text>
+								</TouchableOpacity>
+							)
 						}}
 					/>
 					<TouchableOpacity

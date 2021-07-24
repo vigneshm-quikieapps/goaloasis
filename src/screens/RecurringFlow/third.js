@@ -5,7 +5,7 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {Calendar} from "react-native-calendars"
 import {Entypo} from "@expo/vector-icons"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
-import {CommonStyles} from "../../core/styles"
+import {ColorConstants, CommonStyles} from "../../core/styles"
 import {CommonHomeButton} from "../../core/CommonComponents"
 
 const Third = () => {
@@ -117,6 +117,26 @@ const Third = () => {
 							textDayFontWeight: "300",
 							textMonthFontWeight: "bold",
 							textDayHeaderFontWeight: "300",
+						}}
+						dayComponent={({date}) => {
+							return (
+								<TouchableOpacity
+									onPress={() => {
+										setDate(date.dateString)
+									}}
+								>
+									<Text
+										style={{
+											padding: 0,
+											margin: 0,
+											textAlign: "center",
+											color: ColorConstants.white,
+										}}
+									>
+										{date.day}
+									</Text>
+								</TouchableOpacity>
+							)
 						}}
 					/>
 					<TouchableOpacity

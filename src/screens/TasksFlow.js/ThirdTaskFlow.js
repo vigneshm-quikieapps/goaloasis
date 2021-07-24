@@ -130,6 +130,26 @@ const ThirdTaskFlow = () => {
 								selectedColor: ColorConstants.faintWhite,
 							},
 						}}
+						dayComponent={({date}) => {
+							return (
+								<TouchableOpacity
+									onPress={() => {
+										setDate(date.dateString)
+									}}
+								>
+									<Text
+										style={{
+											padding: 0,
+											margin: 0,
+											textAlign: "center",
+											color: ColorConstants.white,
+										}}
+									>
+										{date.day}
+									</Text>
+								</TouchableOpacity>
+							)
+						}}
 					/>
 					<TouchableOpacity
 						style={CommonStyles.containerMilestone}

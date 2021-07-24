@@ -10,6 +10,7 @@ import StatusBarScreen from "./StatusBarScreen"
 
 import RBSheet from "react-native-raw-bottom-sheet"
 import {CommonHomeButton} from "../../core/CommonComponents"
+import {ColorConstants} from "../../core/styles"
 
 const AterModal = () => {
 	const navigation = useNavigation()
@@ -188,6 +189,26 @@ const AterModal = () => {
 					}}
 					markedDates={{
 						"2012-05-31": {selected: true, marked: true, selectedColor: "#BDDFDB"},
+					}}
+					dayComponent={({date}) => {
+						return (
+							<TouchableOpacity
+								onPress={() => {
+									setDate(date.dateString)
+								}}
+							>
+								<Text
+									style={{
+										padding: 0,
+										margin: 0,
+										textAlign: "center",
+										color: ColorConstants.white,
+									}}
+								>
+									{date.day}
+								</Text>
+							</TouchableOpacity>
+						)
 					}}
 				/>
 
