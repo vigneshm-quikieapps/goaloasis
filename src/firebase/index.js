@@ -31,7 +31,7 @@ export const getAllGoalsFromFirestore = () => {
 
 // Goal Delete Operation
 export const deleteGoalFromFirestore = (target) => {
-	let targetObj = JSON.parse(target)
+	let targetObj = target
 	let deleteGoal = new Promise((resolve, reject) => {
 		firestore()
 			.collection(GOALS_COLLECTION)

@@ -23,7 +23,12 @@ import {
 } from "./../../redux/actions"
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
 import Constants from "expo-constants"
-import {CommonHomeButton, CommonNextButton, CommonPrevNextButton} from "../../core/CommonComponents"
+import {
+	CommonHomeButton,
+	CommonNextButton,
+	CommonPrevNextButton,
+	CustomDayComponentForCalendar,
+} from "../../core/CommonComponents"
 
 const FirstMilestone = ({
 	addNewMilestone,
@@ -34,15 +39,16 @@ const FirstMilestone = ({
 	setClickedMilestone,
 }) => {
 	const [milestone, setMilestone] = useState("")
-	const [date, setDate] = useState("")
+	const [clickedDate, setDate] = useState("")
 	const navigation = useNavigation()
+	// console.log("Solving the date issue", typeof clickedDate)
 
 	const nextScreen = () => {
 		let milestoneArr = [
 			...clickedGoal.goalMilestone,
 			{
 				milestone: milestone,
-				date: date,
+				date: clickedDate,
 				taskData: [],
 			},
 		]
@@ -51,11 +57,18 @@ const FirstMilestone = ({
 			...clickedGoal,
 			goalMilestone: milestoneArr,
 		}
-		console.log("setttiiinngggClickedGoal(updatedObj)", updatedObj)
+
 		setClickedGoal(updatedObj)
 		console.log("setClickedGoal(updatedObj) donnee", updatedObj)
 		addNewMilestone(milestoneArr)
 		setClickedMilestone(milestone)
+		addNewMilestone([
+			{
+				milestone: milestone,
+				date: clickedDate,
+				taskData: [],
+			},
+		])
 		addMilestoneToFirestore(clickedGoal, milestoneArr)
 
 		navigation.navigate("ThirdMileStone")
@@ -100,8 +113,8 @@ const FirstMilestone = ({
 
 							<Calendar
 								current={new Date()}
-								minDate={"2001-05-10"}
-								maxDate={"2050-05-30"}
+								// minDate={"2001-05-10"}
+								// maxDate={"2050-05-30"}
 								// onDayPress={(day) => {
 								// 	setDate(day.dateString)
 								// }}
@@ -143,24 +156,14 @@ const FirstMilestone = ({
 									backgroundColor: ColorConstants.transparent,
 									// height: sizeConstants.twoSeventyMX,
 								}}
-								dayComponent={({date}) => {
+								dayComponent={({date, state}) => {
 									return (
-										<TouchableOpacity
-											onPress={() => {
-												setDate(date.dateString)
-											}}
-										>
-											<Text
-												style={{
-													padding: 0,
-													margin: 0,
-													textAlign: "center",
-													color: ColorConstants.white,
-												}}
-											>
-												{date.day}
-											</Text>
-										</TouchableOpacity>
+										<CustomDayComponentForCalendar
+											date={date}
+											state={state}
+											clickedDate={clickedDate}
+											dayClick={setDate}
+										/>
 									)
 								}}
 							/>

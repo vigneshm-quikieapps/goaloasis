@@ -3,8 +3,11 @@ import {StyleSheet, Text, View, TouchableOpacity} from "react-native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
+import {deleteGoalFromFirestore} from "../../firebase"
+import {connect} from "react-redux"
+import {sizeConstants} from "../../core/styles"
 
-const Deletegoal = () => {
+const Deletegoal = ({clickedGoal}) => {
 	const navigation = useNavigation()
 
 	const handleOpenNewGoal = () => {
@@ -13,6 +16,12 @@ const Deletegoal = () => {
 
 	const gotoGoal = () => {
 		navigation.navigate("particulargoal")
+	}
+
+	const deleteConfirm = () => {
+		deleteGoalFromFirestore(clickedGoal)
+		// navigation.navigate("milestones")
+		navigation.navigate("mygoals")
 	}
 	return (
 		<StatusBarScreen style={styles.container}>
@@ -27,10 +36,7 @@ const Deletegoal = () => {
 				</View>
 
 				<View style={styles.bottomBtnContainer}>
-					<TouchableOpacity
-						style={styles.HelpBtn}
-						onPress={() => navigation.navigate("milestones")}
-					>
+					<TouchableOpacity style={styles.HelpBtn} onPress={deleteConfirm}>
 						<Text style={styles.btnText}>Confirm</Text>
 					</TouchableOpacity>
 				</View>
@@ -39,7 +45,17 @@ const Deletegoal = () => {
 	)
 }
 
-export default Deletegoal
+const mapStateToProps = (state) => {
+	return {
+		clickedGoal: state.milestone.clickedGoal,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Deletegoal)
 
 const styles = StyleSheet.create({
 	container: {
@@ -47,9 +63,10 @@ const styles = StyleSheet.create({
 		backgroundColor: "#588C8D",
 	},
 	titleContainer: {
-		height: 170,
+		height: 180,
 		backgroundColor: "#588C8D",
 		justifyContent: "center",
+		borderBottomLeftRadius: 70,
 	},
 
 	goalsContainer: {
@@ -62,7 +79,7 @@ const styles = StyleSheet.create({
 	bottomBtnContainer: {
 		width: "100%",
 		position: "absolute",
-		bottom: 150,
+		bottom: sizeConstants.eightyFive,
 		justifyContent: "center",
 		alignItems: "center",
 	},
@@ -78,13 +95,13 @@ const styles = StyleSheet.create({
 
 	HelpBtn: {
 		backgroundColor: "#76BBBC",
-		height: 70,
+		height: sizeConstants.xxxl,
 		width: "75%",
 		borderRadius: 60,
 		justifyContent: "center",
 		alignItems: "center",
 		elevation: 10,
-		marginVertical: 20,
+		// marginVertical: 20,
 	},
 	btnText: {
 		fontSize: 20,
