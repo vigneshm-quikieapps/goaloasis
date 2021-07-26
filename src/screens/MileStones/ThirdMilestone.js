@@ -19,7 +19,7 @@ import {CommonHomeButton, CommonNextButton, CommonPrevNextButton} from "../../co
 const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 	const navigation = useNavigation()
 	const FourthMileStone = () => {
-		navigation.navigate("milestones")
+		navigation.navigate("FourthMilestone")
 	}
 	const particularGoal = () => {
 		navigation.navigate("particulargoal")
@@ -28,6 +28,12 @@ const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 	// 	navigation.goBack()
 	// }
 	const [date, setDate] = useState(new Date())
+	console.log(
+		"TESTTTTTTTTING",
+		clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].milestone
+	)
+	let temp = clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].milestone
+	const [milestone, setMilestone] = useState(temp)
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 
 	return (
@@ -50,7 +56,12 @@ const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 				<View>
 					<Text style={styles.milestoneText}>Enter Milestone</Text>
 					<View style={styles.centerCont}>
-						<TextInput style={styles.textInput} placeholder="Type Here" />
+						<TextInput
+							style={styles.textInput}
+							placeholder="Type here"
+							onChangeText={(text) => setMilestone(text)}
+							value={milestone}
+						/>
 					</View>
 					<Text style={styles.subTitle}>
 						{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.

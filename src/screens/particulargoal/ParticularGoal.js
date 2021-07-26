@@ -17,34 +17,25 @@ const ParticularGoal = (props) => {
 	const navigation = useNavigation()
 
 	const [DATA, setData] = useState([])
-	useEffect(() => {
-		// setModalVisible(false)
-		// getFirstTimeData()
-		// setData(props.newMileStone)
-		setData(props.clickedGoal.goalMilestone)
-	}, [props.clickedGoal])
-	// console.log("CLICKED FROM PARTICULAR", props.clickedGoal.goalMilestone)
-	// console.log("LENGTH", DATA.length)
-	// console.log("DATA FROM PARTICULAR", DATA[DATA.length - 1])
+	// useEffect(() => {
+	// 	// setModalVisible(false)
+	// 	// getFirstTimeData()
+	// 	// setData(props.newMileStone)
+	// 	// setData(props.clickedGoal.goalMilestone)
+	// }, [props.clickedGoal])
 
-	// const getFirstTimeData = async () => {
-	// 	const data = await getFirstTimeIndividual()s
-	// 	props.setFirstTimeForIndividualGoal(data)
-	// 	const isFirst = props.firstTimeIndividual === null ? true : false
-	// 	// setModalVisible(isFirst)
-	// }
-
+	console.log("Particular Goal", props.clickedGoal.goalMilestone)
 	const goBack = () => {
 		navigation.goBack()
 	}
-	// useEffect(() => {
-	// 	// setModalVisible(false)
-	// 	getClickedGoalFromAsyncStorage(clickedGoal.name).then((goal) => {
-	// 		let goals = JSON.parse(goal)
-	// 		setData(goals.goalMilestone)
-	// 		console.log("all milesss", goals.goalMilestone)
-	// 	})
-	// }, [clickedGoal])
+	useEffect(() => {
+		// setModalVisible(false)
+		getClickedGoalFromAsyncStorage(props.clickedGoal.name).then((goal) => {
+			let goals = JSON.parse(goal)
+			setData(goals.goalMilestone)
+			console.log("all milesss", goals.goalMilestone)
+		})
+	}, [props.clickedGoal])
 
 	return (
 		<StatusBarScreen style={styles.container}>

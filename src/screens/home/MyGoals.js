@@ -23,6 +23,8 @@ import {
 	setFirstTimeForTimeLine,
 	setTestDataForTimeline,
 	setClickedGoal,
+	setShowLoader,
+	setHideLoader,
 } from "./../../redux/actions"
 import {
 	getClickedGoalFromAsyncStorage,
@@ -32,6 +34,7 @@ import {
 import {ColorConstants, CommonStyles, forGoals, sizeConstants} from "./../../core/styles"
 import firestore from "@react-native-firebase/firestore"
 import {CommonHomeButton} from "../../core/CommonComponents"
+import Spinner from "./../../core/Spinner"
 
 const MyGoals = ({
 	testData,
@@ -40,6 +43,9 @@ const MyGoals = ({
 	setFirstTime,
 	firstTimeTimelineFlow,
 	setClickedGoal,
+	setShowLoader,
+	setHideLoader,
+	loading,
 }) => {
 	const [test, setTest] = useState({})
 
@@ -49,6 +55,7 @@ const MyGoals = ({
 
 	const fetchData = async () => {
 		const data = await getFirstTimeTaskTutorial().catch((err) => console.log(err))
+
 		const data1 = await getFirstTimeTimelineFlow().catch((err) => console.log(err))
 		console.log("getFirstTimeTimelineFlow", !firstTimeTimelineFlow)
 		setFirstTime(data)
@@ -119,6 +126,7 @@ const MyGoals = ({
 		) {
 			allTasks.push(task)
 		}
+		loading = true
 	})
 
 	const getColor = (index) => {
@@ -127,8 +135,19 @@ const MyGoals = ({
 	}
 	const colorArray = Object.values(forGoals)
 
+	const [loader, setLoader] = useState(false)
 	useEffect(() => {
+		// if (loader === false) {
+		// 	// setShowLoader()
+		// 	setTimeout(() => {
+		// 		// setLoader(true)
+		// 	}, 2000)
+		// } else {
+		// 	setTimeout(() => {
 		getData()
+		// setHideLoader()
+		// }, 5000)
+
 		// console.log("GOAL DATA", allTasks);
 	}, [allTasks])
 
@@ -231,6 +250,7 @@ const MyGoals = ({
 					</TouchableOpacity>
 				</View> */}
 			</View>
+			{/* <Spinner size="large" /> */}
 			<CommonHomeButton
 				iconName={"file-tree-outline"}
 				size={34}
@@ -247,6 +267,7 @@ const mapStateToProps = (state) => {
 		firstTime: state.milestone.firstTime,
 		firstTimeTimelineFlow: state.milestone.firstTimeTimelineFlow,
 		clickedGoal: state.milestone.clickedGoal,
+		loading: state.milestone.loading,
 	}
 }
 
@@ -264,6 +285,14 @@ const mapDispatchToProps = (dispatch) => {
 
 		setClickedGoal: (data) => {
 			dispatch(setClickedGoal(data))
+		},
+
+		setShowLoader: () => {
+			dispatch(setShowLoader())
+		},
+
+		setHideLoader: () => {
+			dispatch(setHideLoader())
 		},
 	}
 }

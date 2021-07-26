@@ -19,7 +19,7 @@ const MilestoneCards = ({
 	const navigation = useNavigation()
 
 	const [upDown, setUpDown] = useState(false)
-	console.log("FROM MILESTONE CARD", fromParticularData)
+	// console.log("FROM MILESTONE CARD", fromParticularData)
 	if (fromParticularData !== null && fromParticularData !== undefined) {
 		data = fromParticularData[fromParticularData.length - 1]
 	}
@@ -83,6 +83,7 @@ const MilestoneCards = ({
 					</View>
 				</Swipeout>
 			</View>
+			{/* {console.log("TESTINGNGNGNG", clickedMilestone)} */}
 			{upDown && data && (
 				<FlatList
 					data={data.taskData}

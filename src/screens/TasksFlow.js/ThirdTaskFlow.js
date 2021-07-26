@@ -6,7 +6,7 @@ import {Calendar} from "react-native-calendars"
 import {Entypo} from "@expo/vector-icons"
 import {ColorConstants, CommonStyles, sizeConstants} from "../../core/styles"
 import StatusBarScreen from "./../MileStones/StatusBarScreen"
-import {CommonHomeButton} from "../../core/CommonComponents"
+import {CommonHomeButton, CommonPrevNextButton} from "../../core/CommonComponents"
 
 const ThirdTaskFlow = () => {
 	const navigation = useNavigation()
@@ -17,8 +17,10 @@ const ThirdTaskFlow = () => {
 	// const goBack = () => {
 	// 	navigation.goBack()
 	// }
+	const [task, setTask] = useState()
+
 	const [value, onChange] = useState(new Date())
-	const [date, setDate] = useState(new Date())
+	const [date, setDate] = useState("")
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
 		<StatusBarScreen style={CommonStyles.introContainer}>
@@ -43,9 +45,19 @@ const ThirdTaskFlow = () => {
 
 					<View style={CommonStyles.calendarContainer}>
 						<Text style={CommonStyles.targetDate}>Target Date</Text>
-						<TouchableOpacity>
-							<Text style={CommonStyles.done}>Done</Text>
-						</TouchableOpacity>
+						{date == "" ? (
+							<TouchableOpacity>
+								<Text style={CommonStyles.done}>Done</Text>
+							</TouchableOpacity>
+						) : (
+							<TouchableOpacity
+								onPress={() => {
+									navigation.navigate("particulargoal")
+								}}
+							>
+								<Text style={CommonStyles.done}>Done</Text>
+							</TouchableOpacity>
+						)}
 					</View>
 
 					<Calendar
@@ -159,12 +171,21 @@ const ThirdTaskFlow = () => {
 					>
 						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
 					</TouchableOpacity>
-					{/* <TouchableOpacity
-						style={CommonStyles.bottomBtnMilestone}
-						onPress={() => navigation.navigate("particulargoal")}
-					>
-						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
-					</TouchableOpacity> */}
+					{task === "" ? (
+						<CommonPrevNextButton
+							right={true}
+							style={{backgroundColor: ColorConstants.whiteOp50}}
+							size={50}
+							bottom={0}
+						/>
+					) : (
+						<CommonPrevNextButton
+							right={true}
+							nextClick={() => navigation.navigate("particulargoal")}
+							size={50}
+							bottom={0}
+						/>
+					)}
 				</View>
 			</ScrollView>
 			<CommonHomeButton click={() => navigation.navigate("particulargoal")} />

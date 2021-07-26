@@ -265,17 +265,31 @@ export const CommonStyles = ScaledSheet.create({
 	// sliders common styles ends
 
 	// NameGoal
+	// textInput: {
+	// 	width: scale(314),
+	// 	height: sizeConstants.fifty,
+	// 	backgroundColor: "#FDF9F2",
+	// 	borderRadius: sizeConstants.fifty,
+	// 	marginTop: sizeConstants.fifty,
+	// 	paddingLeft: moderateScale(20),
+	// 	fontSize: "19@s",
+	// 	color: "#666666",
+	// 	elevation: "10@s",
+	// },
+
 	textInput: {
-		width: scale(314),
+		width: sizeConstants.threeFourTeen,
 		height: sizeConstants.fifty,
-		backgroundColor: "#FDF9F2",
+		backgroundColor: ColorConstants.faintWhite,
 		borderRadius: sizeConstants.fifty,
-		marginTop: sizeConstants.fifty,
-		paddingLeft: moderateScale(20),
-		fontSize: "19@s",
-		color: "#666666",
-		elevation: "10@s",
+		marginTop: sizeConstants.three,
+		paddingLeft: sizeConstants.twentyX,
+		fontSize: sizeConstants.nineteenX,
+		color: ColorConstants.faintBlack2,
+		elevation: sizeConstants.m,
 	},
+
+
 	homeAndRight: {
 		position: "absolute",
 		bottom: verticalScale(sizeConstants.fourtyFive),

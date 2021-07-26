@@ -1,5 +1,13 @@
 import React, {useState} from "react"
-import {StyleSheet, Text, TouchableOpacity, View, ScrollView} from "react-native"
+import {
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+	ScrollView,
+	TouchableWithoutFeedback,
+	TextInput,
+} from "react-native"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import DatePicker from "react-native-date-picker"
@@ -9,25 +17,29 @@ import StatusBarScreen from "./StatusBarScreen"
 import {Entypo} from "@expo/vector-icons"
 import {ColorConstants, CommonStyles, sizeConstants} from "../../core/styles"
 import {CommonHomeButton} from "../../core/CommonComponents"
+import {connect} from "react-redux"
 
-const FourthMilestone = () => {
+const FourthMilestone = ({clickedGoal}) => {
 	const navigation = useNavigation()
-
 	// const gotoHome = () => {
 	// 	navigation.navigate("secondMileStone")
 	// }
 	// const goBack = () => {
 	// 	navigation.goBack()
 	// }
+
+	let temp = clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].milestone
+	const [milestone, setMilestone] = useState(temp)
 	const [value, onChange] = useState(new Date())
-	const [date, setDate] = useState(new Date())
+	const [date, setDate] = useState(null)
+	console.log("DATE", date)
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
 		<StatusBarScreen style={CommonStyles.introContainer}>
 			<ScrollView>
 				<View style={CommonStyles.flexOne}>
 					<View style={CommonStyles.flexDirectionRow}>
-						<Text style={CommonStyles.mainTitle}>Read 5 books</Text>
+						<Text style={CommonStyles.mainTitle}>{clickedGoal.name}</Text>
 						<Entypo
 							name="cross"
 							color={ColorConstants.faintWhite}
@@ -36,8 +48,13 @@ const FourthMilestone = () => {
 						/>
 					</View>
 					<Text style={CommonStyles.milestoneText}>Enter Milestone</Text>
-					<TouchableOpacity style={CommonStyles.container2}>
-						<Text style={CommonStyles.button}>Read One Book</Text>
+					<TouchableOpacity style={CommonStyles.centerCont}>
+						<TextInput
+							style={CommonStyles.textInput}
+							placeholder="Type here"
+							onChangeText={(text) => setMilestone(text)}
+							value={milestone}
+						/>
 					</TouchableOpacity>
 					<Text style={CommonStyles.subTitleMilestone}>
 						{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
@@ -45,9 +62,15 @@ const FourthMilestone = () => {
 
 					<View style={CommonStyles.calendarContainer}>
 						<Text style={CommonStyles.targetDate}>Target Date</Text>
-						<TouchableOpacity onPress={() => navigation.navigate("FifthMilestone")}>
-							<Text style={CommonStyles.done}>Done</Text>
-						</TouchableOpacity>
+						{date !== null ? (
+							<TouchableOpacity onPress={() => navigation.navigate("SixthMilestone")}>
+								<Text style={CommonStyles.done}>Done</Text>
+							</TouchableOpacity>
+						) : (
+							<TouchableOpacity>
+								<Text style={CommonStyles.done}>Done</Text>
+							</TouchableOpacity>
+						)}
 					</View>
 
 					<Calendar
@@ -59,7 +82,7 @@ const FourthMilestone = () => {
 						maxDate={"2020-05-30"}
 						// // Handler which gets executed on day press. Default = undefined
 						// onDayPress={(day) => {
-						// 	console.log("selected day", day)
+						// 	setDate
 						// }}
 						// // Handler which gets executed on day long press. Default = undefined
 						onDayLongPress={(day) => {
@@ -155,7 +178,7 @@ const FourthMilestone = () => {
 					/>
 					<TouchableOpacity
 						style={CommonStyles.containerMilestone}
-						onPress={() => navigation.navigate("FifthMilestone")}
+						onPress={() => navigation.navigate("SixthMilestone")}
 					>
 						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
 					</TouchableOpacity>
@@ -172,4 +195,17 @@ const FourthMilestone = () => {
 	)
 }
 
-export default FourthMilestone
+const mapStateToProps = (state) => {
+	return {
+		newMileStone: state.milestone.newMileStone,
+		clickedGoal: state.milestone.clickedGoal,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		addNewMilestone: (milestone) => dispatch(addNewMilestone(milestone)),
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FourthMilestone)
