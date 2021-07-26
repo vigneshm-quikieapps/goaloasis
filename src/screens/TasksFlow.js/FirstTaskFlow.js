@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {
 	StyleSheet,
 	Text,
@@ -24,7 +24,11 @@ import {
 } from "./../../redux/actions"
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
 import {connect} from "react-redux"
-import {CommonHomeButton, CommonPrevNextButton} from "../../core/CommonComponents"
+import {
+	CommonHomeButton,
+	CommonPrevNextButton,
+	CustomDayComponentForCalendar,
+} from "../../core/CommonComponents"
 
 const FirstTaskFlow = ({
 	setTaskFlowData,
@@ -33,9 +37,12 @@ const FirstTaskFlow = ({
 	clickedMilestone,
 	taskFlowData,
 }) => {
+	useEffect(() => {
+		console.log("newMileStone", newMileStone)
+	}, [])
 	const navigation = useNavigation()
 	const [task, setTask] = useState("")
-	const [date, setDate] = useState()
+	const [clickedDate, setDate] = useState()
 
 	const nextScreen = () => {
 		console.log("nextScreen1", clickedMilestone)
@@ -48,7 +55,7 @@ const FirstTaskFlow = ({
 						...item.taskData,
 						{
 							task: task,
-							date: date,
+							date: clickedDate,
 						},
 					],
 				}
@@ -57,8 +64,8 @@ const FirstTaskFlow = ({
 		console.log("Checking ADDING DATA OR NOT", newMilestoneItemWithTask.taskData)
 		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask)
 		console.log("FROM FIRST FLOW", clickedGoal)
-		// navigation.navigate("secondtaskflow")
-		navigation.navigate("particulargoal")
+		navigation.navigate("secondtaskflow")
+		// navigation.navigate("particulargoal")
 
 		console.log("nextScreen2")
 	}
@@ -105,11 +112,11 @@ const FirstTaskFlow = ({
 
 						<Calendar
 							// // Initially visible month. Default = Date()
-							current={"2012-05-31"}
+							current={new Date()}
 							// // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-							minDate={"2001-05-10"}
+							// minDate={"2001-05-10"}
 							// // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-							maxDate={"2020-05-30"}
+							// maxDate={"2020-05-30"}
 							// // Handler which gets executed on day press. Default = undefined
 							// onDayPress={(day) => {
 							// 	setDate(day.dateString)
@@ -139,9 +146,7 @@ const FirstTaskFlow = ({
 							hideDayNames={false}
 							// // Show week numbers to the left. Default = false
 							showWeekNumbers={false}
-							// // Handler which gets executed when press arrow icon left. It receive a callback can go back month
 							onPressArrowLeft={(subtractMonth) => subtractMonth()}
-							// // Handler which gets executed when press arrow icon right. It receive a callback can go next month
 							onPressArrowRight={(addMonth) => addMonth()}
 							// // Disable left arrow. Default = false
 							disableArrowLeft={false}
@@ -182,24 +187,14 @@ const FirstTaskFlow = ({
 								// textDayHeaderFontSize: 40,
 							}}
 							style={ColorConstants.transparent}
-							dayComponent={({date}) => {
+							dayComponent={({date, state}) => {
 								return (
-									<TouchableOpacity
-										onPress={() => {
-											setDate(date.dateString)
-										}}
-									>
-										<Text
-											style={{
-												padding: 0,
-												margin: 0,
-												textAlign: "center",
-												color: ColorConstants.white,
-											}}
-										>
-											{date.day}
-										</Text>
-									</TouchableOpacity>
+									<CustomDayComponentForCalendar
+										date={date}
+										state={state}
+										clickedDate={clickedDate}
+										dayClick={setDate}
+									/>
 								)
 							}}
 						/>
@@ -326,9 +321,9 @@ const styles = StyleSheet.create({
 
 	bigTitle: {
 		color: ColorConstants.whitishBlue,
-		fontSize: sizeConstants.mThirty,
-		marginLeft: sizeConstants.fourteenMX,
+		fontSize: sizeConstants.thirty,
+		marginLeft: sizeConstants.fourteen,
 		fontWeight: "bold",
-		marginTop: sizeConstants.fourteenMX,
+		marginTop: sizeConstants.fourteen,
 	},
 })

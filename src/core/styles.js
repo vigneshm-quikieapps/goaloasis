@@ -7,6 +7,7 @@ import {
 } from "react-native-size-matters"
 import Constants from "expo-constants"
 import colors from "../../colors"
+import {Dimensions} from "react-native"
 
 export const sizeConstants = {
 	negativeSeventy: verticalScale(-70),
@@ -45,7 +46,6 @@ export const sizeConstants = {
 	nineteen: verticalScale(19),
 	nineteenX: moderateScale(19),
 	xl: verticalScale(20),
-	twentyOne: verticalScale(21),
 	twentyX: scale(20),
 	twentyMX: scale(20),
 	twentyOne: moderateScale(21),
@@ -105,6 +105,9 @@ export const sizeConstants = {
 	threeFourTeen: moderateScale(314),
 	paddingHorizontal: moderateScale(15, 2),
 }
+
+export const height = Dimensions.get("window").height
+export const width = Dimensions.get("window").width
 
 export const commonImages = {
 	firstImage: require("././../assets/images/first.png"),

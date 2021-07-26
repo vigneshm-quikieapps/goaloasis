@@ -19,7 +19,7 @@ const DParticularGoals = ({clickedGoal}) => {
 	return (
 		<StatusBarScreen style={styles.container}>
 			<View style={CommonStyles.titleContainer}>
-				<RBBottomSheet name={clickedGoal.name} />
+				<RBBottomSheet name={clickedGoal.name} id={clickedGoal.name} />
 				<Text style={styles.subTitle}>I want to continue improve myself and my state of mind.</Text>
 
 				<View style={CommonStyles.trackingcont}>

@@ -1,8 +1,14 @@
 import React from "react"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
-import {StyleSheet, TouchableOpacity, View} from "react-native"
-import {CommonStyles, ColorConstants, sizeConstants} from "./styles"
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native"
+import {CommonStyles, ColorConstants, sizeConstants, height} from "./styles"
 import colors from "../../colors"
+
+const convertToDateString = (date) => {
+	let month = date.getMonth() + 1
+	let day = date.getDate()
+	return `${date.getFullYear()}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day}`
+}
 
 export const CommonHomeButton = ({
 	click = () => {},
@@ -83,6 +89,42 @@ export const CommonPrevNextButton = ({
 	)
 }
 
+export const CustomDayComponentForCalendar = ({clickedDate, date, state, dayClick}) => {
+	let today = convertToDateString(new Date())
+	let selectedDate = convertToDateString(new Date(clickedDate))
+	return (
+		<TouchableOpacity
+			onPress={() => {
+				dayClick(date.dateString)
+			}}
+		>
+			<View
+				style={[
+					styles.dayContainer,
+					date.dateString == selectedDate
+						? styles.selectedDateContainer
+						: date.dateString == today
+						? styles.todayContainer
+						: {},
+				]}
+			>
+				<Text
+					style={[
+						styles.dayText,
+						date.dateString == selectedDate
+							? styles.selectedDate
+							: date.dateString == today
+							? styles.todayText
+							: {},
+					]}
+				>
+					{date.day}
+				</Text>
+			</View>
+		</TouchableOpacity>
+	)
+}
+
 const styles = StyleSheet.create({
 	prevNextBtn: {
 		justifyContent: "center",
@@ -105,4 +147,37 @@ const styles = StyleSheet.create({
 		backgroundColor: colors.buttonBackGround,
 		marginLeft: sizeConstants.thirty,
 	},
+
+	// ---- styles for Day Component -----
+	dayContainer: {
+		height: height <= 700 ? sizeConstants.twentyTwo : sizeConstants.twentySix,
+		width: height <= 700 ? sizeConstants.twentyTwo : sizeConstants.twentySix,
+		borderRadius: sizeConstants.eightyFive,
+		borderWidth: height < 700 ? 1 : 1.5,
+		borderColor: ColorConstants.transparent,
+		padding: sizeConstants.xs,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	todayContainer: {
+		borderColor: ColorConstants.white,
+	},
+	selectedDateContainer: {
+		backgroundColor: ColorConstants.white,
+		borderColor: ColorConstants.white,
+	},
+
+	dayText: {
+		textAlign: "center",
+		color: ColorConstants.white,
+		fontSize: height < 700 ? sizeConstants.twelve : sizeConstants.thirteen,
+	},
+	todayText: {
+		fontWeight: "bold",
+	},
+	selectedDate: {
+		color: ColorConstants.greyishBlue,
+	},
+
+	// ---- styles for Day Component ends -----
 })

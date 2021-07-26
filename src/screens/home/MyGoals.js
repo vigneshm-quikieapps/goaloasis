@@ -7,6 +7,7 @@ import {
 	TouchableHighlight,
 	StatusBar,
 	ScrollView,
+	Dimensions,
 } from "react-native"
 import {MaterialCommunityIcons, AntDesign} from "@expo/vector-icons"
 import {FontAwesome5} from "@expo/vector-icons"
@@ -33,6 +34,7 @@ import {ColorConstants, CommonStyles, forGoals, sizeConstants} from "./../../cor
 import firestore from "@react-native-firebase/firestore"
 import {CommonHomeButton} from "../../core/CommonComponents"
 
+const Height = Dimensions.get("window").height
 const MyGoals = ({
 	testData,
 	setTestData,
@@ -44,6 +46,7 @@ const MyGoals = ({
 	const [test, setTest] = useState({})
 
 	useEffect(() => {
+		console.log("Height of this device is: ", Height)
 		fetchData()
 	}, [testData, firstTime, firstTimeTimelineFlow])
 

@@ -1,12 +1,12 @@
 import React, {useState} from "react"
-import {StyleSheet, Text, TouchableOpacity, View, ScrollView} from "react-native"
+import {StyleSheet, Text, TouchableOpacity, View, ScrollView, Dimensions} from "react-native"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {Calendar} from "react-native-calendars"
 import {Entypo} from "@expo/vector-icons"
-import {ColorConstants, CommonStyles, sizeConstants} from "../../core/styles"
+import {ColorConstants, CommonStyles, sizeConstants, height} from "../../core/styles"
 import StatusBarScreen from "./../MileStones/StatusBarScreen"
-import {CommonHomeButton} from "../../core/CommonComponents"
+import {CommonHomeButton, CustomDayComponentForCalendar} from "../../core/CommonComponents"
 
 const ThirdTaskFlow = () => {
 	const navigation = useNavigation()
@@ -18,14 +18,15 @@ const ThirdTaskFlow = () => {
 	// 	navigation.goBack()
 	// }
 	const [value, onChange] = useState(new Date())
-	const [date, setDate] = useState(new Date())
+	const [clickedDate, setDate] = useState(new Date())
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
+
 	return (
 		<StatusBarScreen style={CommonStyles.introContainer}>
 			<ScrollView>
 				<View style={CommonStyles.flexOne}>
 					<View style={CommonStyles.flexDirectionRow}>
-						<Text style={CommonStyles.mainTitle}>Read 5 books</Text>
+						<Text style={CommonStyles.mainTitle}>Read 5 book</Text>
 						<Entypo
 							name="cross"
 							color={ColorConstants.faintWhite}
@@ -34,7 +35,9 @@ const ThirdTaskFlow = () => {
 						/>
 					</View>
 					<Text style={CommonStyles.milestoneText}>Enter Milestone</Text>
-					<TouchableOpacity style={CommonStyles.container2}>
+					<TouchableOpacity
+						style={[CommonStyles.container2, height <= 700 ? {marginTop: sizeConstants.xs} : {}]}
+					>
 						<Text style={CommonStyles.button}>Read One Book</Text>
 					</TouchableOpacity>
 					<Text style={CommonStyles.subTitleMilestone}>
@@ -42,7 +45,11 @@ const ThirdTaskFlow = () => {
 					</Text>
 
 					<View style={CommonStyles.calendarContainer}>
-						<Text style={CommonStyles.targetDate}>Target Date</Text>
+						<Text
+							style={[CommonStyles.targetDate, height <= 700 ? {marginTop: sizeConstants.xs} : {}]}
+						>
+							Target Date
+						</Text>
 						<TouchableOpacity>
 							<Text style={CommonStyles.done}>Done</Text>
 						</TouchableOpacity>
@@ -50,11 +57,11 @@ const ThirdTaskFlow = () => {
 
 					<Calendar
 						// // Initially visible month. Default = Date()
-						current={"2012-03-01"}
+						current={new Date()}
 						// // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-						minDate={"2001-05-10"}
+						// minDate={"2001-05-10"}
 						// // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-						maxDate={"2020-05-30"}
+						// maxDate={"2020-05-30"}
 						// // Handler which gets executed on day press. Default = undefined
 						onDayPress={(day) => {
 							console.log("selected day", day)
@@ -123,36 +130,26 @@ const ThirdTaskFlow = () => {
 							textMonthFontWeight: "bold",
 							textDayHeaderFontWeight: "300",
 						}}
-						markedDates={{
-							"2012-03-01": {
-								selected: true,
-								marked: true,
-								selectedColor: ColorConstants.faintWhite,
-							},
-						}}
-						dayComponent={({date}) => {
+						// markedDates={{
+						// 	"2012-03-01": {
+						// 		selected: true,
+						// 		marked: true,
+						// 		selectedColor: ColorConstants.faintWhite,
+						// 	},
+						// }}
+						dayComponent={({date, state}) => {
 							return (
-								<TouchableOpacity
-									onPress={() => {
-										setDate(date.dateString)
-									}}
-								>
-									<Text
-										style={{
-											padding: 0,
-											margin: 0,
-											textAlign: "center",
-											color: ColorConstants.white,
-										}}
-									>
-										{date.day}
-									</Text>
-								</TouchableOpacity>
+								<CustomDayComponentForCalendar
+									date={date}
+									state={state}
+									clickedDate={clickedDate}
+									dayClick={setDate}
+								/>
 							)
 						}}
 					/>
 					<TouchableOpacity
-						style={CommonStyles.containerMilestone}
+						style={[CommonStyles.containerMilestone, {marginTop: sizeConstants.s}]}
 						onPress={() => {
 							navigation.navigate("first")
 						}}

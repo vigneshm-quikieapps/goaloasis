@@ -8,7 +8,7 @@ import {Calendar} from "react-native-calendars"
 import StatusBarScreen from "./StatusBarScreen"
 import {Entypo} from "@expo/vector-icons"
 import {ColorConstants, CommonStyles, sizeConstants} from "../../core/styles"
-import {CommonHomeButton} from "../../core/CommonComponents"
+import {CommonHomeButton, CustomDayComponentForCalendar} from "../../core/CommonComponents"
 
 const FourthMilestone = () => {
 	const navigation = useNavigation()
@@ -20,7 +20,7 @@ const FourthMilestone = () => {
 	// 	navigation.goBack()
 	// }
 	const [value, onChange] = useState(new Date())
-	const [date, setDate] = useState(new Date())
+	const [clickedDate, setDate] = useState(new Date())
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
 		<StatusBarScreen style={CommonStyles.introContainer}>
@@ -52,11 +52,11 @@ const FourthMilestone = () => {
 
 					<Calendar
 						// // Initially visible month. Default = Date()
-						current={"2012-03-01"}
+						current={new Date()}
 						// // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-						minDate={"2001-05-10"}
+						// minDate={"2001-05-10"}
 						// // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-						maxDate={"2020-05-30"}
+						// maxDate={"2020-05-30"}
 						// // Handler which gets executed on day press. Default = undefined
 						// onDayPress={(day) => {
 						// 	console.log("selected day", day)
@@ -125,31 +125,21 @@ const FourthMilestone = () => {
 							textMonthFontWeight: "bold",
 							textDayHeaderFontWeight: "300",
 						}}
-						markedDates={{
-							"2012-03-01": {
-								selected: true,
-								marked: true,
-								selectedColor: ColorConstants.faintWhite,
-							},
-						}}
-						dayComponent={({date}) => {
+						// markedDates={{
+						// 	"2012-03-01": {
+						// 		selected: true,
+						// 		marked: true,
+						// 		selectedColor: ColorConstants.faintWhite,
+						// 	},
+						// }}
+						dayComponent={({date, state}) => {
 							return (
-								<TouchableOpacity
-									onPress={() => {
-										setDate(date.dateString)
-									}}
-								>
-									<Text
-										style={{
-											padding: 0,
-											margin: 0,
-											textAlign: "center",
-											color: ColorConstants.white,
-										}}
-									>
-										{date.day}
-									</Text>
-								</TouchableOpacity>
+								<CustomDayComponentForCalendar
+									date={date}
+									state={state}
+									clickedDate={clickedDate}
+									dayClick={setDate}
+								/>
 							)
 						}}
 					/>

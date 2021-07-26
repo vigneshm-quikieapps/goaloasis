@@ -9,13 +9,13 @@ import colors from "../../../colors"
 import StatusBarScreen from "./StatusBarScreen"
 
 import RBSheet from "react-native-raw-bottom-sheet"
-import {CommonHomeButton} from "../../core/CommonComponents"
+import {CommonHomeButton, CustomDayComponentForCalendar} from "../../core/CommonComponents"
 import {ColorConstants} from "../../core/styles"
 
 const AterModal = () => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
-	const [date, setDate] = useState(new Date())
+	const [clickedDate, setDate] = useState(new Date())
 
 	return (
 		<StatusBarScreen style={styles.introContainer}>
@@ -114,11 +114,11 @@ const AterModal = () => {
 				</View>
 				<Calendar
 					// // Initially visible month. Default = Date()
-					current={"2012-05-31"}
+					current={new Date()}
 					// // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-					minDate={"2001-05-10"}
+					// minDate={"2001-05-10"}
 					// // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-					maxDate={"2020-05-30"}
+					// maxDate={"2020-05-30"}
 					// // Handler which gets executed on day press. Default = undefined
 					onDayPress={(day) => {
 						console.log("selected day", day)
@@ -187,27 +187,14 @@ const AterModal = () => {
 						textMonthFontWeight: "bold",
 						textDayHeaderFontWeight: "300",
 					}}
-					markedDates={{
-						"2012-05-31": {selected: true, marked: true, selectedColor: "#BDDFDB"},
-					}}
-					dayComponent={({date}) => {
+					dayComponent={({date, state}) => {
 						return (
-							<TouchableOpacity
-								onPress={() => {
-									setDate(date.dateString)
-								}}
-							>
-								<Text
-									style={{
-										padding: 0,
-										margin: 0,
-										textAlign: "center",
-										color: ColorConstants.white,
-									}}
-								>
-									{date.day}
-								</Text>
-							</TouchableOpacity>
+							<CustomDayComponentForCalendar
+								date={date}
+								state={state}
+								clickedDate={clickedDate}
+								dayClick={setDate}
+							/>
 						)
 					}}
 				/>
