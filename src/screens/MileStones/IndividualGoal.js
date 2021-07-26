@@ -18,17 +18,21 @@ import MilestoneCards from "../../components/MilestoneCards"
 const IndividualGoal = (props) => {
 	const [DATA, setData] = useState([])
 	useEffect(() => {
-		setModalVisible(false)
-		getFirstTimeData()
-		setData(props.newMileStone)
-	}, [props.firstTimeIndividual, props.clickedGoal])
+		// setModalVisible(false)
+		// getFirstTimeData()
+		// setData(props.newMileStone)
+		setData(props.clickedGoal.goalMilestone)
+	}, [props.clickedGoal])
+	// console.log("CLICKED FROM PARTICULAR", props.clickedGoal.goalMilestone)
+	// console.log("LENGTH", DATA.length)
+	// console.log("DATA FROM PARTICULAR", DATA[DATA.length - 1])
 
-	const getFirstTimeData = async () => {
-		const data = await getFirstTimeIndividual()
-		props.setFirstTimeForIndividualGoal(data)
-		const isFirst = props.firstTimeIndividual === null ? true : false
-		setModalVisible(isFirst)
-	}
+	// const getFirstTimeData = async () => {
+	// 	const data = await getFirstTimeIndividual()
+	// 	props.setFirstTimeForIndividualGoal(data)
+	// 	const isFirst = props.firstTimeIndividual === null ? true : false
+	// 	// setModalVisible(isFirst)
+	// }DDd
 
 	const closeModal = async () => {
 		await setisFirstTimeIndividual()
@@ -186,7 +190,7 @@ const IndividualGoal = (props) => {
 
 				{/* MODEL CREATION END */}
 				{/* <Text style={styles.mainTitle}>Read 5 books</Text> */}
-				<RBBottomSheet />
+				<RBBottomSheet name={props.clickedGoal.name} />
 				<Text style={styles.subTitle}>I want to continue improve myself and my state of mind.</Text>
 				<View style={styles.trackingcont}>
 					<ProgressCircle
@@ -328,7 +332,11 @@ const IndividualGoal = (props) => {
 						</View>
 					</Swipeout>
 				</View> */}
-				<MilestoneCards style={{backgroundColor: ColorConstants.lighterBlue}} data={DATA} />
+
+				<MilestoneCards
+					style={{backgroundColor: ColorConstants.lighterBlue}}
+					fromIndividual={DATA}
+				/>
 
 				{/* <View style={[CommonStyles.btnContainer, {bottom: sizeConstants.l}]}>
 					<TouchableOpacity style={styles.bottomBtn} onPress={goBack}>

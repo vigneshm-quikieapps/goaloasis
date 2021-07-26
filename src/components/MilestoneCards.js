@@ -8,10 +8,25 @@ import {useNavigation} from "@react-navigation/native"
 import {setClickedMilestone} from "./../redux/actions"
 import {connect} from "react-redux"
 
-const MilestoneCards = ({data, setClickedMilestone, clickedMilestone, style}) => {
+const MilestoneCards = ({
+	data,
+	setClickedMilestone,
+	clickedMilestone,
+	style,
+	fromParticularData,
+	fromIndividual,
+}) => {
 	const navigation = useNavigation()
 
 	const [upDown, setUpDown] = useState(false)
+	console.log("FROM MILESTONE CARD", fromParticularData)
+	if (fromParticularData !== null && fromParticularData !== undefined) {
+		data = fromParticularData[fromParticularData.length - 1]
+	}
+
+	if (fromIndividual !== null && fromIndividual !== undefined) {
+		data = fromIndividual[fromIndividual.length - 1]
+	}
 
 	const emptyComponent = () => {
 		return (

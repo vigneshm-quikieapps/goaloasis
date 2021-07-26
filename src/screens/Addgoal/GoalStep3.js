@@ -30,7 +30,8 @@ const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
 			targetDate: date.toISOString(),
 			createdAt: firestore.FieldValue.serverTimestamp(),
 			goalMilestone: [],
-			color: getColorForGoal(),
+			// color: getColorForGoal(),
+			color: "pink",
 		}
 		setCurrentGoal(currentGoalObj)
 		addGoalToFirestore(currentGoalObj)
@@ -45,6 +46,7 @@ const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
 
 	// async Task
 	// TODO
+
 	const getColorForGoal = () => {
 		let len = 0
 		firestore()
@@ -53,9 +55,9 @@ const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
 			.then((snap) => {
 				size = snap.size // will return the collection size
 				len = snap.size
-				let a = len % 6
-				return colorArray[a]
 			})
+		let a = len % 6
+		return colorArray[a]
 	}
 
 	return (

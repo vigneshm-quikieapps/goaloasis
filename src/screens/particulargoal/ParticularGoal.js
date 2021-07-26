@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from "react"
+import React, {useRef, useEffect, useState} from "react"
 import {StyleSheet, Text, View, TouchableOpacity, ScrollView} from "react-native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
@@ -10,10 +10,29 @@ import {CommonHomeButton} from "../../core/CommonComponents"
 import {CommonStyles} from "../../core/styles"
 import {sizeConstants, ColorConstants} from "./../../core/styles"
 import {scale, verticalScale} from "react-native-size-matters"
+import {connect} from "react-redux"
 import {getClickedGoalFromAsyncStorage} from "./../../utils/asyncStorage"
 
-const ParticularGoal = ({clickedGoal}) => {
+const ParticularGoal = (props) => {
 	const navigation = useNavigation()
+
+	const [DATA, setData] = useState([])
+	useEffect(() => {
+		// setModalVisible(false)
+		// getFirstTimeData()
+		// setData(props.newMileStone)
+		setData(props.clickedGoal.goalMilestone)
+	}, [props.clickedGoal])
+	// console.log("CLICKED FROM PARTICULAR", props.clickedGoal.goalMilestone)
+	// console.log("LENGTH", DATA.length)
+	// console.log("DATA FROM PARTICULAR", DATA[DATA.length - 1])
+
+	// const getFirstTimeData = async () => {
+	// 	const data = await getFirstTimeIndividual()s
+	// 	props.setFirstTimeForIndividualGoal(data)
+	// 	const isFirst = props.firstTimeIndividual === null ? true : false
+	// 	// setModalVisible(isFirst)
+	// }
 
 	const goBack = () => {
 		navigation.goBack()
@@ -31,7 +50,7 @@ const ParticularGoal = ({clickedGoal}) => {
 		<StatusBarScreen style={styles.container}>
 			<View style={CommonStyles.titleContainer}>
 				{/* <Text style={styles.mainTitle}>Read 5 books</Text> */}
-				<RBBottomSheet />
+				<RBBottomSheet name={props.clickedGoal.name} />
 				<Text style={styles.subTitle}>I want to continue improve myself and my state of mind.</Text>
 				<View style={CommonStyles.trackingcont}>
 					<ProgressCircle
@@ -92,7 +111,11 @@ const ParticularGoal = ({clickedGoal}) => {
 						add a milestone and get on your way.
 					</Text> */}
 					<ScrollView>
-						<MilestoneCards style={{marginTop: 0}} />
+						<MilestoneCards
+							style={{backgroundColor: ColorConstants.lighterBlue}}
+							fromParticularData={DATA}
+							style={{marginTop: 0}}
+						/>
 					</ScrollView>
 					<View
 						style={{
@@ -128,8 +151,22 @@ const ParticularGoal = ({clickedGoal}) => {
 		</StatusBarScreen>
 	)
 }
+const mapStateToProps = (state) => {
+	return {
+		firstTimeIndividual: state.milestone.firstTimeIndividual,
+		clickedGoal: state.milestone.clickedGoal,
+		newMileStone: state.milestone.newMileStone,
+	}
+}
 
-export default ParticularGoal
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setFirstTimeForIndividualGoal: (data) => {
+			dispatch(setFirstTimeForIndividualGoal(data))
+		},
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ParticularGoal)
 
 const styles = StyleSheet.create({
 	container: {
@@ -148,7 +185,7 @@ const styles = StyleSheet.create({
 		color: "black",
 	},
 	goalsContainer: {
-		flex: 0.7,
+		flex: 0.8,
 		backgroundColor: "#588C8D",
 		borderTopRightRadius: sizeConstants.seventy,
 	},

@@ -38,9 +38,9 @@ const FirstTaskFlow = ({
 	const [date, setDate] = useState()
 
 	const nextScreen = () => {
-		console.log("nextScreen1")
+		console.log("nextScreen1", clickedMilestone)
 
-		let newMilestoneItem = clickedGoal.goalMilestone.map((item) => {
+		let newMilestoneItemWithTask = clickedGoal.goalMilestone.map((item) => {
 			if (item.milestone == clickedMilestone) {
 				return {
 					...item,
@@ -54,8 +54,11 @@ const FirstTaskFlow = ({
 				}
 			} else return item
 		})
-		addMilestoneToFirestore(clickedGoal, newMilestoneItem)
-		navigation.navigate("secondtaskflow")
+		console.log("Checking ADDING DATA OR NOT", newMilestoneItemWithTask.taskData)
+		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask)
+		console.log("FROM FIRST FLOW", clickedGoal)
+		// navigation.navigate("secondtaskflow")
+		navigation.navigate("particulargoal")
 
 		console.log("nextScreen2")
 	}

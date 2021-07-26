@@ -56,12 +56,15 @@ export const deleteGoalFromFirestore = (target) => {
 
 // Goal Add Operation
 export const addGoalToFirestore = (data) => {
+	console.log("Firebase Data 1", data)
 	let addGoal = new Promise((resolve, reject) => {
 		firestore()
 			.collection(GOALS_COLLECTION)
 			.add(data)
 			.then((docRef) => {
 				let id = docRef._documentPath._parts[1]
+				console.log("id", id)
+
 				let obj = {
 					...data,
 					id: id,
