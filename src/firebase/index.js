@@ -13,11 +13,11 @@ export const getAllGoalsFromFirestore = (callback) => {
 			.collection("Goals")
 			.get()
 			.then((querySnapshot) => {
-				console.log("All Goals length", querySnapshot.size)
+				// console.log("All Goals length", querySnapshot.size)
 				querySnapshot.forEach((documentSnapshot) => {
 					AllGoalArr.push(documentSnapshot.data())
 				})
-				console.log("All Goals ", AllGoalArr)
+				// console.log("All Goals ", AllGoalArr)
 				resolve(AllGoalArr)
 			})
 			.catch((err) => {
@@ -26,7 +26,7 @@ export const getAllGoalsFromFirestore = (callback) => {
 	})
 	getAllGoals
 		.then((data) => {
-			console.log("Goals from firestore: ", data)
+			// console.log("Goals from firestore: ", data)
 			callback(data)
 		})
 		.catch((err) => {

@@ -35,7 +35,6 @@ import firestore from "@react-native-firebase/firestore"
 import {CommonHomeButton} from "../../core/CommonComponents"
 import {getAllGoalsFromFirestore} from "../../firebase"
 
-const Height = Dimensions.get("window").height
 const MyGoals = ({
 	testData,
 	setTestData,
@@ -47,11 +46,7 @@ const MyGoals = ({
 	const [test, setTest] = useState({})
 
 	useEffect(() => {
-		getAllGoalsFromFirestore((goals) => {
-			console.log("goals", goals)
-		})
-		console.log("Height of this device is: ", Height)
-
+		getAllGoalsFromFirestore((goals) => {})
 		fetchData()
 	}, [testData, firstTime, firstTimeTimelineFlow])
 
@@ -136,7 +131,6 @@ const MyGoals = ({
 	const colorArray = Object.values(forGoals)
 
 	useEffect(() => {
-		console.log("second use effect")
 		getData()
 		// console.log("GOAL DATA", allTasks);
 	}, [allTasks])

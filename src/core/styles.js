@@ -292,7 +292,6 @@ export const CommonStyles = ScaledSheet.create({
 		elevation: sizeConstants.m,
 	},
 
-
 	homeAndRight: {
 		position: "absolute",
 		bottom: verticalScale(sizeConstants.fourtyFive),

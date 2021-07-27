@@ -27,7 +27,7 @@ const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 	// const goBack = () => {
 	// 	navigation.goBack()
 	// }
-	const [date, setDate] = useState(new Date())
+	// const [date, setDate] = useState(new Date())
 	console.log(
 		"TESTTTTTTTTING",
 		clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].milestone
@@ -98,14 +98,17 @@ const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 					<View style={CommonStyles.alignItemsCenter}></View>
 				</View> */}
 			</StatusBarScreen>
-			<CommonPrevNextButton right={true} nextClick={FourthMileStone} />
+			<CommonPrevNextButton
+				right={true}
+				nextClick={() => {
+					navigation.navigate("firsttaskflow")
+				}}
+			/>
 			<CommonHomeButton click={() => {}} size={44} />
 		</ImageBackground>
 	)
 }
 const mapStateToProps = (state) => {
-	console.log("Milestone", state.newMileStone)
-
 	return {
 		newMileStone: state.milestone.newMileStone,
 		clickedGoal: state.milestone.clickedGoal,

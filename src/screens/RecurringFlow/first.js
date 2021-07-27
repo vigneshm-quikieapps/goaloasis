@@ -9,15 +9,16 @@ import StatusBarScreen from "../MileStones/StatusBarScreen"
 import {CommonStyles, sizeConstants} from "../../core/styles"
 import {CommonHomeButton} from "../../core/CommonComponents"
 
-const First = () => {
+const First = ({route}) => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
-	const [toggle, setToggle] = useState()
+	const [toggle, setToggle] = useState("Daily")
+	const {taskDate} = route.params
 
 	const [value, onChange] = useState(new Date())
 	const [date, setDate] = useState(new Date())
 	const options = [
-		{label: "Day", value: "Day"},
+		{label: "Daily", value: "Daily"},
 		{label: "Weekly", value: "Weekly"},
 	]
 
@@ -120,10 +121,30 @@ const First = () => {
 				</View>
 			)}
 
-			<View style={{position: "absolute", bottom: sizeConstants.oneTen, alignSelf: "center"}}>
+			<View
+				style={{
+					position: "absolute",
+					bottom: sizeConstants.oneTen,
+					alignSelf: "center",
+					width: "100%",
+				}}
+			>
 				<TouchableOpacity
 					style={CommonStyles.cancelReoccuring}
-					onPress={() => navigation.navigate("second")}
+					onPress={() => {
+						navigation.navigate("second", {
+							reoccuring: toggle,
+							taskDate: taskDate,
+						})
+					}}
+				>
+					<Text style={CommonStyles.cancelReoccuringText}>Set reoccuring</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={CommonStyles.cancelReoccuring}
+					onPress={() => {
+						// navigation.navigate("second")
+					}}
 				>
 					<Text style={CommonStyles.cancelReoccuringText}>Cancel reoccuring</Text>
 				</TouchableOpacity>

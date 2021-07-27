@@ -44,8 +44,11 @@ const FirstTaskFlow = ({
 	const [task, setTask] = useState("")
 	const [clickedDate, setDate] = useState()
 
-	const navigatoinCallback = () => {
-		navigation.navigate("secondtaskflow")
+	const navigationCallback = () => {
+		navigation.navigate("secondtaskflow", {
+			task: task,
+			date: clickedDate,
+		})
 	}
 	const nextScreen = () => {
 		console.log("Testing First task Flow", clickedMilestone)
@@ -63,7 +66,7 @@ const FirstTaskFlow = ({
 				}
 			} else return item
 		})
-		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask, navigatoinCallback)
+		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask, navigationCallback)
 		// console.log(
 		// 	"CLICKED GOAL",
 		// 	clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].taskData
@@ -80,7 +83,7 @@ const FirstTaskFlow = ({
 		// console.log("Checking ADDING DATA OR NOT", newMilestoneItemWithTask.taskData)
 		// addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask)
 		// console.log("FROM FIRST FLOW", clickedGoal)
-		navigation.navigate("secondtaskflow")
+		// navigation.navigate("secondtaskflow")
 		// navigation.navigate("particulargoal")
 
 		// navigation.navigate("particulargoal")
@@ -97,7 +100,7 @@ const FirstTaskFlow = ({
 				<StatusBarScreen>
 					<View style={CommonStyles.flexOne}>
 						<View style={CommonStyles.flexDirectionRow}>
-							<Text style={CommonStyles.mainTitle}>{clickedGoal.name}</Text>
+							<Text style={CommonStyles.mainTitle}>{clickedMilestone}</Text>
 							<Entypo
 								name="cross"
 								color={ColorConstants.faintWhite}
@@ -126,8 +129,7 @@ const FirstTaskFlow = ({
 						<Calendar
 							// // Initially visible month. Default = Date()
 							current={new Date()}
-							// // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-							// minDate={"2001-05-10"}
+							minDate={new Date()}
 							// // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
 							// maxDate={"2020-05-30"}
 							// // Handler which gets executed on day press. Default = undefined

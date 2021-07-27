@@ -163,8 +163,10 @@ export const CommonPrevNextButton = ({
 export const CustomDayComponentForCalendar = ({clickedDate, date, state, dayClick, marking}) => {
 	let today = convertToDateString(new Date())
 	let selectedDate = convertToDateString(new Date(clickedDate))
-
 	let isMarked = marking && marking.marked
+	let isStart = marking && marking.start
+	let isEnd = marking && marking.end
+
 	return (
 		<View style={styles.mainDayContainer}>
 			{state == "disabled" ? (
@@ -180,7 +182,13 @@ export const CustomDayComponentForCalendar = ({clickedDate, date, state, dayClic
 					<View
 						style={[
 							styles.dayContainer,
-							date.dateString == selectedDate || isMarked
+							isEnd
+								? styles.endContainer
+								: isStart
+								? styles.startConatainer
+								: isMarked
+								? styles.markedDateContainer
+								: date.dateString == selectedDate
 								? styles.selectedDateContainer
 								: date.dateString == today
 								? styles.todayContainer
@@ -190,7 +198,9 @@ export const CustomDayComponentForCalendar = ({clickedDate, date, state, dayClic
 						<Text
 							style={[
 								styles.dayText,
-								date.dateString == selectedDate || isMarked
+								isMarked
+									? styles.markedDate
+									: date.dateString == selectedDate
 									? styles.selectedDate
 									: date.dateString == today
 									? styles.todayText
@@ -233,6 +243,46 @@ const styles = StyleSheet.create({
 	mainDayContainer: {
 		margin: 0,
 		padding: 0,
+	},
+
+	markedDateContainer: {
+		height: height <= 700 ? sizeConstants.twentyTwo : sizeConstants.twentySix,
+		width: sizeConstants.fiftyFive,
+		borderRadius: 0,
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: ColorConstants.white,
+		margin: 0,
+	},
+	startConatainer: {
+		height: height <= 700 ? sizeConstants.twentyTwo : sizeConstants.twentySix,
+		width: sizeConstants.fiftyFive,
+		borderRadius: 0,
+		borderWidth: height < 700 ? 1 : 1.5,
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: ColorConstants.white,
+		margin: 0,
+		padding: sizeConstants.xs,
+		borderTopLeftRadius: sizeConstants.eightyFive,
+		borderBottomLeftRadius: sizeConstants.eightyFive,
+		borderColor: ColorConstants.white,
+	},
+	endContainer: {
+		height: height <= 700 ? sizeConstants.twentyTwo : sizeConstants.twentySix,
+		width: sizeConstants.fiftyFive,
+		borderRadius: 0,
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: ColorConstants.white,
+		margin: 0,
+		padding: sizeConstants.xs,
+		borderColor: ColorConstants.white,
+		borderTopRightRadius: sizeConstants.eightyFive,
+		borderBottomRightRadius: sizeConstants.eightyFive,
+	},
+	markedDate: {
+		color: ColorConstants.greyishBlue,
 	},
 	disabledDate: {
 		color: ColorConstants.mediumFaintBlue,
