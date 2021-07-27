@@ -68,7 +68,7 @@ const ThirdTaskFlow = ({clickedGoal}) => {
 							style={CommonStyles.cross}
 						/>
 					</View>
-					<Text style={CommonStyles.milestoneText}>Enter Milestone</Text>
+					<Text style={CommonStyles.milestoneText}>Enter task</Text>
 					<TouchableOpacity
 						style={[CommonStyles.container2, height <= 700 ? {marginTop: sizeConstants.xs} : {}]}
 					>
@@ -80,7 +80,7 @@ const ThirdTaskFlow = ({clickedGoal}) => {
 
 					<View style={CommonStyles.calendarContainer}>
 						<Text style={CommonStyles.targetDate}>Target Date</Text>
-						{date == "" ? (
+						{!clickedDate ? (
 							<TouchableOpacity>
 								<Text style={CommonStyles.done}>Done</Text>
 							</TouchableOpacity>

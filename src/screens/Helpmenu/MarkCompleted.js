@@ -2,17 +2,26 @@ import React from "react"
 import {StyleSheet, Text, View, TouchableOpacity} from "react-native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
+import {setCurrentGoal} from "./../../redux/actions"
+import {connect} from "react-redux"
+import {updateGoalToFirestore} from "./../../firebase/index"
 
-const MarkCompleted = () => {
+const MarkCompleted = (props) => {
 	const navigation = useNavigation()
 
 	const handleOpenNewGoal = () => {
 		navigation.navigate("addgoal")
 	}
 
-	const gotoGoal = () => {
-		navigation.navigate("particulargoal")
+	let currentGoalObj = {
+		...props.clickedGoal,
 	}
+
+	const gotoHome = () => {
+		navigation.navigate("mygoals")
+		updateGoalToFirestore(currentGoalObj)
+	}
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.titleContainer}></View>
@@ -28,10 +37,7 @@ const MarkCompleted = () => {
 				</View>
 
 				<View style={styles.bottomBtnContainer}>
-					<TouchableOpacity
-						style={styles.HelpBtn}
-						onPress={() => navigation.navigate("milestones")}
-					>
+					<TouchableOpacity style={styles.HelpBtn} onPress={gotoHome}>
 						<Text style={styles.btnText}>Confirm</Text>
 					</TouchableOpacity>
 				</View>
@@ -40,7 +46,21 @@ const MarkCompleted = () => {
 	)
 }
 
-export default MarkCompleted
+const mapStateToProps = (state) => {
+	return {
+		currentGoal: state.milestone.currentGoal,
+		clickedGoal: state.milestone.clickedGoal,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setCurrentGoal: (data) => {
+			dispatch(setCurrentGoal(data))
+		},
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(MarkCompleted)
 
 const styles = StyleSheet.create({
 	container: {

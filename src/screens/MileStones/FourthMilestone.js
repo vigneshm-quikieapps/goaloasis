@@ -31,8 +31,8 @@ const FourthMilestone = ({clickedGoal}) => {
 	let temp = clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].milestone
 	const [milestone, setMilestone] = useState(temp)
 	const [value, onChange] = useState(new Date())
-	const [date, setDate] = useState(null)
-	console.log("DATE", date)
+	// const [date, setDate] = useState(null)
+	// console.log("DATE", date)
 	const [clickedDate, setDate] = useState(new Date())
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
@@ -63,7 +63,7 @@ const FourthMilestone = ({clickedGoal}) => {
 
 					<View style={CommonStyles.calendarContainer}>
 						<Text style={CommonStyles.targetDate}>Target Date</Text>
-						{date !== null ? (
+						{clickedDate !== null ? (
 							<TouchableOpacity onPress={() => navigation.navigate("SixthMilestone")}>
 								<Text style={CommonStyles.done}>Done</Text>
 							</TouchableOpacity>
