@@ -1,8 +1,8 @@
-import { combineReducers } from "redux";
-import milestoneReducer from "./milestoneReducer";
+import {combineReducers} from "redux"
+import milestoneReducer from "./milestoneReducer"
 
 const rootReducer = combineReducers({
-    milestone: milestoneReducer
+	milestone: milestoneReducer,
 })
 
-export default rootReducer;
+export default rootReducer

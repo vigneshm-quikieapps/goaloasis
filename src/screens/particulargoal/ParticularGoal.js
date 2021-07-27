@@ -12,6 +12,7 @@ import {sizeConstants, ColorConstants} from "./../../core/styles"
 import {scale, verticalScale} from "react-native-size-matters"
 import {connect} from "react-redux"
 import {getClickedGoalFromAsyncStorage} from "./../../utils/asyncStorage"
+import {setBooleanFlag} from "../../redux/actions"
 
 const ParticularGoal = (props) => {
 	const navigation = useNavigation()
@@ -21,21 +22,24 @@ const ParticularGoal = (props) => {
 	// 	// setModalVisible(false)
 	// 	// getFirstTimeData()
 	// 	// setData(props.newMileStone)
-	// 	// setData(props.clickedGoal.goalMilestone)
+	// 	setData(props.clickedGoal.goalMilestone)
 	// }, [props.clickedGoal])
 
-	console.log("Particular Goal", props.clickedGoal.goalMilestone)
-	const goBack = () => {
-		navigation.goBack()
-	}
 	useEffect(() => {
 		// setModalVisible(false)
 		getClickedGoalFromAsyncStorage(props.clickedGoal.name).then((goal) => {
 			let goals = JSON.parse(goal)
 			setData(goals.goalMilestone)
+
 			console.log("all milesss", goals.goalMilestone)
 		})
-	}, [props.clickedGoal])
+	}, [props.clickedGoal, props.booleanFlag])
+
+	console.log("Particular Goal", props.clickedGoal.goalMilestone)
+
+	const goBack = () => {
+		navigation.goBack()
+	}
 
 	return (
 		<StatusBarScreen style={styles.container}>
@@ -147,6 +151,8 @@ const mapStateToProps = (state) => {
 		firstTimeIndividual: state.milestone.firstTimeIndividual,
 		clickedGoal: state.milestone.clickedGoal,
 		newMileStone: state.milestone.newMileStone,
+		clickedMilestone: state.milestone.clickedMilestone,
+		booleanFlag: state.milestone.booleanFlag,
 	}
 }
 
@@ -154,6 +160,10 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		setFirstTimeForIndividualGoal: (data) => {
 			dispatch(setFirstTimeForIndividualGoal(data))
+		},
+
+		setBooleanFlag: (data) => {
+			dispatch(setBooleanFlag(data))
 		},
 	}
 }

@@ -24,7 +24,7 @@ const ThirdTaskFlow = () => {
 	const [task, setTask] = useState()
 
 	const [value, onChange] = useState(new Date())
-	const [date, setDate] = useState("")
+	// const [date, setDate] = useState("")
 	const [clickedDate, setDate] = useState(new Date())
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 
@@ -52,7 +52,7 @@ const ThirdTaskFlow = () => {
 					</Text>
 
 					<View style={CommonStyles.calendarContainer}>
-						<Text style={CommonStyles.targetDate}>Target Date</Text>
+						{/* <Text style={CommonStyles.targetDate}>Target Date</Text>
 						{date == "" ? (
 							<TouchableOpacity>
 								<Text style={CommonStyles.done}>Done</Text>
@@ -65,7 +65,7 @@ const ThirdTaskFlow = () => {
 							>
 								<Text style={CommonStyles.done}>Done</Text>
 							</TouchableOpacity>
-						)}
+						)} */}
 						<Text
 							style={[CommonStyles.targetDate, height <= 700 ? {marginTop: sizeConstants.xs} : {}]}
 						>

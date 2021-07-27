@@ -85,6 +85,35 @@ export const addGoalToFirestore = (data) => {
 		})
 }
 
+// goal Update Operation
+export const updateGoalToFirestore = (data) => {
+	let targetObj = data
+	let updatedObj = {
+		...targetObj,
+		isCompleted: true,
+	}
+	let addGoal = new Promise((resolve, reject) => {
+		firestore()
+			.collection(GOALS_COLLECTION)
+			.doc(targetObj.id)
+			.update(updatedObj)
+			.then(() => {
+				resolve(updatedObj)
+			})
+			.catch((err) => {
+				reject(err)
+			})
+	})
+	addGoal
+		.then((Obj) => {
+			addGoalDataToAsyncStorage(Obj) // adding data to Async Storage
+			console.log("FB obj added to async", Obj)
+		})
+		.catch((err) => {
+			console.log("FB async goal add error", err)
+		})
+}
+
 export const addMilestoneToFirestore = (target, milestoneArr, navigationCallback) => {
 	// let targetObj = JSON.parse(target)
 	let targetObj = target

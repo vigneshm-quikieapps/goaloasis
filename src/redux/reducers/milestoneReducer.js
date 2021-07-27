@@ -4,6 +4,7 @@ const initialState = {
 	test: "Testing...",
 	firstTime: null,
 	firstTimeTimelineFlow: null,
+	booleanFlag: false,
 	firstTimeIndividual: null,
 	newMileStone: [], // similar to state objects in class component
 	editMileStone: [],
@@ -120,6 +121,12 @@ const milestoneReducer = (state = initialState, action) => {
 			return {
 				...state,
 				loading: false,
+			}
+
+		case actionTypes.SET_BOOLEAN_FLAG:
+			return {
+				...state,
+				booleanFlag: action.value,
 			}
 
 		default:
