@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
 		right: scale(0),
 		bottom: verticalScale(6),
 		margin: scale(10),
-		height: sizeConstants.thirty,
+		height: sizeConstants.fifteenMX,
 		width: scale(35),
 		borderRadius: scale(30),
 		alignItems: "center",

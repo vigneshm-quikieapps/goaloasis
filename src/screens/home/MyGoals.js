@@ -17,7 +17,7 @@ import StatusBarScreen from "../MileStones/StatusBarScreen"
 import Constants from "expo-constants"
 import {connect} from "react-redux"
 import AsyncStorage from "@react-native-community/async-storage"
-
+import firebase from "firebase"
 import {
 	setTestData,
 	setFirstTime,
@@ -30,11 +30,20 @@ import {
 	getFirstTimeTaskTutorial,
 	getFirstTimeTimelineFlow,
 } from "./../../utils/asyncStorage"
-import {ColorConstants, CommonStyles, forGoals, sizeConstants} from "./../../core/styles"
+import {
+	ColorConstants,
+	CommonStyles,
+	firebaseConstants,
+	forGoals,
+	sizeConstants,
+} from "./../../core/styles"
 import firestore from "@react-native-firebase/firestore"
 import {CommonHomeButton} from "../../core/CommonComponents"
+import Spinner from "./../../core/Spinner"
 import {getAllGoalsFromFirestore} from "../../firebase"
 
+const {GOALS_COLLECTION} = firebaseConstants
+const Height = Dimensions.get("window").height
 const MyGoals = ({
 	testData,
 	setTestData,
@@ -42,12 +51,18 @@ const MyGoals = ({
 	setFirstTime,
 	firstTimeTimelineFlow,
 	setClickedGoal,
+	setShowLoader,
+	setHideLoader,
+	loading,
+	currentGoal,
+	clickedGoal,
 }) => {
 	const [test, setTest] = useState({})
 
 	useEffect(() => {
 		getAllGoalsFromFirestore((goals) => {})
 		fetchData()
+		gettingAllData()
 	}, [testData, firstTime, firstTimeTimelineFlow])
 
 	const fetchData = async () => {
@@ -99,6 +114,7 @@ const MyGoals = ({
 	}
 	//async code
 	const [tasks, setTasks] = useState([])
+	const [goal, setAllGoals] = useState([])
 
 	let allTasks = []
 	const getData = async () => {
@@ -131,9 +147,37 @@ const MyGoals = ({
 	const colorArray = Object.values(forGoals)
 
 	useEffect(() => {
+		// if (loader === false) {
+		// 	// setShowLoader()
+		// 	setTimeout(() => {
+		// 		// setLoader(true)
+		// 	}, 2000)
+		// } else {
+		// 	setTimeout(() => {s
+		console.log("second use effect")
 		getData()
 		// console.log("GOAL DATA", allTasks);
 	}, [allTasks])
+
+	const [firebaseData, setFirebaseData] = useState([])
+	const [firebaseCompletedGoal, setFirebaseCompletedGoal] = useState([])
+
+	const gettingAllData = () => {
+		firestore()
+			.collection("Goals")
+			.get()
+			.then((querySnapshot) => {
+				querySnapshot.forEach((doc) => {
+					setFirebaseData(doc.data())
+				})
+			})
+	}
+	// firebaseData.map((item) => {
+	// 	if (item.isCompleted === true) {
+	// 		setFirebaseCompletedGoal(item)
+	// 	}
+	// })
+	// console.log("FROM HOME SCREEN", firebaseData)
 
 	return (
 		<StatusBarScreen style={styles.container}>
@@ -152,7 +196,8 @@ const MyGoals = ({
 				<View>
 					<Text style={CommonStyles.myGoalsText}>My goals</Text>
 				</View>
-
+				{/* {getAllGoalsFromFirestore().then((data) => console.log("DATA", data))} */}
+				{/* {getAllGoalsFromFirestore()} */}
 				<ScrollView contentContainerStyle={{paddingHorizontal: 0, marginHorizontal: 0}}>
 					<View style={CommonStyles.logoSpacing}>
 						{allTasks.map((task, index) => (
@@ -163,22 +208,39 @@ const MyGoals = ({
 										handleOpenNewGoal(task)
 									}}
 								>
+									{/* {console.log("TASKKKKKKKKKKK", task)} */}
 									{/* <TouchableOpacity
 									style={CommonStyles.logoContainer}
 									onPress={() => navigation.navigate("third")}
 								> */}
-									<ProgressCircle
-										percent={0}
-										radius={sizeConstants.fiftyHalf}
-										borderWidth={5}
-										color={getColor(index)}
-										shadowColor="#999"
-										bgColor="#FBF5E9"
-									>
-										<Text style={{fontSize: 22, color: getColor(index), fontWeight: "bold"}}>
-											{"0%"}
-										</Text>
-									</ProgressCircle>
+									{setFirebaseCompletedGoal.contains(task) ? (
+										<ProgressCircle
+											percent={100}
+											radius={sizeConstants.fiftyHalf}
+											borderWidth={5}
+											color={getColor(index)}
+											shadowColor="#999"
+											bgColor="#FBF5E9"
+										>
+											<Text style={{fontSize: 22, color: getColor(index), fontWeight: "bold"}}>
+												{"100%"}
+											</Text>
+										</ProgressCircle>
+									) : (
+										<ProgressCircle
+											percent={0}
+											radius={sizeConstants.fiftyHalf}
+											borderWidth={5}
+											color={getColor(index)}
+											shadowColor="#999"
+											bgColor="#FBF5E9"
+										>
+											<Text style={{fontSize: 22, color: getColor(index), fontWeight: "bold"}}>
+												{"0%"}
+											</Text>
+										</ProgressCircle>
+									)}
+
 									<Text style={CommonStyles.goalText}>{task}</Text>
 								</TouchableOpacity>
 
@@ -250,6 +312,8 @@ const mapStateToProps = (state) => {
 		firstTime: state.milestone.firstTime,
 		firstTimeTimelineFlow: state.milestone.firstTimeTimelineFlow,
 		clickedGoal: state.milestone.clickedGoal,
+		loading: state.milestone.loading,
+		currentGoal: state.milestone.currentGoal,
 	}
 }
 

@@ -30,15 +30,16 @@ const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
 			targetDate: date.toISOString(),
 			createdAt: firestore.FieldValue.serverTimestamp(),
 			goalMilestone: [],
-			color: getColorForGoal(),
+			// color: getColorForGoal(),
 			isCompleted: false,
-			// color: "pink",
+			color: "pink",
 		}
 		setCurrentGoal(currentGoalObj)
 		addGoalToFirestore(currentGoalObj)
 		navigation.navigate("mygoals")
 	}
 	const [date, setDate] = useState(new Date())
+	console.log("CURRENT GOAL FROM GOAL STEP  3", currentGoal)
 
 	// let asyncData = []
 	// asyncData.push(name)

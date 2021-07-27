@@ -97,3 +97,10 @@ export const setHideLoader = () => {
 		type: actionTypes.HIDE_LOADER,
 	}
 }
+
+export const setBooleanFlag = (data) => {
+	return {
+		type: actionTypes.SET_BOOLEAN_FLAG,
+		value: data,
+	}
+}

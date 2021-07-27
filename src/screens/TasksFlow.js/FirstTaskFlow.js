@@ -19,6 +19,7 @@ import StatusBarScreen from "./../MileStones/StatusBarScreen"
 import {
 	addNewMilestone,
 	EditNewMilestone,
+	setBooleanFlag,
 	setClickedGoal,
 	setTaskFlowData,
 } from "./../../redux/actions"
@@ -29,13 +30,13 @@ import {
 	CommonPrevNextButton,
 	CustomDayComponentForCalendar,
 } from "../../core/CommonComponents"
-
 const FirstTaskFlow = ({
 	setTaskFlowData,
 	clickedGoal,
 	newMileStone,
 	clickedMilestone,
 	taskFlowData,
+	setBooleanFlag,
 }) => {
 	useEffect(() => {
 		console.log("newMileStone", newMileStone)
@@ -66,7 +67,8 @@ const FirstTaskFlow = ({
 				}
 			} else return item
 		})
-		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask, navigationCallback)
+		setBooleanFlag(true)
+		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask, navigatoinCallback)
 		// console.log(
 		// 	"CLICKED GOAL",
 		// 	clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].taskData
@@ -253,12 +255,14 @@ const mapStateToProps = (state) => {
 		taskFlowData: state.milestone.taskFlowData,
 		clickedGoal: state.milestone.clickedGoal,
 		clickedMilestone: state.milestone.clickedMilestone,
+		booleanFlag: state.milestone.booleanFlag,
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		setTaskFlowData: (task) => dispatch(setTaskFlowData(task)),
+		setBooleanFlag: (task) => dispatch(setBooleanFlag(task)),
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(FirstTaskFlow)

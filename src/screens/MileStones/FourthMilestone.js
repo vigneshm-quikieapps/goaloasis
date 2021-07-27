@@ -156,10 +156,10 @@ const FourthMilestone = ({clickedGoal}) => {
 						// 		selectedColor: ColorConstants.faintWhite,
 						// 	},
 						// }}
-						dayComponent={({date, state}) => {
+						dayComponent={({clickedDate, state}) => {
 							return (
 								<CustomDayComponentForCalendar
-									date={date}
+									date={clickedDate}
 									state={state}
 									clickedDate={clickedDate}
 									dayClick={setDate}

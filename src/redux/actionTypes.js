@@ -25,3 +25,6 @@ export const SET_ALL_GOALS = "settingAllGoals"
 // Loader
 export const SET_LOADER = "loader"
 export const HIDE_LOADER = "hideLoader"
+
+// boolean
+export const SET_BOOLEAN_FLAG = "booleanflag"

@@ -80,12 +80,25 @@ const ThirdTaskFlow = ({clickedGoal, route}) => {
 					</Text>
 
 					<View style={CommonStyles.calendarContainer}>
+						<Text style={CommonStyles.targetDate}>Target Date</Text>
+						{!clickedDate ? (
+							<TouchableOpacity>
+								<Text style={CommonStyles.done}>Done</Text>
+							</TouchableOpacity>
+						) : (
+							<TouchableOpacity
+								onPress={() => {
+									navigation.navigate("particulargoal")
+								}}
+							>
+								<Text style={CommonStyles.done}>Done</Text>
+							</TouchableOpacity>
+						)}{" "}
 						<Text
 							style={[CommonStyles.targetDate, height <= 700 ? {marginTop: sizeConstants.xs} : {}]}
 						>
 							Target Date
 						</Text>
-
 						<TouchableOpacity
 							onPress={() => {
 								clickedDate && navigation.navigate("particulargoal")
@@ -93,7 +106,6 @@ const ThirdTaskFlow = ({clickedGoal, route}) => {
 						>
 							<Text style={CommonStyles.done}>Done</Text>
 						</TouchableOpacity>
-
 						{/* <Text
 							style={[CommonStyles.targetDate, height <= 700 ? {marginTop: sizeConstants.xs} : {}]}
 						>
