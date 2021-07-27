@@ -15,17 +15,24 @@ import StatusBarScreen from "../screens/MileStones/StatusBarScreen"
 import Constants from "expo-constants"
 import {connect} from "react-redux"
 import {setFirstTime} from "../redux/actions"
-import {LongPressGestureHandler} from "react-native-gesture-handler"
+import {LongPressGestureHandler, State} from "react-native-gesture-handler"
 import Swipeout from "rc-swipeout"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {SnoozeIcon} from "../assets/customIcons"
 import {AntDesign} from "@expo/vector-icons"
 
-const TaskTutorialSlider = ({data, setFirstTime}) => {
+const TaskTutorialSlider = ({data, setFirstTime, loading}) => {
 	const [taskCompleted, setCompleted] = useState(false)
 	const [taskSnoozed, setSnoozed] = useState(false)
 	const navigation = useNavigation()
 	const {title, subTitle, color1, color2, screen, img} = data
+
+	const onLongPress = (event) => {
+		if (event.nativeEvent.state === State.ACTIVE) {
+			// alert("I've been pressed for 800 milliseconds")
+			setCompleted(!taskCompleted)
+		}
+	}
 
 	const handleNavigateScreen = async () => {
 		console.log("screen", screen)
@@ -35,9 +42,9 @@ const TaskTutorialSlider = ({data, setFirstTime}) => {
 			navigation.navigate("taskTutorialSlide3")
 		}
 	}
-	const completeTask = () => {
-		setCompleted(!taskCompleted)
-	}
+	// const completeTask = () => {
+	// 	setCompleted(!taskCompleted)
+	// }
 
 	const setLoggedIn = async () => {
 		await setisFirstTimeTaskTutorial()
@@ -96,13 +103,15 @@ const TaskTutorialSlider = ({data, setFirstTime}) => {
 				</View>
 				<View style={styles.btnContainer2}>
 					{screen === 1 ? (
-						<View>
-							<TouchableOpacity style={styles.centerBtn} onLongPress={completeTask}>
-								<Text style={taskCompleted ? styles.btnTextCompleted : styles.btnText}>
-									{taskCompleted ? "Completed Task" : "Long Press"}
-								</Text>
-							</TouchableOpacity>
-						</View>
+						<LongPressGestureHandler onHandlerStateChange={onLongPress} minDurationMs={800}>
+							<View>
+								<TouchableOpacity style={styles.centerBtn}>
+									<Text style={taskCompleted ? styles.btnTextCompleted : styles.btnText}>
+										{taskCompleted ? "Completed Task" : "Long Press"}
+									</Text>
+								</TouchableOpacity>
+							</View>
+						</LongPressGestureHandler>
 					) : screen === 2 ? (
 						<View style={styles.swipeButton}>
 							{taskSnoozed ? (

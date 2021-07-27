@@ -14,7 +14,7 @@ import TodaysTask from "../screens/TodaysTask/TodaysTask"
 
 import {
 	AfterModal,
-	FifthMilestone,
+	// FifthMilestone,
 	FirstMilestone,
 	FourthMilestone,
 	SecondAfterModal,
@@ -66,7 +66,7 @@ const IntroStack = () => {
 			<Stack.Screen name="FirstMilestone" component={FirstMilestone} />
 			<Stack.Screen name="ThirdMileStone" component={ThirdMilestone} />
 			<Stack.Screen name="FourthMilestone" component={FourthMilestone} />
-			<Stack.Screen name="FifthMilestone" component={FifthMilestone} />
+			{/* <Stack.Screen name="FifthMilestone" component={FifthMilestone} /> */}
 			<Stack.Screen name="SixthMilestone" component={SixthMilestone} />
 			<Stack.Screen name="IndividualGoal" component={IndividualGoal} />
 			{/* <Stack.Screen name="SecondIndividualGoal" component={SecondIndividualGoal} /> */}

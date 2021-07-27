@@ -10,6 +10,7 @@ import {
 	CommonHomeButton,
 	CustomDayComponentForCalendar,
 	getAllDatesBetween,
+	CommonPrevNextButton,
 } from "../../core/CommonComponents"
 import {connect} from "react-redux"
 
@@ -22,6 +23,8 @@ const ThirdTaskFlow = ({clickedGoal}) => {
 	// const goBack = () => {
 	// 	navigation.goBack()
 	// }
+	const [task, setTask] = useState()
+
 	const [value, onChange] = useState(new Date())
 	const [clickedDate, setDate] = useState(null)
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
@@ -76,6 +79,20 @@ const ThirdTaskFlow = ({clickedGoal}) => {
 					</Text>
 
 					<View style={CommonStyles.calendarContainer}>
+						<Text style={CommonStyles.targetDate}>Target Date</Text>
+						{date == "" ? (
+							<TouchableOpacity>
+								<Text style={CommonStyles.done}>Done</Text>
+							</TouchableOpacity>
+						) : (
+							<TouchableOpacity
+								onPress={() => {
+									navigation.navigate("particulargoal")
+								}}
+							>
+								<Text style={CommonStyles.done}>Done</Text>
+							</TouchableOpacity>
+						)}
 						<Text
 							style={[CommonStyles.targetDate, height <= 700 ? {marginTop: sizeConstants.xs} : {}]}
 						>
@@ -146,12 +163,21 @@ const ThirdTaskFlow = ({clickedGoal}) => {
 					>
 						<Text style={CommonStyles.reoccuring}>Set reoccuringgg</Text>
 					</TouchableOpacity>
-					{/* <TouchableOpacity
-						style={CommonStyles.bottomBtnMilestone}
-						onPress={() => navigation.navigate("particulargoal")}
-					>
-						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
-					</TouchableOpacity> */}
+					{task === "" ? (
+						<CommonPrevNextButton
+							right={true}
+							style={{backgroundColor: ColorConstants.whiteOp50}}
+							size={50}
+							bottom={0}
+						/>
+					) : (
+						<CommonPrevNextButton
+							right={true}
+							nextClick={() => navigation.navigate("particulargoal")}
+							size={50}
+							bottom={0}
+						/>
+					)}
 				</View>
 			</ScrollView>
 			<CommonHomeButton click={() => navigation.navigate("particulargoal")} />

@@ -84,7 +84,7 @@ export const addGoalToFirestore = (data) => {
 		})
 }
 
-export const addMilestoneToFirestore = (target, milestoneArr) => {
+export const addMilestoneToFirestore = (target, milestoneArr, navigationCallback) => {
 	// let targetObj = JSON.parse(target)
 	let targetObj = target
 	let updatedObj = {
@@ -107,6 +107,7 @@ export const addMilestoneToFirestore = (target, milestoneArr) => {
 		.then((updated) => {
 			addGoalDataToAsyncStorage(updated) // adding data to Async Storage//TODO update redux for clicked goals
 			console.log("FB milestone updated", updated)
+			navigationCallback ? navigationCallback() : null
 		})
 		.catch((err) => {
 			console.log("FB error", err)

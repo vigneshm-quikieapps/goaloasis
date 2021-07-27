@@ -15,7 +15,12 @@ import {Entypo} from "@expo/vector-icons"
 import {Calendar} from "react-native-calendars"
 import StatusBarScreen from "./StatusBarScreen"
 import {connect} from "react-redux"
-import {addNewMilestone, EditNewMilestone, setClickedGoal} from "./../../redux/actions"
+import {
+	addNewMilestone,
+	EditNewMilestone,
+	setClickedGoal,
+	setClickedMilestone,
+} from "./../../redux/actions"
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
 import Constants from "expo-constants"
 import {
@@ -31,6 +36,7 @@ const FirstMilestone = ({
 	clickedGoal,
 	taskFlowData,
 	setClickedGoal,
+	setClickedMilestone,
 }) => {
 	const [milestone, setMilestone] = useState("")
 	const [clickedDate, setDate] = useState("")
@@ -53,6 +59,9 @@ const FirstMilestone = ({
 		}
 
 		setClickedGoal(updatedObj)
+		console.log("setClickedGoal(updatedObj) donnee", updatedObj)
+		addNewMilestone(milestoneArr)
+		setClickedMilestone(milestone)
 		addNewMilestone([
 			{
 				milestone: milestone,
@@ -62,8 +71,8 @@ const FirstMilestone = ({
 		])
 		addMilestoneToFirestore(clickedGoal, milestoneArr)
 
-		// navigation.navigate("ThirdMileStone")
-		navigation.navigate("IndividualGoal")
+		navigation.navigate("ThirdMileStone")
+		// navigation.navigate("IndividualGoal")
 	}
 
 	const handleHomeClick = () => {
@@ -182,6 +191,7 @@ const mapStateToProps = (state) => {
 	return {
 		newMileStone: state.milestone.newMileStone,
 		clickedGoal: state.milestone.clickedGoal,
+		clickedMilestone: state.milestone.clickedMilestone,
 	}
 }
 
@@ -191,6 +201,7 @@ const mapDispatchToProps = (dispatch) => {
 		setClickedGoal: (data) => {
 			dispatch(setClickedGoal(data))
 		},
+		setClickedMilestone: (task) => dispatch(setClickedMilestone(task)),
 	}
 }
 

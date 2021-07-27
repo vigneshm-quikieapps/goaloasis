@@ -11,7 +11,7 @@ import {
 	moderateVerticalScale,
 } from "react-native-size-matters"
 
-const RBBottomSheet = ({name = "Read 5 Books", flag = true}) => {
+const RBBottomSheet = ({name = "MileStone Title", flag = true}) => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
 	const goBack = () => {

@@ -12,8 +12,9 @@ import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../c
 import AppButton from "./../MileStones/AppButton"
 import {CommonHomeButton, CommonPrevNextButton} from "../../core/CommonComponents"
 import DisableAppButton from "../MileStones/DisableAppButton"
+import {connect} from "react-redux"
 
-const SecondTaskFlow = () => {
+const SecondTaskFlow = ({clickedGoal}) => {
 	const navigation = useNavigation()
 
 	const particularGoal = () => {
@@ -22,10 +23,17 @@ const SecondTaskFlow = () => {
 	// const goBack = () => {
 	// 	navigation.goBack()
 	// }
+
 	const [date, setDate] = useState(new Date())
-	const [taskData, setTaskData] = useState("")
+
+	// let temp = clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].taskData
+	// console.log(
+	// 	"LOGGING from the",
+	// 	clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].taskData
+	// )
+	const [taskData, setTaskData] = useState()
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
-	console.log("taskDATA", taskData)
+	// console.log("taskDATA", taskData)
 
 	return (
 		<ImageBackground
@@ -48,7 +56,7 @@ const SecondTaskFlow = () => {
 				<TextInput
 					style={styles.textInput}
 					placeholder="Type Here"
-					onChangeText={(text) => setTaskData(text)}
+					// onChangeText={(text) => setTaskData(text)}
 				/>
 			</View>
 
@@ -111,7 +119,21 @@ const SecondTaskFlow = () => {
 		</ImageBackground>
 	)
 }
-export default SecondTaskFlow
+const mapStateToProps = (state) => {
+	console.log("TASK FLOW DATA", state.taskFlowData)
+	return {
+		taskFlowData: state.milestone.taskFlowData,
+		clickedGoal: state.milestone.clickedGoal,
+		clickedMilestone: state.milestone.clickedMilestone,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setTaskFlowData: (task) => dispatch(setTaskFlowData(task)),
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(SecondTaskFlow)
 const styles = StyleSheet.create({
 	introContainer: {
 		flex: 1,

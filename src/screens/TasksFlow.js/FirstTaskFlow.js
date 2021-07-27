@@ -44,9 +44,11 @@ const FirstTaskFlow = ({
 	const [task, setTask] = useState("")
 	const [clickedDate, setDate] = useState()
 
+	const navigatoinCallback = () => {
+		navigation.navigate("secondtaskflow")
+	}
 	const nextScreen = () => {
-		console.log("nextScreen1", clickedMilestone)
-
+		console.log("Testing First task Flow", clickedMilestone)
 		let newMilestoneItemWithTask = clickedGoal.goalMilestone.map((item) => {
 			if (item.milestone == clickedMilestone) {
 				return {
@@ -61,17 +63,28 @@ const FirstTaskFlow = ({
 				}
 			} else return item
 		})
-		console.log("Checking ADDING DATA OR NOT", newMilestoneItemWithTask.taskData)
-		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask)
-		console.log("FROM FIRST FLOW", clickedGoal)
+		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask, navigatoinCallback)
+		// console.log(
+		// 	"CLICKED GOAL",
+		// 	clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].taskData
+		// )
+		// console.log(
+		// 	"newMilestoneItemWithTask",
+		// 	newMilestoneItemWithTask[newMilestoneItemWithTask.length - 1].taskData[0].task
+		// )
+		// console.log(
+		// 	"Checking ADDING DATA OR NOT",
+		// 	clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1]
+		// )
+		// console.log("CLICKED MILESTONE", clickedMilestone)
+		// console.log("Checking ADDING DATA OR NOT", newMilestoneItemWithTask.taskData)
+		// addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask)
+		// console.log("FROM FIRST FLOW", clickedGoal)
 		navigation.navigate("secondtaskflow")
 		// navigation.navigate("particulargoal")
 
-		console.log("nextScreen2")
+		// navigation.navigate("particulargoal")
 	}
-	// const goBack = () => {
-	// 	navigation.goBack()
-	// }
 
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
@@ -234,7 +247,6 @@ const FirstTaskFlow = ({
 	)
 }
 const mapStateToProps = (state) => {
-	console.log("TASK FLOW DATA", state.taskFlowData)
 	return {
 		taskFlowData: state.milestone.taskFlowData,
 		clickedGoal: state.milestone.clickedGoal,

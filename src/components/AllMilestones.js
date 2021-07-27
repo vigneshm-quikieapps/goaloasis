@@ -17,7 +17,7 @@ const AllMilestones = ({data}) => {
 	const [selectedId, setSelectedId] = useState(null)
 
 	return (
-		<View style={{paddingBottom: sizeConstants.eightyFiveMX}}>
+		<View style={{paddingBottom: sizeConstants.eightyFiveMX, height: "90%"}}>
 			<FlatList
 				data={data}
 				renderItem={(item) => {

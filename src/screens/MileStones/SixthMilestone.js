@@ -15,10 +15,11 @@ import {
 	CommonPrevButton,
 	CommonPrevNextButton,
 } from "../../core/CommonComponents"
-
-const SixthMilestone = () => {
+import {connect} from "react-redux"
+const SixthMilestone = ({clickedGoal}) => {
 	const navigation = useNavigation()
-
+	let temp = clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].milestone
+	const [milestone, setMilestone] = useState(temp)
 	const [date, setDate] = useState(new Date())
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 
@@ -29,7 +30,7 @@ const SixthMilestone = () => {
 			resizeMode="stretch"
 		>
 			<View style={styles.topHeadingContainer}>
-				<Text style={CommonStyles.mainTitle}>Read 5 books</Text>
+				<Text style={CommonStyles.mainTitle}>{clickedGoal.name}</Text>
 				<Entypo
 					name="cross"
 					color={ColorConstants.faintWhite}
@@ -38,9 +39,14 @@ const SixthMilestone = () => {
 				/>
 			</View>
 			<Text style={[CommonStyles.milestoneText, CommonStyles.mt20]}>Enter Milestone</Text>
-			<View style={styles.centerCont}>
-				<TextInput style={styles.textInput} placeholder="Type Here" />
-			</View>
+			<TouchableOpacity style={CommonStyles.centerCont}>
+				<TextInput
+					style={CommonStyles.textInput}
+					placeholder="Type here"
+					onChangeText={(text) => setMilestone(text)}
+					value={milestone}
+				/>
+			</TouchableOpacity>
 			<Text style={styles.subTitle}>
 				{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
 			</Text>
@@ -68,12 +74,6 @@ const SixthMilestone = () => {
 				<CommonPrevButton click={() => navigation.navigate("addgoal")} />
 				<CommonNextButton click={() => navigation.navigate("milestones")} />
 			</View> */}
-			<CommonPrevNextButton
-				right={true}
-				left={true}
-				nextClick={() => navigation.navigate("milestones")}
-				prevClick={() => navigation.navigate("addgoal")}
-			/>
 
 			{/* <View>
 						<TouchableOpacity style={[styles.btnStylingRight, styles.nextBtn]}>
@@ -93,11 +93,32 @@ const SixthMilestone = () => {
 					</TouchableOpacity>
 				</View> */}
 			{/* </View> */}
+			<CommonPrevNextButton
+				right={true}
+				left={true}
+				nextClick={() => navigation.navigate("firsttaskflow")}
+				prevClick={() => navigation.navigate("addgoal")}
+				bottom={0}
+			/>
 			<CommonHomeButton click={() => {}} size={44} />
 		</ImageBackground>
 	)
 }
-export default SixthMilestone
+
+const mapStateToProps = (state) => {
+	return {
+		newMileStone: state.milestone.newMileStone,
+		clickedGoal: state.milestone.clickedGoal,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		addNewMilestone: (milestone) => dispatch(addNewMilestone(milestone)),
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SixthMilestone)
 
 const styles = StyleSheet.create({
 	subTitle: {

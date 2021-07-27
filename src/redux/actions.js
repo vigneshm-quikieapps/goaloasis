@@ -86,3 +86,14 @@ export const setAllGoals = () => {
 		value: data,
 	}
 }
+export const setShowLoader = () => {
+	return {
+		type: actionTypes.SET_LOADER,
+	}
+}
+
+export const setHideLoader = () => {
+	return {
+		type: actionTypes.HIDE_LOADER,
+	}
+}

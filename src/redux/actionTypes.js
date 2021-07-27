@@ -19,6 +19,9 @@ export const SET_CLICKED_GOAL = "settingClickedGoal"
 
 // for Task Flow
 export const SET_TASK_FLOW_DATA = "settingTaskFlow"
-
 export const SET_CLICKED_MILESTONE = "settingClickedMilestone"
 export const SET_ALL_GOALS = "settingAllGoals"
+
+// Loader
+export const SET_LOADER = "loader"
+export const HIDE_LOADER = "hideLoader"
