@@ -12,6 +12,7 @@ const initialState = {
 	clickedGoal: {},
 	taskFlowData: [],
 	clickedMilestone: "",
+	allGoals: [],
 	loading: false,
 }
 
@@ -110,6 +111,11 @@ const milestoneReducer = (state = initialState, action) => {
 						taskFlowData: action.value,
 					},
 				],
+			}
+		case actionTypes.SET_ALL_GOALS:
+			return {
+				...state,
+				allGoals: action.value,
 			}
 
 		case actionTypes.SET_LOADER:

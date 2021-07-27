@@ -30,7 +30,7 @@ const MilestoneCards = ({
 
 	const emptyComponent = () => {
 		return (
-			<View style={styles.accordian}>
+			<View style={[styles.accordian, {alignSelf: "flex-end"}]}>
 				<Text style={{padding: 15, backgroundColor: ColorConstants.lightestBlue}}>
 					There are no tasks for this milestone
 				</Text>
@@ -38,7 +38,7 @@ const MilestoneCards = ({
 		)
 	}
 	return (
-		<View>
+		<View style={{marginHorizontal: sizeConstants.twentyOne}}>
 			<View style={[styles.swipeButton, style]}>
 				<Swipeout
 					left={[
@@ -97,7 +97,7 @@ const MilestoneCards = ({
 						console.log("FlatList", item)
 						return (
 							<TouchableOpacity
-								style={styles.accordian}
+								style={[styles.accordian, {width: "85%", alignSelf: "flex-end"}]}
 								onPress={() => navigation.navigate("firsttaskflow")}
 							>
 								<View>
@@ -168,11 +168,11 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		marginLeft: 50,
 	},
+
 	swipeButton: {
 		alignContent: "center",
 		borderRadius: sizeConstants.twentyTwo,
 		overflow: "hidden",
-		marginHorizontal: sizeConstants.twentyOne,
 		justifyContent: "center",
 		marginTop: sizeConstants.fifty,
 	},

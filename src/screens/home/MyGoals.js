@@ -24,8 +24,6 @@ import {
 	setFirstTimeForTimeLine,
 	setTestDataForTimeline,
 	setClickedGoal,
-	setShowLoader,
-	setHideLoader,
 } from "./../../redux/actions"
 import {
 	getClickedGoalFromAsyncStorage,
@@ -41,7 +39,10 @@ import {
 } from "./../../core/styles"
 import firestore from "@react-native-firebase/firestore"
 import {CommonHomeButton} from "../../core/CommonComponents"
+<<<<<<< HEAD
 import Spinner from "./../../core/Spinner"
+=======
+>>>>>>> ca0f0862afd9447717c0b41fe5bca1f317c3b9ec
 import {getAllGoalsFromFirestore} from "../../firebase"
 
 const {GOALS_COLLECTION} = firebaseConstants
@@ -53,23 +54,29 @@ const MyGoals = ({
 	setFirstTime,
 	firstTimeTimelineFlow,
 	setClickedGoal,
+<<<<<<< HEAD
 	setShowLoader,
 	setHideLoader,
 	loading,
 	currentGoal,
 	clickedGoal,
+=======
+>>>>>>> ca0f0862afd9447717c0b41fe5bca1f317c3b9ec
 }) => {
 	const [test, setTest] = useState({})
 
 	useEffect(() => {
+		getAllGoalsFromFirestore((goals) => {
+			console.log("goals", goals)
+		})
 		console.log("Height of this device is: ", Height)
+
 		fetchData()
 		gettingAllData()
 	}, [testData, firstTime, firstTimeTimelineFlow])
 
 	const fetchData = async () => {
 		const data = await getFirstTimeTaskTutorial().catch((err) => console.log(err))
-
 		const data1 = await getFirstTimeTimelineFlow().catch((err) => console.log(err))
 		console.log("getFirstTimeTimelineFlow", !firstTimeTimelineFlow)
 		setFirstTime(data)
@@ -141,7 +148,6 @@ const MyGoals = ({
 		) {
 			allTasks.push(task)
 		}
-		loading = true
 	})
 
 	const getColor = (index) => {
@@ -150,8 +156,8 @@ const MyGoals = ({
 	}
 	const colorArray = Object.values(forGoals)
 
-	const [loader, setLoader] = useState(false)
 	useEffect(() => {
+<<<<<<< HEAD
 		// if (loader === false) {
 		// 	// setShowLoader()
 		// 	setTimeout(() => {
@@ -159,10 +165,10 @@ const MyGoals = ({
 		// 	}, 2000)
 		// } else {
 		// 	setTimeout(() => {s
+=======
+		console.log("second use effect")
+>>>>>>> ca0f0862afd9447717c0b41fe5bca1f317c3b9ec
 		getData()
-		// setHideLoader()
-		// }, 5000)
-
 		// console.log("GOAL DATA", allTasks);
 	}, [allTasks])
 
@@ -303,7 +309,6 @@ const MyGoals = ({
 					</TouchableOpacity>
 				</View> */}
 			</View>
-			{/* <Spinner size="large" /> */}
 			<CommonHomeButton
 				iconName={"file-tree-outline"}
 				size={34}
@@ -320,8 +325,11 @@ const mapStateToProps = (state) => {
 		firstTime: state.milestone.firstTime,
 		firstTimeTimelineFlow: state.milestone.firstTimeTimelineFlow,
 		clickedGoal: state.milestone.clickedGoal,
+<<<<<<< HEAD
 		loading: state.milestone.loading,
 		currentGoal: state.milestone.currentGoal,
+=======
+>>>>>>> ca0f0862afd9447717c0b41fe5bca1f317c3b9ec
 	}
 }
 
@@ -339,14 +347,6 @@ const mapDispatchToProps = (dispatch) => {
 
 		setClickedGoal: (data) => {
 			dispatch(setClickedGoal(data))
-		},
-
-		setShowLoader: () => {
-			dispatch(setShowLoader())
-		},
-
-		setHideLoader: () => {
-			dispatch(setHideLoader())
 		},
 	}
 }

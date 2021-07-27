@@ -1,32 +1,37 @@
 import {addGoalDataToAsyncStorage, deleteGoalDataFromAsyncStorage} from "./../utils/asyncStorage"
 import firestore from "@react-native-firebase/firestore"
 import {firebaseConstants} from "./../core/styles"
+import {setAllGoals} from "../redux/actions"
 
 const {GOALS_COLLECTION} = firebaseConstants
 
 // Get All Goal Operation
-export const getAllGoalsFromFirestore = () => {
-	var allGoals = null
-	let getAllGoals = new Promise((resolve, reject) => {
-		const allGoals = firestore()
-			.collection(GOALS_COLLECTION)
+export const getAllGoalsFromFirestore = (callback) => {
+	var AllGoalArr = []
+	let getAllGoals = new Promise(async (resolve, reject) => {
+		firestore()
+			.collection("Goals")
 			.get()
-			.then(() => {
-				resolve(allGoals)
+			.then((querySnapshot) => {
+				console.log("All Goals length", querySnapshot.size)
+				querySnapshot.forEach((documentSnapshot) => {
+					AllGoalArr.push(documentSnapshot.data())
+				})
+				console.log("All Goals ", AllGoalArr)
+				resolve(AllGoalArr)
 			})
 			.catch((err) => {
 				reject(err)
 			})
 	})
-
 	getAllGoals
 		.then((data) => {
-			allGoals = data
+			console.log("Goals from firestore: ", data)
+			callback(data)
 		})
 		.catch((err) => {
 			console.log("get all goals err", err)
 		})
-	if (allGoals) return allGoals
 }
 
 // Goal Delete Operation
@@ -141,5 +146,34 @@ export const addMilestoneToFirestore = (target, milestoneArr, navigationCallback
 		})
 		.catch((err) => {
 			console.log("FB error", err)
+		})
+}
+
+// goal Update Operation
+export const updateGoalToFirestore = (data) => {
+	let targetObj = data
+	let updatedObj = {
+		...targetObj,
+		isCompleted: true,
+	}
+	let addGoal = new Promise((resolve, reject) => {
+		firestore()
+			.collection(GOALS_COLLECTION)
+			.doc(targetObj.id)
+			.update(updatedObj)
+			.then(() => {
+				resolve(updatedObj)
+			})
+			.catch((err) => {
+				reject(err)
+			})
+	})
+	addGoal
+		.then((Obj) => {
+			addGoalDataToAsyncStorage(Obj) // adding data to Async Storage
+			console.log("FB obj added to async", Obj)
+		})
+		.catch((err) => {
+			console.log("FB async goal add error", err)
 		})
 }

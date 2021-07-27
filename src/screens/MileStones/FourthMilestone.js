@@ -32,6 +32,7 @@ const FourthMilestone = ({clickedGoal}) => {
 	const [milestone, setMilestone] = useState(temp)
 	const [value, onChange] = useState(new Date())
 	// const [date, setDate] = useState(null)
+	// console.log("DATE", date)
 	const [clickedDate, setDate] = useState(new Date())
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (

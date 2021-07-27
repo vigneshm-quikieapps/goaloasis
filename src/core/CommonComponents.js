@@ -4,6 +4,77 @@ import {StyleSheet, Text, TouchableOpacity, View} from "react-native"
 import {CommonStyles, ColorConstants, sizeConstants, height} from "./styles"
 import colors from "../../colors"
 
+export const addDays = (date, noOfdays) => {
+	var newDate = new Date(date)
+	newDate.setDate(newDate.getDate() + noOfdays)
+	return newDate
+}
+
+export const getAllDatesBetween = (startDate, endDate) => {
+	let datesArr = []
+	var tempDate = new Date(startDate)
+	var targetDate = new Date(endDate)
+
+	while (
+		checkDate.compare(tempDate, targetDate) == -1 ||
+		checkDate.compare(tempDate, targetDate) == 0
+	) {
+		datesArr.push(convertToDateString(new Date(tempDate)))
+		tempDate = addDays(tempDate, 1)
+	}
+	return datesArr
+}
+
+export const checkDate = {
+	convert: function (d) {
+		// Converts the date in d to a date-object. The input can be:
+		//   a date object: returned without modification
+		//  an array      : Interpreted as [year,month,day]. NOTE: month is 0-11.
+		//   a number     : Interpreted as number of milliseconds
+		//                  since 1 Jan 1970 (a timestamp)
+		//   a string     : Any format supported by the javascript engine, like
+		//                  "YYYY/MM/DD", "MM/DD/YYYY", "Jan 31 2009" etc.
+		//  an object     : Interpreted as an object with year, month and date
+		//                  attributes.  **NOTE** month is 0-11.
+		return d.constructor === Date
+			? d
+			: d.constructor === Array
+			? new Date(d[0], d[1], d[2])
+			: d.constructor === Number
+			? new Date(d)
+			: d.constructor === String
+			? new Date(d)
+			: typeof d === "object"
+			? new Date(d.year, d.month, d.date)
+			: NaN
+	},
+	compare: function (a, b) {
+		// Compare two dates (could be of any type supported by the convert
+		// function above) and returns:
+		//  -1 : if a < b
+		//   0 : if a = b
+		//   1 : if a > b
+		// NaN : if a or b is an illegal date
+		// NOTE: The code inside isFinite does an assignment (=).
+		return isFinite((a = this.convert(a).valueOf())) && isFinite((b = this.convert(b).valueOf()))
+			? (a > b) - (a < b)
+			: NaN
+	},
+	inRange: function (d, start, end) {
+		// Checks if date in d is between dates in start and end.
+		// Returns a boolean or NaN:
+		//    true  : if d is between start and end (inclusive)
+		//    false : if d is before start or after end
+		//    NaN   : if one or more of the dates is illegal.
+		// NOTE: The code inside isFinite does an assignment (=).
+		return isFinite((d = this.convert(d).valueOf())) &&
+			isFinite((start = this.convert(start).valueOf())) &&
+			isFinite((end = this.convert(end).valueOf()))
+			? start <= d && d <= end
+			: NaN
+	},
+}
+
 const convertToDateString = (date) => {
 	let month = date.getMonth() + 1
 	let day = date.getDate()
@@ -89,39 +160,49 @@ export const CommonPrevNextButton = ({
 	)
 }
 
-export const CustomDayComponentForCalendar = ({clickedDate, date, state, dayClick}) => {
+export const CustomDayComponentForCalendar = ({clickedDate, date, state, dayClick, marking}) => {
 	let today = convertToDateString(new Date())
 	let selectedDate = convertToDateString(new Date(clickedDate))
+
+	let isMarked = marking && marking.marked
 	return (
-		<TouchableOpacity
-			onPress={() => {
-				dayClick(date.dateString)
-			}}
-		>
-			<View
-				style={[
-					styles.dayContainer,
-					date.dateString == selectedDate
-						? styles.selectedDateContainer
-						: date.dateString == today
-						? styles.todayContainer
-						: {},
-				]}
-			>
-				<Text
-					style={[
-						styles.dayText,
-						date.dateString == selectedDate
-							? styles.selectedDate
-							: date.dateString == today
-							? styles.todayText
-							: {},
-					]}
+		<View style={styles.mainDayContainer}>
+			{state == "disabled" ? (
+				<View style={styles.dayContainer}>
+					<Text style={[styles.dayText, styles.disabledDate]}>{date.day}</Text>
+				</View>
+			) : (
+				<TouchableOpacity
+					onPress={() => {
+						dayClick(date.dateString)
+					}}
 				>
-					{date.day}
-				</Text>
-			</View>
-		</TouchableOpacity>
+					<View
+						style={[
+							styles.dayContainer,
+							date.dateString == selectedDate || isMarked
+								? styles.selectedDateContainer
+								: date.dateString == today
+								? styles.todayContainer
+								: {},
+						]}
+					>
+						<Text
+							style={[
+								styles.dayText,
+								date.dateString == selectedDate || isMarked
+									? styles.selectedDate
+									: date.dateString == today
+									? styles.todayText
+									: {},
+							]}
+						>
+							{date.day}
+						</Text>
+					</View>
+				</TouchableOpacity>
+			)}
+		</View>
 	)
 }
 
@@ -149,6 +230,13 @@ const styles = StyleSheet.create({
 	},
 
 	// ---- styles for Day Component -----
+	mainDayContainer: {
+		margin: 0,
+		padding: 0,
+	},
+	disabledDate: {
+		color: ColorConstants.mediumFaintBlue,
+	},
 	dayContainer: {
 		height: height <= 700 ? sizeConstants.twentyTwo : sizeConstants.twentySix,
 		width: height <= 700 ? sizeConstants.twentyTwo : sizeConstants.twentySix,

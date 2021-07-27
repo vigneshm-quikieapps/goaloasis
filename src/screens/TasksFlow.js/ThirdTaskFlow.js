@@ -8,11 +8,13 @@ import {ColorConstants, CommonStyles, sizeConstants, height} from "../../core/st
 import StatusBarScreen from "./../MileStones/StatusBarScreen"
 import {
 	CommonHomeButton,
-	CommonPrevNextButton,
 	CustomDayComponentForCalendar,
+	getAllDatesBetween,
+	CommonPrevNextButton,
 } from "../../core/CommonComponents"
+import {connect} from "react-redux"
 
-const ThirdTaskFlow = () => {
+const ThirdTaskFlow = ({clickedGoal}) => {
 	const navigation = useNavigation()
 
 	// const gotoHome = () => {
@@ -24,9 +26,34 @@ const ThirdTaskFlow = () => {
 	const [task, setTask] = useState()
 
 	const [value, onChange] = useState(new Date())
-	// const [date, setDate] = useState("")
-	const [clickedDate, setDate] = useState(new Date())
+	const [clickedDate, setDate] = useState(null)
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
+
+	const convertArrToObj = (arr) => {
+		let finalObj = {}
+		arr.forEach((item) => {
+			let key = Object.keys(item)[0]
+			let value = item[key]
+			finalObj[key] = value
+		})
+		return finalObj
+	}
+	const getMarkedDates = () => {
+		var markedDates = getAllDatesBetween(clickedDate, clickedGoal.targetDate)
+		let markedObj = {
+			selected: true,
+			marked: true,
+			selectedColor: ColorConstants.white,
+		}
+		var finalArr = markedDates.map((date) => {
+			let obj = {}
+			obj[date] = markedObj
+			return obj
+		})
+		let allDatesObj = convertArrToObj(finalArr)
+
+		return allDatesObj
+	}
 
 	return (
 		<StatusBarScreen style={CommonStyles.introContainer}>
@@ -41,7 +68,7 @@ const ThirdTaskFlow = () => {
 							style={CommonStyles.cross}
 						/>
 					</View>
-					<Text style={CommonStyles.milestoneText}>Enter Milestone</Text>
+					<Text style={CommonStyles.milestoneText}>Enter task</Text>
 					<TouchableOpacity
 						style={[CommonStyles.container2, height <= 700 ? {marginTop: sizeConstants.xs} : {}]}
 					>
@@ -52,8 +79,8 @@ const ThirdTaskFlow = () => {
 					</Text>
 
 					<View style={CommonStyles.calendarContainer}>
-						{/* <Text style={CommonStyles.targetDate}>Target Date</Text>
-						{date == "" ? (
+						<Text style={CommonStyles.targetDate}>Target Date</Text>
+						{!clickedDate ? (
 							<TouchableOpacity>
 								<Text style={CommonStyles.done}>Done</Text>
 							</TouchableOpacity>
@@ -65,7 +92,7 @@ const ThirdTaskFlow = () => {
 							>
 								<Text style={CommonStyles.done}>Done</Text>
 							</TouchableOpacity>
-						)} */}
+						)}{" "}
 						<Text
 							style={[CommonStyles.targetDate, height <= 700 ? {marginTop: sizeConstants.xs} : {}]}
 						>
@@ -77,56 +104,19 @@ const ThirdTaskFlow = () => {
 					</View>
 
 					<Calendar
-						// // Initially visible month. Default = Date()
 						current={new Date()}
-						// // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-						// minDate={"2001-05-10"}
-						// // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-						// maxDate={"2020-05-30"}
-						// // Handler which gets executed on day press. Default = undefined
-						onDayPress={(day) => {
-							console.log("selected day", day)
-						}}
-						// // Handler which gets executed on day long press. Default = undefined
-						onDayLongPress={(day) => {
-							console.log("selected day", day)
-						}}
-						// // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-						// // monthFormat={"yyyy MM"}
-						// // Handler which gets executed when visible month changes in calendar. Default = undefined
+						minDate={new Date()}
+						maxDate={"2090-01-01"}
 						onMonthChange={(month) => {
 							console.log("month changed", month)
 						}}
-						// // Hide month navigation arrows. Default = false
 						hideArrows={false}
-						// // Replace default arrows with custom ones (direction can be 'left' or 'right')
-						// //   renderArrow={(direction) => (<Arrow/>)}
-						// // Do not show days of other months in month page. Default = false
 						hideExtraDays={true}
-						// // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
-						// // day from another month that is visible in calendar page. Default = false
-						disableMonthChange={false}
-						// // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
-						// firstDay={1}
-						// // Hide day names. Default = false
 						hideDayNames={false}
-						// // Show week numbers to the left. Default = false
 						showWeekNumbers={false}
-						// // Handler which gets executed when press arrow icon left. It receive a callback can go back month
 						onPressArrowLeft={(subtractMonth) => subtractMonth()}
-						// // Handler which gets executed when press arrow icon right. It receive a callback can go next month
 						onPressArrowRight={(addMonth) => addMonth()}
-						// // Disable left arrow. Default = false
 						disableArrowLeft={false}
-						// // Disable right arrow. Default = false
-						// disableArrowRight={false}
-						// // Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates
-						// disableAllTouchEventsForDisabledDays={false}
-						// // Replace default month and year title with custom one. the function receive a date as parameter.
-						// renderHeader={(date) => {
-						// 	/*Return JSX*/
-						// }}
-						// Enable the option to swipe between months. Default = false
 						enableSwipeMonths={true}
 						theme={{
 							backgroundColor: ColorConstants.darkFaintBlue,
@@ -151,20 +141,16 @@ const ThirdTaskFlow = () => {
 							textMonthFontWeight: "bold",
 							textDayHeaderFontWeight: "300",
 						}}
-						// markedDates={{
-						// 	"2012-03-01": {
-						// 		selected: true,
-						// 		marked: true,
-						// 		selectedColor: ColorConstants.faintWhite,
-						// 	},
-						// }}
-						dayComponent={({date, state}) => {
+						markedDates={clickedDate ? getMarkedDates() : {}}
+						dayComponent={({date, state, marking}) => {
+							console.log(state)
 							return (
 								<CustomDayComponentForCalendar
 									date={date}
 									state={state}
 									clickedDate={clickedDate}
 									dayClick={setDate}
+									marking={marking}
 								/>
 							)
 						}}
@@ -175,7 +161,7 @@ const ThirdTaskFlow = () => {
 							navigation.navigate("first")
 						}}
 					>
-						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
+						<Text style={CommonStyles.reoccuring}>Set reoccuringgg</Text>
 					</TouchableOpacity>
 					{task === "" ? (
 						<CommonPrevNextButton
@@ -199,4 +185,12 @@ const ThirdTaskFlow = () => {
 	)
 }
 
-export default ThirdTaskFlow
+const mapStateToProps = (state) => {
+	return {
+		clickedGoal: state.milestone.clickedGoal,
+	}
+}
+const mapDispatchToProps = (dispatch) => {
+	return {}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ThirdTaskFlow)
