@@ -1,12 +1,12 @@
 import {addGoalDataToAsyncStorage, deleteGoalDataFromAsyncStorage} from "./../utils/asyncStorage"
 import firestore from "@react-native-firebase/firestore"
 import {firebaseConstants} from "./../core/styles"
+import {setAllGoals} from "../redux/actions"
 
 const {GOALS_COLLECTION} = firebaseConstants
 
 // Get All Goal Operation
-export const getAllGoalsFromFirestore = () => {
-	var allGoals = null
+export const getAllGoalsFromFirestore = (callback) => {
 	let getAllGoals = new Promise((resolve, reject) => {
 		const allGoals = firestore()
 			.collection(GOALS_COLLECTION)
@@ -21,12 +21,11 @@ export const getAllGoalsFromFirestore = () => {
 
 	getAllGoals
 		.then((data) => {
-			allGoals = data
+			callback(data)
 		})
 		.catch((err) => {
 			console.log("get all goals err", err)
 		})
-	if (allGoals) return allGoals
 }
 
 // Goal Delete Operation

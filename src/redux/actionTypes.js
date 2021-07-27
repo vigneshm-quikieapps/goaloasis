@@ -21,3 +21,4 @@ export const SET_CLICKED_GOAL = "settingClickedGoal"
 export const SET_TASK_FLOW_DATA = "settingTaskFlow"
 
 export const SET_CLICKED_MILESTONE = "settingClickedMilestone"
+export const SET_ALL_GOALS = "settingAllGoals"

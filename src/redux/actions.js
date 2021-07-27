@@ -79,3 +79,10 @@ export const setClickedMilestone = (data) => {
 		value: data,
 	}
 }
+
+export const setAllGoals = () => {
+	return {
+		type: actionTypes.SET_ALL_GOALS,
+		value: data,
+	}
+}
