@@ -93,7 +93,7 @@ export const addGoalToFirestore = (data, callback) => {
 }
 
 // goal Update Operation
-export const updateGoalToFirestore = (data) => {
+export const updateGoalToFirestore = (data, callback) => {
 	let targetObj = data
 	let updatedObj = {
 		...targetObj,
@@ -115,6 +115,7 @@ export const updateGoalToFirestore = (data) => {
 		.then((Obj) => {
 			addGoalDataToAsyncStorage(Obj) // adding data to Async Storage
 			console.log("FB obj added to async", Obj)
+			callback ? callback() : null
 		})
 		.catch((err) => {
 			console.log("FB async goal add error", err)

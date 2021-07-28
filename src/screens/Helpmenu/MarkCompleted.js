@@ -2,7 +2,7 @@ import React from "react"
 import {StyleSheet, Text, View, TouchableOpacity} from "react-native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
-import {setCurrentGoal} from "./../../redux/actions"
+import {setBooleanFlag, setCurrentGoal} from "./../../redux/actions"
 import {connect} from "react-redux"
 import {updateGoalToFirestore} from "./../../firebase/index"
 
@@ -18,8 +18,10 @@ const MarkCompleted = (props) => {
 	}
 
 	const gotoHome = () => {
-		navigation.navigate("mygoals")
-		updateGoalToFirestore(currentGoalObj)
+		updateGoalToFirestore(currentGoalObj, () => {
+			navigation.navigate("mygoals")
+			props.setBooleanFlag(!props.booleanFlag)
+		})
 	}
 
 	return (
@@ -50,6 +52,7 @@ const mapStateToProps = (state) => {
 	return {
 		currentGoal: state.milestone.currentGoal,
 		clickedGoal: state.milestone.clickedGoal,
+		booleanFlag: state.milestone.booleanFlag,
 	}
 }
 
@@ -57,6 +60,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		setCurrentGoal: (data) => {
 			dispatch(setCurrentGoal(data))
+		},
+		setBooleanFlag: (data) => {
+			dispatch(setBooleanFlag(data))
 		},
 	}
 }

@@ -48,6 +48,7 @@ const MyGoals = ({
 	setAllGoals,
 	allGoals,
 	currentGoal,
+	booleanFlag,
 }) => {
 	// const [test, setTest] = useState({})
 
@@ -113,7 +114,7 @@ const MyGoals = ({
 
 	useEffect(() => {
 		importData()
-	}, [currentGoal])
+	}, [currentGoal, booleanFlag])
 
 	const importData = async () => {
 		try {
@@ -244,6 +245,7 @@ const mapStateToProps = (state) => {
 		clickedGoal: state.milestone.clickedGoal,
 		allGoals: state.milestone.allGoals,
 		currentGoal: state.milestone.currentGoal,
+		booleanFlag: state.milestone.booleanFlag,
 	}
 }
 
