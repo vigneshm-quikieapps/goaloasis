@@ -27,7 +27,7 @@ export const getAllGoalsFromFirestore = (callback) => {
 	getAllGoals
 		.then((data) => {
 			// console.log("Goals from firestore: ", data)
-			callback(data)
+			callback ? callback(data) : null
 		})
 		.catch((err) => {
 			console.log("get all goals err", err)

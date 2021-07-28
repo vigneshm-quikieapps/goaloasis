@@ -122,7 +122,7 @@ const MyGoals = ({
 			keys = keys.filter(
 				(item) =>
 					item !== "FirsttimeIndividual" &&
-					item !== "FirsttimeitemTutorial" &&
+					item !== "FirsttimeTaskTutorial" &&
 					item !== "FirsttimeTimelineFlow" &&
 					item !== "Firsttime"
 			)

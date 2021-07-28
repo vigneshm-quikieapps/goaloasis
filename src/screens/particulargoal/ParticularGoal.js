@@ -30,8 +30,6 @@ const ParticularGoal = (props) => {
 		getClickedGoalFromAsyncStorage(props.clickedGoal.name).then((goal) => {
 			let goals = JSON.parse(goal)
 			setData(goals.goalMilestone)
-
-			console.log("all milesss", goals.goalMilestone)
 		})
 	}, [props.clickedGoal, props.booleanFlag])
 

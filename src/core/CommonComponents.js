@@ -4,6 +4,9 @@ import {StyleSheet, Text, TouchableOpacity, View} from "react-native"
 import {CommonStyles, ColorConstants, sizeConstants, height} from "./styles"
 import colors from "../../colors"
 
+export const reoccuringDefaultDailyArray = [0, 1, 2, 3, 4, 5, 6]
+export const weekArray = ["S", "M", "T", "W", "T", "F", "S"]
+
 export const addDays = (date, noOfdays) => {
 	var newDate = new Date(date)
 	newDate.setDate(newDate.getDate() + noOfdays)

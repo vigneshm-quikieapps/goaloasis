@@ -30,9 +30,8 @@ const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
 			targetDate: date.toISOString(),
 			createdAt: firestore.FieldValue.serverTimestamp(),
 			goalMilestone: [],
-			// color: getColorForGoal(),
+			color: getColorForGoal(),
 			isCompleted: false,
-			color: "pink",
 		}
 
 		addGoalToFirestore(currentGoalObj, () => {
