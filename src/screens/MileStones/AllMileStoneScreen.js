@@ -28,11 +28,9 @@ const AllMilestonesScreen = (props) => {
 		getClickedGoalFromAsyncStorage(props.clickedGoal.name).then((goal) => {
 			let goals = JSON.parse(goal)
 			setData(goals.goalMilestone)
-			console.log("all milesss", goals.goalMilestone)
 		})
 	}, [props.firstTimeIndividual, props.clickedGoal])
 
-	console.log("FROM ALL MILESTONESCREEN", DATA)
 	const getFirstTimeData = async () => {
 		const data = await getFirstTimeIndividual()
 		props.setFirstTimeForIndividualGoal(data)

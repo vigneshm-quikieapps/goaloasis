@@ -13,8 +13,10 @@ import {
 	getAllDatesBetween,
 } from "../../core/CommonComponents"
 import {connect} from "react-redux"
+import {setClickedGoal} from "../../redux/actions"
+import {addMilestoneToFirestore} from "../../firebase"
 
-const Second = ({route, clickedGoal}) => {
+const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag}) => {
 	const navigation = useNavigation()
 
 	// const gotoHome = () => {
@@ -26,19 +28,11 @@ const Second = ({route, clickedGoal}) => {
 	useEffect(() => {
 		getMarkedDates()
 	}, [])
-	const {reoccuring, taskDate} = route.params
+
+	const {reoccuring, reoccuringDays, taskDate, taskName} = route.params
 	const [value, onChange] = useState(new Date())
 	const [clickedDate, setDate] = useState(taskDate ? new Date(taskDate) : new Date())
 
-	const convertArrToObj = (arr) => {
-		let finalObj = {}
-		arr.forEach((item) => {
-			let key = Object.keys(item)[0]
-			let value = item[key]
-			finalObj[key] = value
-		})
-		return finalObj
-	}
 	const getMarkedDates = () => {
 		var markedDates = getAllDatesBetween(clickedDate, clickedGoal.targetDate)
 
@@ -69,8 +63,75 @@ const Second = ({route, clickedGoal}) => {
 			return obj
 		})
 		let allDatesObj = convertArrToObj(finalArr)
-
 		return allDatesObj
+	}
+	const convertArrToObj = (arr) => {
+		let finalObj = {}
+		arr.forEach((item) => {
+			let key = Object.keys(item)[0]
+			let value = item[key]
+			let dayIndex = new Date(key).getDay()
+
+			if (reoccuring == "Weekly") {
+				if (reoccuringDays.length) {
+					if (reoccuringDays.find((day) => day == dayIndex) != undefined) {
+						finalObj[key] = value
+					}
+				} else {
+					return {}
+				}
+			} else {
+				finalObj[key] = value
+			}
+		})
+		return finalObj
+	}
+
+	const setReoccuring = () => {
+		let newMilestoneItemWithTaskReoccuring = clickedGoal.goalMilestone.map((item) => {
+			if (item.milestone == clickedMilestone) {
+				return {
+					...item,
+					taskData: item.taskData.map((taskObj) => {
+						if (taskObj.task == taskName) {
+							let newTaskObjWithReoccur = {
+								...taskObj,
+								reoccuring: {
+									startDate: clickedDate,
+									reoccuringType: reoccuring,
+									reoccuringDays: reoccuringDays,
+								},
+							}
+
+							return newTaskObjWithReoccur
+						} else {
+							return taskObj
+						}
+					}),
+
+					// ...item.taskData,
+					// {
+					// 	task: task,
+					// 	date: clickedDate,
+					// 	reoccuring: {
+					// 		startDate: clickedDate,
+					// 		reoccuringType: "Daily",
+					// 		reoccuringDays: [0, 1, 2, 3, 4, 5, 6],
+					// 	},
+					// },
+				}
+			} else return item
+		})
+
+		let updatedGoalObj = {
+			...clickedGoal,
+			goalMilestone: newMilestoneItemWithTaskReoccuring,
+		}
+		console.log("New Mile Array ", newMilestoneItemWithTaskReoccuring)
+
+		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTaskReoccuring, () => {
+			setClickedGoal(updatedGoalObj)
+		})
 	}
 
 	return (
@@ -78,12 +139,12 @@ const Second = ({route, clickedGoal}) => {
 			<ScrollView>
 				<View style={{flex: 1}}>
 					<View style={{flexDirection: "row"}}>
-						<Text style={CommonStyles.mainTitle}>Read 1 books</Text>
+						<Text style={CommonStyles.mainTitle}>{clickedMilestone}</Text>
 						<Entypo name="cross" color="#FDF9F2" size={38} style={CommonStyles.cross} />
 					</View>
-					<Text style={CommonStyles.enterTask}>Enter Task</Text>
+					{/* <Text style={CommonStyles.enterTask}>Enter Task</Text> */}
 					<TouchableOpacity style={[CommonStyles.container2, {marginTop: sizeConstants.xs}]}>
-						<Text style={CommonStyles.button}>Read One Chapter</Text>
+						<Text style={CommonStyles.button}>{taskName}</Text>
 					</TouchableOpacity>
 					<View style={[CommonStyles.editContainer, {marginVertical: 0}]}>
 						<Text style={CommonStyles.editOccuringText}>Edit Reoccuring</Text>
@@ -93,7 +154,12 @@ const Second = ({route, clickedGoal}) => {
 							Reoccuring Date
 						</Text>
 
-						<TouchableOpacity onPress={() => navigation.navigate("FifthMilestone")}>
+						<TouchableOpacity
+							onPress={() => {
+								setReoccuring()
+								//  navigation.navigate("FifthMilestone")
+							}}
+						>
 							<Text style={CommonStyles.done}>Done</Text>
 						</TouchableOpacity>
 					</View>
@@ -182,7 +248,10 @@ const Second = ({route, clickedGoal}) => {
 						style={[CommonStyles.containerMilestone, {marginTop: sizeConstants.xs}]}
 						onPress={() => {
 							// navigation.navigate("third")
-							navigation.navigate("particulargoal")
+
+							setReoccuring()
+
+							// navigation.navigate("particulargoal")
 						}}
 					>
 						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
@@ -204,10 +273,16 @@ const Second = ({route, clickedGoal}) => {
 const mapStateToProps = (state) => {
 	return {
 		clickedGoal: state.milestone.clickedGoal,
+		clickedMilestone: state.milestone.clickedMilestone,
+		booleanFlag: state.milestone.booleanFlag,
 	}
 }
 const mapDispatchToProps = (dispatch) => {
-	return {}
+	return {
+		setClickedGoal: (data) => {
+			dispatch(setClickedGoal(data))
+		},
+	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Second)
 

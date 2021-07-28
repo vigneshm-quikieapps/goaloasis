@@ -52,17 +52,11 @@ const MilestoneCards = ({
 		)
 	}
 	return (
-		// <LongPressGestureHandler onHandlerStateChange={onLongPress} minDurationMs={800}>
-		// 					<View>
-		// 						<TouchableOpacity style={styles.centerBtn}>
-		// 							<Text style={taskCompleted ? styles.btnTextCompleted : styles.btnText}>
-		// 								{taskCompleted ? "Completed Task" : "Long Press"}
-		// 							</Text>
-		// 						</TouchableOpacity>
-		// 					</View>
-		// 				</LongPressGestureHandler>
-
-		<View style={{marginHorizontal: sizeConstants.twentyOne}}>
+		<View
+			style={{
+				marginHorizontal: sizeConstants.twentyOne,
+			}}
+		>
 			<View style={[styles.swipeButton, style]}>
 				<Swipeout
 					left={[
@@ -131,15 +125,20 @@ const MilestoneCards = ({
 					}}
 					ListEmptyComponent={emptyComponent}
 					renderItem={(item) => {
-						console.log("FlatList", item)
+						console.log("FlatList", item.item.reoccuring)
+						let bottomItem = item.item.reoccuring
+							? item.item.reoccuring.reoccuringType == "Daily"
+								? "Reoccuring Daily"
+								: item.item.date
+							: item.item.date
 						return (
 							<TouchableOpacity
-								style={[styles.accordian, {width: "85%", alignSelf: "flex-end"}]}
+								style={[styles.accordian, {alignSelf: "flex-end"}]}
 								onPress={() => navigation.navigate("firsttaskflow")}
 							>
 								<View>
 									<Text style={styles.mainTitle}>{item.item.task}</Text>
-									<Text style={styles.subtitle}>{item.item.date}</Text>
+									<Text style={styles.subtitle}>{bottomItem}</Text>
 								</View>
 							</TouchableOpacity>
 						)
@@ -195,13 +194,13 @@ const styles = StyleSheet.create({
 	accordian: {
 		backgroundColor: "#CDE8E6",
 		height: 70,
-		width: "75%",
+		width: "90%",
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
 		paddingHorizontal: 20,
 		borderRadius: 20,
-		marginTop: 10,
+		marginTop: sizeConstants.xl,
 		marginLeft: 50,
 	},
 
@@ -210,6 +209,11 @@ const styles = StyleSheet.create({
 		borderRadius: sizeConstants.twentyTwo,
 		overflow: "hidden",
 		justifyContent: "center",
-		marginTop: sizeConstants.fifty,
+		marginTop: sizeConstants.xxl,
+		shadowColor: ColorConstants.darkGrey,
+		shadowRadius: sizeConstants.twentyTwo,
+		shadowOffset: {width: 5, height: 5},
+		shadowOpacity: 0.5,
+		elevation: 10,
 	},
 })

@@ -29,7 +29,9 @@ import {
 	CommonHomeButton,
 	CommonPrevNextButton,
 	CustomDayComponentForCalendar,
+	reoccuringDefaultDailyArray,
 } from "../../core/CommonComponents"
+
 const FirstTaskFlow = ({
 	setTaskFlowData,
 	clickedGoal,
@@ -37,6 +39,7 @@ const FirstTaskFlow = ({
 	clickedMilestone,
 	taskFlowData,
 	setBooleanFlag,
+	setClickedGoal,
 }) => {
 	useEffect(() => {
 		console.log("newMileStone", newMileStone)
@@ -46,6 +49,7 @@ const FirstTaskFlow = ({
 	const [clickedDate, setDate] = useState()
 
 	const navigationCallback = () => {
+		setBooleanFlag(true)
 		navigation.navigate("secondtaskflow", {
 			task: task,
 			date: clickedDate,
@@ -62,14 +66,26 @@ const FirstTaskFlow = ({
 						{
 							task: task,
 							date: clickedDate,
+							reoccuring: {
+								startDate: clickedDate,
+								reoccuringType: "Daily",
+								reoccuringDays: reoccuringDefaultDailyArray,
+							},
 						},
 					],
 				}
 			} else return item
 		})
-		setBooleanFlag(true)
-		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask, navigationCallback)
 
+		let updatedObj = {
+			...clickedGoal,
+			goalMilestone: newMilestoneItemWithTask,
+		}
+
+		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask, () => {
+			setClickedGoal(updatedObj)
+			navigationCallback()
+		})
 		// console.log(
 		// 	"CLICKED GOAL",
 		// 	clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].taskData
@@ -265,6 +281,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		setTaskFlowData: (task) => dispatch(setTaskFlowData(task)),
 		setBooleanFlag: (task) => dispatch(setBooleanFlag(task)),
+		setClickedGoal: (data) => {
+			dispatch(setClickedGoal(data))
+		},
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(FirstTaskFlow)

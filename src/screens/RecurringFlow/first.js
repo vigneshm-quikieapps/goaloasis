@@ -7,20 +7,33 @@ import RBSheet from "react-native-raw-bottom-sheet"
 import SwitchSelector from "react-native-switch-selector"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import {CommonStyles, sizeConstants} from "../../core/styles"
-import {CommonHomeButton} from "../../core/CommonComponents"
+import {CommonHomeButton, reoccuringDefaultDailyArray, weekArray} from "../../core/CommonComponents"
 
 const First = ({route}) => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
 	const [toggle, setToggle] = useState("Daily")
-	const {taskDate} = route.params
+	const {taskDate, taskName} = route.params
 
 	const [value, onChange] = useState(new Date())
 	const [date, setDate] = useState(new Date())
+	const [reoccuringDays, setReoccuringDays] = useState([])
+
 	const options = [
 		{label: "Daily", value: "Daily"},
 		{label: "Weekly", value: "Weekly"},
 	]
+
+	const setDaysForWeeklyReoccuring = (dayIndex) => {
+		let weekArr = [...reoccuringDays]
+		let isPresent = weekArr.find((day) => day == dayIndex) != undefined
+
+		isPresent
+			? (weekArr = weekArr.filter((day) => day != dayIndex))
+			: (weekArr = [...weekArr, dayIndex])
+
+		setReoccuringDays(weekArr)
+	}
 
 	return (
 		<StatusBarScreen style={styles.introContainer}>
@@ -97,7 +110,24 @@ const First = ({route}) => {
 			/>
 			{toggle == "Weekly" && (
 				<View style={CommonStyles.toggle}>
-					<View style={CommonStyles.days}>
+					{weekArray.map((day, index) => {
+						let isPresent = reoccuringDays.find((day) => day == index) != undefined
+						return (
+							<TouchableOpacity
+								onPress={() => {
+									setDaysForWeeklyReoccuring(index)
+								}}
+								key={`${index}_${day}`}
+							>
+								<View style={[CommonStyles.days, isPresent ? styles.daySelected : {}]}>
+									<Text style={[CommonStyles.daysText, isPresent ? styles.daySelectedText : {}]}>
+										{day}
+									</Text>
+								</View>
+							</TouchableOpacity>
+						)
+					})}
+					{/* <View style={CommonStyles.days}>
 						<Text style={CommonStyles.daysText}>S</Text>
 					</View>
 					<View style={CommonStyles.days}>
@@ -117,7 +147,7 @@ const First = ({route}) => {
 					</View>
 					<View style={CommonStyles.days}>
 						<Text style={CommonStyles.daysText}>S</Text>
-					</View>
+					</View> */}
 				</View>
 			)}
 
@@ -135,6 +165,8 @@ const First = ({route}) => {
 						navigation.navigate("second", {
 							reoccuring: toggle,
 							taskDate: taskDate,
+							taskName: taskName,
+							reoccuringDays: toggle == "Daily" ? reoccuringDefaultDailyArray : reoccuringDays,
 						})
 					}}
 				>
@@ -167,4 +199,10 @@ const styles = StyleSheet.create({
 	introContainer: {
 		backgroundColor: "#588C8D",
 	},
+
+	daySelected: {
+		backgroundColor: "#FDF9F2",
+		margin: sizeConstants.four,
+	},
+	daySelectedText: {color: "#76BBBC"},
 })

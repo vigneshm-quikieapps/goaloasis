@@ -122,7 +122,7 @@ const MyGoals = ({
 			keys = keys.filter(
 				(item) =>
 					item !== "FirsttimeIndividual" &&
-					item !== "FirsttimeitemTutorial" &&
+					item !== "FirsttimeTaskTutorial" &&
 					item !== "FirsttimeTimelineFlow" &&
 					item !== "Firsttime"
 			)
@@ -158,7 +158,8 @@ const MyGoals = ({
 
 				<ScrollView contentContainerStyle={{paddingHorizontal: 0, marginHorizontal: 0}}>
 					<View style={CommonStyles.logoSpacing}>
-						{allGoals.length > 0 &&
+						{allGoals &&
+							allGoals.length > 0 &&
 							allGoals.map((task, index) => (
 								<View key={index}>
 									<TouchableOpacity

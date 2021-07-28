@@ -8,7 +8,7 @@ import {connect} from "react-redux"
 import {sizeConstants} from "../../core/styles"
 import {setBooleanFlag} from "./../../redux/actions"
 
-const Deletegoal = ({clickedGoal}) => {
+const Deletegoal = (props) => {
 	const navigation = useNavigation()
 
 	const handleOpenNewGoal = () => {
@@ -20,7 +20,7 @@ const Deletegoal = ({clickedGoal}) => {
 	}
 
 	const deleteConfirm = () => {
-		deleteGoalFromFirestore(clickedGoal, () => {
+		deleteGoalFromFirestore(props.clickedGoal, () => {
 			navigation.navigate("mygoals")
 			props.setBooleanFlag(!props.booleanFlag)
 		})

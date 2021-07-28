@@ -58,7 +58,6 @@ const FirstMilestone = ({
 			goalMilestone: milestoneArr,
 		}
 
-		setClickedGoal(updatedObj)
 		addNewMilestone(milestoneArr)
 		setClickedMilestone(milestone)
 		addNewMilestone([
@@ -68,7 +67,9 @@ const FirstMilestone = ({
 				taskData: [],
 			},
 		])
-		addMilestoneToFirestore(clickedGoal, milestoneArr)
+		addMilestoneToFirestore(clickedGoal, milestoneArr, () => {
+			setClickedGoal(updatedObj)
+		})
 
 		navigation.navigate("ThirdMileStone")
 		// navigation.navigate("IndividualGoal")

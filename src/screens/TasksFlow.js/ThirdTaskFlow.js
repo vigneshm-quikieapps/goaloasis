@@ -94,8 +94,8 @@ const ThirdTaskFlow = ({clickedGoal, route}) => {
 							>
 								<Text style={CommonStyles.done}>Done</Text>
 							</TouchableOpacity>
-						)}{" "}
-						<Text
+						)}
+						{/* <Text
 							style={[CommonStyles.targetDate, height <= 700 ? {marginTop: sizeConstants.xs} : {}]}
 						>
 							Target Date
@@ -106,7 +106,7 @@ const ThirdTaskFlow = ({clickedGoal, route}) => {
 							}}
 						>
 							<Text style={CommonStyles.done}>Done</Text>
-						</TouchableOpacity>
+						</TouchableOpacity> */}
 						{/* <Text
 							style={[CommonStyles.targetDate, height <= 700 ? {marginTop: sizeConstants.xs} : {}]}
 						>
@@ -163,7 +163,7 @@ const ThirdTaskFlow = ({clickedGoal, route}) => {
 									state={state}
 									clickedDate={clickedDate}
 									dayClick={setDate}
-									// marking={marking}
+									marking={marking}
 								/>
 							)
 						}}
@@ -173,6 +173,7 @@ const ThirdTaskFlow = ({clickedGoal, route}) => {
 						onPress={() => {
 							navigation.navigate("first", {
 								taskDate: taskDate,
+								taskName: taskName,
 							})
 						}}
 					>

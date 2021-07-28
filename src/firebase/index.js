@@ -27,7 +27,7 @@ export const getAllGoalsFromFirestore = (callback) => {
 	getAllGoals
 		.then((data) => {
 			// console.log("Goals from firestore: ", data)
-			callback(data)
+			callback ? callback(data) : null
 		})
 		.catch((err) => {
 			console.log("get all goals err", err)
@@ -151,32 +151,3 @@ export const addMilestoneToFirestore = (target, milestoneArr, navigationCallback
 			console.log("FB error", err)
 		})
 }
-
-// // goal Update Operation
-// export const updateGoalToFirestore = (data) => {
-// 	let targetObj = data
-// 	let updatedObj = {
-// 		...targetObj,
-// 		isCompleted: true,
-// 	}
-// 	let addGoal = new Promise((resolve, reject) => {
-// 		firestore()
-// 			.collection(GOALS_COLLECTION)
-// 			.doc(targetObj.id)
-// 			.update(updatedObj)
-// 			.then(() => {
-// 				resolve(updatedObj)
-// 			})
-// 			.catch((err) => {
-// 				reject(err)
-// 			})
-// 	})
-// 	addGoal
-// 		.then((Obj) => {
-// 			addGoalDataToAsyncStorage(Obj) // adding data to Async Storage
-// 			console.log("FB obj added to async", Obj)
-// 		})
-// 		.catch((err) => {
-// 			console.log("FB async goal add error", err)
-// 		})
-// }
