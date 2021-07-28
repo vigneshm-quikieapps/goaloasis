@@ -1,14 +1,20 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {StyleSheet, Text, TouchableOpacity, View, ScrollView} from "react-native"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {Calendar} from "react-native-calendars"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import {Entypo} from "@expo/vector-icons"
-import {ColorConstants, CommonStyles} from "../../core/styles"
-import {CommonHomeButton, CustomDayComponentForCalendar} from "../../core/CommonComponents"
+import {ColorConstants, CommonStyles, sizeConstants} from "../../core/styles"
+import {
+	checkDate,
+	CommonHomeButton,
+	CustomDayComponentForCalendar,
+	getAllDatesBetween,
+} from "../../core/CommonComponents"
+import {connect} from "react-redux"
 
-const Second = () => {
+const Second = ({route, clickedGoal}) => {
 	const navigation = useNavigation()
 
 	// const gotoHome = () => {
@@ -17,8 +23,56 @@ const Second = () => {
 	// const goBack = () => {
 	// 	navigation.goBack()
 	// }
+	useEffect(() => {
+		getMarkedDates()
+	}, [])
+	const {reoccuring, taskDate} = route.params
 	const [value, onChange] = useState(new Date())
-	const [clickedDate, setDate] = useState(new Date())
+	const [clickedDate, setDate] = useState(taskDate ? new Date(taskDate) : new Date())
+
+	const convertArrToObj = (arr) => {
+		let finalObj = {}
+		arr.forEach((item) => {
+			let key = Object.keys(item)[0]
+			let value = item[key]
+			finalObj[key] = value
+		})
+		return finalObj
+	}
+	const getMarkedDates = () => {
+		var markedDates = getAllDatesBetween(clickedDate, clickedGoal.targetDate)
+
+		let markedObj = {
+			selected: true,
+			marked: true,
+			selectedColor: ColorConstants.white,
+			start: false,
+			end: false,
+		}
+
+		var finalArr = markedDates.map((date, index) => {
+			let obj = {}
+			obj[date] = markedObj
+			if (index == 0) {
+				obj[date] = {
+					...markedObj,
+					start: true,
+				}
+			}
+
+			if (index == markedDates.length - 1) {
+				obj[date] = {
+					...markedObj,
+					end: true,
+				}
+			}
+			return obj
+		})
+		let allDatesObj = convertArrToObj(finalArr)
+
+		return allDatesObj
+	}
+
 	return (
 		<StatusBarScreen style={styles.introContainer}>
 			<ScrollView>
@@ -28,14 +82,16 @@ const Second = () => {
 						<Entypo name="cross" color="#FDF9F2" size={38} style={CommonStyles.cross} />
 					</View>
 					<Text style={CommonStyles.enterTask}>Enter Task</Text>
-					<TouchableOpacity style={CommonStyles.container2}>
+					<TouchableOpacity style={[CommonStyles.container2, {marginTop: sizeConstants.xs}]}>
 						<Text style={CommonStyles.button}>Read One Chapter</Text>
 					</TouchableOpacity>
-					<View style={CommonStyles.editContainer}>
+					<View style={[CommonStyles.editContainer, {marginVertical: 0}]}>
 						<Text style={CommonStyles.editOccuringText}>Edit Reoccuring</Text>
 					</View>
 					<View style={CommonStyles.calendarContainer}>
-						<Text style={CommonStyles.targetDate}>Reoccuring Date</Text>
+						<Text style={[CommonStyles.targetDate, {marginTop: sizeConstants.xs}]}>
+							Reoccuring Date
+						</Text>
 
 						<TouchableOpacity onPress={() => navigation.navigate("FifthMilestone")}>
 							<Text style={CommonStyles.done}>Done</Text>
@@ -45,7 +101,7 @@ const Second = () => {
 					<Calendar
 						style={{paddingLeft: 20, paddingRight: 20}}
 						// // Initially visible month. Default = Date()
-						current={new Date()}
+						current={clickedDate ? new Date(clickedDate) : new Date()}
 						// // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
 						// minDate={"2001-05-10"}
 						// // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
@@ -85,15 +141,6 @@ const Second = () => {
 						onPressArrowRight={(addMonth) => addMonth()}
 						// // Disable left arrow. Default = false
 						disableArrowLeft={false}
-						// // Disable right arrow. Default = false
-						// disableArrowRight={false}
-						// // Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates
-						// disableAllTouchEventsForDisabledDays={false}
-						// // Replace default month and year title with custom one. the function receive a date as parameter.
-						// renderHeader={(date) => {
-						// 	/*Return JSX*/
-						// }}
-						// Enable the option to swipe between months. Default = false
 						enableSwipeMonths={true}
 						theme={{
 							backgroundColor: "#588C8D",
@@ -118,53 +165,25 @@ const Second = () => {
 							textMonthFontWeight: "bold",
 							textDayHeaderFontWeight: "300",
 						}}
-						markingType={"period"}
-						markedDates={{
-							"2012-05-15": {marked: true, dotColor: "#50cebb"},
-							"2012-05-16": {marked: true, dotColor: "#50cebb"},
-							"2012-05-11": {startingDay: true, color: "#70d7c7", textColor: "white"},
-							"2012-05-12": {color: "#70d7c7", endingDay: true, textColor: "white"},
-							"2012-05-13": {
-								color: "#70d7c7",
-								startingDay: true,
-								textColor: "white",
-								marked: true,
-								dotColor: "white",
-							},
-							"2012-05-14": {color: "#70d7c7", textColor: "white"},
-							"2012-05-15": {color: "#70d7c7", textColor: "white"},
-							"2012-05-16": {color: "#70d7c7", textColor: "white"},
-							"2012-05-17": {color: "#70d7c7", textColor: "white"},
-							"2012-05-18": {color: "#70d7c7", textColor: "white"},
-							"2012-05-19": {color: "#70d7c7", endingDay: true, textColor: "white"},
-							"2012-05-20": {color: "#70d7c7", startingDay: true, textColor: "white"},
-							"2012-05-21": {color: "#70d7c7", textColor: "white"},
-							"2012-05-22": {color: "#70d7c7", textColor: "white"},
-							"2012-05-23": {color: "#70d7c7", textColor: "white"},
-							"2012-05-24": {color: "#70d7c7", textColor: "white"},
-							"2012-05-25": {color: "#70d7c7", textColor: "white"},
-							"2012-05-26": {color: "#70d7c7", endingDay: true, textColor: "white"},
-							"2012-05-27": {color: "#70d7c7", startingDay: true, textColor: "white"},
-							"2012-05-28": {color: "#70d7c7", textColor: "white"},
-							"2012-05-29": {color: "#70d7c7", textColor: "white"},
-							"2012-05-30": {color: "#70d7c7", textColor: "white"},
-
-							"2012-05-31": {endingDay: true, color: "#70d7c7", textColor: "white"},
-						}}
-						dayComponent={({date, state}) => {
+						markedDates={clickedDate ? getMarkedDates() : {}}
+						dayComponent={({date, state, marking}) => {
 							return (
 								<CustomDayComponentForCalendar
 									date={date}
 									state={state}
 									clickedDate={clickedDate}
 									dayClick={setDate}
+									marking={marking}
 								/>
 							)
 						}}
 					/>
 					<TouchableOpacity
-						style={CommonStyles.containerMilestone}
-						onPress={() => navigation.navigate("third")}
+						style={[CommonStyles.containerMilestone, {marginTop: sizeConstants.xs}]}
+						onPress={() => {
+							// navigation.navigate("third")
+							navigation.navigate("particulargoal")
+						}}
 					>
 						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
 					</TouchableOpacity>
@@ -182,7 +201,15 @@ const Second = () => {
 	)
 }
 
-export default Second
+const mapStateToProps = (state) => {
+	return {
+		clickedGoal: state.milestone.clickedGoal,
+	}
+}
+const mapDispatchToProps = (dispatch) => {
+	return {}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Second)
 
 const styles = StyleSheet.create({
 	introContainer: {

@@ -59,7 +59,6 @@ const FirstMilestone = ({
 		}
 
 		setClickedGoal(updatedObj)
-		console.log("setClickedGoal(updatedObj) donnee", updatedObj)
 		addNewMilestone(milestoneArr)
 		setClickedMilestone(milestone)
 		addNewMilestone([
@@ -113,7 +112,7 @@ const FirstMilestone = ({
 
 							<Calendar
 								current={new Date()}
-								// minDate={"2001-05-10"}
+								minDate={new Date()}
 								// maxDate={"2050-05-30"}
 								// onDayPress={(day) => {
 								// 	setDate(day.dateString)

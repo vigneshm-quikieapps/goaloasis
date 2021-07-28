@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {StyleSheet, Text, TouchableOpacity, View, TextInput, ImageBackground} from "react-native"
 
 import {useNavigation} from "@react-navigation/native"
@@ -13,9 +13,12 @@ import AppButton from "./../MileStones/AppButton"
 import {CommonHomeButton, CommonPrevNextButton} from "../../core/CommonComponents"
 import DisableAppButton from "../MileStones/DisableAppButton"
 import {connect} from "react-redux"
+import AsyncStorage from "@react-native-community/async-storage"
 
-const SecondTaskFlow = ({clickedGoal}) => {
+const SecondTaskFlow = ({clickedGoal, clickedMilestone, route}) => {
 	const navigation = useNavigation()
+	const {task: taskName, date: taskDate} = route.params
+	useEffect(() => {}, [clickedGoal])
 
 	const particularGoal = () => {
 		navigation.navigate("particulargoal")
@@ -26,12 +29,7 @@ const SecondTaskFlow = ({clickedGoal}) => {
 
 	const [date, setDate] = useState(new Date())
 
-	// let temp = clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].taskData
-	// console.log(
-	// 	"LOGGING from the",
-	// 	clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].taskData
-	// )
-	const [taskData, setTaskData] = useState()
+	const [taskData, setTaskData] = useState(taskName)
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	// console.log("taskDATA", taskData)
 
@@ -42,7 +40,7 @@ const SecondTaskFlow = ({clickedGoal}) => {
 			resizeMode="stretch"
 		>
 			<View style={[CommonStyles.flexDirectionRow, {marginTop: Constants.statusBarHeight}]}>
-				<Text style={CommonStyles.mainTitle}>Read 5 books</Text>
+				<Text style={CommonStyles.mainTitle}>{clickedMilestone}</Text>
 				<Entypo
 					name="cross"
 					color={ColorConstants.faintWhite}
@@ -56,7 +54,8 @@ const SecondTaskFlow = ({clickedGoal}) => {
 				<TextInput
 					style={styles.textInput}
 					placeholder="Type Here"
-					// onChangeText={(text) => setTaskData(text)}
+					value={taskData}
+					onChangeText={(text) => setTaskData(text)}
 				/>
 			</View>
 
@@ -66,7 +65,13 @@ const SecondTaskFlow = ({clickedGoal}) => {
 				</View>
 			) : (
 				<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter]}>
-					<AppButton title="Edit Date" style={styles.editButton} />
+					<AppButton
+						onPress={() => {
+							navigation.navigate("thirdtaskflow", {taskDate: taskDate, taskName: taskName})
+						}}
+						title="Edit Date"
+						style={styles.editButton}
+					/>
 				</View>
 			)}
 
@@ -98,21 +103,17 @@ const SecondTaskFlow = ({clickedGoal}) => {
 					</TouchableOpacity>
 				</View> */}
 				{/* <CommonPrevNextButton right={true} nextClick={() => navigation.navigate("thirdtaskflow")} /> */}
-				{taskData === "" ? (
-					<CommonPrevNextButton
-						right={true}
-						style={{backgroundColor: ColorConstants.whiteOp50}}
-						size={50}
-						bottom={0}
-					/>
-				) : (
-					<CommonPrevNextButton
-						right={true}
-						nextClick={() => navigation.navigate("thirdtaskflow")}
-						size={50}
-						bottom={0}
-					/>
-				)}
+
+				<CommonPrevNextButton
+					right={true}
+					style={taskData === "" ? {backgroundColor: ColorConstants.whiteOp50} : {}}
+					nextClick={() => {
+						taskData === "" ? null : navigation.navigate("particulargoal")
+						// navigation.navigate("thirdtaskflow")
+					}}
+					size={50}
+					bottom={0}
+				/>
 			</View>
 
 			<CommonHomeButton />

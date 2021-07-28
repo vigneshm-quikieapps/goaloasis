@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {StyleSheet, Text, TouchableOpacity, View, ScrollView, Dimensions} from "react-native"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
@@ -14,8 +14,9 @@ import {
 } from "../../core/CommonComponents"
 import {connect} from "react-redux"
 
-const ThirdTaskFlow = ({clickedGoal}) => {
+const ThirdTaskFlow = ({clickedGoal, route}) => {
 	const navigation = useNavigation()
+	const {taskDate, taskName} = route.params
 
 	// const gotoHome = () => {
 	// 	navigation.navigate("secondMileStone")
@@ -26,7 +27,7 @@ const ThirdTaskFlow = ({clickedGoal}) => {
 	const [task, setTask] = useState()
 
 	const [value, onChange] = useState(new Date())
-	const [clickedDate, setDate] = useState(null)
+	const [clickedDate, setDate] = useState(taskDate)
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 
 	const convertArrToObj = (arr) => {
@@ -98,13 +99,25 @@ const ThirdTaskFlow = ({clickedGoal}) => {
 						>
 							Target Date
 						</Text>
+						<TouchableOpacity
+							onPress={() => {
+								clickedDate && navigation.navigate("particulargoal")
+							}}
+						>
+							<Text style={CommonStyles.done}>Done</Text>
+						</TouchableOpacity>
+						{/* <Text
+							style={[CommonStyles.targetDate, height <= 700 ? {marginTop: sizeConstants.xs} : {}]}
+						>
+							Target Date
+						</Text> */}
 						<TouchableOpacity>
 							<Text style={CommonStyles.done}>Done</Text>
 						</TouchableOpacity>
 					</View>
 
 					<Calendar
-						current={new Date()}
+						current={clickedDate ? new Date(clickedDate) : new Date()}
 						minDate={new Date()}
 						maxDate={"2090-01-01"}
 						onMonthChange={(month) => {
@@ -141,16 +154,15 @@ const ThirdTaskFlow = ({clickedGoal}) => {
 							textMonthFontWeight: "bold",
 							textDayHeaderFontWeight: "300",
 						}}
-						markedDates={clickedDate ? getMarkedDates() : {}}
+						// markedDates={clickedDate ? getMarkedDates() : {}}
 						dayComponent={({date, state, marking}) => {
-							console.log(state)
 							return (
 								<CustomDayComponentForCalendar
 									date={date}
 									state={state}
 									clickedDate={clickedDate}
 									dayClick={setDate}
-									marking={marking}
+									// marking={marking}
 								/>
 							)
 						}}
@@ -158,10 +170,12 @@ const ThirdTaskFlow = ({clickedGoal}) => {
 					<TouchableOpacity
 						style={[CommonStyles.containerMilestone, {marginTop: sizeConstants.s}]}
 						onPress={() => {
-							navigation.navigate("first")
+							navigation.navigate("first", {
+								taskDate: taskDate,
+							})
 						}}
 					>
-						<Text style={CommonStyles.reoccuring}>Set reoccuringgg</Text>
+						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
 					</TouchableOpacity>
 					{task === "" ? (
 						<CommonPrevNextButton
