@@ -156,16 +156,12 @@ const ParticularGoal = (props) => {
 											},
 										]}
 									>
-<<<<<<< HEAD
 										<View
 											style={[
 												styles.btnTextContainer,
 												{paddingHorizontal: sizeConstants.twentyTwo},
 											]}
 										>
-=======
-										<View style={CommonStyles.modalBottomBtn}>
->>>>>>> 00943316ea5f8c9e2ce3668321b784d94e710559
 											<Text style={[CommonStyles.btnText, styles.appBtn]}>{buttonText[page]}</Text>
 										</View>
 									</Swipeout>
