@@ -5,7 +5,7 @@ import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {black} from "color-name"
 import GoalStep2 from "./GoalStep2"
-import {CommonStyles} from "../../core/styles"
+import {CommonStyles, sizeConstants} from "../../core/styles"
 import {setCurrentGoal} from "./../../redux/actions"
 import {connect} from "react-redux"
 import {CommonHomeButton, CommonPrevNextButton} from "../../core/CommonComponents"
@@ -49,7 +49,7 @@ const NameGoal = ({setCurrentGoal, currentGoal}) => {
 						</Text>
 						<View style={CommonStyles.centerCont}>
 							<TextInput
-								style={CommonStyles.textInput}
+								style={[CommonStyles.textInput, {marginTop: sizeConstants.xxxl}]}
 								placeholder="Type Here"
 								onChangeText={(text) => {
 									setGoalName(text)
