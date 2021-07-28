@@ -19,9 +19,9 @@ const Deletegoal = ({clickedGoal}) => {
 	}
 
 	const deleteConfirm = () => {
-		deleteGoalFromFirestore(clickedGoal)
-		// navigation.navigate("milestones")
-		navigation.navigate("mygoals")
+		deleteGoalFromFirestore(clickedGoal, () => {
+			navigation.navigate("mygoals")
+		})
 	}
 	return (
 		<StatusBarScreen style={styles.container}>

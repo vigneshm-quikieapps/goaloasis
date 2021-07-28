@@ -68,7 +68,8 @@ const FirstTaskFlow = ({
 			} else return item
 		})
 		setBooleanFlag(true)
-		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask, navigatoinCallback)
+		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask, navigationCallback)
+
 		// console.log(
 		// 	"CLICKED GOAL",
 		// 	clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].taskData

@@ -8,6 +8,7 @@ import {IntroStack, MainStack} from "./src/navigation"
 import {getFirstTimeUser} from "./src/utils/asyncStorage"
 import authContext from "./src/context/auth/authContext"
 import TimelineFlowSlider from "./src/components/TimelineFlowSlider"
+import SplashScreen from "./src/assets/splashScreen"
 
 export default function Routing() {
 	const AuthContext = useContext(authContext)
@@ -23,9 +24,22 @@ export default function Routing() {
 		const data = await getFirstTimeUser()
 		setFirstTime(data)
 	}
+	const [hasSplashScreenLoaded, setHasSplashScreenLoaded] = useState(false)
 	return (
 		<NavigationContainer>
-			{firstTime === null ? <IntroStack /> : <MainStack />}
+			{hasSplashScreenLoaded ? (
+				firstTime === null ? (
+					<IntroStack />
+				) : (
+					<MainStack />
+				)
+			) : (
+				<SplashScreen
+					hasSplashScreenLoaded={hasSplashScreenLoaded}
+					setHasSplashScreenLoaded={setHasSplashScreenLoaded}
+				/>
+			)}
+
 			<StatusBar style="auto" />
 		</NavigationContainer>
 	)

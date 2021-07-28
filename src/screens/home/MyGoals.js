@@ -47,12 +47,13 @@ const MyGoals = ({
 	setClickedGoal,
 	setAllGoals,
 	allGoals,
+	currentGoal,
 }) => {
 	// const [test, setTest] = useState({})
 
 	useEffect(() => {
 		getAllGoalsFromFirestore((goals) => {
-			console.log("goals from firestore", goals)
+			// console.log("goals from firestore", goals)
 		})
 		console.log("Height of this device is: ", Height)
 		fetchData()
@@ -99,12 +100,10 @@ const MyGoals = ({
 		navigation.navigate("timeline")
 	}
 
-	const goToProblem = () => {
-		// navigation.navigate("FirstMilestone")
-		// navigation.navigate("secondtaskflow")
-		navigation.navigate("IndividualGoal")
-		// navigation.navigate("particulargoal")
-	}
+	// const goToProblem = () => {
+	// 	navigation.navigate("IndividualGoal")
+
+	// }
 
 	const getColor = (index) => {
 		const a = (index + 1) % 6
@@ -114,7 +113,7 @@ const MyGoals = ({
 
 	useEffect(() => {
 		importData()
-	}, [])
+	}, [currentGoal])
 
 	const importData = async () => {
 		try {
@@ -126,8 +125,6 @@ const MyGoals = ({
 					item !== "FirsttimeTimelineFlow" &&
 					item !== "Firsttime"
 			)
-			// const result = await AsyncStorage.multiGet(keys)
-			// const result = await AsyncStorage.getItem(keys)
 			let result = []
 			for (const key of keys) {
 				const val = await AsyncStorage.getItem(key)
@@ -135,13 +132,10 @@ const MyGoals = ({
 			}
 			console.log("RESULT", result)
 			setAllGoals(result)
-			// return result
 		} catch (error) {
 			console.error(error)
 		}
 	}
-
-	console.log("GEtting DATA from async Storage", allGoals)
 
 	return (
 		<StatusBarScreen style={styles.container}>
@@ -169,7 +163,7 @@ const MyGoals = ({
 									<TouchableOpacity
 										style={CommonStyles.logoContainer}
 										onPress={() => {
-											task.isCompleted ? null : handleOpenNewGoal(task)
+											task.isCompleted ? null : handleOpenNewGoal(task.name)
 										}}
 									>
 										<ProgressCircle
@@ -249,6 +243,7 @@ const mapStateToProps = (state) => {
 		firstTimeTimelineFlow: state.milestone.firstTimeTimelineFlow,
 		clickedGoal: state.milestone.clickedGoal,
 		allGoals: state.milestone.allGoals,
+		currentGoal: state.milestone.currentGoal,
 	}
 }
 
