@@ -18,7 +18,7 @@ const initialState = {
 
 console.log("NEW MILESTONE DATA", initialState.newMileStone)
 const milestoneReducer = (state = initialState, action) => {
-	console.log("ACTION FROM THE ACTION FILE", action)
+	// console.log("ACTION FROM THE ACTION FILE", action)
 	switch (action.type) {
 		// Adding new Milestones
 		// case actionTypes.ADD_NEW_MILESTONE:

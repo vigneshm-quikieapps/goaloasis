@@ -61,7 +61,7 @@ export const deleteGoalFromFirestore = (target) => {
 
 // Goal Add Operation
 export const addGoalToFirestore = (data) => {
-	console.log("Firebase Data 1", data)
+	// console.log("Firebase Data 1", data)
 	let addGoal = new Promise((resolve, reject) => {
 		firestore()
 			.collection(GOALS_COLLECTION)

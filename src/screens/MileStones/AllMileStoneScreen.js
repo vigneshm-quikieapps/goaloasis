@@ -20,6 +20,7 @@ import {CommonHomeButton} from "../../core/CommonComponents"
 
 const AllMilestonesScreen = (props) => {
 	const [DATA, setData] = useState([])
+	const navigation = useNavigation()
 	// Modal Code
 	useEffect(() => {
 		setModalVisible(false)
@@ -45,7 +46,6 @@ const AllMilestonesScreen = (props) => {
 		setModalVisible(false)
 		// navigation.navigate("milestones")
 	}
-	const navigation = useNavigation()
 	const dataText = ["Congrats! You're one step closer to your goal.", "", ""]
 	const buttonText = [
 		"Long Press to mark complete",

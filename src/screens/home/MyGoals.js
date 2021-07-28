@@ -8,6 +8,7 @@ import {
 	StatusBar,
 	ScrollView,
 	Dimensions,
+	TouchableWithoutFeedback,
 } from "react-native"
 import {MaterialCommunityIcons, AntDesign} from "@expo/vector-icons"
 import {FontAwesome5} from "@expo/vector-icons"
@@ -17,32 +18,25 @@ import StatusBarScreen from "../MileStones/StatusBarScreen"
 import Constants from "expo-constants"
 import {connect} from "react-redux"
 import AsyncStorage from "@react-native-community/async-storage"
-import firebase from "firebase"
+
 import {
 	setTestData,
 	setFirstTime,
 	setFirstTimeForTimeLine,
 	setTestDataForTimeline,
 	setClickedGoal,
+	setAllGoals,
 } from "./../../redux/actions"
 import {
 	getClickedGoalFromAsyncStorage,
 	getFirstTimeTaskTutorial,
 	getFirstTimeTimelineFlow,
 } from "./../../utils/asyncStorage"
-import {
-	ColorConstants,
-	CommonStyles,
-	firebaseConstants,
-	forGoals,
-	sizeConstants,
-} from "./../../core/styles"
+import {ColorConstants, CommonStyles, forGoals, sizeConstants} from "./../../core/styles"
 import firestore from "@react-native-firebase/firestore"
 import {CommonHomeButton} from "../../core/CommonComponents"
-import Spinner from "./../../core/Spinner"
 import {getAllGoalsFromFirestore} from "../../firebase"
 
-const {GOALS_COLLECTION} = firebaseConstants
 const Height = Dimensions.get("window").height
 const MyGoals = ({
 	testData,
@@ -51,19 +45,18 @@ const MyGoals = ({
 	setFirstTime,
 	firstTimeTimelineFlow,
 	setClickedGoal,
-	setShowLoader,
-	setHideLoader,
-	loading,
-	currentGoal,
-	clickedGoal,
+	setAllGoals,
+	allGoals,
 }) => {
-	const [test, setTest] = useState({})
+	// const [test, setTest] = useState({})
 
 	useEffect(() => {
-		getAllGoalsFromFirestore((goals) => {})
+		getAllGoalsFromFirestore((goals) => {
+			console.log("goals from firestore", goals)
+		})
+		console.log("Height of this device is: ", Height)
 		fetchData()
-		gettingAllData()
-	}, [testData, firstTime, firstTimeTimelineFlow])
+	}, [testData, firstTime, firstTimeTimelineFlow, allGoals])
 
 	const fetchData = async () => {
 		const data = await getFirstTimeTaskTutorial().catch((err) => console.log(err))
@@ -112,33 +105,6 @@ const MyGoals = ({
 		navigation.navigate("IndividualGoal")
 		// navigation.navigate("particulargoal")
 	}
-	//async code
-	const [tasks, setTasks] = useState([])
-	const [goal, setAllGoals] = useState([])
-
-	let allTasks = []
-	const getData = async () => {
-		try {
-			const value = await AsyncStorage.getAllKeys().catch((e) => {
-				console.log(e)
-			})
-			if (value !== null) {
-				setTasks(value)
-			}
-		} catch (e) {
-			console.log(e)
-		}
-	}
-	tasks.map((task) => {
-		if (
-			task !== "FirsttimeIndividual" &&
-			task !== "FirsttimeTaskTutorial" &&
-			task !== "FirsttimeTimelineFlow" &&
-			task !== "Firsttime"
-		) {
-			allTasks.push(task)
-		}
-	})
 
 	const getColor = (index) => {
 		const a = (index + 1) % 6
@@ -147,37 +113,35 @@ const MyGoals = ({
 	const colorArray = Object.values(forGoals)
 
 	useEffect(() => {
-		// if (loader === false) {
-		// 	// setShowLoader()
-		// 	setTimeout(() => {
-		// 		// setLoader(true)
-		// 	}, 2000)
-		// } else {
-		// 	setTimeout(() => {s
-		console.log("second use effect")
-		getData()
-		// console.log("GOAL DATA", allTasks);
-	}, [allTasks])
+		importData()
+	}, [])
 
-	const [firebaseData, setFirebaseData] = useState([])
-	const [firebaseCompletedGoal, setFirebaseCompletedGoal] = useState([])
-
-	const gettingAllData = () => {
-		firestore()
-			.collection("Goals")
-			.get()
-			.then((querySnapshot) => {
-				querySnapshot.forEach((doc) => {
-					setFirebaseData(doc.data())
-				})
-			})
+	const importData = async () => {
+		try {
+			let keys = await AsyncStorage.getAllKeys()
+			keys = keys.filter(
+				(item) =>
+					item !== "FirsttimeIndividual" &&
+					item !== "FirsttimeitemTutorial" &&
+					item !== "FirsttimeTimelineFlow" &&
+					item !== "Firsttime"
+			)
+			// const result = await AsyncStorage.multiGet(keys)
+			// const result = await AsyncStorage.getItem(keys)
+			let result = []
+			for (const key of keys) {
+				const val = await AsyncStorage.getItem(key)
+				result.push(JSON.parse(val))
+			}
+			console.log("RESULT", result)
+			setAllGoals(result)
+			// return result
+		} catch (error) {
+			console.error(error)
+		}
 	}
-	// firebaseData.map((item) => {
-	// 	if (item.isCompleted === true) {
-	// 		setFirebaseCompletedGoal(item)
-	// 	}
-	// })
-	// console.log("FROM HOME SCREEN", firebaseData)
+
+	console.log("GEtting DATA from async Storage", allGoals)
 
 	return (
 		<StatusBarScreen style={styles.container}>
@@ -196,26 +160,21 @@ const MyGoals = ({
 				<View>
 					<Text style={CommonStyles.myGoalsText}>My goals</Text>
 				</View>
-				{/* {getAllGoalsFromFirestore().then((data) => console.log("DATA", data))} */}
-				{/* {getAllGoalsFromFirestore()} */}
+
 				<ScrollView contentContainerStyle={{paddingHorizontal: 0, marginHorizontal: 0}}>
 					<View style={CommonStyles.logoSpacing}>
-						{allTasks.map((task, index) => (
-							<View key={index}>
-								<TouchableOpacity
-									style={CommonStyles.logoContainer}
-									onPress={() => {
-										handleOpenNewGoal(task)
-									}}
-								>
-									{/* {console.log("TASKKKKKKKKKKK", task)} */}
-									{/* <TouchableOpacity
-									style={CommonStyles.logoContainer}
-									onPress={() => navigation.navigate("third")}
-								> */}
-									{setFirebaseCompletedGoal.contains(task) ? (
+						{allGoals &&
+							allGoals.length > 0 &&
+							allGoals.map((task, index) => (
+								<View key={index}>
+									<TouchableOpacity
+										style={CommonStyles.logoContainer}
+										onPress={() => {
+											task.isCompleted ? null : handleOpenNewGoal(task.name)
+										}}
+									>
 										<ProgressCircle
-											percent={100}
+											percent={task.isCompleted ? 100 : 0}
 											radius={sizeConstants.fiftyHalf}
 											borderWidth={5}
 											color={getColor(index)}
@@ -223,35 +182,13 @@ const MyGoals = ({
 											bgColor="#FBF5E9"
 										>
 											<Text style={{fontSize: 22, color: getColor(index), fontWeight: "bold"}}>
-												{"100%"}
+												{task.isCompleted ? "100%" : "0%"}
 											</Text>
 										</ProgressCircle>
-									) : (
-										<ProgressCircle
-											percent={0}
-											radius={sizeConstants.fiftyHalf}
-											borderWidth={5}
-											color={getColor(index)}
-											shadowColor="#999"
-											bgColor="#FBF5E9"
-										>
-											<Text style={{fontSize: 22, color: getColor(index), fontWeight: "bold"}}>
-												{"0%"}
-											</Text>
-										</ProgressCircle>
-									)}
-
-									<Text style={CommonStyles.goalText}>{task}</Text>
-								</TouchableOpacity>
-
-								{/* redux check  */}
-								{/* <Text style={styles.goalText}>{testData}</Text>
-						<TouchableOpacity style={styles.logoContainer} onPress={temp}>
-							<Text style={styles.goalText}>test</Text>
-						</TouchableOpacity> */}
-								{/* redux check */}
-							</View>
-						))}
+										<Text style={CommonStyles.goalText}>{task.name}</Text>
+									</TouchableOpacity>
+								</View>
+							))}
 
 						<View>
 							{/* <TouchableOpacity style={CommonStyles.logoContainer} onPress={gotoGoal}>
@@ -312,8 +249,7 @@ const mapStateToProps = (state) => {
 		firstTime: state.milestone.firstTime,
 		firstTimeTimelineFlow: state.milestone.firstTimeTimelineFlow,
 		clickedGoal: state.milestone.clickedGoal,
-		loading: state.milestone.loading,
-		currentGoal: state.milestone.currentGoal,
+		allGoals: state.milestone.allGoals,
 	}
 }
 
@@ -331,6 +267,10 @@ const mapDispatchToProps = (dispatch) => {
 
 		setClickedGoal: (data) => {
 			dispatch(setClickedGoal(data))
+		},
+
+		setAllGoals: (data) => {
+			dispatch(setAllGoals(data))
 		},
 	}
 }
