@@ -12,7 +12,7 @@ import {sizeConstants, ColorConstants} from "./../../core/styles"
 import {scale, verticalScale} from "react-native-size-matters"
 import {connect} from "react-redux"
 import {getClickedGoalFromAsyncStorage, setisFirstTimeIndividual} from "./../../utils/asyncStorage"
-import {setBooleanFlag} from "../../redux/actions"
+import {setBooleanFlag, setFirstTimeForIndividualGoal} from "../../redux/actions"
 import AppButton from "../MileStones/AppButton"
 import Swipeout from "rc-swipeout"
 import {LongPressGestureHandler, State} from "react-native-gesture-handler"
@@ -21,9 +21,9 @@ const ParticularGoal = (props) => {
 	const navigation = useNavigation()
 
 	const [DATA, setData] = useState([])
-	// useEffect(() => {
-	// 	setModalVisible(true)
-	// })
+	useEffect(() => {
+		getFirstTimeData()
+	}, [])
 	const [taskCompleted, setCompleted] = useState(true)
 
 	const onLongPress = (event) => {
@@ -33,14 +33,20 @@ const ParticularGoal = (props) => {
 		}
 	}
 
-	const [modalVisible, setModalVisible] = useState(true)
+	const [modalVisible, setModalVisible] = useState(false)
 
 	const closeModal = async () => {
-		setModalVisible(false)
 		await setisFirstTimeIndividual()
 		props.setFirstTimeForIndividualGoal("visited")
+		setModalVisible(false)
+		// navigation.navigate("milestones")
 	}
-
+	const getFirstTimeData = async () => {
+		const data = await getFirstTimeIndividual()
+		props.setFirstTimeForIndividualGoal(data)
+		const isFirst = props.firstTimeIndividual === null ? true : false
+		setModalVisible(isFirst)
+	}
 	const dataText = ["Congrats! You're one step closer to your goal.", "", ""]
 	const buttonText = [
 		"Long Press to mark complete",
@@ -150,12 +156,16 @@ const ParticularGoal = (props) => {
 											},
 										]}
 									>
+<<<<<<< HEAD
 										<View
 											style={[
 												styles.btnTextContainer,
 												{paddingHorizontal: sizeConstants.twentyTwo},
 											]}
 										>
+=======
+										<View style={CommonStyles.modalBottomBtn}>
+>>>>>>> 00943316ea5f8c9e2ce3668321b784d94e710559
 											<Text style={[CommonStyles.btnText, styles.appBtn]}>{buttonText[page]}</Text>
 										</View>
 									</Swipeout>

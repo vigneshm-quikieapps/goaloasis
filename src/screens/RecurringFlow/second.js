@@ -137,12 +137,12 @@ const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag}) => {
 	return (
 		<StatusBarScreen style={styles.introContainer}>
 			<ScrollView>
-				<View style={{flex: 1}}>
+				<View>
 					<View style={{flexDirection: "row"}}>
 						<Text style={CommonStyles.mainTitle}>{clickedMilestone}</Text>
 						<Entypo name="cross" color="#FDF9F2" size={38} style={CommonStyles.cross} />
 					</View>
-					{/* <Text style={CommonStyles.enterTask}>Enter Task</Text> */}
+					<Text style={CommonStyles.enterTask}>Enter Task</Text>
 					<TouchableOpacity style={[CommonStyles.container2, {marginTop: sizeConstants.xs}]}>
 						<Text style={CommonStyles.button}>{taskName}</Text>
 					</TouchableOpacity>
@@ -158,6 +158,7 @@ const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag}) => {
 							onPress={() => {
 								setReoccuring()
 								//  navigation.navigate("FifthMilestone")
+								navigation.navigate("myGoals")
 							}}
 						>
 							<Text style={CommonStyles.done}>Done</Text>

@@ -28,11 +28,8 @@ const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 	// 	navigation.goBack()
 	// }
 	// const [date, setDate] = useState(new Date())
-	console.log(
-		"TESTTTTTTTTING",
-		clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].milestone
-	)
-	let temp = clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].milestone
+	console.log("TESTTTTTTTTING", newMileStone)
+	let temp = newMileStone[0].milestone
 	const [milestone, setMilestone] = useState(temp)
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 
