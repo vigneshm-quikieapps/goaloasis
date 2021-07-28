@@ -2,10 +2,12 @@ import React, {useState} from "react"
 import {StyleSheet, Text, View, TouchableOpacity, FlatList} from "react-native"
 import {Feather} from "@expo/vector-icons"
 import Swipeout from "rc-swipeout"
-import {MaterialCommunityIcons, AntDesign, MaterialIcons} from "@expo/vector-icons"
+import {MaterialCommunityIcons, AntDesign, MaterialIcons, Octicons} from "@expo/vector-icons"
 import {ColorConstants, sizeConstants} from "./../core/styles"
 import {useNavigation} from "@react-navigation/native"
 import {setClickedMilestone} from "./../redux/actions"
+import {LongPressGestureHandler, State} from "react-native-gesture-handler"
+
 import {connect} from "react-redux"
 
 const MilestoneCards = ({
@@ -16,8 +18,20 @@ const MilestoneCards = ({
 	fromParticularData,
 	fromIndividual,
 }) => {
+	const [taskCompleted, setCompleted] = useState(true)
 	const navigation = useNavigation()
+	const icons = () => (
+		<View style={{flexDirection: "row", justifyContent: "space-between"}}>
+			<MaterialCommunityIcons name="delete" size={40} color="#77777B" style={{marginRight: 5}} />
+			<Octicons name="pencil" size={40} color="#77777B" />
+		</View>
+	)
 
+	const onLongPress = (event) => {
+		if (event.nativeEvent.state === State.ACTIVE) {
+			setCompleted(!taskCompleted)
+		}
+	}
 	const [upDown, setUpDown] = useState(false)
 	// console.log("FROM MILESTONE CARD", fromParticularData)
 	if (fromParticularData !== null && fromParticularData !== undefined) {
@@ -38,6 +52,16 @@ const MilestoneCards = ({
 		)
 	}
 	return (
+		// <LongPressGestureHandler onHandlerStateChange={onLongPress} minDurationMs={800}>
+		// 					<View>
+		// 						<TouchableOpacity style={styles.centerBtn}>
+		// 							<Text style={taskCompleted ? styles.btnTextCompleted : styles.btnText}>
+		// 								{taskCompleted ? "Completed Task" : "Long Press"}
+		// 							</Text>
+		// 						</TouchableOpacity>
+		// 					</View>
+		// 				</LongPressGestureHandler>
+
 		<View style={{marginHorizontal: sizeConstants.twentyOne}}>
 			<View style={[styles.swipeButton, style]}>
 				<Swipeout
@@ -54,7 +78,8 @@ const MilestoneCards = ({
 					]}
 					right={[
 						{
-							text: <MaterialCommunityIcons name="plus" size={40} color="#77777B" />,
+							text: icons(),
+
 							onPress: () => {},
 							style: {backgroundColor: ColorConstants.faintWhite},
 						},
@@ -64,23 +89,35 @@ const MilestoneCards = ({
 					autoClose={true}
 					disabled={false}
 				>
-					<View style={[styles.swipableBtnContainer]}>
-						<TouchableOpacity
-							style={[styles.TouchContainer, style]}
-							onPress={() => setUpDown(!upDown)}
-						>
-							<View>
-								<Text style={styles.mainTitle}>{data && data.milestone}</Text>
-								<Text style={styles.subtitle}>{data && data.date}</Text>
+					<LongPressGestureHandler onHandlerStateChange={onLongPress} minDurationMs={800}>
+						{taskCompleted ? (
+							<View style={[styles.swipableBtnContainer]}>
+								<TouchableOpacity
+									style={[styles.TouchContainer, style]}
+									onPress={() => setUpDown(!upDown)}
+								>
+									<View>
+										<Text style={styles.mainTitle}>{data && data.milestone}</Text>
+										<Text style={styles.subtitle}>{data && data.date}</Text>
+									</View>
+									<View style={{alignItems: "center"}}>
+										<Text style={{fontSize: 16}}>{`Task: 0/${
+											data && data.taskData && data.taskData.length
+										}`}</Text>
+										<Feather
+											name={upDown ? "chevron-up" : "chevron-down"}
+											size={25}
+											color="black"
+										/>
+									</View>
+								</TouchableOpacity>
 							</View>
-							<View style={{alignItems: "center"}}>
-								<Text style={{fontSize: 16}}>{`Task: 0/${
-									data && data.taskData && data.taskData.length
-								}`}</Text>
-								<Feather name={upDown ? "chevron-up" : "chevron-down"} size={25} color="black" />
+						) : (
+							<View style={[styles.swipableBtnContainer]}>
+								<Text style={{color: "black", fontSize: 20}}>MISSION COMPLETE!</Text>
 							</View>
-						</TouchableOpacity>
-					</View>
+						)}
+					</LongPressGestureHandler>
 				</Swipeout>
 			</View>
 			{/* {console.log("TESTINGNGNGNG", clickedMilestone)} */}
@@ -136,7 +173,6 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		height: sizeConstants.hundredMX,
-		backgroundColor: ColorConstants.lighterBlue,
 		justifyContent: "center",
 	},
 	TouchContainer: {

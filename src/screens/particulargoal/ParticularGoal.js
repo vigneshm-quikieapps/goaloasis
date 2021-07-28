@@ -1,6 +1,6 @@
 import React, {useRef, useEffect, useState} from "react"
-import {StyleSheet, Text, View, TouchableOpacity, ScrollView} from "react-native"
-import {MaterialCommunityIcons} from "@expo/vector-icons"
+import {StyleSheet, Text, View, TouchableOpacity, ScrollView, Modal} from "react-native"
+import {MaterialCommunityIcons, Octicons, AntDesign, MaterialIcons} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
 import ProgressCircle from "react-native-progress-circle"
 import MilestoneCards from "../../components/MilestoneCards"
@@ -11,32 +11,57 @@ import {CommonStyles} from "../../core/styles"
 import {sizeConstants, ColorConstants} from "./../../core/styles"
 import {scale, verticalScale} from "react-native-size-matters"
 import {connect} from "react-redux"
-import {getClickedGoalFromAsyncStorage} from "./../../utils/asyncStorage"
+import {getClickedGoalFromAsyncStorage, setisFirstTimeIndividual} from "./../../utils/asyncStorage"
 import {setBooleanFlag} from "../../redux/actions"
+import AppButton from "../MileStones/AppButton"
+import Swipeout from "rc-swipeout"
+import {LongPressGestureHandler, State} from "react-native-gesture-handler"
 
 const ParticularGoal = (props) => {
 	const navigation = useNavigation()
 
 	const [DATA, setData] = useState([])
 	// useEffect(() => {
-	// 	// setModalVisible(false)
-	// 	// getFirstTimeData()
-	// 	// setData(props.newMileStone)
-	// 	setData(props.clickedGoal.goalMilestone)
-	// }, [props.clickedGoal])
+	// 	setModalVisible(true)
+	// })
+	const [taskCompleted, setCompleted] = useState(true)
+
+	const onLongPress = (event) => {
+		if (event.nativeEvent.state === State.ACTIVE) {
+			// alert("I've been pressed for 800 milliseconds")
+			setCompleted(!taskCompleted)
+		}
+	}
+
+	const [modalVisible, setModalVisible] = useState(true)
+
+	const closeModal = async () => {
+		setModalVisible(false)
+		await setisFirstTimeIndividual()
+		props.setFirstTimeForIndividualGoal("visited")
+	}
+
+	const dataText = ["Congrats! You're one step closer to your goal.", "", ""]
+	const buttonText = [
+		"Long Press to mark complete",
+		"Swipe right to add task",
+		"Swipe left to of edit",
+	]
+	const [page, setPageNo] = useState(0)
 
 	useEffect(() => {
-		// setModalVisible(false)
 		getClickedGoalFromAsyncStorage(props.clickedGoal.name).then((goal) => {
 			let goals = JSON.parse(goal)
 			setData(goals.goalMilestone)
-
-			console.log("all milesss", goals.goalMilestone)
 		})
 	}, [props.clickedGoal, props.booleanFlag])
 
-	console.log("Particular Goal", props.clickedGoal.goalMilestone)
-
+	const icons = () => (
+		<View style={{flexDirection: "row", justifyContent: "space-between"}}>
+			<MaterialCommunityIcons name="delete" size={40} color="#77777B" style={{marginRight: 5}} />
+			<Octicons name="pencil" size={40} color="#77777B" />
+		</View>
+	)
 	const goBack = () => {
 		navigation.goBack()
 	}
@@ -44,7 +69,145 @@ const ParticularGoal = (props) => {
 	return (
 		<StatusBarScreen style={styles.container}>
 			<View style={CommonStyles.titleContainer}>
-				{/* <Text style={styles.mainTitle}>Read 5 books</Text> */}
+				{/* CREATING MODAL */}
+
+				<Modal animationType="slide" transparent={true} visible={modalVisible}>
+					<View style={[CommonStyles.mainContainer, styles.blackOp60]}>
+						<View style={styles.modalContainer}>
+							<View style={styles.modalInnerContainer}>
+								<View
+									style={[
+										styles.modalCommonStyle,
+										CommonStyles.ML30,
+										{backgroundColor: page >= 0 ? "white" : "gray"},
+									]}
+								/>
+								<View
+									style={[styles.modalCommonStyle, {backgroundColor: page >= 1 ? "white" : "gray"}]}
+								/>
+								<View
+									style={[styles.modalCommonStyle, {backgroundColor: page >= 2 ? "white" : "gray"}]}
+								/>
+								<TouchableOpacity onPress={() => closeModal()}>
+									<Text style={[styles.skipText, CommonStyles.ML30]}>Skip</Text>
+								</TouchableOpacity>
+							</View>
+
+							<View style={[styles.modalContentContainer, {marginTop: page === 0 ? 30 : 0}]}>
+								<Text style={styles.dataTextStyle}>{dataText[page]}</Text>
+								{page == 0 ? (
+									<Text style={[styles.contentText, CommonStyles.bold]}>
+										Long press
+										<Text style={CommonStyles.fontW100}> on the milestone when ready to </Text>
+										mark complete
+									</Text>
+								) : null}
+								{page == 1 ? (
+									<Text style={[styles.contentText, CommonStyles.bold]}>
+										Swipe right
+										<Text style={CommonStyles.fontW100}> on the milestone if you want to </Text>
+										add a task
+										<Text style={CommonStyles.fontW100}> within the milestone.</Text>
+									</Text>
+								) : null}
+								{page == 2 ? (
+									<Text style={[{fontSize: sizeConstants.twentyX}, CommonStyles.bold]}>
+										Swipe left
+										<Text style={CommonStyles.fontW100}> if you want to </Text>
+										delete or edit the milestone
+									</Text>
+								) : null}
+							</View>
+
+							<View
+								style={{
+									alignItems: "center",
+									marginTop: page == 0 ? 20 : 50,
+								}}
+							>
+								{page == 0 ? (
+									<AppButton title={buttonText[page]} style={styles.appBtn} />
+								) : page == 1 ? (
+									<Swipeout
+										left={[
+											{
+												text: "ADD",
+												onPress: () => {},
+												style: CommonStyles.bgWhite,
+											},
+										]}
+										right={[
+											{
+												text: icons(),
+
+												onPress: () => {},
+												style: CommonStyles.bgWhite,
+											},
+										]}
+										autoClose={true}
+										disabled={false}
+										style={[CommonStyles.borderRadius30]}
+									>
+										<View style={CommonStyles.modalBottomBtn}>
+											<Text style={[CommonStyles.btnText, styles.appBtn, pad]}>
+												{buttonText[page]}
+											</Text>
+										</View>
+									</Swipeout>
+								) : (
+									// <AppButton
+									// 	title={buttonText[page]}
+									// 	style={{
+									// 		backgroundColor: "#7EC8C9",
+									// 		fontSize: 15,
+									// 		paddingTop: 13,
+									// 		paddingBottom: 13,
+									// 		color: "#333333",
+									// 	}}
+									// />
+
+									<Swipeout
+										right={[
+											{
+												text: (
+													<View style={CommonStyles.flexDirectionRow}>
+														<View style={styles.swipableBtnIconContainer}>
+															<AntDesign name="delete" size={24} color={ColorConstants.black} />
+														</View>
+														<View style={styles.swipableBtnIconContainer}>
+															<MaterialIcons name="edit" size={24} color={ColorConstants.black} />
+														</View>
+													</View>
+												),
+												onPress: () => {},
+												style: CommonStyles.bgWhite,
+											},
+										]}
+										autoClose={true}
+										disabled={false}
+										style={CommonStyles.borderRadius30}
+									>
+										<View style={styles.btnTextContainer}>
+											<Text style={[CommonStyles.btnText, {color: ColorConstants.black}]}>
+												{buttonText[page]}
+											</Text>
+										</View>
+									</Swipeout>
+								)}
+								<AppButton
+									title="Next"
+									style={{
+										backgroundColor: ColorConstants.faintWhite,
+										color: ColorConstants.faintBlack1,
+									}}
+									onPress={() => (page === 2 ? closeModal() : setPageNo(page + 1))}
+								/>
+							</View>
+						</View>
+					</View>
+				</Modal>
+
+				{/* MODEL CREATION END */}
 				<RBBottomSheet name={props.clickedGoal.name} />
 				<Text style={styles.subTitle}>I want to continue improve myself and my state of mind.</Text>
 				<View style={CommonStyles.trackingcont}>
@@ -226,26 +389,7 @@ const styles = StyleSheet.create({
 		height: sizeConstants.fifty,
 		borderRadius: sizeConstants.fifty,
 	},
-	// container: {
-	// 	flex: 1,
-	// 	backgroundColor: "#FBF5E9",
-	// },
-	// titleContainer: {
-	// 	flex: 0.5,
-	// 	justifyContent: "center",
-	// },
-	// mainTitle: {
-	// 	color: "#333333",
-	// 	fontSize: 25,
-	// 	marginLeft: 20,
-	// 	fontWeight: "bold",
-	// },
 
-	// subTitle: {
-	// 	fontSize: 16,
-	// 	color: "#333333",
-	// 	marginLeft: 20,
-	// },
 	addMileStone: {
 		// marginLeft: "auto",
 		flexDirection: "row",
@@ -253,71 +397,68 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 		justifyContent: "space-between",
 	},
-	// trackingcont: {
-	// 	//
-	// 	marginHorizontal: 20,
-	// 	marginVertical: 20,
-	// 	flexDirection: "row",
-	// 	marginTop: 20,
-	// 	alignItems: "center",
-	// 	justifyContent: "space-between",
-	// },
-	// percentageCont: {
-	// 	height: 150,
-	// 	width: 150,
-	// 	borderRadius: 150 / 2,
-	// 	backgroundColor: "#FBF5E9",
-	// 	borderWidth: 5,
-	// 	borderColor: "#C0E5E4",
-	// 	justifyContent: "center",
-	// 	alignItems: "center",
-	// },
-	// goalsText: {
-	// 	fontSize: 16,
-	// },
-	// goalsContainer: {
-	// 	flex: 0.75,
-	// 	backgroundColor: "#588C8D",
-	// 	borderTopRightRadius: 70,
-	// },
-	// viewTap: {
-	// 	height: 50,
-	// 	width: 50,
-	// 	backgroundColor: "white",
-	// 	marginVertical: 10,
-	// 	borderRadius: 50 / 2,
-	// 	justifyContent: "center",
-	// 	alignItems: "center",
-	// },
-	// myGoalsText: {
-	// 	fontSize: 25,
-	// 	fontWeight: "bold",
-	// 	color: "black",
-	// 	marginHorizontal: 20,
-	// 	marginTop: -30,
-	// 	marginBottom: 10,
-	// },
-	// myGoalsubtext: {
-	// 	fontSize: 16,
-	// 	marginHorizontal: 20,
-	// 	marginTop: 10,
-	// 	color: "#333333",
-	// 	lineHeight: 30,
-	// },
-	// bottomBtnContainer: {
-	// 	width: "100%",
-	// 	position: "absolute",
-	// 	bottom: 10,
-	// 	justifyContent: "center",
-	// 	alignItems: "center",
-	// },
-	// bottomBtn: {
-	// 	height: 75,
-	// 	width: 75,
-	// 	borderRadius: 75 / 2,
-	// 	backgroundColor: "white",
-	// 	elevation: 5,
-	// 	justifyContent: "center",
-	// 	alignItems: "center",
-	// },
+	blackOp60: {backgroundColor: ColorConstants.blackOp60},
+
+	modalContainer: {
+		flex: 1,
+		backgroundColor: ColorConstants.lightestBlue,
+		marginVertical: sizeConstants.hundred,
+		marginHorizontal: sizeConstants.mThirty,
+		borderRadius: sizeConstants.m,
+	},
+	modalInnerContainer: {
+		flexDirection: "row",
+		alignContent: "center",
+		justifyContent: "center",
+		marginTop: sizeConstants.m,
+	},
+	modalCommonStyle: {
+		height: sizeConstants.five,
+		width: sizeConstants.sixty,
+		marginTop: sizeConstants.mX,
+		marginRight: sizeConstants.xsX,
+	},
+
+	skipText: {
+		color: ColorConstants.darkGrey,
+		fontSize: sizeConstants.fifteenX,
+	},
+	modalContentContainer: {
+		justifyContent: "center",
+		alignContent: "center",
+		alignItems: "center",
+		paddingHorizontal: sizeConstants.twentyX,
+	},
+
+	dataTextStyle: {
+		fontSize: sizeConstants.twentyX,
+		marginBottom: sizeConstants.m,
+		color: ColorConstants.faintBlack1,
+	},
+	contentText: {fontSize: sizeConstants.twentyX, color: ColorConstants.faintBlack1},
+	appBtn: {
+		backgroundColor: ColorConstants.lighterBlue,
+		fontSize: sizeConstants.fifteenMX,
+		paddingVertical: sizeConstants.thirteenMX,
+		color: ColorConstants.faintBlack1,
+	},
+	swipableBtnContainer: {
+		flexDirection: "row",
+		alignItems: "center",
+		height: sizeConstants.hundredMX,
+		backgroundColor: ColorConstants.lighterBlue,
+		justifyContent: "center",
+	},
+	swipableBtnIconContainer: {
+		padding: sizeConstants.s,
+		borderRightWidth: 1,
+		borderRightColor: ColorConstants.black,
+	},
+	btnTextContainer: {
+		justifyContent: "center",
+		paddingHorizontal: sizeConstants.twentyMX,
+		backgroundColor: ColorConstants.lighterBlue,
+		width: sizeConstants.twoSeventyMX,
+		height: sizeConstants.seventy,
+	},
 })

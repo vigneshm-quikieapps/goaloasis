@@ -94,7 +94,7 @@ const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
 						<View style={CommonStyles.rightArrow}>
 							<View>
 								<TouchableOpacity
-									style={[CommonStyles.btnStylingLeft, CommonStyles.nextBtn]}
+									style={[CommonStyles.btnStylingLeft, CommonStyles.nextBtn]}`
 									onPress={goBack}
 								>
 									<MaterialCommunityIcons name="chevron-left" size={50} color="#7EC8C9" />

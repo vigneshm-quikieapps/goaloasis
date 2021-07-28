@@ -1,7 +1,8 @@
-import {Button, Modal, TouchableOpacity, View, Text} from "react-native"
+import {Button, Modal, TouchableOpacity, View, Text, ImageBackground} from "react-native"
 import React, {useEffect, useState, useContext} from "react"
 import LottieView from "lottie-react-native"
 import {connect} from "react-redux"
+import {commonImages} from "../core/styles"
 
 const SplashScreen = (props) => {
 	useEffect(() => {
@@ -12,24 +13,27 @@ const SplashScreen = (props) => {
 	return (
 		// <Modal visible={!props.hasSplashScreenLoaded} animationType="fade">
 
-        
-		// <LottieView
-			
-		// 	source={require("./splash.json")}
-		// 	loop={false}
-		// 	autoPlay
-		// 	onAnimationFinish={() => {
-		// 		props.setHasSplashScreenLoaded(true)
-		// 	}}
-		// />
+		// <View style={{flex: 1, height: "100%", width: "100%"}}>
+		// 	{/* <LottieView
+		// 		source={require("./lottie.json")}
+		// 		loop={false}
+		// 		autoPlay
+		// 		// onAnimationFinish={() => {
+		// 		// 	props.setHasSplashScreenLoaded(true)
+		// 		// }}
+		// 	/> */}
+
+		// 	<Text>Splash Screen</Text>
+		// </View>
 		//  </Modal>
+
 		<View style={{justifyContent: "center", alignItems: "center", marginTop: 300}}>
 			<TouchableOpacity
 				onPress={() => {
 					props.setHasSplashScreenLoaded(true)
 				}}
 			>
-				<Text>Splash Screen</Text>
+				<Text style={{color: "black", fontSize: 20}}>Splash Screen</Text>
 			</TouchableOpacity>
 		</View>
 	)

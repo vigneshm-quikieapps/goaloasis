@@ -46,6 +46,7 @@ const FourthMilestone = ({clickedGoal}) => {
 							color={ColorConstants.faintWhite}
 							size={38}
 							style={CommonStyles.cross}
+							onPress={() => navigation.navigate("DParticularGoal")}
 						/>
 					</View>
 					<Text style={CommonStyles.milestoneText}>Enter Milestone</Text>
