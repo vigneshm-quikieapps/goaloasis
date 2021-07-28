@@ -34,10 +34,11 @@ const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
 			isCompleted: false,
 			color: "pink",
 		}
-		setCurrentGoal(currentGoalObj)
-		addGoalToFirestore(currentGoalObj)
 
-		navigation.navigate("mygoals")
+		addGoalToFirestore(currentGoalObj, () => {
+			navigation.navigate("mygoals")
+			setCurrentGoal(currentGoalObj)
+		})
 	}
 	const [date, setDate] = useState(new Date())
 

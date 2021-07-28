@@ -11,7 +11,6 @@ export default function App() {
 	return (
 		<Provider store={store}>
 			<AuthState>
-				{/* <SplashScreen /> */}
 				<Routing />
 			</AuthState>
 		</Provider>

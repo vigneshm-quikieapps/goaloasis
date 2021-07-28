@@ -35,7 +35,7 @@ export const getAllGoalsFromFirestore = (callback) => {
 }
 
 // Goal Delete Operation
-export const deleteGoalFromFirestore = (target) => {
+export const deleteGoalFromFirestore = (target, callback) => {
 	let targetObj = target
 	let deleteGoal = new Promise((resolve, reject) => {
 		firestore()
@@ -53,6 +53,7 @@ export const deleteGoalFromFirestore = (target) => {
 	deleteGoal
 		.then((deleted) => {
 			deleteGoalDataFromAsyncStorage(deleted.name)
+			callback ? callback() : null
 		})
 		.catch((err) => {
 			console.log("FB async delete error: ", err)
@@ -60,7 +61,7 @@ export const deleteGoalFromFirestore = (target) => {
 }
 
 // Goal Add Operation
-export const addGoalToFirestore = (data) => {
+export const addGoalToFirestore = (data, callback) => {
 	// console.log("Firebase Data 1", data)
 	let addGoal = new Promise((resolve, reject) => {
 		firestore()
@@ -84,6 +85,7 @@ export const addGoalToFirestore = (data) => {
 		.then((Obj) => {
 			addGoalDataToAsyncStorage(Obj) // adding data to Async Storage
 			console.log("FB obj added to async", Obj)
+			callback ? callback() : null
 		})
 		.catch((err) => {
 			console.log("FB async goal add error", err)
@@ -91,7 +93,7 @@ export const addGoalToFirestore = (data) => {
 }
 
 // goal Update Operation
-export const updateGoalToFirestore = (data) => {
+export const updateGoalToFirestore = (data, callback) => {
 	let targetObj = data
 	let updatedObj = {
 		...targetObj,
@@ -113,6 +115,7 @@ export const updateGoalToFirestore = (data) => {
 		.then((Obj) => {
 			addGoalDataToAsyncStorage(Obj) // adding data to Async Storage
 			console.log("FB obj added to async", Obj)
+			callback ? callback() : null
 		})
 		.catch((err) => {
 			console.log("FB async goal add error", err)

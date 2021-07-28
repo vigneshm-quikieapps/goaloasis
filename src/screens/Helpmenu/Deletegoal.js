@@ -6,6 +6,7 @@ import StatusBarScreen from "../MileStones/StatusBarScreen"
 import {deleteGoalFromFirestore} from "../../firebase"
 import {connect} from "react-redux"
 import {sizeConstants} from "../../core/styles"
+import {setBooleanFlag} from "./../../redux/actions"
 
 const Deletegoal = ({clickedGoal}) => {
 	const navigation = useNavigation()
@@ -19,9 +20,10 @@ const Deletegoal = ({clickedGoal}) => {
 	}
 
 	const deleteConfirm = () => {
-		deleteGoalFromFirestore(clickedGoal)
-		// navigation.navigate("milestones")
-		navigation.navigate("mygoals")
+		deleteGoalFromFirestore(clickedGoal, () => {
+			navigation.navigate("mygoals")
+			props.setBooleanFlag(!props.booleanFlag)
+		})
 	}
 	return (
 		<StatusBarScreen style={styles.container}>
@@ -48,11 +50,16 @@ const Deletegoal = ({clickedGoal}) => {
 const mapStateToProps = (state) => {
 	return {
 		clickedGoal: state.milestone.clickedGoal,
+		booleanFlag: state.milestone.booleanFlag,
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
-	return {}
+	return {
+		setBooleanFlag: (data) => {
+			dispatch(setBooleanFlag(data))
+		},
+	}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Deletegoal)

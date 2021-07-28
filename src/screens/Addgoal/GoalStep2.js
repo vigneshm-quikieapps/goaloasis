@@ -3,11 +3,10 @@ import {StyleSheet, Text, TouchableOpacity, View, TextInput} from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
-import {ColorConstants, CommonStyles} from "../../core/styles"
+import {ColorConstants, CommonStyles, sizeConstants} from "../../core/styles"
 import {setCurrentGoal} from "./../../redux/actions"
 import {connect} from "react-redux"
 import {CommonHomeButton, CommonPrevNextButton} from "../../core/CommonComponents"
-
 const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 	const navigation = useNavigation()
 	const [description, setDescription] = useState("")
@@ -41,9 +40,13 @@ const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 						<Text style={CommonStyles.subTitle}>
 							Write out what this goal means to you and make sure it’s something important.
 						</Text>
+
 						<View style={CommonStyles.centerCont}>
 							<TextInput
-								style={[CommonStyles.textInput, {height: 80, borderRadius: 30}]}
+								style={[
+									CommonStyles.textInput,
+									{height: 80, borderRadius: 30, marginTop: sizeConstants.xxxl},
+								]}
 								placeholder="Type Here"
 								multiline={true}
 								numberOfLines={4}
