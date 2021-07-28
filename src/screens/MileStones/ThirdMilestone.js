@@ -102,7 +102,12 @@ const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 					navigation.navigate("firsttaskflow")
 				}}
 			/>
-			<CommonHomeButton click={() => {}} size={44} />
+			<CommonHomeButton
+				click={() => {
+					navigation.navigate("mygoals")
+				}}
+				size={44}
+			/>
 		</ImageBackground>
 	)
 }
