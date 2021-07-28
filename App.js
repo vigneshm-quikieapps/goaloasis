@@ -5,11 +5,13 @@ import AuthState from "./src/context/auth/AuthState"
 
 import store from "./src/redux/store"
 import {Provider} from "react-redux"
+import SplashScreen from "./src/assets/splashScreen"
 
 export default function App() {
 	return (
 		<Provider store={store}>
 			<AuthState>
+				{/* <SplashScreen /> */}
 				<Routing />
 			</AuthState>
 		</Provider>

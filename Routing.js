@@ -1,5 +1,7 @@
 import {StatusBar} from "expo-status-bar"
 import React, {useEffect, useState, useContext} from "react"
+import {View} from "react-native"
+import LottieView from "lottie-react-native"
 
 import {NavigationContainer} from "@react-navigation/native"
 import {IntroStack, MainStack} from "./src/navigation"
@@ -16,17 +18,14 @@ export default function Routing() {
 	}, [reload])
 
 	const [firstTime, setFirstTime] = useState()
-	console.log("TESTING--->", firstTime)
+	// console.log("TESTING--->", firstTime)
 	const fetchData = async () => {
 		const data = await getFirstTimeUser()
 		setFirstTime(data)
 	}
 	return (
 		<NavigationContainer>
-			{/* <IntroStack /> */}
 			{firstTime === null ? <IntroStack /> : <MainStack />}
-			{/* <MainStack /> */}
-			{/* <TimelineFlowSlider /> */}
 			<StatusBar style="auto" />
 		</NavigationContainer>
 	)

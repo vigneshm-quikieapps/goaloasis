@@ -36,17 +36,11 @@ const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
 		}
 		setCurrentGoal(currentGoalObj)
 		addGoalToFirestore(currentGoalObj)
+
 		navigation.navigate("mygoals")
 	}
 	const [date, setDate] = useState(new Date())
-	console.log("CURRENT GOAL FROM GOAL STEP  3", currentGoal)
 
-	// let asyncData = []
-	// asyncData.push(name)
-	// asyncData.push(description)
-	// asyncData.push(date.toISOString())
-
-	// async Task
 	// TODO
 
 	const getColorForGoal = () => {
