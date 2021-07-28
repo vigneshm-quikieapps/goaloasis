@@ -19,7 +19,7 @@ import {ColorConstants, CommonStyles, sizeConstants} from "../../core/styles"
 import {connect} from "react-redux"
 import {CommonHomeButton, CustomDayComponentForCalendar} from "../../core/CommonComponents"
 
-const FourthMilestone = ({clickedGoal}) => {
+const FourthMilestone = ({clickedGoal, newMileStone}) => {
 	const navigation = useNavigation()
 	// const gotoHome = () => {
 	// 	navigation.navigate("secondMileStone")
@@ -28,7 +28,7 @@ const FourthMilestone = ({clickedGoal}) => {
 	// 	navigation.goBack()
 	// }
 
-	let temp = clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].milestone
+	let temp = newMileStone[0].milestone
 	const [milestone, setMilestone] = useState(temp)
 	const [value, onChange] = useState(new Date())
 	// const [date, setDate] = useState(null)

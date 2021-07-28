@@ -384,18 +384,6 @@ export const CommonStyles = ScaledSheet.create({
 		fontWeight: "bold",
 		color: "black",
 	},
-	container2: {
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "#FDF9F2",
-		width: "70%",
-		padding: scale(8),
-		borderRadius: sizeConstants.twentyFour,
-		flexDirection: "column",
-		marginVertical: sizeConstants.s,
-		marginTop: sizeConstants.l,
-		alignSelf: "center",
-	},
 
 	firstSubTitle: {
 		fontSize: 25,
@@ -765,18 +753,6 @@ export const CommonStyles = ScaledSheet.create({
 		color: ColorConstants.faintWhite,
 		marginLeft: sizeConstants.twentyOne,
 		// marginTop: sizeConstants.twentyX,
-	},
-	container2: {
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: ColorConstants.faintWhite,
-		width: "70%",
-		padding: sizeConstants.eightMX,
-		borderRadius: sizeConstants.xxl,
-		flexDirection: "column",
-		marginVertical: sizeConstants.five,
-		marginTop: sizeConstants.fifteenX,
-		alignSelf: "center",
 	},
 
 	button: {
