@@ -3,6 +3,7 @@ import React, {useEffect, useState, useContext} from "react"
 import LottieView from "lottie-react-native"
 import {connect} from "react-redux"
 import {commonImages} from "../core/styles"
+import {ColorConstants} from "./../core/styles"
 
 const SplashScreen = (props) => {
 	useEffect(() => {
@@ -27,15 +28,24 @@ const SplashScreen = (props) => {
 		// </View>
 		//  </Modal>
 
-		<View style={{justifyContent: "center", alignItems: "center", marginTop: 300}}>
-			<TouchableOpacity
+		// <View style={{justifyContent: "center", alignItems: "center", he}}>
+		/* <TouchableOpacity
 				onPress={() => {
 					props.setHasSplashScreenLoaded(true)
 				}}
 			>
-				<Text style={{color: "black", fontSize: 20}}>Splash Screen</Text>
-			</TouchableOpacity>
-		</View>
+				<Text style={{color: "black", fontSize: 20}}>Splash Screen</Text> */
+		//  </TouchableOpacity>
+		<ImageBackground
+			source={require("./images/logos.png")}
+			style={{
+				width: "100%",
+				height: "100%",
+				flex: 1,
+				backgroundColor: ColorConstants.darkFaintBlue,
+			}}
+		/>
+		// </View>
 	)
 }
 

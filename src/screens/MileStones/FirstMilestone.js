@@ -76,7 +76,7 @@ const FirstMilestone = ({
 	}
 
 	const handleHomeClick = () => {
-		navigation.navigate("ThirdMileStone")
+		navigation.navigate("mygoals")
 	}
 	// const goBack = () => {
 	// 	navigation.goBack()

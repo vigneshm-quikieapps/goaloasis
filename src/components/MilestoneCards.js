@@ -22,8 +22,9 @@ const MilestoneCards = ({
 	const navigation = useNavigation()
 	const icons = () => (
 		<View style={{flexDirection: "row", justifyContent: "space-between"}}>
-			<MaterialCommunityIcons name="delete" size={40} color="#77777B" style={{marginRight: 5}} />
-			<Octicons name="pencil" size={40} color="#77777B" />
+			<MaterialCommunityIcons name="delete" size={30} color="#77777B" style={{marginRight: 0}} />
+			<View style={{height: 40, width: 4, backgroundColor: "#77777B", borderRadius: 20}} />
+			<Octicons name="pencil" size={30} color="#77777B" style={{marginLeft: 4}} />
 		</View>
 	)
 

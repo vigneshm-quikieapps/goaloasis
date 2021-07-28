@@ -64,8 +64,9 @@ const ParticularGoal = (props) => {
 
 	const icons = () => (
 		<View style={{flexDirection: "row", justifyContent: "space-between"}}>
-			<MaterialCommunityIcons name="delete" size={40} color="#77777B" style={{marginRight: 5}} />
-			<Octicons name="pencil" size={40} color="#77777B" />
+			<MaterialCommunityIcons name="delete" size={25} color="#77777B" style={{marginRight: 0}} />
+			<View style={{height: 35, width: 4, backgroundColor: "#77777B", borderRadius: 20}} />
+			<Octicons name="pencil" size={25} color="#77777B" style={{marginLeft: 4}} />
 		</View>
 	)
 	const goBack = () => {
@@ -142,19 +143,25 @@ const ParticularGoal = (props) => {
 												style: CommonStyles.bgWhite,
 											},
 										]}
-										right={[
-											{
-												text: icons(),
-
-												onPress: () => {},
-												style: CommonStyles.bgWhite,
-											},
-										]}
 										autoClose={true}
 										disabled={false}
-										style={[CommonStyles.borderRadius30]}
+										style={[
+											CommonStyles.borderRadius30,
+											{
+												paddingHorizontal: 20,
+												backgroundColor: ColorConstants.lighterBlue,
+												fontSize: sizeConstants.nineteen,
+												paddingVertical: sizeConstants.seven,
+												color: ColorConstants.faintBlack1,
+											},
+										]}
 									>
-										<View style={CommonStyles.modalBottomBtn}>
+										<View
+											style={[
+												styles.btnTextContainer,
+												{paddingHorizontal: sizeConstants.twentyTwo},
+											]}
+										>
 											<Text style={[CommonStyles.btnText, styles.appBtn]}>{buttonText[page]}</Text>
 										</View>
 									</Swipeout>
@@ -173,26 +180,33 @@ const ParticularGoal = (props) => {
 									<Swipeout
 										right={[
 											{
-												text: (
-													<View style={CommonStyles.flexDirectionRow}>
-														<View style={styles.swipableBtnIconContainer}>
-															<AntDesign name="delete" size={24} color={ColorConstants.black} />
-														</View>
-														<View style={styles.swipableBtnIconContainer}>
-															<MaterialIcons name="edit" size={24} color={ColorConstants.black} />
-														</View>
-													</View>
-												),
+												text: icons(),
 												onPress: () => {},
 												style: CommonStyles.bgWhite,
 											},
 										]}
 										autoClose={true}
 										disabled={false}
-										style={CommonStyles.borderRadius30}
+										style={[
+											CommonStyles.borderRadius30,
+											{
+												paddingHorizontal: 20,
+												backgroundColor: ColorConstants.lighterBlue,
+												fontSize: sizeConstants.fifteenMX,
+												paddingVertical: sizeConstants.seven,
+												color: ColorConstants.faintBlack1,
+											},
+										]}
 									>
-										<View style={styles.btnTextContainer}>
-											<Text style={[CommonStyles.btnText, {color: ColorConstants.black}]}>
+										<View
+											style={[
+												styles.btnTextContainer,
+												{paddingHorizontal: sizeConstants.twentyTwo},
+											]}
+										>
+											<Text
+												style={[CommonStyles.btnText, {color: ColorConstants.black}, styles.appBtn]}
+											>
 												{buttonText[page]}
 											</Text>
 										</View>
@@ -203,6 +217,7 @@ const ParticularGoal = (props) => {
 									style={{
 										backgroundColor: ColorConstants.faintWhite,
 										color: ColorConstants.faintBlack1,
+										paddingHorizontal: 50,
 									}}
 									onPress={() => (page === 2 ? closeModal() : setPageNo(page + 1))}
 								/>

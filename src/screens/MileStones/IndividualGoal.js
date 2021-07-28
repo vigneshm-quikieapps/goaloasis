@@ -32,7 +32,7 @@ const IndividualGoal = (props) => {
 	// 	props.setFirstTimeForIndividualGoal(data)
 	// 	const isFirst = props.firstTimeIndividual === null ? true : false
 	// 	// setModalVisible(isFirst)
-	// }DDd
+	// }
 
 	const closeModal = async () => {
 		await setisFirstTimeIndividual()
