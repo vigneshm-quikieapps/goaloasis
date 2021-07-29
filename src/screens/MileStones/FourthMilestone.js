@@ -28,7 +28,7 @@ const FourthMilestone = ({clickedGoal, newMileStone}) => {
 	// 	navigation.goBack()
 	// }
 
-	let temp = newMileStone[0].milestone
+	let temp = newMileStone && newMileStone.length && newMileStone[0].milestone
 	const [milestone, setMilestone] = useState(temp)
 	const [value, onChange] = useState(new Date())
 	// const [date, setDate] = useState(null)

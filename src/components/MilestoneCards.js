@@ -1,11 +1,11 @@
-import React, {useState} from "react"
-import {StyleSheet, Text, View, TouchableOpacity, FlatList} from "react-native"
+import React, {useEffect, useState} from "react"
+import {StyleSheet, Text, View, TouchableOpacity, FlatList, Alert} from "react-native"
 import {Feather} from "@expo/vector-icons"
 import Swipeout from "rc-swipeout"
 import {MaterialCommunityIcons, AntDesign, MaterialIcons, Octicons} from "@expo/vector-icons"
 import {ColorConstants, sizeConstants} from "./../core/styles"
 import {useNavigation} from "@react-navigation/native"
-import {setClickedMilestone} from "./../redux/actions"
+import {setClickedGoal, setClickedMilestone} from "./../redux/actions"
 import {LongPressGestureHandler, State} from "react-native-gesture-handler"
 
 import {connect} from "react-redux"
@@ -14,34 +14,71 @@ import {addMilestoneToFirestore} from "./../firebase/index"
 const MilestoneCards = ({
 	data,
 	setClickedMilestone,
+	setClickedGoal,
 	clickedMilestone,
+	clickedGoal,
 	style,
-	fromParticularData,
+
 	fromIndividual,
 	clickedGoal,
 }) => {
+	useEffect(() => {}, [clickedGoal])
 	const [taskCompleted, setCompleted] = useState(true)
 	const navigation = useNavigation()
-	if (fromParticularData !== null && fromParticularData !== undefined) {
-		data = fromParticularData[fromParticularData.length - 1]
-	}
-
-	// console.log("CLICKED GOAL", clickedGoal.goalMilestone[0])
-	// console.log("FROM PARTICULAR", data)
-	// console.log("FROM ALL MILESTONE", data)
-
-	const icons = () => (
+	const icons = (milestoneObj) => (
 		<View style={{flexDirection: "row", justifyContent: "space-between"}}>
-			<MaterialCommunityIcons name="delete" size={30} color="#77777B" style={{marginRight: 0}} />
-			<View style={{height: 40, width: 4, backgroundColor: "#77777B", borderRadius: 20}} />
-			<Octicons name="pencil" size={30} color="#77777B" style={{marginLeft: 4}} />
+			<TouchableOpacity
+				onPress={() => {
+					deleteMilestoneAlert(milestoneObj.milestone)
+				}}
+			>
+				<MaterialCommunityIcons name="delete" size={30} color="#77777B" style={{marginRight: 0}} />
+			</TouchableOpacity>
+
+			<View style={{height: 40, width: 3, backgroundColor: "#77777B", borderRadius: 20}} />
+			<TouchableOpacity
+				onPress={() => {
+					navigation.navigate("EditMilestone", {
+						milestoneName: milestoneObj.milestone,
+						date: milestoneObj.date,
+					})
+				}}
+			>
+				<Octicons name="pencil" size={30} color="#77777B" style={{marginLeft: 4}} />
+			</TouchableOpacity>
 		</View>
 	)
 
 	let mileStoneArray = []
 	mileStoneArray.push(clickedGoal.goalMilestone)
 
-	const onLongPress = (event, name) => {
+	const deleteMilestoneAlert = (milestoneName) => {
+		console.log("clicked mile name: ", milestoneName)
+		return Alert.alert(milestoneName, "Delete this milestone?", [
+			{
+				text: "No",
+				onPress: () => console.log("Cancel Pressed"),
+				style: "cancel",
+			},
+			{
+				text: "Yes",
+				onPress: () => {
+					let filteredMilestoneArr = clickedGoal.goalMilestone.filter(
+						(mile) => mile.milestone != milestoneName
+					)
+					let updatedObj = {
+						...clickedGoal,
+						goalMilestone: filteredMilestoneArr,
+					}
+					addMilestoneToFirestore(clickedGoal, filteredMilestoneArr, () => {
+						setClickedGoal(updatedObj)
+					})
+					console.log("clickedGoal", updatedObj)
+				},
+			},
+		])
+	}
+	const onLongPress = (event) => {
 		if (event.nativeEvent.state === State.ACTIVE) {
 			// clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].isCompleted = true
 
@@ -71,6 +108,8 @@ const MilestoneCards = ({
 
 	// if (fromIndividual !== null && fromIndividual !== undefined) {
 	// 	data = fromIndividual[fromIndividual.length - 1]
+	// if (fromParticularData !== null && fromParticularData !== undefined) {
+	// 	data = fromParticularData[fromParticularData.length - 1]
 	// }
 
 	const emptyComponent = () => {
@@ -103,7 +142,7 @@ const MilestoneCards = ({
 					]}
 					right={[
 						{
-							text: icons(),
+							text: icons(data && {milestone: data.milestone, date: data.date}),
 
 							onPress: () => {},
 							style: {backgroundColor: ColorConstants.faintWhite},
@@ -165,7 +204,6 @@ const MilestoneCards = ({
 					}}
 					ListEmptyComponent={emptyComponent}
 					renderItem={(item) => {
-						console.log("FlatList", item.item.reoccuring)
 						let bottomItem = item.item.reoccuring
 							? item.item.reoccuring.reoccuringType == "Daily"
 								? "Reoccuring Daily"
@@ -204,6 +242,7 @@ const mapDispatchToProps = (dispatch) => {
 		setClickedGoal: (data) => {
 			dispatch(setClickedGoal(data))
 		},
+		setClickedGoal: (task) => dispatch(setClickedGoal(task)),
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(MilestoneCards)

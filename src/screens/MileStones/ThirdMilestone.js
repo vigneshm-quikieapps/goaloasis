@@ -29,7 +29,7 @@ const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 	// }
 	// const [date, setDate] = useState(new Date())
 	console.log("TESTTTTTTTTING", newMileStone)
-	let temp = newMileStone[0].milestone
+	let temp = newMileStone && newMileStone.length && newMileStone[0].milestone
 	const [milestone, setMilestone] = useState(temp)
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 
