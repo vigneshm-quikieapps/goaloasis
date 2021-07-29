@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {StyleSheet, Text, View, TouchableOpacity, FlatList, Alert} from "react-native"
 import {Feather} from "@expo/vector-icons"
 import Swipeout from "rc-swipeout"
@@ -18,16 +18,17 @@ const MilestoneCards = ({
 	clickedMilestone,
 	clickedGoal,
 	style,
-	fromParticularData,
+
 	fromIndividual,
 }) => {
+	useEffect(() => {}, [clickedGoal])
 	const [taskCompleted, setCompleted] = useState(true)
 	const navigation = useNavigation()
-	const icons = (milestoneName) => (
+	const icons = (milestoneObj) => (
 		<View style={{flexDirection: "row", justifyContent: "space-between"}}>
 			<TouchableOpacity
 				onPress={() => {
-					deleteMilestoneAlert(milestoneName)
+					deleteMilestoneAlert(milestoneObj.milestone)
 				}}
 			>
 				<MaterialCommunityIcons name="delete" size={30} color="#77777B" style={{marginRight: 0}} />
@@ -36,7 +37,10 @@ const MilestoneCards = ({
 			<View style={{height: 40, width: 3, backgroundColor: "#77777B", borderRadius: 20}} />
 			<TouchableOpacity
 				onPress={() => {
-					console.log("clickedMilestone", milestoneName)
+					navigation.navigate("EditMilestone", {
+						milestoneName: milestoneObj.milestone,
+						date: milestoneObj.date,
+					})
 				}}
 			>
 				<Octicons name="pencil" size={30} color="#77777B" style={{marginLeft: 4}} />
@@ -76,14 +80,10 @@ const MilestoneCards = ({
 	}
 	const [upDown, setUpDown] = useState(false)
 
-	if (fromParticularData !== null && fromParticularData !== undefined) {
-		data = fromParticularData[fromParticularData.length - 1]
-	}
+	// if (fromParticularData !== null && fromParticularData !== undefined) {
+	// 	data = fromParticularData[fromParticularData.length - 1]
+	// }
 
-	if (fromIndividual !== null && fromIndividual !== undefined) {
-		data = fromIndividual[fromIndividual.length - 1]
-	}
-	// console.log("FROM MILESTONE CARD", data)
 	const emptyComponent = () => {
 		return (
 			<View style={[styles.accordian, {alignSelf: "flex-end"}]}>
@@ -114,7 +114,7 @@ const MilestoneCards = ({
 					]}
 					right={[
 						{
-							text: icons(data && data.milestone),
+							text: icons(data && {milestone: data.milestone, date: data.date}),
 
 							onPress: () => {},
 							style: {backgroundColor: ColorConstants.faintWhite},
@@ -167,7 +167,6 @@ const MilestoneCards = ({
 					}}
 					ListEmptyComponent={emptyComponent}
 					renderItem={(item) => {
-						console.log("FlatList", item.item.reoccuring)
 						let bottomItem = item.item.reoccuring
 							? item.item.reoccuring.reoccuringType == "Daily"
 								? "Reoccuring Daily"

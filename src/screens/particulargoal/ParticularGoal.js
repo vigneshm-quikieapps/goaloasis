@@ -290,7 +290,7 @@ const ParticularGoal = (props) => {
 					<ScrollView>
 						<MilestoneCards
 							style={{backgroundColor: ColorConstants.lighterBlue}}
-							fromParticularData={DATA}
+							data={DATA[DATA.length - 1]}
 							style={{marginTop: 0}}
 						/>
 					</ScrollView>
