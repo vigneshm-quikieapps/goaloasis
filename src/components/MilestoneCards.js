@@ -18,7 +18,7 @@ const MilestoneCards = ({
 	clickedMilestone,
 	clickedGoal,
 	style,
-	fromIndividual,
+
 }) => {
 	useEffect(() => {}, [clickedGoal])
 	const [taskCompleted, setCompleted] = useState(true)
@@ -91,10 +91,8 @@ const MilestoneCards = ({
 				...clickedGoal,
 				goalMilestone: newMilestone,
 			}
-			console.log("qwerty", updatedObj)
 
 			addMilestoneToFirestore(clickedGoal, newMilestone, () => {
-				console.log("UPDATED", newMilestone)
 				setClickedGoal(updatedObj)
 			})
 

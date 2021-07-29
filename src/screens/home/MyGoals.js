@@ -49,22 +49,17 @@ const MyGoals = ({
 	allGoals,
 	currentGoal,
 	booleanFlag,
+	clickedGoal,
 	newMileStone,
 }) => {
-	// const [test, setTest] = useState({})
-
 	useEffect(() => {
-		// getAllGoalsFromFirestore((goals) => {
-		// 	// console.log("goals from firestore", goals)
-		// })
-		// console.log("Height of this device is: ", Height)
 		fetchData()
 	}, [testData, firstTime, firstTimeTimelineFlow, allGoals])
 
 	const fetchData = async () => {
 		const data = await getFirstTimeTaskTutorial().catch((err) => console.log(err))
 		const data1 = await getFirstTimeTimelineFlow().catch((err) => console.log(err))
-		console.log("getFirstTimeTimelineFlow", !firstTimeTimelineFlow)
+
 		setFirstTime(data)
 		setFirstTimeForTimeLine(data1)
 	}
@@ -72,11 +67,11 @@ const MyGoals = ({
 
 	const handleOpenNewGoal = (task) => {
 		getClickedGoalFromAsyncStorage(task).then((data) => {
-			let clickedGoal = JSON.parse(data)
-			console.log("clicked goal from mygoals", clickedGoal)
-			setClickedGoal(clickedGoal)
+			let clickedGoalObj = JSON.parse(data)
 
-			clickedGoal && clickedGoal.goalMilestone.length
+			setClickedGoal(clickedGoalObj)
+
+			clickedGoalObj && clickedGoalObj.goalMilestone.length
 				? navigation.navigate("particulargoal")
 				: navigation.navigate("DParticularGoal")
 		})
@@ -110,7 +105,7 @@ const MyGoals = ({
 
 	useEffect(() => {
 		importData()
-	}, [currentGoal, booleanFlag])
+	}, [currentGoal, booleanFlag, clickedGoal])
 
 	const importData = async () => {
 		try {
@@ -127,14 +122,27 @@ const MyGoals = ({
 				const val = await AsyncStorage.getItem(key)
 				result.push(JSON.parse(val))
 			}
-			console.log("RESULT", result)
+
 			setAllGoals(result)
 		} catch (error) {
 			console.error(error)
 		}
 	}
-	console.log("ALL GOALS", allGoals)
-	console.log("LATEST MILESTONE", newMileStone)
+
+	const getGoalCompletionPercent = (goalObj) => {
+		let allMilestonesArrayFromCurrentGoal = [...goalObj.goalMilestone]
+
+		let allMilesLen = allMilestonesArrayFromCurrentGoal.length
+		if (!allMilesLen) return 0
+		let allCompletedMiles = allMilestonesArrayFromCurrentGoal.filter((mile) => {
+			return mile.isCompleted
+		})
+
+		let completedMilesLen = allCompletedMiles.length
+		let percentCompleted = (completedMilesLen / allMilesLen) * 100
+		console.log("getGoalCompletionPercent", allMilesLen, completedMilesLen, percentCompleted)
+		return percentCompleted.toFixed(0)
+	}
 
 	return (
 		<StatusBarScreen style={styles.container}>
@@ -143,20 +151,6 @@ const MyGoals = ({
 				onPress={!firstTime ? gotoTaskTutorial : gotoTodaysTask}
 			>
 				<View style={{flexDirection: "row"}}>
-					{/* <IconBadge
-						MainElement={
-							<Text style={[CommonStyles.mainTitle, {marginBottom: sizeConstants.twelve}]}>
-								Today’s tasks
-							</Text>
-						}
-						BadgeElement={<Text style={{color: "#FFFFFF"}}>0</Text>}
-						IconBadgeStyle={{
-							width: 30,
-							height: 30,
-							backgroundColor: ColorConstants.gray,
-						}}
-					/> */}
-
 					<Text style={[CommonStyles.mainTitle, {marginBottom: sizeConstants.twelve}]}>
 						Today’s tasks
 					</Text>
@@ -186,30 +180,36 @@ const MyGoals = ({
 					<View style={CommonStyles.logoSpacing}>
 						{allGoals &&
 							allGoals.length > 0 &&
-							allGoals.map((task, index) => (
-								<View key={index}>
-									<TouchableOpacity
-										style={CommonStyles.logoContainer}
-										onPress={() => {
-											task.isCompleted ? null : handleOpenNewGoal(task.name)
-										}}
-									>
-										<ProgressCircle
-											percent={task.isCompleted ? 100 : 0}
-											radius={sizeConstants.fiftyHalf}
-											borderWidth={5}
-											color={getColor(index)}
-											shadowColor="#999"
-											bgColor="#FBF5E9"
+							allGoals.map((task, index) => {
+								let completedPercent = getGoalCompletionPercent(task)
+								// console.log("completedPercent", completedPercent)
+								return (
+									<View key={index}>
+										<TouchableOpacity
+											style={CommonStyles.logoContainer}
+											onPress={() => {
+												task.isCompleted || completedPercent == 100
+													? null
+													: handleOpenNewGoal(task.name)
+											}}
 										>
-											<Text style={{fontSize: 22, color: getColor(index), fontWeight: "bold"}}>
-												{task.isCompleted ? "100%" : "0%"}
-											</Text>
-										</ProgressCircle>
-										<Text style={CommonStyles.goalText}>{task.name}</Text>
-									</TouchableOpacity>
-								</View>
-							))}
+											<ProgressCircle
+												percent={task.isCompleted ? 100 : completedPercent}
+												radius={sizeConstants.fiftyHalf}
+												borderWidth={5}
+												color={getColor(index)}
+												shadowColor="#999"
+												bgColor="#FBF5E9"
+											>
+												<Text style={{fontSize: 22, color: getColor(index), fontWeight: "bold"}}>
+													{task.isCompleted ? "100%" : `${completedPercent}%`}
+												</Text>
+											</ProgressCircle>
+											<Text style={CommonStyles.goalText}>{task.name}</Text>
+										</TouchableOpacity>
+									</View>
+								)
+							})}
 
 						<View>
 							{/* <TouchableOpacity style={CommonStyles.logoContainer} onPress={gotoGoal}>
