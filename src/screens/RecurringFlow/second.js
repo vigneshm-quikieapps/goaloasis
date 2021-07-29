@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {StyleSheet, Text, TouchableOpacity, View, ScrollView} from "react-native"
+import {StyleSheet, Text, TouchableOpacity, View, ScrollView, TextInput} from "react-native"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {Calendar} from "react-native-calendars"
@@ -30,6 +30,8 @@ const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag}) => {
 	}, [])
 
 	const {reoccuring, reoccuringDays, taskDate, taskName} = route.params
+	const [tName, setTaskName] = useState(taskName)
+
 	const [value, onChange] = useState(new Date())
 	const [clickedDate, setDate] = useState(taskDate ? new Date(taskDate) : new Date())
 
@@ -143,9 +145,14 @@ const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag}) => {
 						<Entypo name="cross" color="#FDF9F2" size={38} style={CommonStyles.cross} />
 					</View>
 					<Text style={CommonStyles.enterTask}>Enter Task</Text>
-					<TouchableOpacity style={[CommonStyles.container2, {marginTop: sizeConstants.xs}]}>
-						<Text style={CommonStyles.button}>{taskName}</Text>
-					</TouchableOpacity>
+					<View style={CommonStyles.centerCont}>
+						<TextInput
+							style={CommonStyles.textInput}
+							placeholder="Type Here"
+							onChangeText={(text) => setTaskName(text)}
+							value={taskName}
+						/>
+					</View>
 					<View style={[CommonStyles.editContainer, {marginVertical: 0}]}>
 						<Text style={CommonStyles.editOccuringText}>Edit Reoccuring</Text>
 					</View>
@@ -252,7 +259,7 @@ const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag}) => {
 
 							setReoccuring()
 
-							// navigation.navigate("particulargoal")
+							navigation.navigate("particulargoal")
 						}}
 					>
 						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>

@@ -1,5 +1,5 @@
 import React, {useState, useRef} from "react"
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native"
+import {StyleSheet, Text, TouchableOpacity, View, TextInput} from "react-native"
 
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
@@ -16,6 +16,7 @@ const First = ({route, clickedMilestone}) => {
 	const refRBSheet = useRef()
 	const [toggle, setToggle] = useState("Daily")
 	const {taskDate, taskName} = route.params
+	const [tName, setTaskName] = useState(taskName)
 
 	const [value, onChange] = useState(new Date())
 	const [date, setDate] = useState(new Date())
@@ -89,9 +90,14 @@ const First = ({route, clickedMilestone}) => {
 				</View>
 			</RBSheet>
 			<Text style={CommonStyles.enterTask}>Enter Task</Text>
-			<TouchableOpacity style={CommonStyles.container2}>
-				<Text style={CommonStyles.button}>Read One Chapter</Text>
-			</TouchableOpacity>
+			<View style={CommonStyles.centerCont}>
+				<TextInput
+					style={CommonStyles.textInput}
+					placeholder="Type Here"
+					onChangeText={(text) => setTaskName(text)}
+					value={taskName}
+				/>
+			</View>
 			<Text style={CommonStyles.firstSubTitle}>Edit reoccuring</Text>
 
 			<SwitchSelector
