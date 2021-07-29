@@ -1,5 +1,13 @@
 import React, {useEffect, useState} from "react"
-import {StyleSheet, Text, TouchableOpacity, View, ScrollView, Dimensions} from "react-native"
+import {
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+	TextInput,
+	ScrollView,
+	Dimensions,
+} from "react-native"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {Calendar} from "react-native-calendars"
@@ -14,7 +22,7 @@ import {
 } from "../../core/CommonComponents"
 import {connect} from "react-redux"
 
-const ThirdTaskFlow = ({clickedGoal, route}) => {
+const ThirdTaskFlow = ({clickedGoal, route, clickedMilestone}) => {
 	const navigation = useNavigation()
 	const {taskDate, taskName} = route.params
 
@@ -24,7 +32,7 @@ const ThirdTaskFlow = ({clickedGoal, route}) => {
 	// const goBack = () => {
 	// 	navigation.goBack()
 	// }
-	const [task, setTask] = useState()
+	const [task, setTaskData] = useState(taskName)
 
 	const [value, onChange] = useState(new Date())
 	const [clickedDate, setDate] = useState(taskDate)
@@ -61,7 +69,7 @@ const ThirdTaskFlow = ({clickedGoal, route}) => {
 			<ScrollView>
 				<View style={CommonStyles.flexOne}>
 					<View style={CommonStyles.flexDirectionRow}>
-						<Text style={CommonStyles.mainTitle}>Read 5 book</Text>
+						<Text style={CommonStyles.mainTitle}>{clickedMilestone}</Text>
 						<Entypo
 							name="cross"
 							color={ColorConstants.faintWhite}
@@ -70,11 +78,17 @@ const ThirdTaskFlow = ({clickedGoal, route}) => {
 							onPress={() => navigation.navigate("DParticularGoal")}
 						/>
 					</View>
-					<Text style={CommonStyles.milestoneText}>Enter task</Text>
-					<TouchableOpacity
-						style={[CommonStyles.container2, height <= 700 ? {marginTop: sizeConstants.xs} : {}]}
-					>
-						<Text style={CommonStyles.button}>Read One Book</Text>
+					<Text style={CommonStyles.milestoneText}>Enter Task</Text>
+					<TouchableOpacity style={[height <= 700 ? {marginTop: sizeConstants.xs} : {}]}>
+						{/* <Text style={CommonStyles.button}>Read One Book</Text> */}
+						<View style={CommonStyles.centerCont}>
+							<TextInput
+								style={CommonStyles.textInput}
+								placeholder="Type Here"
+								value={task}
+								onChangeText={(text) => setTaskData(text)}
+							/>
+						</View>
 					</TouchableOpacity>
 					<Text style={CommonStyles.subTitleMilestone}>
 						{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
@@ -204,6 +218,7 @@ const ThirdTaskFlow = ({clickedGoal, route}) => {
 const mapStateToProps = (state) => {
 	return {
 		clickedGoal: state.milestone.clickedGoal,
+		clickedMilestone: state.milestone.clickedMilestone,
 	}
 }
 const mapDispatchToProps = (dispatch) => {

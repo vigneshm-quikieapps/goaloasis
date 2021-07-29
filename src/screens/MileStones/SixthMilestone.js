@@ -16,6 +16,7 @@ import {
 	CommonPrevNextButton,
 } from "../../core/CommonComponents"
 import {connect} from "react-redux"
+import {verticalScale} from "react-native-size-matters"
 const SixthMilestone = ({clickedGoal}) => {
 	const navigation = useNavigation()
 	let temp = clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].milestone
@@ -98,10 +99,15 @@ const SixthMilestone = ({clickedGoal}) => {
 				right={true}
 				left={true}
 				nextClick={() => navigation.navigate("firsttaskflow")}
-				prevClick={() => navigation.navigate("addgoal")}
-				bottom={0}
+				prevClick={() => navigation.navigate("FirstMilestone")}
+				bottom={sizeConstants.negativeSixty}
 			/>
-			<CommonHomeButton click={() => {}} size={44} />
+			<CommonHomeButton
+				click={() => {
+					navigation.navigate("particulargoal")
+				}}
+				size={44}
+			/>
 		</ImageBackground>
 	)
 }

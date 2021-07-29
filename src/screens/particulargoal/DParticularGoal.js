@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
 		color: "black",
 	},
 	goalsContainer: {
-		flex: 0.6,
+		flex: 0.8,
 		backgroundColor: "#588C8D",
 		borderTopRightRadius: sizeConstants.seventy,
 	},

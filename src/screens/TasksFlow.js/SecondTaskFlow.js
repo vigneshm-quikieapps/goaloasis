@@ -45,13 +45,18 @@ const SecondTaskFlow = ({clickedGoal, clickedMilestone, route}) => {
 					name="cross"
 					color={ColorConstants.faintWhite}
 					size={38}
-					style={CommonStyles.cross}
+					style={{
+						backgroundColor: ColorConstants.greyishBlue,
+						borderRadius: sizeConstants.twentyMX,
+						position: "absolute",
+						right: 0,
+					}}
 					onPress={() => navigation.navigate("DParticularGoal")}
 				/>
 			</View>
 
 			<Text style={styles.milestoneText}>Enter Task</Text>
-			<View style={styles.centerCont}>
+			<View style={CommonStyles.centerCont}>
 				<TextInput
 					style={styles.textInput}
 					placeholder="Type Here"
@@ -203,10 +208,7 @@ const styles = StyleSheet.create({
 		color: ColorConstants.faintBlack2,
 		elevation: sizeConstants.m,
 	},
-	centerCont: {
-		justifyContent: "center",
-		alignItems: "center",
-	},
+
 	cross: {
 		backgroundColor: ColorConstants.darkFaintBlue,
 		borderRadius: sizeConstants.twentyX,

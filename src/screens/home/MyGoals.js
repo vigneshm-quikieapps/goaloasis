@@ -18,7 +18,6 @@ import StatusBarScreen from "../MileStones/StatusBarScreen"
 import Constants from "expo-constants"
 import {connect} from "react-redux"
 import AsyncStorage from "@react-native-community/async-storage"
-import IconBadge from "react-native-icon-badge"
 
 import {
 	setTestData,

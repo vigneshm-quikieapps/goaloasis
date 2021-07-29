@@ -111,7 +111,7 @@ const FirstTaskFlow = ({
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
 		<ImageBackground
-			style={[CommonStyles.mainContainer, styles.image, CommonStyles.pt10]}
+			style={[CommonStyles.mainContainer, styles.image]}
 			source={commonImages.secondImage}
 			resizeMode="stretch"
 		>

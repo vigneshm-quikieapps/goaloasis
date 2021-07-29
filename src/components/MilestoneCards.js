@@ -18,9 +18,7 @@ const MilestoneCards = ({
 	clickedMilestone,
 	clickedGoal,
 	style,
-
 	fromIndividual,
-	clickedGoal,
 }) => {
 	useEffect(() => {}, [clickedGoal])
 	const [taskCompleted, setCompleted] = useState(true)
@@ -78,7 +76,7 @@ const MilestoneCards = ({
 			},
 		])
 	}
-	const onLongPress = (event) => {
+	const onLongPress = (event, name) => {
 		if (event.nativeEvent.state === State.ACTIVE) {
 			// clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].isCompleted = true
 

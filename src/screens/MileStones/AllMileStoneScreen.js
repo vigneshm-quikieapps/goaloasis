@@ -204,7 +204,7 @@ const AllMilestonesScreen = (props) => {
 			{/* MODAL CODE END */}
 
 			<View style={styles.goalsContainer}>
-				<View style={{marginTop: 25, flexDirection: "row"}}>
+				<View style={{marginTop: sizeConstants.xxl, flexDirection: "row"}}>
 					<View>
 						<Text style={styles.myGoalsText}>My milestones</Text>
 					</View>

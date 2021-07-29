@@ -11,7 +11,11 @@ import {CommonStyles} from "../../core/styles"
 import {sizeConstants, ColorConstants} from "./../../core/styles"
 import {scale, verticalScale} from "react-native-size-matters"
 import {connect} from "react-redux"
-import {getClickedGoalFromAsyncStorage, setisFirstTimeIndividual} from "./../../utils/asyncStorage"
+import {
+	getClickedGoalFromAsyncStorage,
+	getFirstTimeIndividual,
+	setisFirstTimeIndividual,
+} from "./../../utils/asyncStorage"
 import {setBooleanFlag, setFirstTimeForIndividualGoal} from "../../redux/actions"
 import AppButton from "../MileStones/AppButton"
 import Swipeout from "rc-swipeout"
@@ -19,14 +23,25 @@ import {LongPressGestureHandler, State} from "react-native-gesture-handler"
 
 const ParticularGoal = (props) => {
 	const navigation = useNavigation()
-
 	const [DATA, setData] = useState([])
 	const [modalVisible, setModalVisible] = useState(false)
+
+	useEffect(() => {
+		// setModalVisible(false)
+		getClickedGoalFromAsyncStorage(props.clickedGoal.name).then((goal) => {
+			let goals = JSON.parse(goal)
+			setData(goals.goalMilestone)
+		})
+	}, [props.clickedGoal, props.booleanFlag])
+
+	useEffect(() => {
+		getFirstTimeData()
+	}, [props.firstTimeIndividual])
 
 	const getFirstTimeData = async () => {
 		const data = await getFirstTimeIndividual()
 		props.setFirstTimeForIndividualGoal(data)
-		const isFirst = props.firstTimeIndividual === null ? true : false
+		const isFirst = props.firstTimeIndividual === "visited" ? false : true
 		setModalVisible(isFirst)
 	}
 
@@ -45,19 +60,10 @@ const ParticularGoal = (props) => {
 	]
 	const [page, setPageNo] = useState(0)
 
-	useEffect(() => {
-		setModalVisible(false)
-		getFirstTimeData()
-		getClickedGoalFromAsyncStorage(props.clickedGoal.name).then((goal) => {
-			let goals = JSON.parse(goal)
-			setData(goals.goalMilestone)
-		})
-	}, [props.firstTimeIndividual, props.clickedGoal, props.booleanFlag])
-
 	const icons = () => (
 		<View style={{flexDirection: "row", justifyContent: "space-between"}}>
 			<MaterialCommunityIcons name="delete" size={25} color="#77777B" style={{marginRight: 0}} />
-			<View style={{height: 35, width: 4, backgroundColor: "#77777B", borderRadius: 20}} />
+			<View style={{height: 35, width: 2, backgroundColor: "#77777B", borderRadius: 20}} />
 			<Octicons name="pencil" size={25} color="#77777B" style={{marginLeft: 4}} />
 		</View>
 	)
@@ -124,7 +130,13 @@ const ParticularGoal = (props) => {
 								}}
 							>
 								{page == 0 ? (
-									<AppButton title={buttonText[page]} style={styles.appBtn} />
+									<AppButton
+										title={buttonText[page]}
+										style={[
+											styles.appBtn,
+											{width: "80%", justifyContent: "center", borderRadius: 35, padding: 0},
+										]}
+									/>
 								) : page == 1 ? (
 									<Swipeout
 										left={[
@@ -138,8 +150,8 @@ const ParticularGoal = (props) => {
 										disabled={false}
 										style={CommonStyles.borderRadius30}
 									>
-										<View style={CommonStyles.modalBottomBtn}>
-											<Text style={CommonStyles.btnText}>{buttonText[page]}</Text>
+										<View style={styles.btnTextContainer}>
+											<Text style={styles.btnText}>{buttonText[page]}</Text>
 										</View>
 									</Swipeout>
 								) : (
@@ -157,16 +169,7 @@ const ParticularGoal = (props) => {
 									<Swipeout
 										right={[
 											{
-												text: (
-													<View style={CommonStyles.flexDirectionRow}>
-														<View style={styles.swipableBtnIconContainer}>
-															<AntDesign name="delete" size={24} color={ColorConstants.black} />
-														</View>
-														<View style={styles.swipableBtnIconContainer}>
-															<MaterialIcons name="edit" size={24} color={ColorConstants.black} />
-														</View>
-													</View>
-												),
+												text: icons(),
 												onPress: () => {},
 												style: CommonStyles.bgWhite,
 											},
@@ -176,9 +179,7 @@ const ParticularGoal = (props) => {
 										style={[CommonStyles.borderRadius30]}
 									>
 										<View style={styles.btnTextContainer}>
-											<Text style={[CommonStyles.btnText, {color: ColorConstants.black}]}>
-												{buttonText[page]}
-											</Text>
+											<Text style={[styles.btnText]}>{buttonText[page]}</Text>
 										</View>
 									</Swipeout>
 								)}
@@ -188,6 +189,7 @@ const ParticularGoal = (props) => {
 										backgroundColor: ColorConstants.faintWhite,
 										color: ColorConstants.faintBlack1,
 										width: "80%",
+										paddingLeft: "16%",
 									}}
 									onPress={() => (page === 2 ? closeModal() : setPageNo(page + 1))}
 								/>
@@ -197,6 +199,7 @@ const ParticularGoal = (props) => {
 				</Modal>
 				{/* MODAL CODE END */}
 				<RBBottomSheet name={props.clickedGoal.name} />
+
 				<Text style={styles.subTitle}>I want to continue improve myself and my state of mind.</Text>
 				<View style={CommonStyles.trackingcont}>
 					<ProgressCircle
@@ -341,6 +344,11 @@ const styles = StyleSheet.create({
 		backgroundColor: "#588C8D",
 		borderTopRightRadius: sizeConstants.seventy,
 	},
+	btnText: {
+		fontSize: sizeConstants.fifteenMX,
+		color: ColorConstants.faintBlack1,
+		// letterSpacing: "1.2@s",
+	},
 	viewTap: {
 		height: sizeConstants.xxxl,
 		width: sizeConstants.xxxl,
@@ -424,6 +432,7 @@ const styles = StyleSheet.create({
 		color: ColorConstants.faintBlack1,
 	},
 	contentText: {fontSize: sizeConstants.twentyX, color: ColorConstants.faintBlack1},
+
 	appBtn: {
 		backgroundColor: ColorConstants.lighterBlue,
 		fontSize: sizeConstants.fifteenMX,
