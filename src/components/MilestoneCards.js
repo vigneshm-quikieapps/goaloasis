@@ -117,6 +117,7 @@ const MilestoneCards = ({
 			</View>
 		)
 	}
+	console.log("cards: ", data && data.taskData && data.taskData.length)
 	return (
 		<View
 			style={{
@@ -168,9 +169,9 @@ const MilestoneCards = ({
 
 								{taskCompleted && data && !data.isCompleted ? (
 									<View style={{alignItems: "center"}}>
-										<Text style={{fontSize: 16}}>{`Task: 0/${
-											data && data.taskData && data.taskData.length
-										}`}</Text>
+										<Text
+											style={{fontSize: 16, color: "#000"}}
+										>{`Task: 0/${data.taskData.length}`}</Text>
 										<Feather
 											name={upDown ? "chevron-up" : "chevron-down"}
 											size={25}
