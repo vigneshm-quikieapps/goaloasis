@@ -18,9 +18,6 @@ const MilestoneCards = ({
 	clickedMilestone,
 	clickedGoal,
 	style,
-
-	fromIndividual,
-	clickedGoal,
 }) => {
 	useEffect(() => {}, [clickedGoal])
 	const [taskCompleted, setCompleted] = useState(true)
@@ -78,7 +75,7 @@ const MilestoneCards = ({
 			},
 		])
 	}
-	const onLongPress = (event) => {
+	const onLongPress = (event, name) => {
 		if (event.nativeEvent.state === State.ACTIVE) {
 			// clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].isCompleted = true
 
@@ -93,10 +90,8 @@ const MilestoneCards = ({
 				...clickedGoal,
 				goalMilestone: newMilestone,
 			}
-			console.log("qwerty", updatedObj)
 
 			addMilestoneToFirestore(clickedGoal, newMilestone, () => {
-				console.log("UPDATED", newMilestone)
 				setClickedGoal(updatedObj)
 			})
 

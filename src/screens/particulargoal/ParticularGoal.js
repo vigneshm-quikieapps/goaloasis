@@ -11,7 +11,11 @@ import {CommonStyles} from "../../core/styles"
 import {sizeConstants, ColorConstants} from "./../../core/styles"
 import {scale, verticalScale} from "react-native-size-matters"
 import {connect} from "react-redux"
-import {getClickedGoalFromAsyncStorage, setisFirstTimeIndividual} from "./../../utils/asyncStorage"
+import {
+	getClickedGoalFromAsyncStorage,
+	getFirstTimeIndividual,
+	setisFirstTimeIndividual,
+} from "./../../utils/asyncStorage"
 import {setBooleanFlag, setFirstTimeForIndividualGoal} from "../../redux/actions"
 import AppButton from "../MileStones/AppButton"
 import Swipeout from "rc-swipeout"
@@ -22,6 +26,9 @@ const ParticularGoal = (props) => {
 
 	const [DATA, setData] = useState([])
 	const [modalVisible, setModalVisible] = useState(false)
+	const [allMilestonesLength, setMilestonesLength] = useState(0)
+	const [completedMilestonesLength, setCompletedMilestonesLength] = useState(0)
+	const [goalCompletedPercent, setGoalPercent] = useState(0)
 
 	const getFirstTimeData = async () => {
 		const data = await getFirstTimeIndividual()
@@ -51,8 +58,28 @@ const ParticularGoal = (props) => {
 		getClickedGoalFromAsyncStorage(props.clickedGoal.name).then((goal) => {
 			let goals = JSON.parse(goal)
 			setData(goals.goalMilestone)
+			getGoalCompletionPercent()
 		})
 	}, [props.firstTimeIndividual, props.clickedGoal, props.booleanFlag])
+
+	const getGoalCompletionPercent = () => {
+		let allMilestonesArrayFromCurrentGoal = [...props.clickedGoal.goalMilestone]
+		let allMilesLen = allMilestonesArrayFromCurrentGoal.length
+
+		let allCompletedMiles = allMilestonesArrayFromCurrentGoal.filter((mile) => {
+			return mile.isCompleted
+		})
+
+		console.log("allCompletedMiles", allCompletedMiles.length)
+		let completedMilesLen = allCompletedMiles.length
+
+		let percentCompleted = (completedMilesLen / allMilesLen) * 100
+		console.log("getGoalCompletionPercent", allMilesLen, completedMilesLen, percentCompleted)
+
+		setMilestonesLength(allMilesLen)
+		setCompletedMilestonesLength(completedMilesLen)
+		setGoalPercent(percentCompleted.toFixed(1))
+	}
 
 	const icons = () => (
 		<View style={{flexDirection: "row", justifyContent: "space-between"}}>
@@ -200,7 +227,7 @@ const ParticularGoal = (props) => {
 				<Text style={styles.subTitle}>I want to continue improve myself and my state of mind.</Text>
 				<View style={CommonStyles.trackingcont}>
 					<ProgressCircle
-						percent={5}
+						percent={goalCompletedPercent}
 						radius={86}
 						borderWidth={5}
 						color="#588C8D"
@@ -214,23 +241,38 @@ const ParticularGoal = (props) => {
 					</ProgressCircle>
 
 					<View style={{flexDirection: "row"}}>
-						<View style={{marginHorizontal: 10}}>
-							<Text style={styles.goalsText}>
+						<View style={{marginHorizontal: 10, alignItems: "flex-start"}}>
+							<View style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
 								<View
-									style={{height: 8, width: 8, borderRadius: 8 / 2, backgroundColor: "#588C8D"}}
-								></View>{" "}
-								Goal
-							</Text>
-							<Text style={styles.goalsText}>
+									style={{
+										height: 8,
+										width: 8,
+										borderRadius: 8,
+										marginRight: 5,
+										backgroundColor: "#588C8D",
+									}}
+								></View>
+								<Text style={styles.goalsText}>Goal</Text>
+							</View>
+
+							<View style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
 								<View
-									style={{height: 8, width: 8, borderRadius: 8 / 2, backgroundColor: "#86C7C8"}}
-								></View>{" "}
-								Milestone
-							</Text>
+									style={{
+										height: 8,
+										width: 8,
+										borderRadius: 8,
+										marginRight: 5,
+										backgroundColor: "#86C7C8",
+									}}
+								></View>
+								<Text style={styles.goalsText}>Milestone</Text>
+							</View>
 						</View>
 						<View>
-							<Text style={styles.goalsText}>• 0%</Text>
-							<Text style={styles.goalsText}>• 0/0</Text>
+							<Text style={styles.goalsText}>{`• ${goalCompletedPercent}%`}</Text>
+							<Text
+								style={styles.goalsText}
+							>{`• ${completedMilestonesLength}/${allMilestonesLength}`}</Text>
 						</View>
 					</View>
 				</View>

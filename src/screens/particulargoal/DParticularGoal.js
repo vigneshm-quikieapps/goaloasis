@@ -24,7 +24,7 @@ const DParticularGoals = ({clickedGoal}) => {
 
 				<View style={CommonStyles.trackingcont}>
 					<ProgressCircle
-						percent={5}
+						percent={0}
 						radius={86}
 						borderWidth={5}
 						color="#588C8D"
@@ -38,19 +38,32 @@ const DParticularGoals = ({clickedGoal}) => {
 					</ProgressCircle>
 
 					<View style={{flexDirection: "row"}}>
-						<View style={{marginHorizontal: 10}}>
-							<Text style={styles.goalsText}>
+						<View style={{marginHorizontal: 10, alignItems: "flex-start"}}>
+							<View style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
 								<View
-									style={{height: 8, width: 8, borderRadius: 8 / 2, backgroundColor: "#588C8D"}}
-								></View>{" "}
-								Goal
-							</Text>
-							<Text style={styles.goalsText}>
+									style={{
+										height: 8,
+										width: 8,
+										borderRadius: 8,
+										marginRight: 5,
+										backgroundColor: "#588C8D",
+									}}
+								></View>
+								<Text style={styles.goalsText}>Goal</Text>
+							</View>
+
+							<View style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
 								<View
-									style={{height: 8, width: 8, borderRadius: 8 / 2, backgroundColor: "#86C7C8"}}
-								></View>{" "}
-								Milestone
-							</Text>
+									style={{
+										height: 8,
+										width: 8,
+										borderRadius: 8,
+										marginRight: 5,
+										backgroundColor: "#86C7C8",
+									}}
+								></View>
+								<Text style={styles.goalsText}>Milestone</Text>
+							</View>
 						</View>
 						<View>
 							<Text style={styles.goalsText}>• 0%</Text>
