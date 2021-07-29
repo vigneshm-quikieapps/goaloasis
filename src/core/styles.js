@@ -10,6 +10,7 @@ import colors from "../../colors"
 import {Dimensions} from "react-native"
 
 export const sizeConstants = {
+	negativeSixty: verticalScale(-160),
 	negativeSeventy: verticalScale(-70),
 	negativeThirty: verticalScale(-30),
 	negativeTwenty: verticalScale(-20),

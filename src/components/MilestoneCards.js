@@ -18,6 +18,7 @@ const MilestoneCards = ({
 	clickedMilestone,
 	clickedGoal,
 	style,
+
 }) => {
 	useEffect(() => {}, [clickedGoal])
 	const [taskCompleted, setCompleted] = useState(true)
