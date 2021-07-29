@@ -1,40 +1,81 @@
 import React, {useState} from "react"
-import {StyleSheet, Text, View, TouchableOpacity, FlatList} from "react-native"
+import {StyleSheet, Text, View, TouchableOpacity, FlatList, Alert} from "react-native"
 import {Feather} from "@expo/vector-icons"
 import Swipeout from "rc-swipeout"
 import {MaterialCommunityIcons, AntDesign, MaterialIcons, Octicons} from "@expo/vector-icons"
 import {ColorConstants, sizeConstants} from "./../core/styles"
 import {useNavigation} from "@react-navigation/native"
-import {setClickedMilestone} from "./../redux/actions"
+import {setClickedGoal, setClickedMilestone} from "./../redux/actions"
 import {LongPressGestureHandler, State} from "react-native-gesture-handler"
 
 import {connect} from "react-redux"
+import {addMilestoneToFirestore} from "../firebase"
 
 const MilestoneCards = ({
 	data,
 	setClickedMilestone,
+	setClickedGoal,
 	clickedMilestone,
+	clickedGoal,
 	style,
 	fromParticularData,
 	fromIndividual,
 }) => {
 	const [taskCompleted, setCompleted] = useState(true)
 	const navigation = useNavigation()
-	const icons = () => (
+	const icons = (milestoneName) => (
 		<View style={{flexDirection: "row", justifyContent: "space-between"}}>
-			<MaterialCommunityIcons name="delete" size={30} color="#77777B" style={{marginRight: 0}} />
-			<View style={{height: 40, width: 4, backgroundColor: "#77777B", borderRadius: 20}} />
-			<Octicons name="pencil" size={30} color="#77777B" style={{marginLeft: 4}} />
+			<TouchableOpacity
+				onPress={() => {
+					deleteMilestoneAlert(milestoneName)
+				}}
+			>
+				<MaterialCommunityIcons name="delete" size={30} color="#77777B" style={{marginRight: 0}} />
+			</TouchableOpacity>
+
+			<View style={{height: 40, width: 3, backgroundColor: "#77777B", borderRadius: 20}} />
+			<TouchableOpacity
+				onPress={() => {
+					console.log("clickedMilestone", milestoneName)
+				}}
+			>
+				<Octicons name="pencil" size={30} color="#77777B" style={{marginLeft: 4}} />
+			</TouchableOpacity>
 		</View>
 	)
-
+	const deleteMilestoneAlert = (milestoneName) => {
+		console.log("clicked mile name: ", milestoneName)
+		return Alert.alert(milestoneName, "Delete this milestone?", [
+			{
+				text: "No",
+				onPress: () => console.log("Cancel Pressed"),
+				style: "cancel",
+			},
+			{
+				text: "Yes",
+				onPress: () => {
+					let filteredMilestoneArr = clickedGoal.goalMilestone.filter(
+						(mile) => mile.milestone != milestoneName
+					)
+					let updatedObj = {
+						...clickedGoal,
+						goalMilestone: filteredMilestoneArr,
+					}
+					addMilestoneToFirestore(clickedGoal, filteredMilestoneArr, () => {
+						setClickedGoal(updatedObj)
+					})
+					console.log("clickedGoal", updatedObj)
+				},
+			},
+		])
+	}
 	const onLongPress = (event) => {
 		if (event.nativeEvent.state === State.ACTIVE) {
 			setCompleted(!taskCompleted)
 		}
 	}
 	const [upDown, setUpDown] = useState(false)
-	// console.log("FROM MILESTONE CARD", fromParticularData)
+
 	if (fromParticularData !== null && fromParticularData !== undefined) {
 		data = fromParticularData[fromParticularData.length - 1]
 	}
@@ -42,7 +83,7 @@ const MilestoneCards = ({
 	if (fromIndividual !== null && fromIndividual !== undefined) {
 		data = fromIndividual[fromIndividual.length - 1]
 	}
-
+	// console.log("FROM MILESTONE CARD", data)
 	const emptyComponent = () => {
 		return (
 			<View style={[styles.accordian, {alignSelf: "flex-end"}]}>
@@ -73,7 +114,7 @@ const MilestoneCards = ({
 					]}
 					right={[
 						{
-							text: icons(),
+							text: icons(data && data.milestone),
 
 							onPress: () => {},
 							style: {backgroundColor: ColorConstants.faintWhite},
@@ -155,12 +196,14 @@ const MilestoneCards = ({
 const mapStateToProps = (state) => {
 	return {
 		clickedMilestone: state.milestone.clickedMilestone,
+		clickedGoal: state.milestone.clickedGoal,
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		setClickedMilestone: (task) => dispatch(setClickedMilestone(task)),
+		setClickedGoal: (task) => dispatch(setClickedGoal(task)),
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(MilestoneCards)
