@@ -50,6 +50,7 @@ const FirstMilestone = ({
 				milestone: milestone,
 				date: clickedDate,
 				taskData: [],
+				isCompleted: false,
 			},
 		]
 
@@ -60,13 +61,13 @@ const FirstMilestone = ({
 
 		addNewMilestone(milestoneArr)
 		setClickedMilestone(milestone)
-		addNewMilestone([
-			{
-				milestone: milestone,
-				date: clickedDate,
-				taskData: [],
-			},
-		])
+		// addNewMilestone([
+		// 	{
+		// 		milestone: milestone,
+		// 		date: clickedDate,
+		// 		taskData: [],
+		// 	},
+		// ])
 		addMilestoneToFirestore(clickedGoal, milestoneArr, () => {
 			setClickedGoal(updatedObj)
 		})
@@ -78,9 +79,7 @@ const FirstMilestone = ({
 	const handleHomeClick = () => {
 		navigation.navigate("mygoals")
 	}
-	// const goBack = () => {
-	// 	navigation.goBack()
-	// }
+	console.log("Checking Milestone completed", clickedGoal)
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
 		<ImageBackground style={[styles.image]} source={commonImages.secondImage} resizeMode="stretch">

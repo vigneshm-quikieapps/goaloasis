@@ -626,11 +626,12 @@ export const CommonStyles = ScaledSheet.create({
 		backgroundColor: "#588C8D",
 		justifyContent: "center",
 	},
-	goalsContainer: {
-		flex: 1,
-		backgroundColor: "#FBF5E9",
-		borderTopRightRadius: sizeConstants.seventy,
+	titleContainer1: {
+		height: scale(90) - Constants.statusBarHeight,
+		backgroundColor: "#588C8D",
+		justifyContent: "center",
 	},
+
 	viewTap: {
 		height: sizeConstants.six,
 		width: scale(60),
@@ -827,11 +828,7 @@ export const CommonStyles = ScaledSheet.create({
 	},
 
 	// MyGoals Home Screen
-	titleContainer1: {
-		height: scale(90) - Constants.statusBarHeight,
-		backgroundColor: "#588C8D",
-		justifyContent: "center",
-	},
+
 	goalsContainer: {
 		flex: 1,
 		backgroundColor: "#FBF5E9",

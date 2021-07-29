@@ -117,7 +117,7 @@ const SecondTaskFlow = ({clickedGoal, clickedMilestone, route}) => {
 				/>
 			</View>
 
-			<CommonHomeButton />
+			<CommonHomeButton click={() => navigation.navigate("particulargoal")} />
 		</ImageBackground>
 	)
 }

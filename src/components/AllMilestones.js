@@ -7,7 +7,7 @@ import {connect} from "react-redux"
 import {getClickedGoalFromAsyncStorage} from "../utils/asyncStorage"
 import {sizeConstants, ColorConstants} from "../core/styles"
 
-const AllMilestones = ({data}) => {
+const AllMilestones = ({data, boolean}) => {
 	const [upDown, setUpDown] = useState(false)
 	const [upDownTwo, setUpDownTwo] = useState(false)
 	const [upDown3, setUpDown3] = useState(false)

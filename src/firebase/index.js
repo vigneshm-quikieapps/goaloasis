@@ -122,19 +122,21 @@ export const updateGoalToFirestore = (data, callback) => {
 		})
 }
 
-export const addMilestoneToFirestore = (target, milestoneArr, navigationCallback) => {
+export const addMilestoneToFirestore = (target, milestoneArr, callback) => {
 	// let targetObj = JSON.parse(target)
 	let targetObj = target
 	let updatedObj = {
 		...targetObj,
 		goalMilestone: milestoneArr,
 	}
+	console.log("UPDATED", targetObj.id)
 	let addMiletonesToGoal = new Promise((resolve, reject) => {
 		firestore()
 			.collection(GOALS_COLLECTION)
 			.doc(targetObj.id)
 			.update(updatedObj)
 			.then(() => {
+				console.log("RESOLVE", updatedObj)
 				resolve(updatedObj)
 			})
 			.catch((err) => {
@@ -145,7 +147,7 @@ export const addMilestoneToFirestore = (target, milestoneArr, navigationCallback
 		.then((updated) => {
 			addGoalDataToAsyncStorage(updated) // adding data to Async Storage//TODO update redux for clicked goals
 			console.log("FB milestone updated", updated)
-			navigationCallback ? navigationCallback() : null
+			callback ? callback() : null
 		})
 		.catch((err) => {
 			console.log("FB error", err)

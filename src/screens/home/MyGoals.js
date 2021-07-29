@@ -18,6 +18,7 @@ import StatusBarScreen from "../MileStones/StatusBarScreen"
 import Constants from "expo-constants"
 import {connect} from "react-redux"
 import AsyncStorage from "@react-native-community/async-storage"
+import IconBadge from "react-native-icon-badge"
 
 import {
 	setTestData,
@@ -49,14 +50,15 @@ const MyGoals = ({
 	allGoals,
 	currentGoal,
 	booleanFlag,
+	newMileStone,
 }) => {
 	// const [test, setTest] = useState({})
 
 	useEffect(() => {
-		getAllGoalsFromFirestore((goals) => {
-			// console.log("goals from firestore", goals)
-		})
-		console.log("Height of this device is: ", Height)
+		// getAllGoalsFromFirestore((goals) => {
+		// 	// console.log("goals from firestore", goals)
+		// })
+		// console.log("Height of this device is: ", Height)
 		fetchData()
 	}, [testData, firstTime, firstTimeTimelineFlow, allGoals])
 
@@ -101,11 +103,6 @@ const MyGoals = ({
 		navigation.navigate("timeline")
 	}
 
-	// const goToProblem = () => {
-	// 	navigation.navigate("IndividualGoal")
-
-	// }
-
 	const getColor = (index) => {
 		const a = (index + 1) % 6
 		return colorArray[a]
@@ -137,6 +134,8 @@ const MyGoals = ({
 			console.error(error)
 		}
 	}
+	console.log("ALL GOALS", allGoals)
+	console.log("LATEST MILESTONE", newMileStone)
 
 	return (
 		<StatusBarScreen style={styles.container}>
@@ -144,9 +143,37 @@ const MyGoals = ({
 				style={CommonStyles.titleContainer1}
 				onPress={!firstTime ? gotoTaskTutorial : gotoTodaysTask}
 			>
-				<Text style={CommonStyles.mainTitle}>Today’s tasks</Text>
-			</TouchableOpacity>
+				<View style={{flexDirection: "row"}}>
+					{/* <IconBadge
+						MainElement={
+							<Text style={[CommonStyles.mainTitle, {marginBottom: sizeConstants.twelve}]}>
+								Today’s tasks
+							</Text>
+						}
+						BadgeElement={<Text style={{color: "#FFFFFF"}}>0</Text>}
+						IconBadgeStyle={{
+							width: 30,
+							height: 30,
+							backgroundColor: ColorConstants.gray,
+						}}
+					/> */}
 
+					<Text style={[CommonStyles.mainTitle, {marginBottom: sizeConstants.twelve}]}>
+						Today’s tasks
+					</Text>
+					<View
+						style={{
+							width: sizeConstants.twentyFour,
+							height: sizeConstants.twentyFour,
+							backgroundColor: "red",
+							borderRadius: sizeConstants.twentyFour,
+							justifyContent: "center",
+						}}
+					>
+						<Text style={{color: "#FFFFFF", alignSelf: "center"}}>0</Text>
+					</View>
+				</View>
+			</TouchableOpacity>
 			<View style={CommonStyles.goalsContainer}>
 				<View style={{justifyContent: "center", alignItems: "center"}}>
 					<View style={CommonStyles.viewTap}></View>
@@ -247,6 +274,7 @@ const mapStateToProps = (state) => {
 		allGoals: state.milestone.allGoals,
 		currentGoal: state.milestone.currentGoal,
 		booleanFlag: state.milestone.booleanFlag,
+		newMileStone: state.milestone.newMileStone,
 	}
 }
 

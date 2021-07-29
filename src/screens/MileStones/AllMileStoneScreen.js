@@ -21,7 +21,10 @@ import {CommonHomeButton} from "../../core/CommonComponents"
 const AllMilestonesScreen = (props) => {
 	const [DATA, setData] = useState([])
 	const navigation = useNavigation()
+	const [modalVisible, setModalVisible] = useState(false)
+
 	// Modal Code
+
 	useEffect(() => {
 		setModalVisible(false)
 		getFirstTimeData()
@@ -38,12 +41,6 @@ const AllMilestonesScreen = (props) => {
 		setModalVisible(isFirst)
 	}
 
-	const closeModal = async () => {
-		await setisFirstTimeIndividual()
-		props.setFirstTimeForIndividualGoal("visited")
-		setModalVisible(false)
-		// navigation.navigate("milestones")
-	}
 	const dataText = ["Congrats! You're one step closer to your goal.", "", ""]
 	const buttonText = [
 		"Long Press to mark complete",
@@ -56,7 +53,6 @@ const AllMilestonesScreen = (props) => {
 		navigation.goBack()
 	}
 
-	const [modalVisible, setModalVisible] = useState(false)
 	const [isLongPressed, setLongPressed] = useState(false)
 	// Modal Code End
 	const refRBSheet = useRef()
@@ -79,7 +75,7 @@ const AllMilestonesScreen = (props) => {
 
 			<View style={styles.titleContainer}></View>
 			{/* MODAL CODE START */}
-			<Modal animationType="slide" transparent={true} visible={modalVisible}>
+			{/* <Modal animationType="slide" transparent={true} visible={modalVisible}>
 				<View style={[CommonStyles.mainContainer, styles.blackOp60]}>
 					<View style={styles.modalContainer}>
 						<View style={styles.modalInnerContainer}>
@@ -204,13 +200,13 @@ const AllMilestonesScreen = (props) => {
 						</View>
 					</View>
 				</View>
-			</Modal>
+			</Modal> */}
 			{/* MODAL CODE END */}
 
 			<View style={styles.goalsContainer}>
 				<View style={{marginTop: 25, flexDirection: "row"}}>
 					<View>
-						<Text style={styles.myGoalsText}>My milestoness</Text>
+						<Text style={styles.myGoalsText}>My milestones</Text>
 					</View>
 					<View style={styles.viewTap}>
 						<MaterialCommunityIcons
@@ -305,16 +301,29 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 	},
+	// viewTap: {
+	// 	flexDirection: "row-reverse",
+	// 	margin: 120,
+	// 	height: 35,
+	// 	width: 35,
+	// 	backgroundColor: "white",
+	// 	marginVertical: 10,
+	// 	borderRadius: 35 / 2,
+	// 	justifyContent: "center",
+	// 	alignItems: "center",
+	// },
 	viewTap: {
-		flexDirection: "row-reverse",
-		margin: 120,
-		height: 35,
-		width: 35,
-		backgroundColor: "white",
-		marginVertical: 10,
-		borderRadius: 35 / 2,
+		height: sizeConstants.thirtyFive,
+		width: sizeConstants.thirtyFive,
+		backgroundColor: ColorConstants.white,
+		marginBottom: sizeConstants.m,
+		borderRadius: sizeConstants.thirtyFive,
 		justifyContent: "center",
 		alignItems: "center",
+		flexDirection: "row-reverse",
+		position: "absolute",
+		right: 0,
+		marginRight: sizeConstants.thirty,
 	},
 	titleContainer: {
 		height: 50,
@@ -380,15 +389,6 @@ const styles = StyleSheet.create({
 	// goalsContainer: {
 	// 	flex: 0.75,
 	// 	borderTopRightRadius: sizeConstants.seventy,
-	// },
-	// viewTap: {
-	// 	height: sizeConstants.fifty,
-	// 	width: sizeConstants.fifty,
-	// 	backgroundColor: ColorConstants.white,
-	// 	marginBottom: sizeConstants.m,
-	// 	borderRadius: sizeConstants.fifty / 2,
-	// 	justifyContent: "center",
-	// 	alignItems: "center",
 	// },
 
 	// bottomBtn: {

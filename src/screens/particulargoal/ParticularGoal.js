@@ -21,19 +21,14 @@ const ParticularGoal = (props) => {
 	const navigation = useNavigation()
 
 	const [DATA, setData] = useState([])
-	useEffect(() => {
-		getFirstTimeData()
-	}, [])
-	const [taskCompleted, setCompleted] = useState(true)
-
-	const onLongPress = (event) => {
-		if (event.nativeEvent.state === State.ACTIVE) {
-			// alert("I've been pressed for 800 milliseconds")
-			setCompleted(!taskCompleted)
-		}
-	}
-
 	const [modalVisible, setModalVisible] = useState(false)
+
+	const getFirstTimeData = async () => {
+		const data = await getFirstTimeIndividual()
+		props.setFirstTimeForIndividualGoal(data)
+		const isFirst = props.firstTimeIndividual === null ? true : false
+		setModalVisible(isFirst)
+	}
 
 	const closeModal = async () => {
 		await setisFirstTimeIndividual()
@@ -41,12 +36,7 @@ const ParticularGoal = (props) => {
 		setModalVisible(false)
 		// navigation.navigate("milestones")
 	}
-	const getFirstTimeData = async () => {
-		const data = await getFirstTimeIndividual()
-		props.setFirstTimeForIndividualGoal(data)
-		const isFirst = props.firstTimeIndividual === null ? true : false
-		setModalVisible(isFirst)
-	}
+
 	const dataText = ["Congrats! You're one step closer to your goal.", "", ""]
 	const buttonText = [
 		"Long Press to mark complete",
@@ -56,11 +46,13 @@ const ParticularGoal = (props) => {
 	const [page, setPageNo] = useState(0)
 
 	useEffect(() => {
+		setModalVisible(false)
+		getFirstTimeData()
 		getClickedGoalFromAsyncStorage(props.clickedGoal.name).then((goal) => {
 			let goals = JSON.parse(goal)
 			setData(goals.goalMilestone)
 		})
-	}, [props.clickedGoal, props.booleanFlag])
+	}, [props.firstTimeIndividual, props.clickedGoal, props.booleanFlag])
 
 	const icons = () => (
 		<View style={{flexDirection: "row", justifyContent: "space-between"}}>
@@ -72,12 +64,11 @@ const ParticularGoal = (props) => {
 	const goBack = () => {
 		navigation.goBack()
 	}
-
+	// console.log("DATA FROM", DATA)
 	return (
 		<StatusBarScreen style={styles.container}>
 			<View style={CommonStyles.titleContainer}>
-				{/* CREATING MODAL */}
-
+				{/* MODAL CODE START */}
 				<Modal animationType="slide" transparent={true} visible={modalVisible}>
 					<View style={[CommonStyles.mainContainer, styles.blackOp60]}>
 						<View style={styles.modalContainer}>
@@ -145,24 +136,10 @@ const ParticularGoal = (props) => {
 										]}
 										autoClose={true}
 										disabled={false}
-										style={[
-											CommonStyles.borderRadius30,
-											{
-												paddingHorizontal: 20,
-												backgroundColor: ColorConstants.lighterBlue,
-												fontSize: sizeConstants.nineteen,
-												paddingVertical: sizeConstants.seven,
-												color: ColorConstants.faintBlack1,
-											},
-										]}
+										style={CommonStyles.borderRadius30}
 									>
-										<View
-											style={[
-												styles.btnTextContainer,
-												{paddingHorizontal: sizeConstants.twentyTwo},
-											]}
-										>
-											<Text style={[CommonStyles.btnText, styles.appBtn]}>{buttonText[page]}</Text>
+										<View style={CommonStyles.modalBottomBtn}>
+											<Text style={CommonStyles.btnText}>{buttonText[page]}</Text>
 										</View>
 									</Swipeout>
 								) : (
@@ -180,33 +157,26 @@ const ParticularGoal = (props) => {
 									<Swipeout
 										right={[
 											{
-												text: icons(),
+												text: (
+													<View style={CommonStyles.flexDirectionRow}>
+														<View style={styles.swipableBtnIconContainer}>
+															<AntDesign name="delete" size={24} color={ColorConstants.black} />
+														</View>
+														<View style={styles.swipableBtnIconContainer}>
+															<MaterialIcons name="edit" size={24} color={ColorConstants.black} />
+														</View>
+													</View>
+												),
 												onPress: () => {},
 												style: CommonStyles.bgWhite,
 											},
 										]}
 										autoClose={true}
 										disabled={false}
-										style={[
-											CommonStyles.borderRadius30,
-											{
-												paddingHorizontal: 20,
-												backgroundColor: ColorConstants.lighterBlue,
-												fontSize: sizeConstants.fifteenMX,
-												paddingVertical: sizeConstants.seven,
-												color: ColorConstants.faintBlack1,
-											},
-										]}
+										style={[CommonStyles.borderRadius30]}
 									>
-										<View
-											style={[
-												styles.btnTextContainer,
-												{paddingHorizontal: sizeConstants.twentyTwo},
-											]}
-										>
-											<Text
-												style={[CommonStyles.btnText, {color: ColorConstants.black}, styles.appBtn]}
-											>
+										<View style={styles.btnTextContainer}>
+											<Text style={[CommonStyles.btnText, {color: ColorConstants.black}]}>
 												{buttonText[page]}
 											</Text>
 										</View>
@@ -217,7 +187,7 @@ const ParticularGoal = (props) => {
 									style={{
 										backgroundColor: ColorConstants.faintWhite,
 										color: ColorConstants.faintBlack1,
-										paddingHorizontal: 50,
+										width: "80%",
 									}}
 									onPress={() => (page === 2 ? closeModal() : setPageNo(page + 1))}
 								/>
@@ -225,8 +195,7 @@ const ParticularGoal = (props) => {
 						</View>
 					</View>
 				</Modal>
-
-				{/* MODEL CREATION END */}
+				{/* MODAL CODE END */}
 				<RBBottomSheet name={props.clickedGoal.name} />
 				<Text style={styles.subTitle}>I want to continue improve myself and my state of mind.</Text>
 				<View style={CommonStyles.trackingcont}>

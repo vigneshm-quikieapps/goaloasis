@@ -9,6 +9,7 @@ import {setClickedMilestone} from "./../redux/actions"
 import {LongPressGestureHandler, State} from "react-native-gesture-handler"
 
 import {connect} from "react-redux"
+import {addMilestoneToFirestore} from "./../firebase/index"
 
 const MilestoneCards = ({
 	data,
@@ -17,9 +18,18 @@ const MilestoneCards = ({
 	style,
 	fromParticularData,
 	fromIndividual,
+	clickedGoal,
 }) => {
 	const [taskCompleted, setCompleted] = useState(true)
 	const navigation = useNavigation()
+	if (fromParticularData !== null && fromParticularData !== undefined) {
+		data = fromParticularData[fromParticularData.length - 1]
+	}
+
+	// console.log("CLICKED GOAL", clickedGoal.goalMilestone[0])
+	// console.log("FROM PARTICULAR", data)
+	// console.log("FROM ALL MILESTONE", data)
+
 	const icons = () => (
 		<View style={{flexDirection: "row", justifyContent: "space-between"}}>
 			<MaterialCommunityIcons name="delete" size={30} color="#77777B" style={{marginRight: 0}} />
@@ -28,20 +38,40 @@ const MilestoneCards = ({
 		</View>
 	)
 
-	const onLongPress = (event) => {
+	let mileStoneArray = []
+	mileStoneArray.push(clickedGoal.goalMilestone)
+
+	const onLongPress = (event, name) => {
 		if (event.nativeEvent.state === State.ACTIVE) {
+			// clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].isCompleted = true
+
+			let newMilestone = clickedGoal.goalMilestone.map((item) => {
+				if (item.milestone === name) {
+					return {...item, isCompleted: true}
+				} else {
+					return item
+				}
+			})
+			let updatedObj = {
+				...clickedGoal,
+				goalMilestone: newMilestone,
+			}
+			console.log("qwerty", updatedObj)
+
+			addMilestoneToFirestore(clickedGoal, newMilestone, () => {
+				console.log("UPDATED", newMilestone)
+				setClickedGoal(updatedObj)
+			})
+
 			setCompleted(!taskCompleted)
 		}
 	}
-	const [upDown, setUpDown] = useState(false)
-	// console.log("FROM MILESTONE CARD", fromParticularData)
-	if (fromParticularData !== null && fromParticularData !== undefined) {
-		data = fromParticularData[fromParticularData.length - 1]
-	}
 
-	if (fromIndividual !== null && fromIndividual !== undefined) {
-		data = fromIndividual[fromIndividual.length - 1]
-	}
+	const [upDown, setUpDown] = useState(false)
+
+	// if (fromIndividual !== null && fromIndividual !== undefined) {
+	// 	data = fromIndividual[fromIndividual.length - 1]
+	// }
 
 	const emptyComponent = () => {
 		return (
@@ -84,17 +114,24 @@ const MilestoneCards = ({
 					autoClose={true}
 					disabled={false}
 				>
-					<LongPressGestureHandler onHandlerStateChange={onLongPress} minDurationMs={800}>
-						{taskCompleted ? (
-							<View style={[styles.swipableBtnContainer]}>
-								<TouchableOpacity
-									style={[styles.TouchContainer, style]}
-									onPress={() => setUpDown(!upDown)}
-								>
-									<View>
-										<Text style={styles.mainTitle}>{data && data.milestone}</Text>
-										<Text style={styles.subtitle}>{data && data.date}</Text>
-									</View>
+					<LongPressGestureHandler
+						onHandlerStateChange={(event) => {
+							onLongPress(event, data.milestone)
+						}}
+						minDurationMs={800}
+					>
+						{/* {taskCompleted && !boolean */}
+						<View style={[styles.swipableBtnContainer]}>
+							<TouchableOpacity
+								style={[styles.TouchContainer, style]}
+								onPress={() => setUpDown(!upDown)}
+							>
+								<View>
+									<Text style={styles.mainTitle}>{data && data.milestone}</Text>
+									<Text style={styles.subtitle}>{data && data.date}</Text>
+								</View>
+
+								{taskCompleted && data && !data.isCompleted ? (
 									<View style={{alignItems: "center"}}>
 										<Text style={{fontSize: 16}}>{`Task: 0/${
 											data && data.taskData && data.taskData.length
@@ -105,13 +142,15 @@ const MilestoneCards = ({
 											color="black"
 										/>
 									</View>
-								</TouchableOpacity>
-							</View>
-						) : (
-							<View style={[styles.swipableBtnContainer]}>
-								<Text style={{color: "black", fontSize: 20}}>MISSION COMPLETE!</Text>
-							</View>
-						)}
+								) : (
+									<View style={{alignItems: "center"}}>
+										<Text style={{color: ColorConstants.gray, fontWeight: "bold"}}>
+											MILESTONE COMPLETED
+										</Text>
+									</View>
+								)}
+							</TouchableOpacity>
+						</View>
 					</LongPressGestureHandler>
 				</Swipeout>
 			</View>
@@ -155,12 +194,16 @@ const MilestoneCards = ({
 const mapStateToProps = (state) => {
 	return {
 		clickedMilestone: state.milestone.clickedMilestone,
+		clickedGoal: state.milestone.clickedGoal,
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		setClickedMilestone: (task) => dispatch(setClickedMilestone(task)),
+		setClickedGoal: (data) => {
+			dispatch(setClickedGoal(data))
+		},
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(MilestoneCards)

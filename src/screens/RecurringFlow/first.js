@@ -8,8 +8,10 @@ import SwitchSelector from "react-native-switch-selector"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import {CommonStyles, sizeConstants} from "../../core/styles"
 import {CommonHomeButton, reoccuringDefaultDailyArray, weekArray} from "../../core/CommonComponents"
+import {setClickedGoal} from "./../../redux/actions"
+import {connect} from "react-redux"
 
-const First = ({route}) => {
+const First = ({route, clickedMilestone}) => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
 	const [toggle, setToggle] = useState("Daily")
@@ -38,7 +40,7 @@ const First = ({route}) => {
 	return (
 		<StatusBarScreen style={styles.introContainer}>
 			<View style={{flexDirection: "row"}}>
-				<Text style={CommonStyles.mainTitle}>Read 5 books</Text>
+				<Text style={CommonStyles.mainTitle}>{clickedMilestone}</Text>
 				<TouchableOpacity onPress={() => refRBSheet.current.open()} style={CommonStyles.threeDots}>
 					<View style={CommonStyles.dots}></View>
 					<View style={CommonStyles.dots}></View>
@@ -193,7 +195,21 @@ const First = ({route}) => {
 	)
 }
 
-export default First
+const mapStateToProps = (state) => {
+	return {
+		clickedGoal: state.milestone.clickedGoal,
+		clickedMilestone: state.milestone.clickedMilestone,
+		booleanFlag: state.milestone.booleanFlag,
+	}
+}
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setClickedGoal: (data) => {
+			dispatch(setClickedGoal(data))
+		},
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(First)
 
 const styles = StyleSheet.create({
 	introContainer: {
