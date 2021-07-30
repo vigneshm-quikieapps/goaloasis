@@ -45,23 +45,38 @@ const RBBottomSheet = ({name = "MileStone Title", flag = true}) => {
 				<View style={{alignItems: "center", marginTop: 20, width: "100%"}}>
 					<TouchableOpacity
 						style={styles.BottomTouch}
-						onPress={() => navigation.navigate("markcomplete")}
+						onPress={() => {
+							refRBSheet.current.close()
+							navigation.navigate("markcomplete")
+						}}
 					>
 						<Text style={styles.bottomText}>Mark Goal Complete</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={styles.BottomTouch}
-						onPress={() => navigation.navigate("editgoal")}
+						onPress={() => {
+							refRBSheet.current.close()
+							navigation.navigate("editgoal")
+						}}
 					>
 						<Text style={styles.bottomText}>Edit Goal</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={styles.BottomTouch}
-						onPress={() => navigation.navigate("deletegoal")}
+						onPress={() => {
+							refRBSheet.current.close()
+							navigation.navigate("deletegoal")
+						}}
 					>
 						<Text style={styles.bottomText}>Delete Goal</Text>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.BottomTouch} onPress={() => navigation.navigate("help")}>
+					<TouchableOpacity
+						style={styles.BottomTouch}
+						onPress={() => {
+							refRBSheet.current.close()
+							navigation.navigate("help")
+						}}
+					>
 						<Text style={styles.bottomText}>Tutorial</Text>
 					</TouchableOpacity>
 				</View>
