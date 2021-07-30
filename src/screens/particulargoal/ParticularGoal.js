@@ -64,7 +64,6 @@ const ParticularGoal = (props) => {
 	]
 	const [page, setPageNo] = useState(0)
 
-
 	const getGoalCompletionPercent = () => {
 		let allMilestonesArrayFromCurrentGoal = [...props.clickedGoal.goalMilestone]
 		let allMilesLen = allMilestonesArrayFromCurrentGoal.length
@@ -81,7 +80,7 @@ const ParticularGoal = (props) => {
 
 		setMilestonesLength(allMilesLen)
 		setCompletedMilestonesLength(completedMilesLen)
-		setGoalPercent(percentCompleted.toFixed(1))
+		setGoalPercent(parseInt(percentCompleted.toFixed(1)))
 	}
 
 	const icons = () => (

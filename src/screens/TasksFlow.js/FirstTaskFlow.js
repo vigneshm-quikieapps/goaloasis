@@ -46,7 +46,7 @@ const FirstTaskFlow = ({
 	}, [])
 	const navigation = useNavigation()
 	const [task, setTask] = useState("")
-	const [clickedDate, setDate] = useState()
+	const [clickedDate, setDate] = useState(new Date())
 
 	const navigationCallback = () => {
 		setBooleanFlag(true)
@@ -221,7 +221,6 @@ const FirstTaskFlow = ({
 								// textMonthFontSize: 16,
 								// textDayHeaderFontSize: 40,
 							}}
-							style={ColorConstants.transparent}
 							dayComponent={({date, state}) => {
 								return (
 									<CustomDayComponentForCalendar

@@ -18,7 +18,6 @@ const MilestoneCards = ({
 	clickedMilestone,
 	clickedGoal,
 	style,
-
 }) => {
 	useEffect(() => {}, [clickedGoal])
 	const [taskCompleted, setCompleted] = useState(true)
@@ -209,7 +208,9 @@ const MilestoneCards = ({
 						return (
 							<TouchableOpacity
 								style={[styles.accordian, {alignSelf: "flex-end"}]}
-								onPress={() => navigation.navigate("firsttaskflow")}
+								onPress={() => {
+									// navigation.navigate("firsttaskflow")
+								}}
 							>
 								<View>
 									<Text style={styles.mainTitle}>{item.item.task}</Text>

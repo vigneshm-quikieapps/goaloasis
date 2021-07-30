@@ -39,7 +39,7 @@ const FirstMilestone = ({
 	setClickedMilestone,
 }) => {
 	const [milestone, setMilestone] = useState("")
-	const [clickedDate, setDate] = useState("")
+	const [clickedDate, setDate] = useState(new Date())
 	const navigation = useNavigation()
 	// console.log("Solving the date issue", typeof clickedDate)
 
@@ -58,16 +58,14 @@ const FirstMilestone = ({
 			...clickedGoal,
 			goalMilestone: milestoneArr,
 		}
-
-		addNewMilestone(milestoneArr)
 		setClickedMilestone(milestone)
-		// addNewMilestone([
-		// 	{
-		// 		milestone: milestone,
-		// 		date: clickedDate,
-		// 		taskData: [],
-		// 	},
-		// ])
+		addNewMilestone([
+			{
+				milestone: milestone,
+				date: clickedDate,
+				taskData: [],
+			},
+		])
 		addMilestoneToFirestore(clickedGoal, milestoneArr, () => {
 			setClickedGoal(updatedObj)
 		})
@@ -79,7 +77,6 @@ const FirstMilestone = ({
 	const handleHomeClick = () => {
 		navigation.navigate("mygoals")
 	}
-	console.log("Checking Milestone completed", clickedGoal)
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
 		<ImageBackground style={[styles.image]} source={commonImages.secondImage} resizeMode="stretch">

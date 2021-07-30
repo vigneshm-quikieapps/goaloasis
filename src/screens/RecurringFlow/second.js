@@ -13,10 +13,10 @@ import {
 	getAllDatesBetween,
 } from "../../core/CommonComponents"
 import {connect} from "react-redux"
-import {setClickedGoal} from "../../redux/actions"
+import {setClickedGoal, setBooleanFlag} from "../../redux/actions"
 import {addMilestoneToFirestore} from "../../firebase"
 
-const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag}) => {
+const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag, booleanFlag}) => {
 	const navigation = useNavigation()
 
 	// const gotoHome = () => {
@@ -133,6 +133,8 @@ const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag}) => {
 
 		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTaskReoccuring, () => {
 			setClickedGoal(updatedGoalObj)
+			navigation.navigate("particulargoal")
+			setBooleanFlag(!booleanFlag)
 		})
 	}
 
@@ -165,7 +167,6 @@ const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag}) => {
 							onPress={() => {
 								setReoccuring()
 								//  navigation.navigate("FifthMilestone")
-								navigation.navigate("myGoals")
 							}}
 						>
 							<Text style={CommonStyles.done}>Done</Text>
@@ -259,7 +260,7 @@ const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag}) => {
 
 							setReoccuring()
 
-							navigation.navigate("particulargoal")
+							// navigation.navigate("particulargoal")
 						}}
 					>
 						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
@@ -289,6 +290,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		setClickedGoal: (data) => {
 			dispatch(setClickedGoal(data))
+		},
+		setBooleanFlag: (data) => {
+			dispatch(setBooleanFlag(data))
 		},
 	}
 }

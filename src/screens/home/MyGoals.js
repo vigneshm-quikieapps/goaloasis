@@ -141,7 +141,7 @@ const MyGoals = ({
 		let completedMilesLen = allCompletedMiles.length
 		let percentCompleted = (completedMilesLen / allMilesLen) * 100
 		console.log("getGoalCompletionPercent", allMilesLen, completedMilesLen, percentCompleted)
-		return percentCompleted.toFixed(0)
+		return parseInt(percentCompleted.toFixed(0))
 	}
 
 	return (
@@ -182,7 +182,7 @@ const MyGoals = ({
 							allGoals.length > 0 &&
 							allGoals.map((task, index) => {
 								let completedPercent = getGoalCompletionPercent(task)
-								// console.log("completedPercent", completedPercent)
+								console.log("completedPercent", completedPercent)
 								return (
 									<View key={index}>
 										<TouchableOpacity

@@ -11,53 +11,70 @@ import {Calendar, LocaleConfig} from "react-native-calendars"
 import DatePicker from "react-native-date-picker"
 import MonthTimeline from "./MonthTimeline"
 import {CommonHomeButton} from "../../core/CommonComponents"
+import {connect} from "react-redux"
+import {ColorConstants, sizeConstants} from "../../core/styles"
+import {setAllGoals, setClickedGoal} from "../../redux/actions"
+import {updateGoalToFirestore} from "../../firebase"
+import AsyncStorage from "@react-native-community/async-storage"
 
-const IntroSlider = () => {
+const TimelineScreen = ({allGoals, clickedGoal, setClickedGoal}) => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
-	const [date, setDate] = useState(new Date())
+	const [clickedGoalDate, setClickedGoalDate] = useState(new Date())
+	const [clickedGoalName, setClickedGoalName] = useState("")
+	const [allGoalsforTimeline, setAllGoalsforTimeline] = useState([])
 
-	const data = [
-		{
-			time: "09:00",
-			title: "Archery Training",
-			description:
-				"The Beginner Archery and Beginner Crossbow course does not require you to bring any equipment, since everything you need will be provided for the course. ",
-			lineColor: "#009688",
-			imageUrl:
-				"https://cloud.githubusercontent.com/assets/21040043/24240340/c0f96b3a-0fe3-11e7-8964-fe66e4d9be7a.jpg",
-		},
-		{
-			time: "10:45",
-			title: "Play Badminton",
-			description:
-				"Badminton is a racquet sport played using racquets to hit a shuttlecock across a net.",
+	useEffect(() => {
+		let timelineData = allGoals.map((goal) => {
+			let date = new Date(goal.targetDate)
+			var year = date.getFullYear()
 
-			imageUrl:
-				"https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg",
-		},
-		{
-			time: "12:00",
-			title: "Lunch",
-		},
-		{
-			time: "14:00",
-			title: "Watch Soccer",
-			description: "Team sport played between two teams of eleven players with a spherical ball. ",
-			lineColor: "#009688",
+			return {
+				title: goal.name,
+				description: goal.description,
+				time: year,
+			}
+		})
+		setAllGoalsforTimeline(timelineData)
+	}, [allGoals])
 
-			imageUrl:
-				"https://cloud.githubusercontent.com/assets/21040043/24240419/1f553dee-0fe4-11e7-8638-6025682232b1.jpg",
-		},
-		{
-			time: "16:30",
-			title: "Go to Fitness center",
-			description: "Look out for the Best Gym & Fitness Centers around me :)",
+	useEffect(() => {
+		importData()
+	}, [clickedGoal])
 
-			imageUrl:
-				"https://cloud.githubusercontent.com/assets/21040043/24240422/20d84f6c-0fe4-11e7-8f1d-9dbc594d0cfa.jpg",
-		},
-	]
+	const importData = async () => {
+		try {
+			let keys = await AsyncStorage.getAllKeys()
+			keys = keys.filter(
+				(item) =>
+					item !== "FirsttimeIndividual" &&
+					item !== "FirsttimeTaskTutorial" &&
+					item !== "FirsttimeTimelineFlow" &&
+					item !== "Firsttime"
+			)
+			let result = []
+			for (const key of keys) {
+				const val = await AsyncStorage.getItem(key)
+				result.push(JSON.parse(val))
+			}
+
+			setAllGoals(result)
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
+	const updateGoal = () => {
+		let updatedObj = {
+			...clickedGoal,
+			targetDate: clickedGoalDate,
+			name: clickedGoalName,
+		}
+		updateGoalToFirestore(updatedObj, clickedGoal.name, () => {
+			setClickedGoal(updatedObj)
+			refRBSheet.current.close()
+		})
+	}
 
 	return (
 		<ImageBackground
@@ -78,7 +95,7 @@ const IntroSlider = () => {
 				</Text>
 				<Timeline
 					style={styles.list}
-					data={data}
+					data={allGoalsforTimeline}
 					circleSize={10}
 					circleColor="#B3855C"
 					lineColor="#B3855C"
@@ -104,8 +121,13 @@ const IntroSlider = () => {
 					}}
 					titleStyle={{color: "white"}}
 					columnFormat="two-column"
-					// onEventPress={(item) => alert(`${item.title} at ${item.time}`)}
-					onEventPress={(item) => refRBSheet.current.open()}
+					onEventPress={(item) => {
+						setClickedGoalName(item.title)
+						var currentGoal = allGoals.find((goal) => goal.name == item.title)
+						setClickedGoal(currentGoal)
+						setClickedGoalDate(new Date(currentGoal.targetDate))
+						refRBSheet.current.open()
+					}}
 				/>
 			</View>
 
@@ -128,21 +150,32 @@ const IntroSlider = () => {
 					<View>
 						<Text style={styles.mainTitle}>Edit Name of Goal</Text>
 						<View>
-							<TextInput style={styles.textInput} placeholder="Type Here" />
+							<TextInput
+								style={styles.textInput}
+								placeholder="Type Here"
+								value={clickedGoalName}
+								onChangeText={setClickedGoalName}
+							/>
 						</View>
 					</View>
 					<Text style={styles.mainTitle}>Edit Target Date</Text>
 					<View style={{marginTop: 30}}>
 						<DatePicker
 							androidVariant="iosClone"
-							date={date}
-							onDateChange={setDate}
+							date={clickedGoalDate}
+							onDateChange={setClickedGoalDate}
 							mode="date"
 							textColor="#FDF9F2"
 							locale="en"
 							fadeToColor="none"
 							dividerHeight={0}
+							minimumDate={new Date()}
 						/>
+					</View>
+					<View style={styles.cnfrmBtnContainer}>
+						<TouchableOpacity style={styles.HelpBtn} onPress={updateGoal}>
+							<Text style={styles.btnText}>Confirm</Text>
+						</TouchableOpacity>
 					</View>
 				</LinearGradient>
 			</RBSheet>
@@ -152,10 +185,10 @@ const IntroSlider = () => {
 				style={{
 					width: "100%",
 					position: "absolute",
-					bottom: 143,
 					justifyContent: "flex-start",
 					alignItems: "flex-start",
-					marginLeft: 29,
+					bottom: sizeConstants.xxxl,
+					marginLeft: sizeConstants.thirty,
 				}}
 			>
 				<TouchableOpacity
@@ -220,7 +253,25 @@ const IntroSlider = () => {
 	)
 }
 
-export default IntroSlider
+const mapStateToProps = (state) => {
+	return {
+		allGoals: state.milestone.allGoals,
+		clickedGoal: state.milestone.clickedGoal,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setClickedGoal: (goalObj) => {
+			dispatch(setClickedGoal(goalObj))
+		},
+		setAllGoals: (goalObj) => {
+			dispatch(setAllGoals(goalObj))
+		},
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TimelineScreen)
 
 const styles = StyleSheet.create({
 	introContainer: {
@@ -242,7 +293,7 @@ const styles = StyleSheet.create({
 	},
 	list: {
 		flex: 1,
-		marginTop: 20,
+		paddingTop: 20,
 	},
 	title: {
 		fontSize: 16,
@@ -285,13 +336,77 @@ const styles = StyleSheet.create({
 	},
 	textInput: {
 		width: 314,
+		height: 50,
 		backgroundColor: "#FDF9F2",
 		borderRadius: 50,
+		marginVertical: sizeConstants.l,
 		paddingLeft: 20,
 		fontSize: 19,
 		color: "#666666",
 		elevation: 10,
-		marginVertical: 30,
-		padding: 10,
+	},
+
+	cnfrmBtnContainer: {
+		marginVertical: sizeConstants.xxxl,
+		width: "100%",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	HelpBtn: {
+		backgroundColor: ColorConstants.white,
+		height: sizeConstants.xxxl,
+		width: "75%",
+		borderRadius: 60,
+		justifyContent: "center",
+		alignItems: "center",
+		elevation: 10,
+		// marginVertical: 20,
+	},
+	btnText: {
+		fontSize: sizeConstants.xl,
+		color: ColorConstants.darkFaintBlue,
+		fontWeight: "bold",
 	},
 })
+
+// const data = [
+// 	{
+// 		time: "09:00",
+// 		title: "Archery Training",
+// 		description:
+// 			"The Beginner Archery and Beginner Crossbow course does not require you to bring any equipment, since everything you need will be provided for the course. ",
+// 		lineColor: "#009688",
+// 		imageUrl:
+// 			"https://cloud.githubusercontent.com/assets/21040043/24240340/c0f96b3a-0fe3-11e7-8964-fe66e4d9be7a.jpg",
+// 	},
+// 	{
+// 		time: "10:45",
+// 		title: "Play Badminton",
+// 		description:
+// 			"Badminton is a racquet sport played using racquets to hit a shuttlecock across a net.",
+
+// 		imageUrl:
+// 			"https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg",
+// 	},
+// 	{
+// 		time: "12:00",
+// 		title: "Lunch",
+// 	},
+// 	{
+// 		time: "14:00",
+// 		title: "Watch Soccer",
+// 		description: "Team sport played between two teams of eleven players with a spherical ball. ",
+// 		lineColor: "#009688",
+
+// 		imageUrl:
+// 			"https://cloud.githubusercontent.com/assets/21040043/24240419/1f553dee-0fe4-11e7-8638-6025682232b1.jpg",
+// 	},
+// 	{
+// 		time: "16:30",
+// 		title: "Go to Fitness center",
+// 		description: "Look out for the Best Gym & Fitness Centers around me :)",
+
+// 		imageUrl:
+// 			"https://cloud.githubusercontent.com/assets/21040043/24240422/20d84f6c-0fe4-11e7-8f1d-9dbc594d0cfa.jpg",
+// 	},
+// ]
