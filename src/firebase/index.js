@@ -138,14 +138,12 @@ export const addMilestoneToFirestore = (target, milestoneArr, callback) => {
 		...targetObj,
 		goalMilestone: milestoneArr,
 	}
-	console.log("UPDATED", targetObj.id)
 	let addMiletonesToGoal = new Promise((resolve, reject) => {
 		firestore()
 			.collection(GOALS_COLLECTION)
 			.doc(targetObj.id)
 			.update(updatedObj)
 			.then(() => {
-				console.log("RESOLVE", updatedObj)
 				resolve(updatedObj)
 			})
 			.catch((err) => {

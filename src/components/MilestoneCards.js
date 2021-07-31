@@ -10,6 +10,7 @@ import {LongPressGestureHandler, State} from "react-native-gesture-handler"
 
 import {connect} from "react-redux"
 import {addMilestoneToFirestore} from "./../firebase/index"
+import {convertToDateString} from "../core/CommonComponents"
 
 const MilestoneCards = ({
 	data,
@@ -200,11 +201,12 @@ const MilestoneCards = ({
 					}}
 					ListEmptyComponent={emptyComponent}
 					renderItem={(item) => {
+						let dateStr = convertToDateString(new Date(item.item.date))
 						let bottomItem = item.item.reoccuring
 							? item.item.reoccuring.reoccuringType == "Daily"
 								? "Reoccuring Daily"
-								: item.item.date
-							: item.item.date
+								: dateStr
+							: dateStr
 						return (
 							<TouchableOpacity
 								style={[styles.accordian, {alignSelf: "flex-end"}]}

@@ -18,8 +18,6 @@ const First = ({route, clickedMilestone}) => {
 	const {taskDate, taskName} = route.params
 	const [tName, setTaskName] = useState(taskName)
 
-	const [value, onChange] = useState(new Date())
-	const [date, setDate] = useState(new Date())
 	const [reoccuringDays, setReoccuringDays] = useState([])
 
 	const options = [
@@ -95,7 +93,7 @@ const First = ({route, clickedMilestone}) => {
 					style={CommonStyles.textInput}
 					placeholder="Type Here"
 					onChangeText={(text) => setTaskName(text)}
-					value={taskName}
+					value={tName}
 				/>
 			</View>
 			<Text style={CommonStyles.firstSubTitle}>Edit reoccuring</Text>
@@ -135,27 +133,6 @@ const First = ({route, clickedMilestone}) => {
 							</TouchableOpacity>
 						)
 					})}
-					{/* <View style={CommonStyles.days}>
-						<Text style={CommonStyles.daysText}>S</Text>
-					</View>
-					<View style={CommonStyles.days}>
-						<Text style={CommonStyles.daysText}>M</Text>
-					</View>
-					<View style={CommonStyles.days}>
-						<Text style={CommonStyles.daysText}>T</Text>
-					</View>
-					<View style={CommonStyles.days}>
-						<Text style={CommonStyles.daysText}>W</Text>
-					</View>
-					<View style={CommonStyles.days}>
-						<Text style={CommonStyles.daysText}>T</Text>
-					</View>
-					<View style={CommonStyles.days}>
-						<Text style={CommonStyles.daysText}>F</Text>
-					</View>
-					<View style={CommonStyles.days}>
-						<Text style={CommonStyles.daysText}>S</Text>
-					</View> */}
 				</View>
 			)}
 
@@ -173,7 +150,7 @@ const First = ({route, clickedMilestone}) => {
 						navigation.navigate("second", {
 							reoccuring: toggle,
 							taskDate: taskDate,
-							taskName: taskName,
+							taskName: tName,
 							reoccuringDays: toggle == "Daily" ? reoccuringDefaultDailyArray : reoccuringDays,
 						})
 					}}

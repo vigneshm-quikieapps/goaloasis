@@ -19,12 +19,15 @@ import {
 	CustomDayComponentForCalendar,
 	getAllDatesBetween,
 	CommonPrevNextButton,
+	reoccuringDefaultDailyArray,
 } from "../../core/CommonComponents"
 import {connect} from "react-redux"
+import {addMilestoneToFirestore} from "../../firebase"
+import {setBooleanFlag, setClickedGoal} from "../../redux/actions"
 
-const ThirdTaskFlow = ({clickedGoal, route, clickedMilestone}) => {
+const ThirdTaskFlow = ({clickedGoal, route, clickedMilestone, setBooleanFlag, setClickedGoal}) => {
 	const navigation = useNavigation()
-	const {taskDate, taskName} = route.params
+	const {currentTaskData} = route.params
 
 	// const gotoHome = () => {
 	// 	navigation.navigate("secondMileStone")
@@ -32,36 +35,47 @@ const ThirdTaskFlow = ({clickedGoal, route, clickedMilestone}) => {
 	// const goBack = () => {
 	// 	navigation.goBack()
 	// }
-	const [task, setTaskData] = useState(taskName)
+	const [taskName, setTaskName] = useState(currentTaskData.taskName)
+	const [clickedDate, setDate] = useState(currentTaskData.taskDate)
 
-	const [value, onChange] = useState(new Date())
-	const [clickedDate, setDate] = useState(taskDate)
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 
-	const convertArrToObj = (arr) => {
-		let finalObj = {}
-		arr.forEach((item) => {
-			let key = Object.keys(item)[0]
-			let value = item[key]
-			finalObj[key] = value
-		})
-		return finalObj
+	const navigationCallback = () => {
+		setBooleanFlag(true)
+		navigation.navigate("particulargoal")
 	}
-	const getMarkedDates = () => {
-		var markedDates = getAllDatesBetween(clickedDate, clickedGoal.targetDate)
-		let markedObj = {
-			selected: true,
-			marked: true,
-			selectedColor: ColorConstants.white,
-		}
-		var finalArr = markedDates.map((date) => {
-			let obj = {}
-			obj[date] = markedObj
-			return obj
-		})
-		let allDatesObj = convertArrToObj(finalArr)
 
-		return allDatesObj
+	const nextScreen = () => {
+		let newMilestoneItemWithTask = clickedGoal.goalMilestone.map((item) => {
+			if (item.milestone == clickedMilestone) {
+				let filteredTasks = item.taskData.filter((tsk) => tsk.task != taskName)
+				return {
+					...item,
+					taskData: [
+						...filteredTasks,
+						{
+							task: taskName,
+							date: clickedDate,
+							reoccuring: {
+								startDate: clickedDate,
+								reoccuringType: "Daily",
+								reoccuringDays: reoccuringDefaultDailyArray,
+							},
+						},
+					],
+				}
+			} else return item
+		})
+
+		let updatedObj = {
+			...clickedGoal,
+			goalMilestone: newMilestoneItemWithTask,
+		}
+
+		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask, () => {
+			setClickedGoal(updatedObj)
+			navigationCallback()
+		})
 	}
 
 	return (
@@ -85,8 +99,8 @@ const ThirdTaskFlow = ({clickedGoal, route, clickedMilestone}) => {
 							<TextInput
 								style={CommonStyles.textInput}
 								placeholder="Type Here"
-								value={task}
-								onChangeText={(text) => setTaskData(text)}
+								value={taskName}
+								onChangeText={(text) => setTaskName(text)}
 							/>
 						</View>
 					</TouchableOpacity>
@@ -186,28 +200,23 @@ const ThirdTaskFlow = ({clickedGoal, route, clickedMilestone}) => {
 						style={[CommonStyles.containerMilestone, {marginTop: sizeConstants.s}]}
 						onPress={() => {
 							navigation.navigate("first", {
-								taskDate: taskDate,
+								taskDate: clickedDate,
 								taskName: taskName,
 							})
 						}}
 					>
 						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
 					</TouchableOpacity>
-					{task === "" ? (
-						<CommonPrevNextButton
-							right={true}
-							style={{backgroundColor: ColorConstants.whiteOp50}}
-							size={50}
-							bottom={0}
-						/>
-					) : (
-						<CommonPrevNextButton
-							right={true}
-							nextClick={() => navigation.navigate("particulargoal")}
-							size={50}
-							bottom={0}
-						/>
-					)}
+
+					<CommonPrevNextButton
+						right={true}
+						style={taskName === "" ? {backgroundColor: ColorConstants.whiteOp50} : {}}
+						nextClick={() => {
+							taskName != "" && nextScreen()
+						}}
+						size={50}
+						bottom={0}
+					/>
 				</View>
 			</ScrollView>
 			<CommonHomeButton click={() => navigation.navigate("particulargoal")} />
@@ -222,6 +231,13 @@ const mapStateToProps = (state) => {
 	}
 }
 const mapDispatchToProps = (dispatch) => {
-	return {}
+	return {
+		setClickedGoal: (goal) => {
+			dispatch(setClickedGoal(goal))
+		},
+		setBooleanFlag: (flag) => {
+			dispatch(setBooleanFlag(flag))
+		},
+	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ThirdTaskFlow)
