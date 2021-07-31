@@ -1,6 +1,12 @@
 import React, {useRef, useEffect, useState} from "react"
 import {StyleSheet, Text, View, TouchableOpacity, ScrollView, Modal} from "react-native"
-import {MaterialCommunityIcons, Octicons, AntDesign, MaterialIcons} from "@expo/vector-icons"
+import {
+	MaterialCommunityIcons,
+	Octicons,
+	AntDesign,
+	MaterialIcons,
+	Entypo,
+} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
 import ProgressCircle from "react-native-progress-circle"
 import MilestoneCards from "../../components/MilestoneCards"
@@ -29,7 +35,7 @@ const ParticularGoal = (props) => {
 	const [allMilestonesLength, setMilestonesLength] = useState(0)
 	const [completedMilestonesLength, setCompletedMilestonesLength] = useState(0)
 	const [goalCompletedPercent, setGoalPercent] = useState(0)
-	const {setModalTrue} = props.route.params
+
 	useEffect(() => {
 		setModalVisible(false)
 		getClickedGoalFromAsyncStorage(props.clickedGoal.name).then((goal) => {
@@ -42,20 +48,15 @@ const ParticularGoal = (props) => {
 	useEffect(() => {
 		getFirstTimeData()
 	}, [props.firstTimeIndividual])
-	console.log("modalVisible", props.route)
-
-	const [helpMenuState, setHelpMenuState] = useState(setModalTrue)
 
 	const getFirstTimeData = async () => {
-		if (setModalTrue) {
-			setHelpMenuState(!helpMenuState)
-			setModalVisible(true)
-		} else {
-			const data = await getFirstTimeIndividual()
-			props.setFirstTimeForIndividualGoal(data)
-			const isFirst = props.firstTimeIndividual === "visited" ? false : true
-			setModalVisible(isFirst)
-		}
+		setPageNo(0)
+		const data = await getFirstTimeIndividual()
+		console.log("data", data)
+		props.setFirstTimeForIndividualGoal(data)
+		const isFirst = data === "visited" ? false : true
+		console.log("isFirst", isFirst)
+		setModalVisible(isFirst)
 	}
 
 	const closeModal = async () => {
@@ -163,101 +164,134 @@ const ParticularGoal = (props) => {
 									</Text>
 								) : null}
 							</View>
-
-							<View
-								style={{
-									alignItems: "center",
-									marginTop: page == 0 ? 20 : 50,
-								}}
-							>
-								{page == 0 ? (
-									<LongPressGestureHandler onHandlerStateChange={onLongPress} minDurationMs={800}>
-										{/* <AppButton
+							<View style={{height: "50%", marginHorizontal: 15}}>
+								<View
+									style={{
+										width: "100%",
+										position: "absolute",
+										alignItems: "center",
+										bottom: -50,
+									}}
+								>
+									{page == 0 ? (
+										<LongPressGestureHandler
+											onHandlerStateChange={onLongPress}
+											minDurationMs={800}
+											style={{alignSelf: "center"}}
+										>
+											{/* <AppButton
 												title={taskCompleted ? "MISSION COMPLETE" : buttonText[page]}
 												style={[
 													styles.appBtn,
 													{width: "80%", justifyContent: "center", borderRadius: 35, padding: 0},
 												]}
 											/> */}
-										<TouchableOpacity>
-											<View
-												style={[
-													styles.btnTextContainer,
-													{
-														borderRadius: 30,
-														width: 278,
-														backgroundColor: taskCompleted ? "white" : ColorConstants.lighterBlue,
-													},
-												]}
-											>
-												<Text
-													style={{
-														fontSize: 16,
-														color: ColorConstants.faintBlack1,
-													}}
+											<TouchableOpacity style={{alignSelf: "center", width: "100%"}}>
+												<View
+													style={[
+														styles.btnTextContainer,
+														{
+															borderRadius: sizeConstants.xl,
+															marginVertical: sizeConstants.xl,
+															width: "100%",
+															elevation: 7,
+															backgroundColor: taskCompleted ? "white" : ColorConstants.lighterBlue,
+														},
+													]}
 												>
-													{taskCompleted ? "MISSION COMPLETE!" : buttonText[page]}
-												</Text>
+													<Text
+														style={{
+															fontSize: 16,
+															fontWeight: "bold",
+															alignSelf: "center",
+															color: ColorConstants.faintBlack1,
+														}}
+													>
+														{taskCompleted ? "MISSION COMPLETE!" : buttonText[page]}
+													</Text>
+												</View>
+											</TouchableOpacity>
+										</LongPressGestureHandler>
+									) : page == 1 ? (
+										<Swipeout
+											left={[
+												{
+													text: "ADD",
+													onPress: () => {},
+													style: CommonStyles.bgWhite,
+												},
+											]}
+											autoClose={true}
+											disabled={false}
+											style={[
+												CommonStyles.borderRadius20,
+												{
+													elevation: 7,
+													marginTop: sizeConstants.xxl,
+													marginBottom: sizeConstants.xxl,
+													width: "100%",
+													backgroundColor: ColorConstants.lighterBlue,
+												},
+											]}
+										>
+											<View style={styles.btnTextContainer}>
+												<Text style={styles.btnText}>{buttonText[page]}</Text>
 											</View>
-										</TouchableOpacity>
-									</LongPressGestureHandler>
-								) : page == 1 ? (
-									<Swipeout
-										left={[
-											{
-												text: "ADD",
-												onPress: () => {},
-												style: CommonStyles.bgWhite,
-											},
-										]}
-										autoClose={true}
-										disabled={false}
-										style={CommonStyles.borderRadius30}
-									>
-										<View style={styles.btnTextContainer}>
-											<Text style={styles.btnText}>{buttonText[page]}</Text>
-										</View>
-									</Swipeout>
-								) : (
-									// <AppButton
-									// 	title={buttonText[page]}
-									// 	style={{
-									// 		backgroundColor: "#7EC8C9",
-									// 		fontSize: 15,
-									// 		paddingTop: 13,
-									// 		paddingBottom: 13,
-									// 		color: "#333333",
-									// 	}}
-									// />
+										</Swipeout>
+									) : (
+										// <AppButton
+										// 	title={buttonText[page]}
+										// 	style={{
+										// 		backgroundColor: "#7EC8C9",
+										// 		fontSize: 15,
+										// 		paddingTop: 13,
+										// 		paddingBottom: 13,
+										// 		color: "#333333",
+										// 	}}
+										// />
 
-									<Swipeout
-										right={[
-											{
-												text: icons(),
-												onPress: () => {},
-												style: CommonStyles.bgWhite,
-											},
-										]}
-										autoClose={true}
-										disabled={false}
-										style={[CommonStyles.borderRadius30]}
-									>
-										<View style={styles.btnTextContainer}>
-											<Text style={[styles.btnText]}>{buttonText[page]}</Text>
-										</View>
-									</Swipeout>
-								)}
-								<AppButton
-									title="Next"
-									style={{
-										backgroundColor: ColorConstants.faintWhite,
-										color: ColorConstants.faintBlack1,
-										width: "80%",
-										paddingLeft: "16%",
-										fontSize: 19,
-									}}
-									onPress={() => (page === 2 ? closeModal() : setPageNo(page + 1))}
-								/>
+										<Swipeout
+											right={[
+												{
+													text: icons(),
+													onPress: () => {},
+													style: CommonStyles.bgWhite,
+												},
+											]}
+											autoClose={true}
+											disabled={false}
+											style={[
+												CommonStyles.borderRadius20,
+												{
+													elevation: 7,
+													marginTop: sizeConstants.xxl,
+													marginBottom: sizeConstants.xxl,
+													width: "100%",
+													backgroundColor: ColorConstants.lighterBlue,
+												},
+											]}
+										>
+											<View style={styles.btnTextContainer}>
+												<Text style={[styles.btnText]}>{buttonText[page]}</Text>
+											</View>
+										</Swipeout>
+									)}
+									<AppButton
+										title="Next"
+										style={{
+											backgroundColor: ColorConstants.faintWhite,
+											color: ColorConstants.faintBlack1,
+											width: "100%",
+											paddingVertical: sizeConstants.s,
+											fontSize: 19,
+											elevation: 7,
+											fontWeight: "bold",
+											alignSelf: "center",
+											color: ColorConstants.faintBlack2,
+										}}
+										onPress={() => (page === 2 ? closeModal() : setPageNo(page + 1))}
+									/>
+								</View>
 							</View>
 						</View>
 					</View>
@@ -265,7 +299,7 @@ const ParticularGoal = (props) => {
 				{/* MODAL CODE END */}
 				<RBBottomSheet name={props.clickedGoal.name} />
 
-				<Text style={styles.subTitle}>I want to continue improve myself and my state of mind.</Text>
+				<Text style={styles.subTitle}>{props.clickedGoal.description}</Text>
 				<View style={CommonStyles.trackingcont}>
 					<ProgressCircle
 						percent={goalCompletedPercent}
@@ -318,31 +352,31 @@ const ParticularGoal = (props) => {
 					</View>
 				</View>
 			</View>
-
-			<GestureRecognizer
-				onSwipeUp={() => {
-					navigation.navigate("milestones", {
-						paramsItinerary: true,
-					})
-				}}
-				// style={{backgroundColor: Colors.eventBackground}}
-				style={styles.goalsContainer}
-			>
-				<View>
-					<View style={styles.addMileStone}>
+			<View style={styles.goalsContainer}>
+				<GestureRecognizer
+					onSwipeUp={() => {
+						navigation.navigate("milestones", {
+							paramsItinerary: true,
+						})
+					}}
+					// style={{backgroundColor: "#ff0000"}}
+				>
+					<View style={[styles.addMileStone]}>
 						<Text style={styles.myGoalsText}>Add Milestones</Text>
 						<View style={styles.viewTap}>
-							<MaterialCommunityIcons
+							<Entypo
 								name="plus"
-								size={40}
-								color="#7EC8C9"
+								size={33}
+								color="#66A3A4"
 								onPress={() => {
 									navigation.navigate("FirstMilestone")
 								}}
+								style={{fontWeight: "bold"}}
 							/>
 						</View>
 					</View>
-
+				</GestureRecognizer>
+				<View>
 					<View>
 						{/* <Text style={styles.myGoalsubtext}>
 						It looks like you don’t have a plan to achieve your goal yet. Don’t worry! Tap (+) to
@@ -355,7 +389,7 @@ const ParticularGoal = (props) => {
 								style={{marginTop: 0}}
 							/>
 						</ScrollView>
-						<View
+						{/* <View
 							style={{
 								alignItems: "center",
 								flexDirection: "row",
@@ -376,7 +410,7 @@ const ParticularGoal = (props) => {
 									<MaterialCommunityIcons name="chevron-right" size={50} color="#7EC8C9" />
 								</TouchableOpacity>
 							</View>
-						</View>
+						</View> */}
 					</View>
 
 					{/* <View style={styles.bottomBtnContainer}>
@@ -385,8 +419,13 @@ const ParticularGoal = (props) => {
 					</TouchableOpacity>
 				</View> */}
 				</View>
-			</GestureRecognizer>
-			<CommonHomeButton click={goBack} />
+			</View>
+
+			<CommonHomeButton
+				click={() => {
+					navigation.navigate("mygoals")
+				}}
+			/>
 		</StatusBarScreen>
 	)
 }
@@ -432,16 +471,18 @@ const styles = StyleSheet.create({
 	goalsContainer: {
 		flex: 0.8,
 		backgroundColor: "#588C8D",
-		borderTopRightRadius: sizeConstants.seventy,
+		borderTopRightRadius: sizeConstants.fourty,
 	},
 	btnText: {
 		fontSize: 16,
 		color: ColorConstants.faintBlack1,
+		fontWeight: "bold",
+		textAlign: "center",
 		// letterSpacing: "1.2@s",
 	},
 	viewTap: {
-		height: sizeConstants.xxxl,
-		width: sizeConstants.xxxl,
+		height: sizeConstants.fourty,
+		width: sizeConstants.fourty,
 		backgroundColor: "white",
 		marginVertical: sizeConstants.m,
 		borderRadius: sizeConstants.xxxl,
@@ -449,7 +490,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	myGoalsText: {
-		fontSize: 25,
+		fontSize: sizeConstants.xxl,
 		fontWeight: "bold",
 		color: "black",
 		marginHorizontal: verticalScale(20),
@@ -479,8 +520,9 @@ const styles = StyleSheet.create({
 	addMileStone: {
 		// marginLeft: "auto",
 		flexDirection: "row",
-		marginRight: 40,
-		marginTop: 20,
+		marginRight: sizeConstants.xl,
+		marginVertical: sizeConstants.s,
+		alignItems: "center",
 		justifyContent: "space-between",
 	},
 	blackOp60: {backgroundColor: ColorConstants.blackOp60},

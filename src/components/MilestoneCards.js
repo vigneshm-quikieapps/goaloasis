@@ -117,6 +117,9 @@ const MilestoneCards = ({
 			</View>
 		)
 	}
+
+	var milestoneDate = data ? convertToDateString(new Date(data.date)) : ""
+
 	console.log("cards: ", data && data.taskData && data.taskData.length)
 	return (
 		<View
@@ -164,7 +167,7 @@ const MilestoneCards = ({
 							>
 								<View>
 									<Text style={styles.mainTitle}>{data && data.milestone}</Text>
-									<Text style={styles.subtitle}>{data && data.date}</Text>
+									<Text style={styles.subtitle}>{milestoneDate}</Text>
 								</View>
 
 								{taskCompleted && data && !data.isCompleted ? (

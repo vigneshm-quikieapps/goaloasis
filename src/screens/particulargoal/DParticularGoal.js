@@ -1,12 +1,12 @@
 import React from "react"
 import {StyleSheet, Text, View, TouchableOpacity} from "react-native"
-import {MaterialCommunityIcons} from "@expo/vector-icons"
+import {MaterialCommunityIcons, Entypo} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
 import ProgressCircle from "react-native-progress-circle"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import RBBottomSheet from "../MileStones/RBBottomSheet"
 import {connect} from "react-redux"
-import {ColorConstants, CommonStyles, sizeConstants} from "../../core/styles"
+import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/styles"
 import {moderateScale, scale, verticalScale} from "react-native-size-matters"
 import {CommonHomeButton} from "../../core/CommonComponents"
 
@@ -20,7 +20,7 @@ const DParticularGoals = ({clickedGoal}) => {
 		<StatusBarScreen style={styles.container}>
 			<View style={CommonStyles.titleContainer}>
 				<RBBottomSheet name={clickedGoal.name} id={clickedGoal.name} />
-				<Text style={styles.subTitle}>I want to continue improve myself and my state of mind.</Text>
+				<Text style={styles.subTitle}>{clickedGoal.description}</Text>
 
 				<View style={CommonStyles.trackingcont}>
 					<ProgressCircle
@@ -74,21 +74,22 @@ const DParticularGoals = ({clickedGoal}) => {
 			</View>
 
 			<View style={styles.goalsContainer}>
-				<View style={CommonStyles.addMileStone}>
+				<View style={[styles.addMileStone]}>
+					<Text style={styles.myGoalsText}>My Milestones</Text>
 					<View style={styles.viewTap}>
-						<MaterialCommunityIcons
+						<Entypo
 							name="plus"
-							size={40}
-							color="#7EC8C9"
+							size={33}
+							color="#66A3A4"
 							onPress={() => {
 								navigation.navigate("FirstMilestone")
 							}}
+							style={{fontWeight: "bold"}}
 						/>
 					</View>
 				</View>
 
 				<View>
-					<Text style={styles.myGoalsText}>My Milestones</Text>
 					<Text style={styles.myGoalsubtext}>
 						It looks like you don’t have a plan to achieve your goal yet. Don’t worry! Tap (+) to
 						add a milestone and get on your way.
@@ -137,11 +138,11 @@ const styles = StyleSheet.create({
 	goalsContainer: {
 		flex: 0.8,
 		backgroundColor: "#588C8D",
-		borderTopRightRadius: sizeConstants.seventy,
+		borderTopRightRadius: sizeConstants.fourty,
 	},
 	viewTap: {
-		height: sizeConstants.xxxl,
-		width: sizeConstants.xxxl,
+		height: sizeConstants.fourty,
+		width: sizeConstants.fourty,
 		backgroundColor: "white",
 		marginVertical: sizeConstants.m,
 		borderRadius: sizeConstants.xxxl,
@@ -160,5 +161,13 @@ const styles = StyleSheet.create({
 		marginTop: sizeConstants.m,
 		color: "#333333",
 		lineHeight: sizeConstants.thirty,
+	},
+	addMileStone: {
+		// marginLeft: "auto",
+		flexDirection: "row",
+		marginRight: sizeConstants.xl,
+		marginVertical: sizeConstants.s,
+		alignItems: "center",
+		justifyContent: "space-between",
 	},
 })

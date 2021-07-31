@@ -5,7 +5,7 @@ import {sizeConstants} from "./../../core/styles"
 function AppButton({title, onPress, style}) {
 	return (
 		<TouchableOpacity onPress={onPress} style={[styles.container, style]}>
-			<Text style={[styles.button, style]}>{title}</Text>
+			<Text style={[styles.button, style, {elevation: 0, textAlign: "center"}]}>{title}</Text>
 		</TouchableOpacity>
 	)
 }

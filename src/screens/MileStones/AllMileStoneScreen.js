@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from "react"
 import {StyleSheet, Text, View, TouchableOpacity, Modal} from "react-native"
-import {MaterialCommunityIcons, AntDesign, MaterialIcons} from "@expo/vector-icons"
+import {Entypo} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
 import AllMilestones from "../../components/AllMilestones"
 import RBSheet from "react-native-raw-bottom-sheet"
@@ -209,10 +209,10 @@ const AllMilestonesScreen = (props) => {
 						<Text style={styles.myGoalsText}>My milestones</Text>
 					</View>
 					<View style={styles.viewTap}>
-						<MaterialCommunityIcons
+						<Entypo
 							name="plus"
-							size={28}
-							color="#7EC8C9"
+							size={33}
+							color="#66A3A4"
 							onPress={() => {
 								navigation.navigate("FirstMilestone")
 							}}
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row-reverse",
 		position: "absolute",
 		right: 0,
-		marginRight: sizeConstants.thirty,
+		marginRight: sizeConstants.xl,
 	},
 	titleContainer: {
 		height: 50,
@@ -338,8 +338,7 @@ const styles = StyleSheet.create({
 	goalsContainer: {
 		flex: 1,
 		backgroundColor: "#588C8D",
-		borderTopRightRadius: 70,
-		// marginTop: -50,
+		borderTopRightRadius: sizeConstants.fourty,
 	},
 
 	myGoalsText: {

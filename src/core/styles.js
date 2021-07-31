@@ -472,6 +472,7 @@ export const CommonStyles = ScaledSheet.create({
 	borderRadius4: {
 		borderRadius: sizeConstants.four,
 	},
+	borderRadius20: {borderRadius: sizeConstants.xl},
 	flexDirectionRow: {
 		flexDirection: "row",
 	},
@@ -528,19 +529,19 @@ export const CommonStyles = ScaledSheet.create({
 	},
 
 	calendarContainer: {
-		display: "flex",
-		justifyContent: "center",
-		alignItems: "center",
-		flexDirection: "row",
+		// display: "flex",
+		// flexDirection: "row",
+		// justifyContent: "center",
+		// alignItems: "center",
 
-		// marginTop: sizeConstants.m,
+		marginTop: sizeConstants.twentyMX,
 	},
 
 	doneText: {
-		fontSize: "14@s",
+		fontSize: 14,
 		color: "#FDF9F2",
-		position: "absolute",
-		left: sizeConstants.xxxl,
+		// position: "absolute",
+		// left: sizeConstants.xxxl,
 	},
 	container: {
 		justifyContent: "center",
@@ -557,7 +558,6 @@ export const CommonStyles = ScaledSheet.create({
 		alignSelf: "center",
 		marginLeft: sizeConstants.twentyMX,
 		color: ColorConstants.faintWhite,
-		marginTop: sizeConstants.twentyMX,
 	},
 
 	containerMilestone: {
@@ -717,13 +717,7 @@ export const CommonStyles = ScaledSheet.create({
 		color: "#FDF9F2",
 		marginTop: sizeConstants.m,
 	},
-	doneText: {
-		fontSize: 14,
-		color: "#FDF9F2",
-		// position: "absolute",
-		// right: 0,
-		// left: sizeConstants.xxxl,
-	},
+
 	container: {
 		justifyContent: "center",
 		alignItems: "center",
@@ -736,8 +730,10 @@ export const CommonStyles = ScaledSheet.create({
 	done: {
 		fontSize: 16,
 		color: "#89B3B2",
+
 		position: "absolute",
-		left: sizeConstants.hundred,
+		bottom: 0,
+		right: sizeConstants.xxl,
 	},
 
 	// MyGoals Home Screen
@@ -859,11 +855,11 @@ export const CommonStyles = ScaledSheet.create({
 		justifyContent: "space-between",
 	},
 	percentageCont: {
-		height: sizeConstants.oneFifty,
-		width: sizeConstants.oneFifty,
+		height: sizeConstants.oneThirty,
+		width: sizeConstants.oneThirty,
 		borderRadius: sizeConstants.oneFifty,
 		backgroundColor: "#FBF5E9",
-		borderWidth: 5,
+		borderWidth: 8,
 		borderColor: "#C0E5E4",
 		justifyContent: "center",
 		alignItems: "center",

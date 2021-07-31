@@ -149,7 +149,7 @@ const SecondTaskFlow = ({clickedGoal, clickedMilestone, route, setClickedGoal, s
 						// navigation.navigate("thirdtaskflow")
 					}}
 					size={50}
-					bottom={0}
+					// bottom={0}
 				/>
 			</View>
 

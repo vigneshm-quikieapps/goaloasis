@@ -160,7 +160,7 @@ const First = ({route, clickedMilestone}) => {
 				<TouchableOpacity
 					style={CommonStyles.cancelReoccuring}
 					onPress={() => {
-						// navigation.navigate("second")
+						navigation.navigate("particulargoal")
 					}}
 				>
 					<Text style={CommonStyles.cancelReoccuringText}>Cancel reoccuring</Text>
@@ -173,7 +173,7 @@ const First = ({route, clickedMilestone}) => {
 					<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 				</TouchableOpacity> */}
 			</View>
-			<CommonHomeButton click={() => navigation.navigate("mygoals")} />
+			<CommonHomeButton click={() => navigation.navigate("particulargoal")} />
 		</StatusBarScreen>
 	)
 }

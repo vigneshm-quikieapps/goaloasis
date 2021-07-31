@@ -161,7 +161,7 @@ const Second = ({
 								//  navigation.navigate("FifthMilestone")
 							}}
 						>
-							<Text style={[CommonStyles.done, {bottom: sizeConstants.negativeTen}]}>Done</Text>
+							<Text style={[CommonStyles.done]}>Done</Text>
 						</TouchableOpacity>
 					</View>
 

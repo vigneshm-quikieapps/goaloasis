@@ -8,8 +8,11 @@ import {ColorConstants} from "../../core/styles"
 // import {setisFirstTimeTaskTutorial} from "./../../utils/asyncStorage"
 // import {setFirstTime} from "../../redux/actions"
 import {connect} from "react-redux"
+import AsyncStorage from "@react-native-community/async-storage"
+import {setisFirstTimeIndividual} from "../../utils/asyncStorage"
+import {setFirstTimeForIndividualGoal} from "../../redux/actions"
 
-const Helpmenu = ({setFirstTime}) => {
+const Helpmenu = ({setFirstTime, setFirstTimeForIndividualGoal}) => {
 	const navigation = useNavigation()
 
 	const handleOpenNewGoal = () => {
@@ -53,7 +56,12 @@ const Helpmenu = ({setFirstTime}) => {
 					<View style={{alignItems: "center", marginBottom: 20}}>
 						<TouchableOpacity
 							style={styles.HelpBtn}
-							onPress={() => navigation.navigate("particulargoal", {setModalTrue: true})}
+							onPress={() => {
+								setisFirstTimeIndividual("null").then(() => {
+									setFirstTimeForIndividualGoal("null")
+									navigation.navigate("particulargoal")
+								})
+							}}
 						>
 							<Text style={styles.btnText}>Goal Screen</Text>
 						</TouchableOpacity>
@@ -98,6 +106,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		setFirstTime: (data) => {
 			dispatch(setFirstTime(data))
+		},
+		setFirstTimeForIndividualGoal: (flag) => {
+			dispatch(setFirstTimeForIndividualGoal(flag))
 		},
 	}
 }

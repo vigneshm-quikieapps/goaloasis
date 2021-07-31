@@ -91,7 +91,7 @@ const FirstTaskFlow = ({
 
 						<View style={CommonStyles.calendarContainer}>
 							<Text style={CommonStyles.targetDate}>Target Date</Text>
-							<TouchableOpacity onPress={() => {}}>
+							<TouchableOpacity onPress={() => {}} style={{alignSelf: "flex-end"}}>
 								<Text style={CommonStyles.done}>Done</Text>
 							</TouchableOpacity>
 						</View>

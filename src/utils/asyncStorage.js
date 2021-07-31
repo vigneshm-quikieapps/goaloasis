@@ -58,9 +58,9 @@ export const getFirstTimeTimelineFlow = async (key) => {
 	}
 }
 
-export const setisFirstTimeIndividual = async () => {
+export const setisFirstTimeIndividual = async (flag = "visited") => {
 	try {
-		await AsyncStorage.setItem("FirsttimeIndividual", "visited")
+		await AsyncStorage.setItem("FirsttimeIndividual", flag)
 	} catch (error) {
 		console.log(error.message)
 	}

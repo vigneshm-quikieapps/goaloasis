@@ -42,6 +42,23 @@ import ThirdTaskFlow from "./../screens/TasksFlow.js/ThirdTaskFlow"
 import EditMilestone from "../screens/MileStones/EditMilestone"
 import DailyTimeline from "./../screens/Helpmenu/DailyTimeline"
 
+export const verticalAnimation = {
+	gestureDirection: "vertical",
+	cardStyleInterpolator: ({current, layouts}) => {
+		return {
+			cardStyle: {
+				transform: [
+					{
+						translateY: current.progress.interpolate({
+							inputRange: [0, 1],
+							outputRange: [layouts.screen.height, 0],
+						}),
+					},
+				],
+			},
+		}
+	},
+}
 const Stack = createStackNavigator()
 const options = {
 	gestureEnabled: true, // If you want to swipe back like iOS on Android
@@ -65,7 +82,7 @@ const IntroStack = () => {
 			<Stack.Screen name="addgoal" component={NameGoal} />
 			<Stack.Screen name="goal2" component={GoalStep2} options={options} />
 			<Stack.Screen name="goal3" component={GoalStep3} options={options} />
-			<Stack.Screen name="particulargoal" component={ParticularGoal} />
+			<Stack.Screen name="particulargoal" component={ParticularGoal} options={verticalAnimation} />
 			<Stack.Screen name="DParticularGoal" component={DParticularGoal} />
 			<Stack.Screen name="FirstMilestone" component={FirstMilestone} />
 			<Stack.Screen name="ThirdMileStone" component={ThirdMilestone} />
@@ -77,7 +94,7 @@ const IntroStack = () => {
 			<Stack.Screen name="AfterModal" component={AfterModal} />
 			<Stack.Screen name="SecondAfterModal" component={SecondAfterModal} />
 			<Stack.Screen name="ThirdAfterModal" component={ThirdAfterModal} />
-			<Stack.Screen name="milestones" component={AllMineStoneScreen} options={options} />
+			<Stack.Screen name="milestones" component={AllMineStoneScreen} options={verticalAnimation} />
 			<Stack.Screen name="help" component={Helpmenu} options={options} />
 			<Stack.Screen name="markcomplete" component={MarkCompleted} />
 			<Stack.Screen name="deletegoal" component={Deletegoal} />
