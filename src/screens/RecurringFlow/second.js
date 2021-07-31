@@ -13,26 +13,25 @@ import {
 	getAllDatesBetween,
 } from "../../core/CommonComponents"
 import {connect} from "react-redux"
-import {setClickedGoal} from "../../redux/actions"
+import {setClickedGoal, setBooleanFlag} from "../../redux/actions"
 import {addMilestoneToFirestore} from "../../firebase"
 
-const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag}) => {
+const Second = ({
+	route,
+	clickedGoal,
+	clickedMilestone,
+	setBooleanFlag,
+	booleanFlag,
+	setClickedGoal,
+}) => {
 	const navigation = useNavigation()
 
-	// const gotoHome = () => {
-	// 	navigation.navigate("secondMileStone")
-	// }
-	// const goBack = () => {
-	// 	navigation.goBack()
-	// }
 	useEffect(() => {
 		getMarkedDates()
 	}, [])
 
 	const {reoccuring, reoccuringDays, taskDate, taskName} = route.params
 	const [tName, setTaskName] = useState(taskName)
-
-	const [value, onChange] = useState(new Date())
 	const [clickedDate, setDate] = useState(taskDate ? new Date(taskDate) : new Date())
 
 	const getMarkedDates = () => {
@@ -90,49 +89,44 @@ const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag}) => {
 	}
 
 	const setReoccuring = () => {
-		let newMilestoneItemWithTaskReoccuring = clickedGoal.goalMilestone.map((item) => {
+		nextScreen()
+	}
+
+	const navigationCallback = () => {
+		setBooleanFlag(true)
+		navigation.navigate("particulargoal")
+	}
+
+	const nextScreen = () => {
+		let newMilestoneItemWithTask = clickedGoal.goalMilestone.map((item) => {
 			if (item.milestone == clickedMilestone) {
+				let filteredTasks = item.taskData.filter((tsk) => tsk.task != tName)
 				return {
 					...item,
-					taskData: item.taskData.map((taskObj) => {
-						if (taskObj.task == taskName) {
-							let newTaskObjWithReoccur = {
-								...taskObj,
-								reoccuring: {
-									startDate: clickedDate,
-									reoccuringType: reoccuring,
-									reoccuringDays: reoccuringDays,
-								},
-							}
-
-							return newTaskObjWithReoccur
-						} else {
-							return taskObj
-						}
-					}),
-
-					// ...item.taskData,
-					// {
-					// 	task: task,
-					// 	date: clickedDate,
-					// 	reoccuring: {
-					// 		startDate: clickedDate,
-					// 		reoccuringType: "Daily",
-					// 		reoccuringDays: [0, 1, 2, 3, 4, 5, 6],
-					// 	},
-					// },
+					taskData: [
+						...filteredTasks,
+						{
+							task: tName,
+							date: clickedDate,
+							reoccuring: {
+								startDate: clickedDate,
+								reoccuringType: reoccuring,
+								reoccuringDays: reoccuringDays,
+							},
+						},
+					],
 				}
 			} else return item
 		})
 
-		let updatedGoalObj = {
+		let updatedObj = {
 			...clickedGoal,
-			goalMilestone: newMilestoneItemWithTaskReoccuring,
+			goalMilestone: newMilestoneItemWithTask,
 		}
-		console.log("New Mile Array ", newMilestoneItemWithTaskReoccuring)
 
-		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTaskReoccuring, () => {
-			setClickedGoal(updatedGoalObj)
+		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask, () => {
+			setClickedGoal(updatedObj)
+			navigationCallback()
 		})
 	}
 
@@ -165,7 +159,6 @@ const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag}) => {
 							onPress={() => {
 								setReoccuring()
 								//  navigation.navigate("FifthMilestone")
-								navigation.navigate("myGoals")
 							}}
 						>
 							<Text style={[CommonStyles.done, {bottom: sizeConstants.negativeTen}]}>Done</Text>
@@ -174,46 +167,24 @@ const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag}) => {
 
 					<Calendar
 						style={{paddingLeft: 20, paddingRight: 20}}
-						// // Initially visible month. Default = Date()
 						current={clickedDate ? new Date(clickedDate) : new Date()}
-						// // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-						// minDate={"2001-05-10"}
-						// // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-						// maxDate={"2020-05-30"}
-						// // Handler which gets executed on day press. Default = undefined
+						minDate={new Date()}
 						onDayPress={(day) => {
 							console.log("selected day", day)
 						}}
-						// // Handler which gets executed on day long press. Default = undefined
 						onDayLongPress={(day) => {
 							console.log("selected day", day)
 						}}
-						// // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-						// // monthFormat={"yyyy MM"}
-						// // Handler which gets executed when visible month changes in calendar. Default = undefined
 						onMonthChange={(month) => {
 							console.log("month changed", month)
 						}}
-						// // Hide month navigation arrows. Default = false
 						hideArrows={false}
-						// // Replace default arrows with custom ones (direction can be 'left' or 'right')
-						// //   renderArrow={(direction) => (<Arrow/>)}
-						// // Do not show days of other months in month page. Default = false
 						hideExtraDays={true}
-						// // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
-						// // day from another month that is visible in calendar page. Default = false
 						disableMonthChange={false}
-						// // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
-						// firstDay={1}
-						// // Hide day names. Default = false
 						hideDayNames={false}
-						// // Show week numbers to the left. Default = false
 						showWeekNumbers={false}
-						// // Handler which gets executed when press arrow icon left. It receive a callback can go back month
 						onPressArrowLeft={(subtractMonth) => subtractMonth()}
-						// // Handler which gets executed when press arrow icon right. It receive a callback can go next month
 						onPressArrowRight={(addMonth) => addMonth()}
-						// // Disable left arrow. Default = false
 						disableArrowLeft={false}
 						enableSwipeMonths={true}
 						theme={{
@@ -256,10 +227,8 @@ const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag}) => {
 						style={[CommonStyles.containerMilestone, {marginTop: sizeConstants.xs}]}
 						onPress={() => {
 							// navigation.navigate("third")
-
 							setReoccuring()
-
-							navigation.navigate("particulargoal")
+							// navigation.navigate("particulargoal")
 						}}
 					>
 						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
@@ -290,6 +259,9 @@ const mapDispatchToProps = (dispatch) => {
 		setClickedGoal: (data) => {
 			dispatch(setClickedGoal(data))
 		},
+		setBooleanFlag: (data) => {
+			dispatch(setBooleanFlag(data))
+		},
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Second)
@@ -300,3 +272,43 @@ const styles = StyleSheet.create({
 		backgroundColor: "#588C8D",
 	},
 })
+
+// const setReoccuring = () => {
+// 	let newMilestoneItemWithTaskReoccuring = clickedGoal.goalMilestone.map((item) => {
+// 		if (item.milestone == clickedMilestone) {
+// 			return {
+// 				...item,
+// 				taskData: item.taskData.map((taskObj) => {
+// 					console.log("task check: ", JSON.stringify(taskObj), taskName)
+// 					if (taskObj.task == taskName) {
+// 						let newTaskObjWithReoccur = {
+// 							...taskObj,
+// 							reoccuring: {
+// 								startDate: clickedDate,
+// 								reoccuringType: reoccuring,
+// 								reoccuringDays: reoccuringDays,
+// 							},
+// 						}
+
+// 						return newTaskObjWithReoccur
+// 					} else {
+// 						return taskObj
+// 					}
+// 				}),
+// 			}
+// 		} else return item
+// 	})
+
+// 	let updatedGoalObj = {
+// 		...clickedGoal,
+// 		goalMilestone: newMilestoneItemWithTaskReoccuring,
+// 	}
+// 	console.log("New Mile Array ", JSON.stringify(newMilestoneItemWithTaskReoccuring))
+// 	// return
+
+// 	addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTaskReoccuring, () => {
+// 		setClickedGoal(updatedGoalObj)
+// 		navigation.navigate("particulargoal")
+// 		setBooleanFlag(!booleanFlag)
+// 	})
+// }

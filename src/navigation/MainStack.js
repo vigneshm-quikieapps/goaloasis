@@ -40,6 +40,7 @@ import FirstTaskFlow from "./../screens/TasksFlow.js/FirstTaskFlow"
 import SecondTaskFlow from "./../screens/TasksFlow.js/SecondTaskFlow"
 import ThirdTaskFlow from "./../screens/TasksFlow.js/ThirdTaskFlow"
 import EditMilestone from "../screens/MileStones/EditMilestone"
+import DailyTimeline from "./../screens/Helpmenu/DailyTimeline"
 
 const Stack = createStackNavigator()
 const options = {
@@ -57,6 +58,7 @@ const IntroStack = () => {
 			<Stack.Screen name="mygoals" component={MyGoals} options={options} />
 			<Stack.Screen name="taskTutorialSlide1" component={TaskTutorialSlide1} />
 			<Stack.Screen name="EditMilestone" component={EditMilestone} />
+			<Stack.Screen name="DailyTimeline" component={DailyTimeline} />
 			<Stack.Screen name="todaysTask" component={TodaysTask} />
 			<Stack.Screen name="taskTutorialSlide2" component={TaskTutorialSlide2} />
 			<Stack.Screen name="taskTutorialSlide3" component={TaskTutorialSlide3} />

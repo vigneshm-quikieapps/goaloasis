@@ -6,6 +6,34 @@ import colors from "../../colors"
 
 export const reoccuringDefaultDailyArray = [0, 1, 2, 3, 4, 5, 6]
 export const weekArray = ["S", "M", "T", "W", "T", "F", "S"]
+export const monthNames = [
+	"January",
+	"February",
+	"March",
+	"April",
+	"May",
+	"June",
+	"July",
+	"August",
+	"September",
+	"October",
+	"November",
+	"December",
+]
+export const monthNamesShort = [
+	"Jan",
+	"Feb",
+	"Mar",
+	"Apr",
+	"May",
+	"Jun",
+	"Jul",
+	"Aug",
+	"Sep",
+	"Oct",
+	"Nov",
+	"Dec",
+]
 
 export const addDays = (date, noOfdays) => {
 	var newDate = new Date(date)
@@ -78,7 +106,7 @@ export const checkDate = {
 	},
 }
 
-const convertToDateString = (date) => {
+export const convertToDateString = (date) => {
 	let month = date.getMonth() + 1
 	let day = date.getDate()
 	return `${date.getFullYear()}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day}`

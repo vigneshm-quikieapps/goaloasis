@@ -18,9 +18,13 @@ const MarkCompleted = (props) => {
 	}
 
 	const gotoHome = () => {
-		updateGoalToFirestore(currentGoalObj, () => {
-			navigation.navigate("mygoals")
+		let updatedObj = {
+			...currentGoalObj,
+			isCompleted: true,
+		}
+		updateGoalToFirestore(updatedObj, null, () => {
 			props.setBooleanFlag(!props.booleanFlag)
+			navigation.navigate("mygoals")
 		})
 	}
 

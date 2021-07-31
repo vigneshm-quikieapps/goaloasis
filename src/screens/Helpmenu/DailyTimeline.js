@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import {StyleSheet, Text, TouchableOpacity, View, TextInput, ImageBackground} from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
@@ -9,38 +9,47 @@ import {AntDesign} from "@expo/vector-icons"
 import RBSheet from "react-native-raw-bottom-sheet"
 import {Calendar, LocaleConfig} from "react-native-calendars"
 import DatePicker from "react-native-date-picker"
-import MonthTimeline from "./MonthTimeline"
-import {CommonHomeButton} from "../../core/CommonComponents"
+import TimelineScreen from "./Timeline"
+import {CommonHomeButton, convertToDateString, monthNames} from "../../core/CommonComponents"
 import {connect} from "react-redux"
 import {ColorConstants, sizeConstants} from "../../core/styles"
-import {setAllGoals, setClickedGoal} from "../../redux/actions"
-import {updateGoalToFirestore} from "../../firebase"
+import {setAllGoals, setBooleanFlag, setClickedGoal} from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
+import {addMilestoneToFirestore} from "../../firebase"
 
-const TimelineScreen = ({allGoals, clickedGoal, setClickedGoal}) => {
+const DailyTimeline = ({allGoals, clickedGoal, setClickedGoal, setAllGoals, booleanFlag}) => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
-	const [clickedGoalDate, setClickedGoalDate] = useState(new Date())
-	const [clickedGoalName, setClickedGoalName] = useState("")
-	const [allGoalsforTimeline, setAllGoalsforTimeline] = useState([])
+	const [date, setDate] = useState(new Date())
+	const [allTasks, setAllTasks] = useState([])
+	const [clickedTaskDate, setClickedTaskDate] = useState(new Date())
+	const [clickedTaskName, setClickedTaskName] = useState("")
+	const [clickedMilestone, setClickedMilestone] = useState("")
+	const [oldTask, setOldTask] = useState("")
 
 	useEffect(() => {
-		let timelineData = allGoals.map((goal) => {
-			let date = new Date(goal.targetDate)
-			var year = date.getFullYear()
-
-			return {
-				title: goal.name,
-				description: goal.description,
-				time: year,
-			}
+		var allTasks = []
+		allGoals.forEach((goal) => {
+			goal.goalMilestone.forEach((mile) => {
+				if (mile.taskData.length) {
+					mile.taskData.forEach((task) => {
+						let date = convertToDateString(new Date(task.date))
+						allTasks.push({
+							key: `${goal.id}_${mile.milestone}_${task.task}`,
+							title: task.task,
+							description: "",
+							time: date,
+						})
+					})
+				}
+			})
 		})
-		setAllGoalsforTimeline(timelineData)
+		setAllTasks(allTasks)
 	}, [allGoals])
 
 	useEffect(() => {
 		importData()
-	}, [clickedGoal])
+	}, [booleanFlag])
 
 	const importData = async () => {
 		try {
@@ -64,14 +73,34 @@ const TimelineScreen = ({allGoals, clickedGoal, setClickedGoal}) => {
 		}
 	}
 
-	const updateGoal = () => {
+	const updateTask = () => {
+		var newMilestoneArray = clickedGoal.goalMilestone.map((mile) => {
+			if (mile.milestone == clickedMilestone) {
+				return {
+					...mile,
+					taskData: mile.taskData.map((task) => {
+						if (task.task == oldTask) {
+							let date = convertToDateString(new Date(clickedTaskDate))
+							return {
+								...task,
+								date: date,
+								task: clickedTaskName,
+							}
+						}
+						return task
+					}),
+				}
+			}
+			return mile
+		})
+
 		let updatedObj = {
 			...clickedGoal,
-			targetDate: clickedGoalDate,
-			name: clickedGoalName,
+			goalMilestone: newMilestoneArray,
 		}
-		updateGoalToFirestore(updatedObj, clickedGoal.name, () => {
+		addMilestoneToFirestore(clickedGoal, newMilestoneArray, () => {
 			setClickedGoal(updatedObj)
+			setBooleanFlag(!booleanFlag)
 			refRBSheet.current.close()
 		})
 	}
@@ -91,11 +120,11 @@ const TimelineScreen = ({allGoals, clickedGoal, setClickedGoal}) => {
 						fontWeight: "bold",
 					}}
 				>
-					Yearly Timeline
+					Daily Timeline
 				</Text>
 				<Timeline
 					style={styles.list}
-					data={allGoalsforTimeline}
+					data={allTasks}
 					circleSize={10}
 					circleColor="#B3855C"
 					lineColor="#B3855C"
@@ -121,11 +150,16 @@ const TimelineScreen = ({allGoals, clickedGoal, setClickedGoal}) => {
 					}}
 					titleStyle={{color: "white"}}
 					columnFormat="two-column"
+					// onEventPress={(item) => alert(`${item.title} at ${item.time}`)}
 					onEventPress={(item) => {
-						setClickedGoalName(item.title)
-						var currentGoal = allGoals.find((goal) => goal.name == item.title)
+						let keyArr = item.key.split("_")
+
+						setClickedTaskName(item.title)
+						setOldTask(keyArr[2])
+						var currentGoal = allGoals.find((goal) => goal.id == keyArr[0])
+						setClickedMilestone(keyArr[1])
 						setClickedGoal(currentGoal)
-						setClickedGoalDate(new Date(currentGoal.targetDate))
+						setClickedTaskDate(new Date(item.time))
 						refRBSheet.current.open()
 					}}
 				/>
@@ -148,13 +182,13 @@ const TimelineScreen = ({allGoals, clickedGoal, setClickedGoal}) => {
 			>
 				<LinearGradient colors={["#588C8D", "#7EC8C9"]} style={{padding: 50, flex: 1}}>
 					<View>
-						<Text style={styles.mainTitle}>Edit Name of Goal</Text>
+						<Text style={styles.mainTitle}>Edit Name of Task</Text>
 						<View>
 							<TextInput
 								style={styles.textInput}
 								placeholder="Type Here"
-								value={clickedGoalName}
-								onChangeText={setClickedGoalName}
+								value={clickedTaskName}
+								onChangeText={setClickedTaskName}
 							/>
 						</View>
 					</View>
@@ -162,8 +196,8 @@ const TimelineScreen = ({allGoals, clickedGoal, setClickedGoal}) => {
 					<View style={{marginTop: 30}}>
 						<DatePicker
 							androidVariant="iosClone"
-							date={clickedGoalDate}
-							onDateChange={setClickedGoalDate}
+							date={clickedTaskDate}
+							onDateChange={setClickedTaskDate}
 							mode="date"
 							textColor="#FDF9F2"
 							locale="en"
@@ -173,7 +207,7 @@ const TimelineScreen = ({allGoals, clickedGoal, setClickedGoal}) => {
 						/>
 					</View>
 					<View style={styles.cnfrmBtnContainer}>
-						<TouchableOpacity style={styles.HelpBtn} onPress={updateGoal}>
+						<TouchableOpacity style={styles.HelpBtn} onPress={updateTask}>
 							<Text style={styles.btnText}>Confirm</Text>
 						</TouchableOpacity>
 					</View>
@@ -200,7 +234,6 @@ const TimelineScreen = ({allGoals, clickedGoal, setClickedGoal}) => {
 						backgroundColor: "#F8E6D3",
 						justifyContent: "center",
 					}}
-					onPress={() => navigation.navigate("monthTimeline")}
 				>
 					<MaterialCommunityIcons
 						name="plus"
@@ -219,6 +252,7 @@ const TimelineScreen = ({allGoals, clickedGoal, setClickedGoal}) => {
 						borderRadius: 25,
 						backgroundColor: "#F8E6D3",
 					}}
+					onPress={() => navigation.navigate("monthTimeline")}
 				>
 					<MaterialCommunityIcons
 						name="minus"
@@ -245,9 +279,9 @@ const TimelineScreen = ({allGoals, clickedGoal, setClickedGoal}) => {
 				</View>
 			</View>
 			<CommonHomeButton
-				click={() => navigation.navigate("mygoals")}
 				iconColor={"#E4AB76"}
 				size={40}
+				click={() => navigation.navigate("mygoals")}
 			/>
 		</ImageBackground>
 	)
@@ -257,6 +291,7 @@ const mapStateToProps = (state) => {
 	return {
 		allGoals: state.milestone.allGoals,
 		clickedGoal: state.milestone.clickedGoal,
+		booleanFlag: state.milestone.booleanFlag,
 	}
 }
 
@@ -268,10 +303,13 @@ const mapDispatchToProps = (dispatch) => {
 		setAllGoals: (goalObj) => {
 			dispatch(setAllGoals(goalObj))
 		},
+		setBooleanFlag: (flag) => {
+			dispatch(setBooleanFlag(flag))
+		},
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TimelineScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(DailyTimeline)
 
 const styles = StyleSheet.create({
 	introContainer: {
@@ -293,7 +331,7 @@ const styles = StyleSheet.create({
 	},
 	list: {
 		flex: 1,
-		paddingTop: 20,
+		marginTop: 20,
 	},
 	title: {
 		fontSize: 16,
@@ -336,16 +374,15 @@ const styles = StyleSheet.create({
 	},
 	textInput: {
 		width: 314,
-		height: 50,
 		backgroundColor: "#FDF9F2",
 		borderRadius: 50,
-		marginVertical: sizeConstants.l,
 		paddingLeft: 20,
 		fontSize: 19,
 		color: "#666666",
 		elevation: 10,
+		marginVertical: 30,
+		padding: 10,
 	},
-
 	cnfrmBtnContainer: {
 		marginVertical: sizeConstants.xxxl,
 		width: "100%",
@@ -369,44 +406,9 @@ const styles = StyleSheet.create({
 	},
 })
 
-// const data = [
-// 	{
-// 		time: "09:00",
-// 		title: "Archery Training",
-// 		description:
-// 			"The Beginner Archery and Beginner Crossbow course does not require you to bring any equipment, since everything you need will be provided for the course. ",
-// 		lineColor: "#009688",
-// 		imageUrl:
-// 			"https://cloud.githubusercontent.com/assets/21040043/24240340/c0f96b3a-0fe3-11e7-8964-fe66e4d9be7a.jpg",
-// 	},
-// 	{
-// 		time: "10:45",
-// 		title: "Play Badminton",
-// 		description:
-// 			"Badminton is a racquet sport played using racquets to hit a shuttlecock across a net.",
-
-// 		imageUrl:
-// 			"https://cloud.githubusercontent.com/assets/21040043/24240405/0ba41234-0fe4-11e7-919b-c3f88ced349c.jpg",
-// 	},
-// 	{
-// 		time: "12:00",
-// 		title: "Lunch",
-// 	},
-// 	{
-// 		time: "14:00",
-// 		title: "Watch Soccer",
-// 		description: "Team sport played between two teams of eleven players with a spherical ball. ",
-// 		lineColor: "#009688",
-
-// 		imageUrl:
-// 			"https://cloud.githubusercontent.com/assets/21040043/24240419/1f553dee-0fe4-11e7-8638-6025682232b1.jpg",
-// 	},
-// 	{
-// 		time: "16:30",
-// 		title: "Go to Fitness center",
-// 		description: "Look out for the Best Gym & Fitness Centers around me :)",
-
-// 		imageUrl:
-// 			"https://cloud.githubusercontent.com/assets/21040043/24240422/20d84f6c-0fe4-11e7-8f1d-9dbc594d0cfa.jpg",
-// 	},
-// ]
+// for getting time from a date
+// let date = new Date(mile.date)
+// var hours = date.getHours()
+// var minutes = "0" + date.getMinutes()
+// var seconds = "0" + date.getSeconds()
+// var formattedTime = hours + ":" + minutes.substr(-2) + ":" + seconds.substr(-2)

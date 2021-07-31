@@ -4,8 +4,15 @@ import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import DatePicker from "react-native-date-picker"
+import {connect} from "react-redux"
+import {updateGoalToFirestore} from "../../firebase"
+import {setClickedGoal} from "../../redux/actions"
 
-const EditGoalhelp = () => {
+const EditGoalhelp = ({clickedGoal, setClickedGoal}) => {
+	console.log(clickedGoal)
+	const [goalName, setGoalName] = useState(clickedGoal.name)
+	const [targetDate, setTargetDate] = useState(new Date(clickedGoal.targetDate))
+
 	const navigation = useNavigation()
 
 	const gotoHome = () => {
@@ -14,8 +21,18 @@ const EditGoalhelp = () => {
 	const goBack = () => {
 		navigation.goBack()
 	}
-	const [date, setDate] = useState(new Date())
+	const updateGoal = () => {
+		let updatedObj = {
+			...clickedGoal,
+			name: goalName,
+			targetDate: targetDate,
+		}
 
+		updateGoalToFirestore(updatedObj, clickedGoal.name, () => {
+			setClickedGoal(updatedObj)
+			navigation.navigate("mygoals")
+		})
+	}
 	return (
 		<View style={styles.introContainer}>
 			<LinearGradient colors={["#588C8D", "#7EC8C9"]} style={{flex: 1}}>
@@ -24,14 +41,21 @@ const EditGoalhelp = () => {
 					<View style={styles.textContainer}>
 						<Text style={styles.title}>Edit name of goal</Text>
 						<View style={styles.centerCont}>
-							<TextInput style={styles.textInput} placeholder="Type Here" />
+							<TextInput
+								style={styles.textInput}
+								placeholder="Type Here"
+								value={goalName}
+								onChangeText={(text) => {
+									setGoalName(text)
+								}}
+							/>
 						</View>
 						<Text style={[styles.title, {marginTop: 50, marginLeft: 20}]}>Edit target date</Text>
 						<View style={[styles.centerCont, {height: 250}]}>
 							<DatePicker
 								androidVariant="iosClone"
-								date={date}
-								onDateChange={setDate}
+								date={targetDate}
+								onDateChange={setTargetDate}
 								mode="date"
 								textColor="#ffffff"
 								locale="en"
@@ -44,10 +68,7 @@ const EditGoalhelp = () => {
 					<View style={[styles.btnContainer, styles.nextBtnContainer]}>
 						<View></View>
 						<View>
-							<TouchableOpacity
-								style={[styles.btnStyling, styles.nextBtn]}
-								onPress={() => navigation.navigate("mygoals")}
-							>
+							<TouchableOpacity style={[styles.btnStyling, styles.nextBtn]} onPress={updateGoal}>
 								<MaterialCommunityIcons name="chevron-right" size={50} color="#7EC8C9" />
 							</TouchableOpacity>
 						</View>
@@ -58,7 +79,21 @@ const EditGoalhelp = () => {
 	)
 }
 
-export default EditGoalhelp
+const mapStateToProps = (state) => {
+	return {
+		clickedGoal: state.milestone.clickedGoal,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setClickedGoal: (obj) => {
+			dispatch(setClickedGoal(obj))
+		},
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditGoalhelp)
 
 const styles = StyleSheet.create({
 	introContainer: {
