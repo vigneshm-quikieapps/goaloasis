@@ -21,7 +21,7 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {SnoozeIcon} from "../assets/customIcons"
 import {AntDesign} from "@expo/vector-icons"
 
-const TaskTutorialSlider = ({data, setFirstTime, loading}) => {
+const TaskTutorialSlider = ({data, setFirstTime, loading, helpMenu = false}) => {
 	const [taskCompleted, setCompleted] = useState(false)
 	const [taskSnoozed, setSnoozed] = useState(false)
 	const navigation = useNavigation()
@@ -29,7 +29,6 @@ const TaskTutorialSlider = ({data, setFirstTime, loading}) => {
 
 	const onLongPress = (event) => {
 		if (event.nativeEvent.state === State.ACTIVE) {
-			// alert("I've been pressed for 800 milliseconds")
 			setCompleted(!taskCompleted)
 		}
 	}
@@ -45,12 +44,19 @@ const TaskTutorialSlider = ({data, setFirstTime, loading}) => {
 	// const completeTask = () => {
 	// 	setCompleted(!taskCompleted)
 	// }
-
+	console.log("HELPMENU from taskbap", helpMenu)
+	const [helpMenuState, setHelpMenuState] = useState(helpMenu)
 	const setLoggedIn = async () => {
-		await setisFirstTimeTaskTutorial()
-		setFirstTime("visited")
-		gotoTodaysTask()
+		if (helpMenuState) {
+			setHelpMenuState(!helpMenuState)
+			gotoTodaysTask()
+		} else {
+			await setisFirstTimeTaskTutorial()
+			setFirstTime("visited")
+			gotoTodaysTask()
+		}
 	}
+
 	const gotoTodaysTask = () => {
 		navigation.navigate("todaysTask")
 	}

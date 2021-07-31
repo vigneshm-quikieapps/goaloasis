@@ -52,10 +52,11 @@ const MyGoals = ({
 	clickedGoal,
 	newMileStone,
 }) => {
+	const [taskCounter, setTaskCounter] = useState(0)
+
 	useEffect(() => {
 		fetchData()
 	}, [testData, firstTime, firstTimeTimelineFlow, allGoals])
-
 	const fetchData = async () => {
 		const data = await getFirstTimeTaskTutorial().catch((err) => console.log(err))
 		const data1 = await getFirstTimeTimelineFlow().catch((err) => console.log(err))
@@ -103,9 +104,39 @@ const MyGoals = ({
 	}
 	const colorArray = Object.values(forGoals)
 
+	var today = new Date()
+	var dd = String(today.getDate()).padStart(2, "0")
+	var mm = String(today.getMonth() + 1).padStart(2, "0")
+	var yyyy = today.getFullYear()
+
+	today = yyyy + "-" + mm + "-" + dd
+
+	// console.log("TODAYS DATE", today)
+	let count = 0
+	const getTodaysTasks = () => {
+		for (let i = 0; i < allGoals.length; i++) {
+			for (let j = 0; j < allGoals[i].goalMilestone.length; j++) {
+				for (let k = 0; k < allGoals[i].goalMilestone[j].taskData.length; k++) {
+					if (allGoals[i].goalMilestone[j].taskData.length) {
+						let taskDatee = JSON.stringify(allGoals[i].goalMilestone[j].taskData[k].date)
+
+						if (taskDatee.match(today)) {
+							console.log(
+								"taskDateeee",
+								JSON.stringify(allGoals[i].goalMilestone[j].taskData[0].date)
+							)
+							count = count + 1
+						}
+					}
+				}
+			}
+		}
+	}
+
 	useEffect(() => {
-		importData()
-	}, [currentGoal, booleanFlag, clickedGoal])
+		getTodaysTasks()
+		setTaskCounter(count)
+	}, [allGoals])
 
 	const importData = async () => {
 		try {
@@ -128,6 +159,10 @@ const MyGoals = ({
 			console.error(error)
 		}
 	}
+
+	useEffect(() => {
+		importData()
+	}, [currentGoal, booleanFlag, clickedGoal])
 
 	const getGoalCompletionPercent = (goalObj) => {
 		let allMilestonesArrayFromCurrentGoal = [...goalObj.goalMilestone]
@@ -163,7 +198,7 @@ const MyGoals = ({
 							justifyContent: "center",
 						}}
 					>
-						<Text style={{color: "#FFFFFF", alignSelf: "center"}}>0</Text>
+						<Text style={{color: "#FFFFFF", alignSelf: "center"}}>{taskCounter}</Text>
 					</View>
 				</View>
 			</TouchableOpacity>
@@ -201,7 +236,7 @@ const MyGoals = ({
 												shadowColor="#999"
 												bgColor="#FBF5E9"
 											>
-												<Text style={{fontSize: 22, color: getColor(index), fontWeight: "bold"}}>
+												<Text style={{fontSize: 25, color: getColor(index), fontWeight: "bold"}}>
 													{task.isCompleted ? "100%" : `${completedPercent}%`}
 												</Text>
 											</ProgressCircle>

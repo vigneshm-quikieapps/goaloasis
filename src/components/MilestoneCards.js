@@ -18,7 +18,6 @@ const MilestoneCards = ({
 	clickedMilestone,
 	clickedGoal,
 	style,
-
 }) => {
 	useEffect(() => {}, [clickedGoal])
 	const [taskCompleted, setCompleted] = useState(true)
@@ -170,7 +169,7 @@ const MilestoneCards = ({
 								{taskCompleted && data && !data.isCompleted ? (
 									<View style={{alignItems: "center"}}>
 										<Text
-											style={{fontSize: 16, color: "#000"}}
+											style={{fontSize: 16, color: "#333333"}}
 										>{`Task: 0/${data.taskData.length}`}</Text>
 										<Feather
 											name={upDown ? "chevron-up" : "chevron-down"}
@@ -266,10 +265,11 @@ const styles = StyleSheet.create({
 	mainTitle: {
 		fontSize: 19,
 		fontWeight: "bold",
-		color: "black",
+		color: "#333333",
 	},
 	subtitle: {
 		fontSize: 16,
+		color: "#333333",
 	},
 	accordian: {
 		backgroundColor: "#CDE8E6",

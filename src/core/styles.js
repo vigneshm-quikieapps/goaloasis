@@ -184,7 +184,7 @@ export const CommonStyles = ScaledSheet.create({
 
 	SkipText: {
 		color: ColorConstants.faintWhite,
-		fontSize: sizeConstants.nineteen,
+		fontSize: 19,
 		textAlign: "left",
 	},
 	progressContainer: {
@@ -213,16 +213,17 @@ export const CommonStyles = ScaledSheet.create({
 		alignItems: "center",
 	},
 	title: {
-		fontSize: sizeConstants.xxl,
+		fontSize: 25,
 		textAlign: "left",
 		fontWeight: "bold",
-		color: ColorConstants.white,
+		color: ColorConstants.faintWhite,
 	},
 
+	//cricket
 	subTitle: {
-		fontSize: sizeConstants.nineteen,
-		letterSpacing: "0.7@ms",
-		color: "rgba(255, 255, 255, 0.651)",
+		fontSize: 19,
+		letterSpacing: 0.7,
+		color: ColorConstants.faintWhite,
 		marginTop: sizeConstants.thirty,
 	},
 
@@ -244,7 +245,7 @@ export const CommonStyles = ScaledSheet.create({
 	},
 
 	btnText: {
-		fontSize: sizeConstants.nineteenX,
+		fontSize: 19,
 		color: ColorConstants.faintBlack2,
 		letterSpacing: "1.2@s",
 	},
@@ -268,19 +269,6 @@ export const CommonStyles = ScaledSheet.create({
 
 	// sliders common styles ends
 
-	// NameGoal
-	// textInput: {
-	// 	width: scale(314),
-	// 	height: sizeConstants.fifty,
-	// 	backgroundColor: "#FDF9F2",
-	// 	borderRadius: sizeConstants.fifty,
-	// 	marginTop: sizeConstants.fifty,
-	// 	paddingLeft: moderateScale(20),
-	// 	fontSize: "19@s",
-	// 	color: "#666666",
-	// 	elevation: "10@s",
-	// },
-
 	textInput: {
 		width: sizeConstants.threeFourTeen,
 		height: sizeConstants.fifty,
@@ -288,8 +276,8 @@ export const CommonStyles = ScaledSheet.create({
 		borderRadius: sizeConstants.fifty,
 		marginTop: sizeConstants.three,
 		paddingLeft: sizeConstants.twentyX,
-		fontSize: sizeConstants.nineteenX,
-		color: ColorConstants.faintBlack2,
+		fontSize: 19,
+		color: "#666666",
 		elevation: sizeConstants.m,
 	},
 
@@ -344,7 +332,7 @@ export const CommonStyles = ScaledSheet.create({
 	// first
 	mainTitle: {
 		color: "#FDF9F2",
-		fontSize: "25@s",
+		fontSize: 25,
 		marginLeft: verticalScale(21),
 	},
 	threeDots: {
@@ -367,7 +355,7 @@ export const CommonStyles = ScaledSheet.create({
 		margin: scale(1),
 	},
 	enterTask: {
-		fontSize: "16@s",
+		fontSize: 16,
 		color: "#FDF9F2",
 		marginLeft: scale(21),
 	},
@@ -381,14 +369,14 @@ export const CommonStyles = ScaledSheet.create({
 		alignItems: "center",
 	},
 	bottomText: {
-		fontSize: "24@s",
+		fontSize: 19,
 		fontWeight: "bold",
-		color: "black",
+		color: "#333333",
 	},
 
 	firstSubTitle: {
 		fontSize: 25,
-		color: "#FDF9F2",
+		color: "#BDDFDB",
 		marginLeft: scale(21),
 		fontWeight: "bold",
 		marginTop: sizeConstants.xl,
@@ -423,7 +411,7 @@ export const CommonStyles = ScaledSheet.create({
 	},
 	cancelReoccuringText: {
 		color: "#FDF9F2",
-		fontSize: "21@s",
+		fontSize: 19,
 	},
 	bottomBtn: {
 		height: sizeConstants.seventyFive,
@@ -446,19 +434,12 @@ export const CommonStyles = ScaledSheet.create({
 	},
 
 	// Reoccuring Flow
-	// second
-	// cross: {
-	// 	backgroundColor: "#538586",
-	// 	borderRadius: sizeConstants.xl,
-	// 	position: "absolute",
-	// 	right: sizeConstants.zero,
-	// 	marginRight: scale(10),
-	// },
+
 	editContainer: {
 		marginTop: sizeConstants.m,
 		marginLeft: sizeConstants.twentyOne,
 	},
-	editOccuringText: {fontSize: "25@s", color: "#FDF9F2", fontWeight: "bold"},
+	editOccuringText: {fontSize: 25, color: "#FDF9F2", fontWeight: "bold"},
 
 	reoccuringDateContainer: {
 		//modal styles starts
@@ -497,10 +478,7 @@ export const CommonStyles = ScaledSheet.create({
 	MX10: {
 		marginHorizontal: sizeConstants.mX,
 	},
-	dotStyle: {
-		height: sizeConstants.eightX,
-		width: sizeConstants.eightX,
-	},
+
 	ML30: {
 		marginLeft: sizeConstants.mThirty,
 	},
@@ -523,9 +501,10 @@ export const CommonStyles = ScaledSheet.create({
 	// common styles ends
 
 	// milestone starts
-	reoccuring: {color: ColorConstants.faintWhite, fontSize: sizeConstants.twentyOne},
+
+	reoccuring: {color: ColorConstants.faintWhite, fontSize: 19},
 	milestoneText: {
-		fontSize: sizeConstants.sixteenX,
+		fontSize: 16,
 		color: ColorConstants.faintWhite,
 		marginLeft: sizeConstants.twentyOne,
 		// marginTop: sizeConstants.twentyX,
@@ -548,14 +527,6 @@ export const CommonStyles = ScaledSheet.create({
 		fontSize: sizeConstants.twentyOne,
 	},
 
-	subTitleMilestone: {
-		fontSize: sizeConstants.fifteenMX,
-		color: ColorConstants.faintWhite,
-		marginLeft: sizeConstants.twentyOne,
-		paddingLeft: sizeConstants.five,
-		paddingRight: sizeConstants.twentyMX,
-	},
-
 	calendarContainer: {
 		display: "flex",
 		justifyContent: "center",
@@ -564,13 +535,7 @@ export const CommonStyles = ScaledSheet.create({
 
 		// marginTop: sizeConstants.m,
 	},
-	reoccuringText: {
-		fontSize: "21@s",
-		alignSelf: "center",
-		marginLeft: scale(20),
-		color: "#FDF9F2",
-		marginTop: sizeConstants.m,
-	},
+
 	doneText: {
 		fontSize: "14@s",
 		color: "#FDF9F2",
@@ -587,19 +552,12 @@ export const CommonStyles = ScaledSheet.create({
 	},
 
 	targetDate: {
-		fontSize: sizeConstants.twentyOne,
+		fontSize: 16,
 		color: ColorConstants.faintBlack1,
 		alignSelf: "center",
 		marginLeft: sizeConstants.twentyMX,
 		color: ColorConstants.faintWhite,
 		marginTop: sizeConstants.twentyMX,
-	},
-
-	done: {
-		fontSize: sizeConstants.fourteenMX,
-		color: ColorConstants.faintWhite,
-		position: "absolute",
-		left: sizeConstants.fifty,
 	},
 
 	containerMilestone: {
@@ -622,11 +580,11 @@ export const CommonStyles = ScaledSheet.create({
 	},
 
 	// MyGoals Home Screen
-	titleContainer: {
-		height: scale(90) - Constants.statusBarHeight,
-		backgroundColor: "#588C8D",
-		justifyContent: "center",
-	},
+	// titleContainer: {
+	// 	height: scale(90) - Constants.statusBarHeight,
+	// 	backgroundColor: "#588C8D",
+	// 	justifyContent: "center",
+	// },
 	titleContainer1: {
 		height: scale(90) - Constants.statusBarHeight,
 		backgroundColor: "#588C8D",
@@ -642,7 +600,7 @@ export const CommonStyles = ScaledSheet.create({
 		opacity: 0.5,
 	},
 	myGoalsText: {
-		fontSize: "25@s",
+		fontSize: 25,
 		fontWeight: "bold",
 		color: "#588C8D",
 		marginHorizontal: scale(20),
@@ -661,7 +619,7 @@ export const CommonStyles = ScaledSheet.create({
 		// backgroundColor: "green",
 	},
 	goalText: {
-		fontSize: "16@s",
+		fontSize: 16,
 		color: "#666666",
 		textAlign: "center",
 		maxWidth: scale(100),
@@ -687,12 +645,6 @@ export const CommonStyles = ScaledSheet.create({
 		width: scale(30),
 		backgroundColor: "#588C8D",
 		position: "absolute",
-	},
-
-	titleContainer: {
-		flex: 0.6,
-		justifyContent: "center",
-		backgroundColor: ColorConstants.faintWhite,
 	},
 
 	modalBottomBtn: {
@@ -749,21 +701,9 @@ export const CommonStyles = ScaledSheet.create({
 	// common styles ends
 
 	// milestone starts
-	reoccuring: {color: ColorConstants.faintWhite, fontSize: sizeConstants.twentyOne},
-	milestoneText: {
-		fontSize: sizeConstants.sixteenX,
-		color: ColorConstants.faintWhite,
-		marginLeft: sizeConstants.twentyOne,
-		// marginTop: sizeConstants.twentyX,
-	},
-
-	button: {
-		color: ColorConstants.black,
-		fontSize: sizeConstants.twentyOne,
-	},
 
 	subTitleMilestone: {
-		fontSize: sizeConstants.fifteenMX,
+		fontSize: 16,
 		color: ColorConstants.faintWhite,
 		marginLeft: sizeConstants.twentyOne,
 		paddingLeft: sizeConstants.five,
@@ -771,14 +711,14 @@ export const CommonStyles = ScaledSheet.create({
 	},
 
 	reoccuringText: {
-		fontSize: "21@s",
+		fontSize: 19,
 		alignSelf: "center",
 		marginLeft: scale(20),
 		color: "#FDF9F2",
 		marginTop: sizeConstants.m,
 	},
 	doneText: {
-		fontSize: "14@s",
+		fontSize: 14,
 		color: "#FDF9F2",
 		// position: "absolute",
 		// right: 0,
@@ -793,39 +733,11 @@ export const CommonStyles = ScaledSheet.create({
 		marginTop: sizeConstants.m,
 	},
 
-	targetDate: {
-		fontSize: sizeConstants.twentyOne,
-		color: ColorConstants.faintBlack1,
-		alignSelf: "center",
-		marginLeft: sizeConstants.twentyMX,
-		color: ColorConstants.faintWhite,
-		marginTop: sizeConstants.twentyMX,
-	},
-
 	done: {
-		fontSize: sizeConstants.fourteenMX,
-		color: ColorConstants.faintWhite,
+		fontSize: 16,
+		color: "#89B3B2",
 		position: "absolute",
-		left: sizeConstants.fifty,
-	},
-
-	containerMilestone: {
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: ColorConstants.darkFaintBlue,
-		borderColor: ColorConstants.faintWhite,
-		marginBottom: sizeConstants.twentyMX,
-		borderEndWidth: sizeConstants.three,
-		borderStartWidth: sizeConstants.three,
-		borderTopWidth: sizeConstants.three,
-		borderBottomWidth: sizeConstants.three,
-		width: "70%",
-		padding: sizeConstants.eight,
-		borderRadius: sizeConstants.twentySix,
-		flexDirection: "column",
-		marginVertical: sizeConstants.s,
-		marginTop: sizeConstants.l,
-		alignSelf: "center",
+		left: sizeConstants.hundred,
 	},
 
 	// MyGoals Home Screen
@@ -835,37 +747,8 @@ export const CommonStyles = ScaledSheet.create({
 		backgroundColor: "#FBF5E9",
 		borderTopRightRadius: sizeConstants.seventy,
 	},
-	viewTap: {
-		height: sizeConstants.six,
-		width: scale(60),
-		backgroundColor: "#588C8D",
-		marginVertical: sizeConstants.m,
-		borderRadius: sizeConstants.thirty,
-		opacity: 0.5,
-	},
-	myGoalsText: {
-		fontSize: "25@s",
-		fontWeight: "bold",
-		color: "#588C8D",
-		marginHorizontal: scale(20),
-		marginBottom: sizeConstants.m,
-	},
-	logoSpacing: {
-		flex: 1,
-		flexDirection: "row",
-		flexWrap: "wrap",
-		// justifyContent: "center",
-		width: "100%",
-	},
 
-	goalText: {
-		fontSize: "16@s",
-		color: "#666666",
-		textAlign: "center",
-		maxWidth: scale(90),
-
-		// backgroundColor: "blue",
-	},
+	//duplicate
 	circleLogo: {
 		height: sizeConstants.hundred,
 		width: sizeConstants.hundred,
@@ -875,17 +758,7 @@ export const CommonStyles = ScaledSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 	},
-	iconVertical: {
-		height: sizeConstants.thirty,
-		width: scale(4),
-		backgroundColor: "#588C8D",
-	},
-	iconHorizontal: {
-		height: sizeConstants.four,
-		width: scale(30),
-		backgroundColor: "#588C8D",
-		position: "absolute",
-	},
+
 	bottomBtnContainer: {
 		width: "100%",
 		position: "absolute",
@@ -978,17 +851,17 @@ export const CommonStyles = ScaledSheet.create({
 		marginTop: sizeConstants.xl,
 	},
 	trackingcont: {
-		marginTop: 18,
-		marginVertical: 10,
-		marginHorizontal: 20,
+		marginTop: sizeConstants.eighteen,
+		marginVertical: sizeConstants.m,
+		marginHorizontal: sizeConstants.xl,
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between",
 	},
 	percentageCont: {
-		height: 150,
-		width: 150,
-		borderRadius: 150 / 2,
+		height: sizeConstants.oneFifty,
+		width: sizeConstants.oneFifty,
+		borderRadius: sizeConstants.oneFifty,
 		backgroundColor: "#FBF5E9",
 		borderWidth: 5,
 		borderColor: "#C0E5E4",

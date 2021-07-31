@@ -125,14 +125,14 @@ const styles = StyleSheet.create({
 	},
 
 	subTitle: {
-		fontSize: sizeConstants.sixteen,
+		fontSize: 16,
 		color: "#333333",
 		marginLeft: scale(20),
 	},
 
 	goalsText: {
-		fontSize: sizeConstants.sixteen,
-		color: "black",
+		fontSize: 16,
+		color: "#333333",
 	},
 	goalsContainer: {
 		flex: 0.8,
@@ -149,9 +149,9 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	myGoalsText: {
-		fontSize: sizeConstants.xxl,
+		fontSize: 25,
 		fontWeight: "bold",
-		color: "black",
+		color: "#333333",
 		marginHorizontal: verticalScale(20),
 	},
 	myGoalsubtext: {

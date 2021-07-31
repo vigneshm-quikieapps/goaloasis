@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
 	},
 
 	subTitle: {
-		fontSize: sizeConstants.sixteenX,
+		fontSize: 16,
 		color: ColorConstants.faintWhite,
 		marginLeft: sizeConstants.twentyOne,
 		marginTop: sizeConstants.m,
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
 		borderRadius: sizeConstants.fifty,
 		marginTop: sizeConstants.three,
 		paddingLeft: sizeConstants.twentyX,
-		fontSize: sizeConstants.nineteenX,
+		fontSize: 19,
 		color: ColorConstants.faintBlack2,
 		elevation: sizeConstants.m,
 	},
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
 	},
 	milestoneText: {
 		marginTop: sizeConstants.twentyX,
-		fontSize: sizeConstants.sixteenX,
+		fontSize: 16,
 		color: ColorConstants.faintWhite,
 		marginLeft: sizeConstants.twentyOne,
 	},

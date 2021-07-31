@@ -10,6 +10,7 @@ import {CommonHomeButton} from "../../core/CommonComponents"
 import {CommonStyles} from "../../core/styles"
 import {sizeConstants, ColorConstants} from "./../../core/styles"
 import {scale, verticalScale} from "react-native-size-matters"
+import GestureRecognizer from "react-native-swipe-gestures"
 import {connect} from "react-redux"
 import {
 	getClickedGoalFromAsyncStorage,
@@ -28,9 +29,9 @@ const ParticularGoal = (props) => {
 	const [allMilestonesLength, setMilestonesLength] = useState(0)
 	const [completedMilestonesLength, setCompletedMilestonesLength] = useState(0)
 	const [goalCompletedPercent, setGoalPercent] = useState(0)
-
+	const {setModalTrue} = props.route.params
 	useEffect(() => {
-		// setModalVisible(false)
+		setModalVisible(false)
 		getClickedGoalFromAsyncStorage(props.clickedGoal.name).then((goal) => {
 			let goals = JSON.parse(goal)
 			setData(goals.goalMilestone)
@@ -41,12 +42,20 @@ const ParticularGoal = (props) => {
 	useEffect(() => {
 		getFirstTimeData()
 	}, [props.firstTimeIndividual])
+	console.log("modalVisible", props.route)
+
+	const [helpMenuState, setHelpMenuState] = useState(setModalTrue)
 
 	const getFirstTimeData = async () => {
-		const data = await getFirstTimeIndividual()
-		props.setFirstTimeForIndividualGoal(data)
-		const isFirst = props.firstTimeIndividual === "visited" ? false : true
-		setModalVisible(isFirst)
+		if (setModalTrue) {
+			setHelpMenuState(!helpMenuState)
+			setModalVisible(true)
+		} else {
+			const data = await getFirstTimeIndividual()
+			props.setFirstTimeForIndividualGoal(data)
+			const isFirst = props.firstTimeIndividual === "visited" ? false : true
+			setModalVisible(isFirst)
+		}
 	}
 
 	const closeModal = async () => {
@@ -64,7 +73,6 @@ const ParticularGoal = (props) => {
 	]
 	const [page, setPageNo] = useState(0)
 
-
 	const getGoalCompletionPercent = () => {
 		let allMilestonesArrayFromCurrentGoal = [...props.clickedGoal.goalMilestone]
 		let allMilesLen = allMilestonesArrayFromCurrentGoal.length
@@ -81,7 +89,7 @@ const ParticularGoal = (props) => {
 
 		setMilestonesLength(allMilesLen)
 		setCompletedMilestonesLength(completedMilesLen)
-		setGoalPercent(percentCompleted.toFixed(1))
+		setGoalPercent(parseInt(percentCompleted.toFixed(1)))
 	}
 
 	const icons = () => (
@@ -94,6 +102,15 @@ const ParticularGoal = (props) => {
 	const goBack = () => {
 		navigation.goBack()
 	}
+	const [taskCompleted, setCompleted] = useState(false)
+
+	const onLongPress = (event) => {
+		if (event.nativeEvent.state === State.ACTIVE) {
+			console.log("LONGPRESS CALLED")
+			setCompleted(true)
+		}
+	}
+
 	// console.log("DATA FROM", DATA)
 	return (
 		<StatusBarScreen style={styles.container}>
@@ -139,7 +156,7 @@ const ParticularGoal = (props) => {
 									</Text>
 								) : null}
 								{page == 2 ? (
-									<Text style={[{fontSize: sizeConstants.twentyX}, CommonStyles.bold]}>
+									<Text style={[{fontSize: 16}, CommonStyles.bold]}>
 										Swipe left
 										<Text style={CommonStyles.fontW100}> if you want to </Text>
 										delete or edit the milestone
@@ -154,13 +171,36 @@ const ParticularGoal = (props) => {
 								}}
 							>
 								{page == 0 ? (
-									<AppButton
-										title={buttonText[page]}
-										style={[
-											styles.appBtn,
-											{width: "80%", justifyContent: "center", borderRadius: 35, padding: 0},
-										]}
-									/>
+									<LongPressGestureHandler onHandlerStateChange={onLongPress} minDurationMs={800}>
+										{/* <AppButton
+												title={taskCompleted ? "MISSION COMPLETE" : buttonText[page]}
+												style={[
+													styles.appBtn,
+													{width: "80%", justifyContent: "center", borderRadius: 35, padding: 0},
+												]}
+											/> */}
+										<TouchableOpacity>
+											<View
+												style={[
+													styles.btnTextContainer,
+													{
+														borderRadius: 30,
+														width: 278,
+														backgroundColor: taskCompleted ? "white" : ColorConstants.lighterBlue,
+													},
+												]}
+											>
+												<Text
+													style={{
+														fontSize: 16,
+														color: ColorConstants.faintBlack1,
+													}}
+												>
+													{taskCompleted ? "MISSION COMPLETE!" : buttonText[page]}
+												</Text>
+											</View>
+										</TouchableOpacity>
+									</LongPressGestureHandler>
 								) : page == 1 ? (
 									<Swipeout
 										left={[
@@ -214,6 +254,7 @@ const ParticularGoal = (props) => {
 										color: ColorConstants.faintBlack1,
 										width: "80%",
 										paddingLeft: "16%",
+										fontSize: 19,
 									}}
 									onPress={() => (page === 2 ? closeModal() : setPageNo(page + 1))}
 								/>
@@ -235,8 +276,8 @@ const ParticularGoal = (props) => {
 						bgColor="#FBF5E9"
 					>
 						<View style={CommonStyles.percentageCont}>
-							<Text>Target Date</Text>
-							<Text style={{fontWeight: "bold"}}>01/01/21</Text>
+							<Text style={{fontSize: 16, color: "#333333"}}>Target Date</Text>
+							<Text style={{fontWeight: "bold", fontSize: 16, color: "#333333"}}>01/01/21</Text>
 						</View>
 					</ProgressCircle>
 
@@ -278,63 +319,73 @@ const ParticularGoal = (props) => {
 				</View>
 			</View>
 
-			<View style={styles.goalsContainer}>
-				<View style={styles.addMileStone}>
-					<Text style={styles.myGoalsText}>Add Milestones</Text>
-					<View style={styles.viewTap}>
-						<MaterialCommunityIcons
-							name="plus"
-							size={40}
-							color="#7EC8C9"
-							onPress={() => {
-								navigation.navigate("FirstMilestone")
-							}}
-						/>
-					</View>
-				</View>
-
+			<GestureRecognizer
+				onSwipeUp={() => {
+					navigation.navigate("milestones", {
+						paramsItinerary: true,
+					})
+				}}
+				// style={{backgroundColor: Colors.eventBackground}}
+				style={styles.goalsContainer}
+			>
 				<View>
-					{/* <Text style={styles.myGoalsubtext}>
+					<View style={styles.addMileStone}>
+						<Text style={styles.myGoalsText}>Add Milestones</Text>
+						<View style={styles.viewTap}>
+							<MaterialCommunityIcons
+								name="plus"
+								size={40}
+								color="#7EC8C9"
+								onPress={() => {
+									navigation.navigate("FirstMilestone")
+								}}
+							/>
+						</View>
+					</View>
+
+					<View>
+						{/* <Text style={styles.myGoalsubtext}>
 						It looks like you don’t have a plan to achieve your goal yet. Don’t worry! Tap (+) to
 						add a milestone and get on your way.
 					</Text> */}
-					<ScrollView>
-						<MilestoneCards
-							style={{backgroundColor: ColorConstants.lighterBlue}}
-							data={DATA[DATA.length - 1]}
-							style={{marginTop: 0}}
-						/>
-					</ScrollView>
-					<View
-						style={{
-							alignItems: "center",
-							flexDirection: "row",
-							justifyContent: "space-around",
-							marginTop: verticalScale(10),
-						}}
-					>
-						<View>
-							<Text style={{fontSize: 24, color: "#FDF9F2", fontWeight: "bold"}}>
-								See all milestones
-							</Text>
-						</View>
-						<View>
-							<TouchableOpacity
-								style={[styles.btnStyling, styles.nextBtn]}
-								onPress={() => navigation.navigate("milestones")}
-							>
-								<MaterialCommunityIcons name="chevron-right" size={50} color="#7EC8C9" />
-							</TouchableOpacity>
+						<ScrollView>
+							<MilestoneCards
+								style={{backgroundColor: ColorConstants.lighterBlue}}
+								data={DATA[DATA.length - 1]}
+								style={{marginTop: 0}}
+							/>
+						</ScrollView>
+						<View
+							style={{
+								alignItems: "center",
+								flexDirection: "row",
+								justifyContent: "space-around",
+								marginTop: verticalScale(10),
+							}}
+						>
+							<View>
+								<Text style={{fontSize: 24, color: "#FDF9F2", fontWeight: "bold"}}>
+									See all milestones
+								</Text>
+							</View>
+							<View>
+								<TouchableOpacity
+									style={[styles.btnStyling, styles.nextBtn]}
+									onPress={() => navigation.navigate("milestones")}
+								>
+									<MaterialCommunityIcons name="chevron-right" size={50} color="#7EC8C9" />
+								</TouchableOpacity>
+							</View>
 						</View>
 					</View>
-				</View>
 
-				{/* <View style={styles.bottomBtnContainer}>
+					{/* <View style={styles.bottomBtnContainer}>
 					<TouchableOpacity style={styles.bottomBtn} onPress={goBack}>
 						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 					</TouchableOpacity>
 				</View> */}
-			</View>
+				</View>
+			</GestureRecognizer>
 			<CommonHomeButton click={goBack} />
 		</StatusBarScreen>
 	)
@@ -369,7 +420,7 @@ const styles = StyleSheet.create({
 	},
 
 	subTitle: {
-		fontSize: sizeConstants.sixteen,
+		fontSize: 16,
 		color: "#333333",
 		marginLeft: scale(20),
 	},
@@ -384,7 +435,7 @@ const styles = StyleSheet.create({
 		borderTopRightRadius: sizeConstants.seventy,
 	},
 	btnText: {
-		fontSize: sizeConstants.fifteenMX,
+		fontSize: 16,
 		color: ColorConstants.faintBlack1,
 		// letterSpacing: "1.2@s",
 	},
@@ -398,7 +449,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	myGoalsText: {
-		fontSize: sizeConstants.xxl,
+		fontSize: 25,
 		fontWeight: "bold",
 		color: "black",
 		marginHorizontal: verticalScale(20),
@@ -456,7 +507,7 @@ const styles = StyleSheet.create({
 
 	skipText: {
 		color: ColorConstants.darkGrey,
-		fontSize: sizeConstants.fifteenX,
+		fontSize: 16,
 	},
 	modalContentContainer: {
 		justifyContent: "center",
@@ -466,15 +517,15 @@ const styles = StyleSheet.create({
 	},
 
 	dataTextStyle: {
-		fontSize: sizeConstants.twentyX,
+		fontSize: 16,
 		marginBottom: sizeConstants.m,
 		color: ColorConstants.faintBlack1,
 	},
-	contentText: {fontSize: sizeConstants.twentyX, color: ColorConstants.faintBlack1},
+	contentText: {fontSize: 16, color: ColorConstants.faintBlack1},
 
 	appBtn: {
 		backgroundColor: ColorConstants.lighterBlue,
-		fontSize: sizeConstants.fifteenMX,
+		fontSize: 14,
 		paddingVertical: sizeConstants.thirteenMX,
 		color: ColorConstants.faintBlack1,
 	},

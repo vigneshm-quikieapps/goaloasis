@@ -1,7 +1,8 @@
 import React, {useState} from "react"
 import {Text, View} from "react-native"
 import TaskTutorialSlider from "./../../components/TaskTutorialSlider"
-const TaskTutorialSlide1 = () => {
+const TaskTutorialSlide1 = ({route}) => {
+	const {helpMenu} = route.params
 	const [screenData] = useState({
 		title: "Completing Task",
 		subTitle: "Long Press to mark a task complete",
@@ -9,6 +10,7 @@ const TaskTutorialSlide1 = () => {
 		color2: "#E6AB76",
 		screen: 1,
 	})
+	console.log("HELPMENU from slider 1", route)
 
 	return <TaskTutorialSlider data={screenData} />
 }

@@ -144,7 +144,7 @@ const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag}) => {
 						<Text style={CommonStyles.mainTitle}>{clickedMilestone}</Text>
 						<Entypo name="cross" color="#FDF9F2" size={38} style={CommonStyles.cross} />
 					</View>
-					<Text style={CommonStyles.enterTask}>Enter Task</Text>
+					<Text style={[CommonStyles.enterTask, {marginTop: 10}]}>Enter Task</Text>
 					<View style={CommonStyles.centerCont}>
 						<TextInput
 							style={CommonStyles.textInput}
@@ -153,7 +153,7 @@ const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag}) => {
 							value={taskName}
 						/>
 					</View>
-					<View style={[CommonStyles.editContainer, {marginVertical: 0}]}>
+					<View style={[CommonStyles.editContainer, {marginVertical: 20}]}>
 						<Text style={CommonStyles.editOccuringText}>Edit Reoccuring</Text>
 					</View>
 					<View style={CommonStyles.calendarContainer}>
@@ -168,7 +168,7 @@ const Second = ({route, clickedGoal, clickedMilestone, setBooleanFlag}) => {
 								navigation.navigate("myGoals")
 							}}
 						>
-							<Text style={CommonStyles.done}>Done</Text>
+							<Text style={[CommonStyles.done, {bottom: sizeConstants.negativeTen}]}>Done</Text>
 						</TouchableOpacity>
 					</View>
 

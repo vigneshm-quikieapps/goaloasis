@@ -89,7 +89,7 @@ const First = ({route, clickedMilestone}) => {
 					</TouchableOpacity>
 				</View>
 			</RBSheet>
-			<Text style={CommonStyles.enterTask}>Enter Task</Text>
+			<Text style={[CommonStyles.enterTask, {marginTop: 10}]}>Enter Task</Text>
 			<View style={CommonStyles.centerCont}>
 				<TextInput
 					style={CommonStyles.textInput}

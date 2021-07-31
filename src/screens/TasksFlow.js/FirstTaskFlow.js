@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
 		marginLeft: sizeConstants.twentyMX,
 	},
 	subTitle: {
-		fontSize: sizeConstants.sixteenX,
+		fontSize: 16,
 		color: ColorConstants.faintWhite,
 		paddingLeft: sizeConstants.twentyOne,
 		marginTop: sizeConstants.l,
@@ -353,7 +353,7 @@ const styles = StyleSheet.create({
 		borderRadius: sizeConstants.fifty,
 		marginTop: sizeConstants.three,
 		paddingLeft: sizeConstants.twentyMX,
-		fontSize: sizeConstants.nineteenX,
+		fontSize: 19,
 		color: ColorConstants.faintBlack2,
 		elevation: sizeConstants.m,
 	},

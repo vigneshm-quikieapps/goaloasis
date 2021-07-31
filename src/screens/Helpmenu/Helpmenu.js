@@ -4,8 +4,12 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
 import {CommonHomeButton} from "../../core/CommonComponents"
 import {ColorConstants} from "../../core/styles"
+// import {getFirstTimeUser} from "./src/utils/asyncStorage"
+// import {setisFirstTimeTaskTutorial} from "./../../utils/asyncStorage"
+// import {setFirstTime} from "../../redux/actions"
+import {connect} from "react-redux"
 
-const Helpmenu = () => {
+const Helpmenu = ({setFirstTime}) => {
 	const navigation = useNavigation()
 
 	const handleOpenNewGoal = () => {
@@ -18,6 +22,11 @@ const Helpmenu = () => {
 	const gotoHome = () => {
 		navigation.navigate("mygoals")
 	}
+
+	const gotoTodaysTask = () => {
+		navigation.navigate("taskTutorialSlide1", {helpMenu: true})
+	}
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.titleContainer}>
@@ -42,11 +51,14 @@ const Helpmenu = () => {
 					</Text>
 
 					<View style={{alignItems: "center", marginBottom: 20}}>
-						<TouchableOpacity style={styles.HelpBtn}>
+						<TouchableOpacity
+							style={styles.HelpBtn}
+							onPress={() => navigation.navigate("particulargoal", {setModalTrue: true})}
+						>
 							<Text style={styles.btnText}>Goal Screen</Text>
 						</TouchableOpacity>
 
-						<TouchableOpacity style={styles.HelpBtn}>
+						<TouchableOpacity style={styles.HelpBtn} onPress={gotoTodaysTask}>
 							<Text style={styles.btnText}>Today’s Task</Text>
 						</TouchableOpacity>
 
@@ -76,8 +88,20 @@ const Helpmenu = () => {
 		</View>
 	)
 }
+const mapStateToProps = (state) => {
+	return {
+		firstTime: state.milestone.firstTime,
+	}
+}
 
-export default Helpmenu
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setFirstTime: (data) => {
+			dispatch(setFirstTime(data))
+		},
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Helpmenu)
 
 const styles = StyleSheet.create({
 	container: {

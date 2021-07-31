@@ -214,8 +214,8 @@ const styles = StyleSheet.create({
 		marginLeft: sizeConstants.twentyMX,
 	},
 	subTitle: {
-		fontSize: sizeConstants.sixteenX,
-		color: ColorConstants.faintWhite,
+		fontSize: 16,
+		color: "#FDF9F2",
 		paddingLeft: sizeConstants.twentyOne,
 		marginTop: sizeConstants.l,
 		paddingRight: sizeConstants.twentyMX,
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
 
 	bigTitle: {
 		color: ColorConstants.whitishBlue,
-		fontSize: sizeConstants.mThirty,
+		fontSize: 25,
 		marginLeft: sizeConstants.fourteenMX,
 		fontWeight: "bold",
 		marginTop: sizeConstants.fourteenMX,
