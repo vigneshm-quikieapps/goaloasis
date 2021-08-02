@@ -18,6 +18,8 @@ import StatusBarScreen from "../MileStones/StatusBarScreen"
 import Constants from "expo-constants"
 import {connect} from "react-redux"
 import AsyncStorage from "@react-native-community/async-storage"
+import Spinner from "./../../core/Spinner"
+import {getAllGoalsFromFirestore} from "./../../firebase/index"
 
 import {
 	setTestData,
@@ -26,6 +28,8 @@ import {
 	setTestDataForTimeline,
 	setClickedGoal,
 	setAllGoals,
+	setShowLoader,
+	setHideLoader,
 } from "./../../redux/actions"
 import {
 	getClickedGoalFromAsyncStorage,
@@ -35,7 +39,6 @@ import {
 import {ColorConstants, CommonStyles, forGoals, sizeConstants} from "./../../core/styles"
 import firestore from "@react-native-firebase/firestore"
 import {CommonHomeButton} from "../../core/CommonComponents"
-import {getAllGoalsFromFirestore} from "../../firebase"
 
 const Height = Dimensions.get("window").height
 const MyGoals = ({
@@ -51,6 +54,9 @@ const MyGoals = ({
 	booleanFlag,
 	clickedGoal,
 	newMileStone,
+	setShowLoader,
+	setHideLoader,
+	loading,
 }) => {
 	const [taskCounter, setTaskCounter] = useState(0)
 
@@ -110,7 +116,7 @@ const MyGoals = ({
 	var yyyy = today.getFullYear()
 
 	today = yyyy + "-" + mm + "-" + dd
-
+	console.log("loadinggggggg", loading)
 	// console.log("TODAYS DATE", today)
 	let count = 0
 	const getTodaysTasks = () => {
@@ -159,9 +165,30 @@ const MyGoals = ({
 			console.error(error)
 		}
 	}
+	// const [checkIfAsyncIsEmpty, setcheckIfAsyncIsEmpty] = useState([])
 
+	// const checking = async () => {
+	// 	try {
+	// 		let keys = await AsyncStorage.getAllKeys()
+	// 		keys = keys.filter(
+	// 			(item) =>
+	// 				item !== "FirsttimeIndividual" &&
+	// 				item !== "FirsttimeTaskTutorial" &&
+	// 				item !== "FirsttimeTimelineFlow" &&
+	// 				item !== "Firsttime"
+	// 		)
+	// 		setcheckIfAsyncIsEmpty(keys)
+	// 	} catch (error) {
+	// 		console.log(error)
+	// 	}
+	// }
+	// console.log("CHECKINGGGG", checkIfAsyncIsEmpty.length)
 	useEffect(() => {
+		setShowLoader(true)
+
 		importData()
+
+		setHideLoader(false)
 	}, [currentGoal, booleanFlag, clickedGoal])
 
 	const getGoalCompletionPercent = (goalObj) => {
@@ -175,10 +202,10 @@ const MyGoals = ({
 
 		let completedMilesLen = allCompletedMiles.length
 		let percentCompleted = (completedMilesLen / allMilesLen) * 100
-		console.log("getGoalCompletionPercent", allMilesLen, completedMilesLen, percentCompleted)
+
 		return parseInt(percentCompleted.toFixed(0))
 	}
-
+	console.log("allGoals", allGoals.length)
 	return (
 		<StatusBarScreen style={styles.container}>
 			<TouchableOpacity
@@ -202,6 +229,17 @@ const MyGoals = ({
 					</View>
 				</View>
 			</TouchableOpacity>
+
+			{/* <View style={CommonStyles.goalsContainer}>
+				<View style={{justifyContent: "center", alignItems: "center"}}>
+					<View style={CommonStyles.viewTap}></View>
+				</View>
+
+				<View>
+					<Text style={CommonStyles.myGoalsText}>My goals</Text>
+				</View>
+			</View> */}
+
 			<View style={CommonStyles.goalsContainer}>
 				<View style={{justifyContent: "center", alignItems: "center"}}>
 					<View style={CommonStyles.viewTap}></View>
@@ -210,14 +248,20 @@ const MyGoals = ({
 				<View>
 					<Text style={CommonStyles.myGoalsText}>My goals</Text>
 				</View>
+				{loading ? <Spinner /> : null}
 
-				<ScrollView contentContainerStyle={{paddingHorizontal: 0, marginHorizontal: 0}}>
+				<ScrollView
+					contentContainerStyle={{
+						paddingHorizontal: 0,
+						marginHorizontal: 0,
+					}}
+				>
 					<View style={CommonStyles.logoSpacing}>
 						{allGoals &&
 							allGoals.length > 0 &&
 							allGoals.map((task, index) => {
 								let completedPercent = getGoalCompletionPercent(task)
-								console.log("completedPercent", completedPercent)
+
 								return (
 									<View key={index}>
 										<TouchableOpacity
@@ -247,23 +291,16 @@ const MyGoals = ({
 							})}
 
 						<View>
-							{/* <TouchableOpacity style={CommonStyles.logoContainer} onPress={gotoGoal}>
-								<View style={CommonStyles.circleLogo}>
-									<View style={CommonStyles.iconVertical}></View>
-									<View style={CommonStyles.iconHorizontal}></View>
-								</View>
-								<TouchableOpacity onPress={gotoGoal}>
-									<View>
-										<Text style={CommonStyles.goalText}>Add Goal</Text>
-									</View>
-								</TouchableOpacity>
-							</TouchableOpacity> */}
-
-							<TouchableOpacity style={CommonStyles.logoContainer} onPress={gotoGoal}>
-								{/* <TouchableOpacity
-									style={CommonStyles.logoContainer}
-									onPress={() => navigation.navigate("third")}
-								> */}
+							<TouchableOpacity
+								style={CommonStyles.logoContainer}
+								onPress={() => {
+									if (allGoals.length == 0 || allGoals.length < 6) {
+										gotoGoal()
+									} else {
+										alert("You cannot add more than 6 Goals.")
+									}
+								}}
+							>
 								<ProgressCircle
 									percent={100}
 									radius={sizeConstants.fiftyHalf}
@@ -279,6 +316,7 @@ const MyGoals = ({
 						</View>
 					</View>
 				</ScrollView>
+
 				{/* <View style={CommonStyles.bottomBtnContainer}>
 					<TouchableOpacity
 						style={CommonStyles.bottomBtn2}
@@ -289,6 +327,7 @@ const MyGoals = ({
 					</TouchableOpacity>
 				</View> */}
 			</View>
+
 			<CommonHomeButton
 				iconName={"file-tree-outline"}
 				size={34}
@@ -309,6 +348,7 @@ const mapStateToProps = (state) => {
 		currentGoal: state.milestone.currentGoal,
 		booleanFlag: state.milestone.booleanFlag,
 		newMileStone: state.milestone.newMileStone,
+		loading: state.milestone.loading,
 	}
 }
 
@@ -330,6 +370,12 @@ const mapDispatchToProps = (dispatch) => {
 
 		setAllGoals: (data) => {
 			dispatch(setAllGoals(data))
+		},
+		setShowLoader: (data) => {
+			dispatch(setShowLoader(data))
+		},
+		setHideLoader: (data) => {
+			dispatch(setHideLoader(data))
 		},
 	}
 }

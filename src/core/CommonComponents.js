@@ -3,6 +3,7 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native"
 import {CommonStyles, ColorConstants, sizeConstants, height} from "./styles"
 import colors from "../../colors"
+import Spinner from "./Spinner"
 
 export const reoccuringDefaultDailyArray = [0, 1, 2, 3, 4, 5, 6]
 export const weekArray = ["S", "M", "T", "W", "T", "F", "S"]

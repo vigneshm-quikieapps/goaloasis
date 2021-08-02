@@ -110,9 +110,11 @@ const styles = StyleSheet.create({
 	},
 	dots: {
 		backgroundColor: "black",
-		height: sizeConstants.six,
-		width: scale(5),
-		borderRadius: sizeConstants.four,
+		height: 8,
+		width: 8,
+		borderRadius: 4,
+		margin: 1,
+
 		margin: scale(1),
 	},
 	BottomTouch: {

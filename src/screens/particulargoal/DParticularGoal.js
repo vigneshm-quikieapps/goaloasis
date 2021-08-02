@@ -163,7 +163,6 @@ const styles = StyleSheet.create({
 		lineHeight: sizeConstants.thirty,
 	},
 	addMileStone: {
-		// marginLeft: "auto",
 		flexDirection: "row",
 		marginRight: sizeConstants.xl,
 		marginVertical: sizeConstants.s,

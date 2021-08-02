@@ -2,9 +2,10 @@ import React from "react"
 import {StyleSheet, Text, View, TouchableOpacity} from "react-native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
-import {setBooleanFlag, setCurrentGoal} from "./../../redux/actions"
+import {setBooleanFlag, setCurrentGoal, setShowLoader, setHideLoader} from "./../../redux/actions"
 import {connect} from "react-redux"
 import {updateGoalToFirestore} from "./../../firebase/index"
+import Spinner from "../../core/Spinner"
 
 const MarkCompleted = (props) => {
 	const navigation = useNavigation()
@@ -22,7 +23,10 @@ const MarkCompleted = (props) => {
 			...currentGoalObj,
 			isCompleted: true,
 		}
+		props.setShowLoader(true)
 		updateGoalToFirestore(updatedObj, null, () => {
+			console.log("TESTINNNNGNNGGG")
+			props.setHideLoader(false)
 			props.setBooleanFlag(!props.booleanFlag)
 			navigation.navigate("mygoals")
 		})
@@ -30,6 +34,8 @@ const MarkCompleted = (props) => {
 
 	return (
 		<View style={styles.container}>
+			{props.loading ? <Spinner /> : null}
+
 			<View style={styles.titleContainer}></View>
 
 			<View style={styles.goalsContainer}>
@@ -57,6 +63,7 @@ const mapStateToProps = (state) => {
 		currentGoal: state.milestone.currentGoal,
 		clickedGoal: state.milestone.clickedGoal,
 		booleanFlag: state.milestone.booleanFlag,
+		loading: state.milestone.loading,
 	}
 }
 
@@ -67,6 +74,12 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setBooleanFlag: (data) => {
 			dispatch(setBooleanFlag(data))
+		},
+		setShowLoader: (data) => {
+			dispatch(setShowLoader(data))
+		},
+		setHideLoader: (data) => {
+			dispatch(setHideLoader(data))
 		},
 	}
 }

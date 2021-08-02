@@ -20,8 +20,11 @@ import {
 	EditNewMilestone,
 	setClickedGoal,
 	setClickedMilestone,
+	setShowLoader,
+	setHideLoader,
 } from "./../../redux/actions"
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
+import Spinner from "./../../core/Spinner"
 import Constants from "expo-constants"
 import {
 	CommonHomeButton,
@@ -37,6 +40,9 @@ const FirstMilestone = ({
 	taskFlowData,
 	setClickedGoal,
 	setClickedMilestone,
+	setShowLoader,
+	loading,
+	setHideLoader,
 }) => {
 	const [milestone, setMilestone] = useState("")
 	const [clickedDate, setDate] = useState(new Date())
@@ -66,11 +72,15 @@ const FirstMilestone = ({
 				taskData: [],
 			},
 		])
+		setShowLoader(true)
+
 		addMilestoneToFirestore(clickedGoal, milestoneArr, () => {
+			setHideLoader(false)
+			navigation.navigate("ThirdMileStone")
+
 			setClickedGoal(updatedObj)
 		})
 
-		navigation.navigate("ThirdMileStone")
 		// navigation.navigate("IndividualGoal")
 	}
 
@@ -81,6 +91,8 @@ const FirstMilestone = ({
 	return (
 		<ImageBackground style={[styles.image]} source={commonImages.secondImage} resizeMode="stretch">
 			<View style={{flex: 1}}>
+				{loading ? <Spinner /> : null}
+
 				<View>
 					<ScrollView>
 						<StatusBarScreen>
@@ -189,6 +201,7 @@ const mapStateToProps = (state) => {
 		newMileStone: state.milestone.newMileStone,
 		clickedGoal: state.milestone.clickedGoal,
 		clickedMilestone: state.milestone.clickedMilestone,
+		loading: state.milestone.loading,
 	}
 }
 
@@ -199,6 +212,12 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(setClickedGoal(data))
 		},
 		setClickedMilestone: (task) => dispatch(setClickedMilestone(task)),
+		setShowLoader: (data) => {
+			dispatch(setShowLoader(data))
+		},
+		setHideLoader: (data) => {
+			dispatch(setHideLoader(data))
+		},
 	}
 }
 

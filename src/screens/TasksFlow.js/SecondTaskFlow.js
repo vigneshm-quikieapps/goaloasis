@@ -14,9 +14,19 @@ import {
 import DisableAppButton from "../MileStones/DisableAppButton"
 import {connect} from "react-redux"
 import {addMilestoneToFirestore} from "../../firebase"
-import {setBooleanFlag, setClickedGoal} from "../../redux/actions"
+import {setShowLoader, setBooleanFlag, setClickedGoal, setHideLoader} from "../../redux/actions"
+import Spinner from "./../../core/Spinner"
 
-const SecondTaskFlow = ({clickedGoal, clickedMilestone, route, setClickedGoal, setBooleanFlag}) => {
+const SecondTaskFlow = ({
+	setShowLoader,
+	loading,
+	setHideLoader,
+	clickedGoal,
+	clickedMilestone,
+	route,
+	setClickedGoal,
+	setBooleanFlag,
+}) => {
 	const navigation = useNavigation()
 	const {currentTaskData} = route.params
 
@@ -55,8 +65,11 @@ const SecondTaskFlow = ({clickedGoal, clickedMilestone, route, setClickedGoal, s
 			...clickedGoal,
 			goalMilestone: newMilestoneItemWithTask,
 		}
+		setShowLoader(true)
 
 		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask, () => {
+			setHideLoader(false)
+
 			setClickedGoal(updatedObj)
 			navigationCallback()
 		})
@@ -68,6 +81,8 @@ const SecondTaskFlow = ({clickedGoal, clickedMilestone, route, setClickedGoal, s
 			source={commonImages.secondImage}
 			resizeMode="stretch"
 		>
+			{loading ? <Spinner /> : null}
+
 			<View style={[CommonStyles.flexDirectionRow, {marginTop: Constants.statusBarHeight}]}>
 				<Text style={CommonStyles.mainTitle}>{clickedMilestone}</Text>
 				<Entypo
@@ -163,6 +178,7 @@ const mapStateToProps = (state) => {
 		taskFlowData: state.milestone.taskFlowData,
 		clickedGoal: state.milestone.clickedGoal,
 		clickedMilestone: state.milestone.clickedMilestone,
+		loading: state.milestone.loading,
 	}
 }
 
@@ -171,6 +187,12 @@ const mapDispatchToProps = (dispatch) => {
 		setTaskFlowData: (task) => dispatch(setTaskFlowData(task)),
 		setClickedGoal: (task) => dispatch(setClickedGoal(task)),
 		setBooleanFlag: (task) => dispatch(setBooleanFlag(task)),
+		setShowLoader: (data) => {
+			dispatch(setShowLoader(data))
+		},
+		setHideLoader: (data) => {
+			dispatch(setHideLoader(data))
+		},
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SecondTaskFlow)
