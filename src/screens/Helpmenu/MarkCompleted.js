@@ -34,8 +34,6 @@ const MarkCompleted = (props) => {
 
 	return (
 		<View style={styles.container}>
-			{props.loading ? <Spinner /> : null}
-
 			<View style={styles.titleContainer}></View>
 
 			<View style={styles.goalsContainer}>
@@ -43,11 +41,12 @@ const MarkCompleted = (props) => {
 					<Text style={{color: "#333333", fontSize: 24, fontWeight: "bold"}}>
 						Mark Goal Complete
 					</Text>
+
 					<Text style={{color: "#333333", fontSize: 16, lineHeight: 32, width: "80%"}}>
 						Goal will crossed out your timeline but not deleted
 					</Text>
 				</View>
-
+				{props.loading ? <Spinner style={{bottom: 20}} /> : null}
 				<View style={styles.bottomBtnContainer}>
 					<TouchableOpacity style={styles.HelpBtn} onPress={gotoHome}>
 						<Text style={styles.btnText}>Confirm</Text>

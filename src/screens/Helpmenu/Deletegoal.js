@@ -30,8 +30,6 @@ const Deletegoal = (props) => {
 	}
 	return (
 		<StatusBarScreen style={styles.container}>
-			{props.loading ? <Spinner /> : null}
-
 			<View style={styles.titleContainer}></View>
 
 			<View style={styles.goalsContainer}>
@@ -41,6 +39,7 @@ const Deletegoal = (props) => {
 						Goal will be deleted and removed from your timeline
 					</Text>
 				</View>
+				{props.loading ? <Spinner /> : null}
 
 				<View style={styles.bottomBtnContainer}>
 					<TouchableOpacity style={styles.HelpBtn} onPress={deleteConfirm}>

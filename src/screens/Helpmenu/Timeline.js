@@ -16,6 +16,7 @@ import {ColorConstants, sizeConstants} from "../../core/styles"
 import {setAllGoals, setClickedGoal, setShowLoader, setHideLoader} from "../../redux/actions"
 import {updateGoalToFirestore} from "../../firebase"
 import AsyncStorage from "@react-native-community/async-storage"
+import Spinner from "../../core/Spinner"
 
 const TimelineScreen = ({
 	setShowLoader,
@@ -24,9 +25,6 @@ const TimelineScreen = ({
 	allGoals,
 	clickedGoal,
 	setClickedGoal,
-	setShowLoader,
-	loading,
-	setHideLoader,
 }) => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
@@ -96,8 +94,6 @@ const TimelineScreen = ({
 			source={require("../../assets/images/timeline.png")}
 			resizeMode="stretch"
 		>
-			{loading ? <Spinner /> : null}
-
 			<View style={styles.container}>
 				<Text
 					style={{
@@ -207,6 +203,8 @@ const TimelineScreen = ({
 					marginLeft: sizeConstants.thirty,
 				}}
 			>
+				{loading ? <Spinner /> : null}
+
 				<TouchableOpacity
 					style={{
 						height: 50,

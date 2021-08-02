@@ -19,11 +19,10 @@ import {
 	setHideLoader,
 	setBooleanFlag,
 	setClickedGoal,
-	setShowLoader,
-	setHideLoader,
 } from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
 import {addMilestoneToFirestore} from "../../firebase"
+import Spinner from "../../core/Spinner"
 
 const MonthTimeline = ({
 	setShowLoader,
@@ -34,9 +33,6 @@ const MonthTimeline = ({
 	setClickedGoal,
 	setAllGoals,
 	booleanFlag,
-	setShowLoader,
-	loading,
-	setHideLoader,
 }) => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()

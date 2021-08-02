@@ -39,8 +39,6 @@ const EditGoalhelp = ({clickedGoal, setClickedGoal, setShowLoader, loading, setH
 	}
 	return (
 		<View style={styles.introContainer}>
-			{loading ? <Spinner /> : null}
-
 			<LinearGradient colors={["#588C8D", "#7EC8C9"]} style={{flex: 1}}>
 				<View style={styles.headerMargin}></View>
 				<View style={{flex: 1}}>
@@ -56,6 +54,8 @@ const EditGoalhelp = ({clickedGoal, setClickedGoal, setShowLoader, loading, setH
 								}}
 							/>
 						</View>
+						{loading ? <Spinner /> : null}
+
 						<Text style={[styles.title, {marginTop: 50, marginLeft: 20}]}>Edit target date</Text>
 						<View style={[styles.centerCont, {height: 250}]}>
 							<DatePicker
