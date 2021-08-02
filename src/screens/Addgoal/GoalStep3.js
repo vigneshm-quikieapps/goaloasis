@@ -8,13 +8,14 @@ import colors from "../../../colors"
 import AsyncStorage from "@react-native-community/async-storage"
 import {ColorConstants, CommonStyles, forGoals} from "../../core/styles"
 import firestore from "@react-native-firebase/firestore"
-import {setCurrentGoal} from "./../../redux/actions"
+import {setCurrentGoal, setHideLoader, setShowLoader} from "./../../redux/actions"
 import {addGoalToFirestore} from "./../../firebase"
 import {connect} from "react-redux"
 import {CommonHomeButton, CommonPrevNextButton} from "../../core/CommonComponents"
+import Spinner from "../../core/Spinner"
 const colorArray = Object.values(forGoals)
 
-const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
+const GoalStep3 = ({setCurrentGoal, currentGoal, setShowLoader, loading, setHideLoader}) => {
 	const navigation = useNavigation()
 
 	const gotoHome = () => {
@@ -33,8 +34,10 @@ const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
 			color: getColorForGoal(),
 			isCompleted: false,
 		}
+		setShowLoader(true)
 
 		addGoalToFirestore(currentGoalObj, () => {
+			setHideLoader(false)
 			navigation.navigate("mygoals")
 			setCurrentGoal(currentGoalObj)
 		})
@@ -42,7 +45,7 @@ const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
 	const [date, setDate] = useState(new Date())
 
 	// TODO
-
+	console.log("LOADING", loading)
 	const getColorForGoal = () => {
 		let len = 0
 		firestore()
@@ -59,7 +62,8 @@ const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
 	return (
 		<View style={styles.introContainer}>
 			<LinearGradient colors={["#588C8D", "#7EC8C9"]} style={{flex: 1}}>
-				{/* <View style={styles.headerMargin}></View> */}
+				{loading ? <Spinner /> : null}
+
 				<View style={{flex: 1}}>
 					<View style={CommonStyles.progressContainer}>
 						<View style={CommonStyles.progress}></View>
@@ -116,10 +120,12 @@ const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
 						</View> */}
 					{/* </View> */}
 				</View>
+
 				<CommonPrevNextButton
 					right={true}
 					left={true}
 					prevClick={goBack}
+					loadingCalled={true}
 					nextClick={storeData}
 					iconLeftColor={ColorConstants.lighterBlue}
 					iconRightColor={ColorConstants.lighterBlue}
@@ -133,6 +139,7 @@ const GoalStep3 = ({setCurrentGoal, currentGoal}) => {
 const mapStateToProps = (state) => {
 	return {
 		currentGoal: state.milestone.currentGoal,
+		loading: state.milestone.loading,
 	}
 }
 
@@ -140,6 +147,12 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		setCurrentGoal: (data) => {
 			dispatch(setCurrentGoal(data))
+		},
+		setShowLoader: (data) => {
+			dispatch(setShowLoader(data))
+		},
+		setHideLoader: (data) => {
+			dispatch(setHideLoader(data))
 		},
 	}
 }

@@ -5,7 +5,7 @@ import Swipeout from "rc-swipeout"
 import {MaterialCommunityIcons, AntDesign, MaterialIcons, Octicons} from "@expo/vector-icons"
 import {ColorConstants, sizeConstants} from "./../core/styles"
 import {useNavigation} from "@react-navigation/native"
-import {setClickedGoal, setClickedMilestone} from "./../redux/actions"
+import {setClickedGoal, setClickedMilestone, setShowLoader, setHideLoader} from "./../redux/actions"
 import {LongPressGestureHandler, State} from "react-native-gesture-handler"
 
 import {connect} from "react-redux"
@@ -20,6 +20,9 @@ const MilestoneCards = ({
 	clickedMilestone,
 	clickedGoal,
 	style,
+	setShowLoader,
+	loading,
+	setHideLoader,
 }) => {
 	const navigation = useNavigation()
 	const icons = (milestoneObj) => (
@@ -80,7 +83,11 @@ const MilestoneCards = ({
 						...clickedGoal,
 						goalMilestone: filteredMilestoneArr,
 					}
+					setShowLoader(true)
+
 					addMilestoneToFirestore(clickedGoal, filteredMilestoneArr, () => {
+						setHideLoader(false)
+
 						setClickedGoal(updatedObj)
 						navigation.navigate("particulargoal")
 					})
@@ -368,6 +375,7 @@ const mapStateToProps = (state) => {
 	return {
 		clickedMilestone: state.milestone.clickedMilestone,
 		clickedGoal: state.milestone.clickedGoal,
+		loading: state.milestone.loading,
 	}
 }
 
@@ -376,6 +384,12 @@ const mapDispatchToProps = (dispatch) => {
 		setClickedMilestone: (task) => dispatch(setClickedMilestone(task)),
 		setClickedGoal: (data) => {
 			dispatch(setClickedGoal(data))
+		},
+		setShowLoader: (data) => {
+			dispatch(setShowLoader(data))
+		},
+		setHideLoader: (data) => {
+			dispatch(setHideLoader(data))
 		},
 		setClickedGoal: (task) => dispatch(setClickedGoal(task)),
 	}

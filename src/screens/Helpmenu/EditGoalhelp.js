@@ -6,9 +6,11 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import DatePicker from "react-native-date-picker"
 import {connect} from "react-redux"
 import {updateGoalToFirestore} from "../../firebase"
-import {setClickedGoal} from "../../redux/actions"
+import {setClickedGoal, setShowLoader, setHideLoader} from "../../redux/actions"
 
-const EditGoalhelp = ({clickedGoal, setClickedGoal}) => {
+import Spinner from "./../../core/Spinner"
+
+const EditGoalhelp = ({clickedGoal, setClickedGoal, setShowLoader, loading, setHideLoader}) => {
 	console.log(clickedGoal)
 	const [goalName, setGoalName] = useState(clickedGoal.name)
 	const [targetDate, setTargetDate] = useState(new Date(clickedGoal.targetDate))
@@ -27,10 +29,12 @@ const EditGoalhelp = ({clickedGoal, setClickedGoal}) => {
 			name: goalName,
 			targetDate: targetDate,
 		}
-
+		setShowLoader(true)
 		updateGoalToFirestore(updatedObj, clickedGoal.name, () => {
-			setClickedGoal(updatedObj)
+			setHideLoader(false)
+
 			navigation.navigate("mygoals")
+			setClickedGoal(updatedObj)
 		})
 	}
 	return (
@@ -50,6 +54,8 @@ const EditGoalhelp = ({clickedGoal, setClickedGoal}) => {
 								}}
 							/>
 						</View>
+						{loading ? <Spinner /> : null}
+
 						<Text style={[styles.title, {marginTop: 50, marginLeft: 20}]}>Edit target date</Text>
 						<View style={[styles.centerCont, {height: 250}]}>
 							<DatePicker
@@ -82,6 +88,7 @@ const EditGoalhelp = ({clickedGoal, setClickedGoal}) => {
 const mapStateToProps = (state) => {
 	return {
 		clickedGoal: state.milestone.clickedGoal,
+		loading: state.milestone.loading,
 	}
 }
 
@@ -89,6 +96,12 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		setClickedGoal: (obj) => {
 			dispatch(setClickedGoal(obj))
+		},
+		setShowLoader: (data) => {
+			dispatch(setShowLoader(data))
+		},
+		setHideLoader: (data) => {
+			dispatch(setHideLoader(data))
 		},
 	}
 }

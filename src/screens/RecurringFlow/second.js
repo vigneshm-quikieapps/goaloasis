@@ -12,8 +12,10 @@ import {
 	CustomDayComponentForCalendar,
 	getAllDatesBetween,
 } from "../../core/CommonComponents"
+import Spinner from "../../core/Spinner"
+
 import {connect} from "react-redux"
-import {setClickedGoal, setBooleanFlag} from "../../redux/actions"
+import {setClickedGoal, setBooleanFlag, setShowLoader, setHideLoader} from "../../redux/actions"
 import {addMilestoneToFirestore} from "../../firebase"
 
 const Second = ({
@@ -23,6 +25,9 @@ const Second = ({
 	setBooleanFlag,
 	booleanFlag,
 	setClickedGoal,
+	setShowLoader,
+	loading,
+	setHideLoader,
 }) => {
 	const navigation = useNavigation()
 
@@ -124,8 +129,9 @@ const Second = ({
 			...clickedGoal,
 			goalMilestone: newMilestoneItemWithTask,
 		}
-
+		setShowLoader(true)
 		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask, () => {
+			setHideLoader(false)
 			setClickedGoal(updatedObj)
 			navigationCallback()
 		})
@@ -133,6 +139,8 @@ const Second = ({
 
 	return (
 		<StatusBarScreen style={styles.introContainer}>
+			{loading ? <Spinner /> : null}
+
 			<ScrollView>
 				<View>
 					<View style={{flexDirection: "row"}}>
@@ -253,6 +261,7 @@ const mapStateToProps = (state) => {
 		clickedGoal: state.milestone.clickedGoal,
 		clickedMilestone: state.milestone.clickedMilestone,
 		booleanFlag: state.milestone.booleanFlag,
+		loading: state.milestone.loading,
 	}
 }
 const mapDispatchToProps = (dispatch) => {
@@ -262,6 +271,12 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setBooleanFlag: (data) => {
 			dispatch(setBooleanFlag(data))
+		},
+		setShowLoader: (data) => {
+			dispatch(setShowLoader(data))
+		},
+		setHideLoader: (data) => {
+			dispatch(setHideLoader(data))
 		},
 	}
 }

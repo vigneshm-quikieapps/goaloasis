@@ -6,7 +6,8 @@ import StatusBarScreen from "../MileStones/StatusBarScreen"
 import {deleteGoalFromFirestore} from "../../firebase"
 import {connect} from "react-redux"
 import {sizeConstants} from "../../core/styles"
-import {setBooleanFlag} from "./../../redux/actions"
+import {setBooleanFlag, setHideLoader, setShowLoader} from "./../../redux/actions"
+import Spinner from "../../core/Spinner"
 
 const Deletegoal = (props) => {
 	const navigation = useNavigation()
@@ -20,7 +21,9 @@ const Deletegoal = (props) => {
 	}
 
 	const deleteConfirm = () => {
+		props.setShowLoader(true)
 		deleteGoalFromFirestore(props.clickedGoal, () => {
+			props.setHideLoader(false)
 			navigation.navigate("mygoals")
 			props.setBooleanFlag(!props.booleanFlag)
 		})
@@ -36,6 +39,7 @@ const Deletegoal = (props) => {
 						Goal will be deleted and removed from your timeline
 					</Text>
 				</View>
+				{props.loading ? <Spinner /> : null}
 
 				<View style={styles.bottomBtnContainer}>
 					<TouchableOpacity style={styles.HelpBtn} onPress={deleteConfirm}>
@@ -51,6 +55,7 @@ const mapStateToProps = (state) => {
 	return {
 		clickedGoal: state.milestone.clickedGoal,
 		booleanFlag: state.milestone.booleanFlag,
+		loading: state.milestone.loading,
 	}
 }
 
@@ -58,6 +63,12 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		setBooleanFlag: (data) => {
 			dispatch(setBooleanFlag(data))
+		},
+		setShowLoader: (data) => {
+			dispatch(setShowLoader(data))
+		},
+		setHideLoader: (data) => {
+			dispatch(setHideLoader(data))
 		},
 	}
 }

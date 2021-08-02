@@ -1,27 +1,32 @@
 import React from "react"
-import {View, ActivityIndicator} from "react-native"
+import {View, ActivityIndicator, StyleSheet, Modal} from "react-native"
 import {connect} from "react-redux"
 import {setShowLoader} from "../redux/actions"
 import {setHideLoader} from "./../redux/actions"
+import {ColorConstants} from "./styles"
 
-const Spinner = ({size, loading, setHideLoader, setShowLoader}) => {
+const Spinner = ({size, loading, setHideLoader, setShowLoader, style}) => {
 	return (
-		<View>
-			<View style={styles.spinnerStyle}>
-				<ActivityIndicator size={size || "large"} />
-			</View>
+		<View style={[styles.spinnerStyle, style]}>
+			<ActivityIndicator size="large" color="#7EC8C9" />
 		</View>
 	)
 }
 
-const styles = {
+const styles = StyleSheet.create({
 	spinnerStyle: {
-		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "pink",
+		backgroundColor: ColorConstants.faintWhite,
+		position: "absolute",
+		width: 75,
+		height: 75,
+		borderRadius: 10,
+		flex: 1,
+		top: "50%",
+		left: "40%",
 	},
-}
+})
 
 const mapStateToProps = (state) => ({
 	loading: state.milestone.loading,

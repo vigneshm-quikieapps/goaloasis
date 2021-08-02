@@ -22,10 +22,21 @@ import {
 	reoccuringDefaultDailyArray,
 } from "../../core/CommonComponents"
 import {connect} from "react-redux"
-import {addMilestoneToFirestore} from "../../firebase"
-import {setBooleanFlag, setClickedGoal} from "../../redux/actions"
+import Spinner from "../../core/Spinner"
 
-const ThirdTaskFlow = ({clickedGoal, route, clickedMilestone, setBooleanFlag, setClickedGoal}) => {
+import {addMilestoneToFirestore} from "../../firebase"
+import {setBooleanFlag, setClickedGoal, setShowLoader, setHideLoader} from "../../redux/actions"
+
+const ThirdTaskFlow = ({
+	setShowLoader,
+	loading,
+	setHideLoader,
+	clickedGoal,
+	route,
+	clickedMilestone,
+	setBooleanFlag,
+	setClickedGoal,
+}) => {
 	const navigation = useNavigation()
 	const {currentTaskData} = route.params
 
@@ -73,7 +84,10 @@ const ThirdTaskFlow = ({clickedGoal, route, clickedMilestone, setBooleanFlag, se
 			goalMilestone: newMilestoneItemWithTask,
 		}
 
+		setShowLoader(true)
 		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask, () => {
+			setHideLoader(false)
+
 			setClickedGoal(updatedObj)
 			navigationCallback()
 		})
@@ -81,6 +95,8 @@ const ThirdTaskFlow = ({clickedGoal, route, clickedMilestone, setBooleanFlag, se
 
 	return (
 		<StatusBarScreen style={CommonStyles.introContainer}>
+			{loading ? <Spinner /> : null}
+
 			<ScrollView>
 				<View style={CommonStyles.flexOne}>
 					<View style={CommonStyles.flexDirectionRow}>
@@ -229,6 +245,7 @@ const mapStateToProps = (state) => {
 	return {
 		clickedGoal: state.milestone.clickedGoal,
 		clickedMilestone: state.milestone.clickedMilestone,
+		loading: state.milestone.loading,
 	}
 }
 const mapDispatchToProps = (dispatch) => {
@@ -238,6 +255,12 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setBooleanFlag: (flag) => {
 			dispatch(setBooleanFlag(flag))
+		},
+		setShowLoader: (data) => {
+			dispatch(setShowLoader(data))
+		},
+		setHideLoader: (data) => {
+			dispatch(setHideLoader(data))
 		},
 	}
 }
