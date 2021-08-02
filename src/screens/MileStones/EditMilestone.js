@@ -4,12 +4,21 @@ import {useNavigation} from "@react-navigation/native"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import {connect} from "react-redux"
 import {ColorConstants, sizeConstants} from "../../core/styles"
-import {setBooleanFlag, setClickedGoal} from "./../../redux/actions"
+import {setBooleanFlag, setClickedGoal, setShowLoader, setHideLoader} from "./../../redux/actions"
 import {Calendar} from "react-native-calendars"
 import {CustomDayComponentForCalendar} from "../../core/CommonComponents"
 import {addMilestoneToFirestore} from "../../firebase"
 
-const EditMilestone = ({route, clickedGoal, setClickedGoal, setBooleanFlag, booleanFlag}) => {
+const EditMilestone = ({
+	route,
+	clickedGoal,
+	setClickedGoal,
+	setBooleanFlag,
+	booleanFlag,
+	setShowLoader,
+	loading,
+	setHideLoader,
+}) => {
 	const {milestoneName, date: mileDate} = route.params
 
 	const navigation = useNavigation()
@@ -37,7 +46,11 @@ const EditMilestone = ({route, clickedGoal, setClickedGoal, setBooleanFlag, bool
 			goalMilestone: newMilestoneArr,
 		}
 		setClickedGoal(updatedObj)
+		setShowLoader(true)
+
 		addMilestoneToFirestore(clickedGoal, newMilestoneArr, () => {
+			setHideLoader(false)
+
 			navigation.navigate("particulargoal")
 			setBooleanFlag(!booleanFlag)
 		})
@@ -45,6 +58,8 @@ const EditMilestone = ({route, clickedGoal, setClickedGoal, setBooleanFlag, bool
 	return (
 		<ScrollView contentContainerStyle={styles.container}>
 			<StatusBarScreen>
+				{loading ? <Spinner /> : null}
+
 				<View style={styles.titleContainer}>
 					<Text style={styles.titleText}>Edit Milestone</Text>
 				</View>
@@ -140,6 +155,7 @@ const mapStateToProps = (state) => {
 	return {
 		clickedGoal: state.milestone.clickedGoal,
 		booleanFlag: state.milestone.booleanFlag,
+		loading: state.milestone.loading,
 	}
 }
 
@@ -150,6 +166,12 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setClickedGoal: (data) => {
 			dispatch(setClickedGoal(data))
+		},
+		setShowLoader: (data) => {
+			dispatch(setShowLoader(data))
+		},
+		setHideLoader: (data) => {
+			dispatch(setHideLoader(data))
 		},
 	}
 }

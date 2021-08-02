@@ -13,11 +13,31 @@ import TimelineScreen from "./Timeline"
 import {CommonHomeButton, convertToDateString, monthNames} from "../../core/CommonComponents"
 import {connect} from "react-redux"
 import {ColorConstants, sizeConstants} from "../../core/styles"
-import {setAllGoals, setBooleanFlag, setClickedGoal} from "../../redux/actions"
+import {
+	setAllGoals,
+	setShowLoader,
+	setHideLoader,
+	setBooleanFlag,
+	setClickedGoal,
+	setShowLoader,
+	setHideLoader,
+} from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
 import {addMilestoneToFirestore} from "../../firebase"
 
-const MonthTimeline = ({allGoals, clickedGoal, setClickedGoal, setAllGoals, booleanFlag}) => {
+const MonthTimeline = ({
+	setShowLoader,
+	loading,
+	setHideLoader,
+	allGoals,
+	clickedGoal,
+	setClickedGoal,
+	setAllGoals,
+	booleanFlag,
+	setShowLoader,
+	loading,
+	setHideLoader,
+}) => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
 	const [date, setDate] = useState(new Date())
@@ -88,8 +108,11 @@ const MonthTimeline = ({allGoals, clickedGoal, setClickedGoal, setAllGoals, bool
 			...clickedGoal,
 			goalMilestone: newMilestoneArray,
 		}
+		setShowLoader(true)
 
 		addMilestoneToFirestore(clickedGoal, newMilestoneArray, () => {
+			setHideLoader(false)
+
 			setClickedGoal(updatedObj)
 			setBooleanFlag(!booleanFlag)
 			refRBSheet.current.close()
@@ -102,6 +125,8 @@ const MonthTimeline = ({allGoals, clickedGoal, setClickedGoal, setAllGoals, bool
 			source={require("../../assets/images/timeline.png")}
 			resizeMode="stretch"
 		>
+			{loading ? <Spinner /> : null}
+
 			<View style={styles.container}>
 				<Text
 					style={{
@@ -284,6 +309,7 @@ const mapStateToProps = (state) => {
 		allGoals: state.milestone.allGoals,
 		clickedGoal: state.milestone.clickedGoal,
 		booleanFlag: state.milestone.booleanFlag,
+		loading: state.milestone.loading,
 	}
 }
 
@@ -297,6 +323,12 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setBooleanFlag: (flag) => {
 			dispatch(setBooleanFlag(flag))
+		},
+		setShowLoader: (data) => {
+			dispatch(setShowLoader(data))
+		},
+		setHideLoader: (data) => {
+			dispatch(setHideLoader(data))
 		},
 	}
 }

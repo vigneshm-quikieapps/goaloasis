@@ -13,11 +13,21 @@ import MonthTimeline from "./MonthTimeline"
 import {CommonHomeButton} from "../../core/CommonComponents"
 import {connect} from "react-redux"
 import {ColorConstants, sizeConstants} from "../../core/styles"
-import {setAllGoals, setClickedGoal} from "../../redux/actions"
+import {setAllGoals, setClickedGoal, setShowLoader, setHideLoader} from "../../redux/actions"
 import {updateGoalToFirestore} from "../../firebase"
 import AsyncStorage from "@react-native-community/async-storage"
 
-const TimelineScreen = ({allGoals, clickedGoal, setClickedGoal}) => {
+const TimelineScreen = ({
+	setShowLoader,
+	loading,
+	setHideLoader,
+	allGoals,
+	clickedGoal,
+	setClickedGoal,
+	setShowLoader,
+	loading,
+	setHideLoader,
+}) => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
 	const [clickedGoalDate, setClickedGoalDate] = useState(new Date())
@@ -70,7 +80,11 @@ const TimelineScreen = ({allGoals, clickedGoal, setClickedGoal}) => {
 			targetDate: clickedGoalDate,
 			name: clickedGoalName,
 		}
+		setShowLoader(true)
+
 		updateGoalToFirestore(updatedObj, clickedGoal.name, () => {
+			setHideLoader(false)
+
 			setClickedGoal(updatedObj)
 			refRBSheet.current.close()
 		})
@@ -82,6 +96,8 @@ const TimelineScreen = ({allGoals, clickedGoal, setClickedGoal}) => {
 			source={require("../../assets/images/timeline.png")}
 			resizeMode="stretch"
 		>
+			{loading ? <Spinner /> : null}
+
 			<View style={styles.container}>
 				<Text
 					style={{
@@ -257,6 +273,7 @@ const mapStateToProps = (state) => {
 	return {
 		allGoals: state.milestone.allGoals,
 		clickedGoal: state.milestone.clickedGoal,
+		loading: state.milestone.loading,
 	}
 }
 
@@ -267,6 +284,12 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setAllGoals: (goalObj) => {
 			dispatch(setAllGoals(goalObj))
+		},
+		setShowLoader: (data) => {
+			dispatch(setShowLoader(data))
+		},
+		setHideLoader: (data) => {
+			dispatch(setHideLoader(data))
 		},
 	}
 }
