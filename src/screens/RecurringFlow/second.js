@@ -106,6 +106,7 @@ const Second = ({
 					taskData: [
 						...filteredTasks,
 						{
+							isCompleted: false,
 							task: tName,
 							date: clickedDate,
 							reoccuring: {

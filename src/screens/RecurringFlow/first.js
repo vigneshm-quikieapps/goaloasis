@@ -135,43 +135,50 @@ const First = ({route, clickedMilestone}) => {
 					})}
 				</View>
 			)}
-
 			<View
 				style={{
-					position: "absolute",
-					bottom: sizeConstants.oneTen,
-					alignSelf: "center",
-					width: "100%",
+					height: toggle == "Weekly" ? "29.7%" : "40%",
+					alignItems: "center",
+					justifyContent: "flex-end",
 				}}
 			>
-				<TouchableOpacity
-					style={CommonStyles.cancelReoccuring}
-					onPress={() => {
-						navigation.navigate("second", {
-							reoccuring: toggle,
-							taskDate: taskDate,
-							taskName: tName,
-							reoccuringDays: toggle == "Daily" ? reoccuringDefaultDailyArray : reoccuringDays,
-						})
+				<View
+					style={{
+						flexDirection: "row",
+						width: "95%",
+						alignItems: "center",
+						justifyContent: "center",
 					}}
 				>
-					<Text style={CommonStyles.cancelReoccuringText}>Set reoccuring</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={CommonStyles.cancelReoccuring}
-					onPress={() => {
-						navigation.navigate("particulargoal")
-					}}
-				>
-					<Text style={CommonStyles.cancelReoccuringText}>Cancel reoccuring</Text>
-				</TouchableOpacity>
+					<TouchableOpacity
+						style={CommonStyles.cancelReoccuring}
+						onPress={() => {
+							navigation.navigate("second", {
+								reoccuring: toggle,
+								taskDate: taskDate,
+								taskName: tName,
+								reoccuringDays: toggle == "Daily" ? reoccuringDefaultDailyArray : reoccuringDays,
+							})
+						}}
+					>
+						<Text style={CommonStyles.cancelReoccuringText}>Save</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={CommonStyles.cancelReoccuring}
+						onPress={() => {
+							navigation.goBack()
+						}}
+					>
+						<Text style={CommonStyles.cancelReoccuringText}>Cancel</Text>
+					</TouchableOpacity>
 
-				{/* <TouchableOpacity
+					{/* <TouchableOpacity
 					style={CommonStyles.bottomBtn}
 					onPress={() => navigation.navigate("mygoals")}
 				>
 					<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 				</TouchableOpacity> */}
+				</View>
 			</View>
 			<CommonHomeButton click={() => navigation.navigate("particulargoal")} />
 		</StatusBarScreen>

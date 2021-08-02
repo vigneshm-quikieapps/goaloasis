@@ -54,12 +54,13 @@ const ThirdTaskFlow = ({clickedGoal, route, clickedMilestone, setBooleanFlag, se
 					taskData: [
 						...filteredTasks,
 						{
+							isCompleted: false,
 							task: taskName,
 							date: clickedDate,
 							reoccuring: {
-								startDate: clickedDate,
-								reoccuringType: "Daily",
-								reoccuringDays: reoccuringDefaultDailyArray,
+								startDate: null,
+								reoccuringType: "none",
+								reoccuringDays: [],
 							},
 						},
 					],

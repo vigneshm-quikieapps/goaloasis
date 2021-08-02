@@ -36,7 +36,7 @@ import {ColorConstants, CommonStyles, forGoals, sizeConstants} from "./../../cor
 import firestore from "@react-native-firebase/firestore"
 import {CommonHomeButton} from "../../core/CommonComponents"
 import {getAllGoalsFromFirestore} from "../../firebase"
-
+import {withPressButtonAnimation} from "../../core/CustomAnimations"
 const Height = Dimensions.get("window").height
 const MyGoals = ({
 	testData,
@@ -64,6 +64,7 @@ const MyGoals = ({
 		setFirstTime(data)
 		setFirstTimeForTimeLine(data1)
 	}
+
 	const navigation = useNavigation()
 
 	const handleOpenNewGoal = (task) => {
@@ -102,6 +103,7 @@ const MyGoals = ({
 		const a = (index + 1) % 6
 		return colorArray[a]
 	}
+
 	const colorArray = Object.values(forGoals)
 
 	var today = new Date()
@@ -289,6 +291,7 @@ const MyGoals = ({
 					</TouchableOpacity>
 				</View> */}
 			</View>
+
 			<CommonHomeButton
 				iconName={"file-tree-outline"}
 				size={34}

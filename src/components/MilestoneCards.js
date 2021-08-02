@@ -11,6 +11,7 @@ import {LongPressGestureHandler, State} from "react-native-gesture-handler"
 import {connect} from "react-redux"
 import {addMilestoneToFirestore} from "./../firebase/index"
 import {convertToDateString} from "../core/CommonComponents"
+import {SnoozeIcon} from "../assets/customIcons"
 
 const MilestoneCards = ({
 	data,
@@ -20,8 +21,6 @@ const MilestoneCards = ({
 	clickedGoal,
 	style,
 }) => {
-	useEffect(() => {}, [clickedGoal])
-	const [taskCompleted, setCompleted] = useState(true)
 	const navigation = useNavigation()
 	const icons = (milestoneObj) => (
 		<View style={{flexDirection: "row", justifyContent: "space-between"}}>
@@ -47,11 +46,24 @@ const MilestoneCards = ({
 		</View>
 	)
 
-	let mileStoneArray = []
-	mileStoneArray.push(clickedGoal.goalMilestone)
+	const deleteTaskIcon = (task, milestone) => (
+		<View>
+			<TouchableOpacity
+				onPress={() => {
+					deleteTaskAlert(task, milestone)
+				}}
+			>
+				<MaterialCommunityIcons
+					name="delete"
+					size={30}
+					color={ColorConstants.faintWhite}
+					style={{marginRight: 0}}
+				/>
+			</TouchableOpacity>
+		</View>
+	)
 
 	const deleteMilestoneAlert = (milestoneName) => {
-		console.log("clicked mile name: ", milestoneName)
 		return Alert.alert(milestoneName, "Delete this milestone?", [
 			{
 				text: "No",
@@ -70,8 +82,25 @@ const MilestoneCards = ({
 					}
 					addMilestoneToFirestore(clickedGoal, filteredMilestoneArr, () => {
 						setClickedGoal(updatedObj)
+						navigation.navigate("particulargoal")
 					})
-					console.log("clickedGoal", updatedObj)
+				},
+			},
+		])
+	}
+
+	const deleteTaskAlert = (taskName, milestone) => {
+		console.log("deletingggg")
+		return Alert.alert(taskName, "Delete this Task?", [
+			{
+				text: "No",
+				onPress: () => console.log("Cancel Pressed"),
+				style: "cancel",
+			},
+			{
+				text: "Yes",
+				onPress: () => {
+					handleTaskDelete(taskName, milestone)
 				},
 			},
 		])
@@ -95,11 +124,59 @@ const MilestoneCards = ({
 			addMilestoneToFirestore(clickedGoal, newMilestone, () => {
 				setClickedGoal(updatedObj)
 			})
+		}
+	}
+	handleTaskLongPress = (event, clickedTask, currentMilestone) => {
+		if (event.nativeEvent.state === State.ACTIVE) {
+			let newMilestone = clickedGoal.goalMilestone.map((item) => {
+				if (item.milestone === currentMilestone) {
+					return {
+						...item,
+						taskData: item.taskData.map((task) => {
+							if (task.task == clickedTask) {
+								return {
+									...task,
+									isCompleted: true,
+								}
+							}
+							return task
+						}),
+					}
+				}
+				return item
+			})
+			let updatedObj = {
+				...clickedGoal,
+				goalMilestone: newMilestone,
+			}
 
-			setCompleted(!taskCompleted)
+			addMilestoneToFirestore(clickedGoal, newMilestone, () => {
+				setClickedGoal(updatedObj)
+			})
 		}
 	}
 
+	handleTaskDelete = (clickedTask, currentMilestone) => {
+		let newMilestone = clickedGoal.goalMilestone.map((item) => {
+			if (item.milestone === currentMilestone) {
+				return {
+					...item,
+					taskData: item.taskData.filter((task) => {
+						return task.task != clickedTask
+					}),
+				}
+			}
+			return item
+		})
+		let updatedObj = {
+			...clickedGoal,
+			goalMilestone: newMilestone,
+		}
+
+		addMilestoneToFirestore(clickedGoal, newMilestone, () => {
+			setClickedGoal(updatedObj)
+		})
+	}
 	const [upDown, setUpDown] = useState(false)
 
 	// if (fromIndividual !== null && fromIndividual !== undefined) {
@@ -119,8 +196,15 @@ const MilestoneCards = ({
 	}
 
 	var milestoneDate = data ? convertToDateString(new Date(data.date)) : ""
+	let completedTasks =
+		data &&
+		data.taskData &&
+		data.taskData.length &&
+		data.taskData.filter((task) => task.isCompleted === true)
+	let completedTaskCount = completedTasks && completedTasks.length
+	let totalTasks = data && data.taskData && data.taskData.length
 
-	console.log("cards: ", data && data.taskData && data.taskData.length)
+	useEffect(() => {}, [clickedGoal])
 	return (
 		<View
 			style={{
@@ -159,7 +243,6 @@ const MilestoneCards = ({
 						}}
 						minDurationMs={800}
 					>
-						{/* {taskCompleted && !boolean */}
 						<View style={[styles.swipableBtnContainer]}>
 							<TouchableOpacity
 								style={[styles.TouchContainer, style]}
@@ -170,11 +253,11 @@ const MilestoneCards = ({
 									<Text style={styles.subtitle}>{milestoneDate}</Text>
 								</View>
 
-								{taskCompleted && data && !data.isCompleted ? (
+								{data && !data.isCompleted ? (
 									<View style={{alignItems: "center"}}>
 										<Text
 											style={{fontSize: 16, color: "#333333"}}
-										>{`Task: 0/${data.taskData.length}`}</Text>
+										>{`Task: ${completedTaskCount}/${totalTasks}`}</Text>
 										<Feather
 											name={upDown ? "chevron-up" : "chevron-down"}
 											size={25}
@@ -193,7 +276,7 @@ const MilestoneCards = ({
 					</LongPressGestureHandler>
 				</Swipeout>
 			</View>
-			{/* {console.log("TESTINGNGNGNG", clickedMilestone)} */}
+
 			{upDown && data && (
 				<FlatList
 					data={data.taskData}
@@ -210,18 +293,67 @@ const MilestoneCards = ({
 								? "Reoccuring Daily"
 								: dateStr
 							: dateStr
+
 						return (
-							<TouchableOpacity
-								style={[styles.accordian, {alignSelf: "flex-end"}]}
-								onPress={() => {
-									// navigation.navigate("firsttaskflow")
-								}}
-							>
-								<View>
-									<Text style={styles.mainTitle}>{item.item.task}</Text>
-									<Text style={styles.subtitle}>{bottomItem}</Text>
-								</View>
-							</TouchableOpacity>
+							<View style={[styles.swipeButton, styles.taskAccordion]}>
+								<Swipeout
+									left={[
+										{
+											text: (
+												<SnoozeIcon
+													bgColor={ColorConstants.snoozeIconBg}
+													color={ColorConstants.faintWhite}
+												/>
+											),
+											onPress: () => {
+												console.log("Snoozziingg")
+											},
+											style: {backgroundColor: ColorConstants.snoozeIconBg},
+										},
+									]}
+									right={[
+										{
+											text: deleteTaskIcon(item.item.task, data.milestone),
+
+											onPress: () => {
+												deleteTaskAlert(item.item.task, data.milestone)
+											},
+											style: {backgroundColor: ColorConstants.snoozeIconBg},
+										},
+									]}
+									style={{backgroundColor: "#CDE8E6"}}
+									// onOpen={() => console.log("open")}
+									// onClose={() => console.log("close")}
+									autoClose={true}
+									disabled={false}
+								>
+									<LongPressGestureHandler
+										onHandlerStateChange={(event) => {
+											handleTaskLongPress(event, item.item.task, data.milestone)
+										}}
+										minDurationMs={800}
+									>
+										<View style={[styles.swipableBtnContainer]}>
+											<TouchableOpacity
+												style={[styles.TouchContainer, style, {backgroundColor: "#CDE8E6"}]}
+												onPress={() => {}}
+											>
+												<View>
+													<Text style={styles.mainTitle}>{item.item.task}</Text>
+													<Text style={styles.subtitle}>{bottomItem}</Text>
+												</View>
+												{item.item.isCompleted ? (
+													<View>
+														<Text style={{color: ColorConstants.gray, fontWeight: "bold"}}>
+															TASK COMPLETED
+														</Text>
+													</View>
+												) : null}
+											</TouchableOpacity>
+										</View>
+									</LongPressGestureHandler>
+								</Swipeout>
+							</View>
 						)
 					}}
 					keyExtractor={(item) => item.milestone}
@@ -290,17 +422,23 @@ const styles = StyleSheet.create({
 		marginTop: sizeConstants.xl,
 		marginLeft: 50,
 	},
-
+	taskAccordion: {
+		backgroundColor: "#CDE8E6",
+		height: 70,
+		width: "90%",
+		flexDirection: "row",
+		alignItems: "center",
+		alignSelf: "flex-end",
+		borderRadius: 20,
+		marginTop: sizeConstants.xl,
+		elevation: 0,
+	},
 	swipeButton: {
 		alignContent: "center",
 		borderRadius: sizeConstants.twentyTwo,
 		overflow: "hidden",
 		justifyContent: "center",
 		marginTop: sizeConstants.xxl,
-		shadowColor: ColorConstants.darkGrey,
-		shadowRadius: sizeConstants.twentyTwo,
-		shadowOffset: {width: 5, height: 5},
-		shadowOpacity: 0.5,
 		elevation: 10,
 	},
 })

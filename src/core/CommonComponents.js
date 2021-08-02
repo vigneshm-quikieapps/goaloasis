@@ -1,8 +1,9 @@
-import React from "react"
+import React, {useState} from "react"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native"
+import {Alert, StyleSheet, Text, TouchableOpacity, View} from "react-native"
 import {CommonStyles, ColorConstants, sizeConstants, height} from "./styles"
 import colors from "../../colors"
+import Animated, {useSharedValue, useAnimatedStyle} from "react-native-reanimated"
 
 export const reoccuringDefaultDailyArray = [0, 1, 2, 3, 4, 5, 6]
 export const weekArray = ["S", "M", "T", "W", "T", "F", "S"]
@@ -119,12 +120,27 @@ export const CommonHomeButton = ({
 	iconColor = ColorConstants.lighterBlue,
 	iconName = "home",
 }) => {
+	const [scale, setScale] = useState(1)
+
 	return (
-		<View style={CommonStyles.homeButtonContainer}>
+		<View style={[CommonStyles.homeButtonContainer]}>
 			<TouchableOpacity
-				style={[CommonStyles.homeTouchableOpacity, {backgroundColor: bgColor}]}
-				// onPress={() => navigation.navigate("particulargoal")}
-				onPress={click}
+				activeOpacity={1}
+				style={[
+					CommonStyles.homeTouchableOpacity,
+					{
+						backgroundColor: bgColor,
+						transform: [{scale: scale}],
+					},
+				]}
+				// onPress={click}
+				onPressIn={() => {
+					setScale(0.9)
+				}}
+				onPressOut={() => {
+					setScale(1)
+					click()
+				}}
 			>
 				<MaterialCommunityIcons name={iconName} size={size} color={iconColor} />
 			</TouchableOpacity>
@@ -133,24 +149,47 @@ export const CommonHomeButton = ({
 }
 
 export const CommonNextButton = ({click, iconColor = ColorConstants.lighterBlue, style}) => {
+	const [scale, setScale] = useState(1)
 	return (
 		<View>
-			<TouchableOpacity style={[styles.prevNextBtn, styles.btnStylingRight, style]}>
-				<MaterialCommunityIcons
-					name="chevron-right"
-					size={sizeConstants.fifty}
-					color={iconColor}
-					onPress={click}
-				/>
+			<TouchableOpacity
+				activeOpacity={1}
+				style={[
+					styles.prevNextBtn,
+					styles.btnStylingRight,
+					style,
+					{
+						transform: [{scale: scale}],
+					},
+				]}
+				onPressIn={() => {
+					setScale(0.9)
+				}}
+				onPressOut={() => {
+					setScale(1)
+					click()
+				}}
+			>
+				<MaterialCommunityIcons name="chevron-right" size={sizeConstants.fifty} color={iconColor} />
 			</TouchableOpacity>
 		</View>
 	)
 }
 
 export const CommonPrevButton = ({click, iconColor = ColorConstants.faintWhite}) => {
+	const [scale, setScale] = useState(1)
 	return (
 		<View>
-			<TouchableOpacity style={[styles.prevNextBtn, styles.btnStylingLeft]}>
+			<TouchableOpacity
+				style={[styles.prevNextBtn, styles.btnStylingLeft]}
+				onPressIn={() => {
+					setScale(0.9)
+				}}
+				onPressOut={() => {
+					setScale(1)
+					click()
+				}}
+			>
 				<MaterialCommunityIcons
 					name="chevron-left"
 					size={sizeConstants.fifty}
@@ -165,8 +204,8 @@ export const CommonPrevButton = ({click, iconColor = ColorConstants.faintWhite})
 export const CommonPrevNextButton = ({
 	right = false,
 	left = false,
-	nextClick,
-	prevClick,
+	nextClick = () => {},
+	prevClick = () => {},
 	iconLeftColor = ColorConstants.lighterBlue,
 	iconRightColor = ColorConstants.lighterBlue,
 	bottom = sizeConstants.hundred,

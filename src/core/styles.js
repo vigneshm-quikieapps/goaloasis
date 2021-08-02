@@ -145,6 +145,7 @@ export const ColorConstants = {
 	greyishBlue: "#538586",
 	gray: "gray",
 	backGroundTextDIsable: "#BFE4E4",
+	snoozeIconBg: "#7c9b96",
 }
 
 export const forGoals = {
@@ -394,20 +395,15 @@ export const CommonStyles = ScaledSheet.create({
 	cancelReoccuring: {
 		justifyContent: "center",
 		alignItems: "center",
+		alignSelf: "center",
 		// backgroundColor: "#588C8D",
 		borderColor: "#FDF9F2",
-
-		borderEndWidth: scale(3),
-		borderStartWidth: scale(3),
-		borderTopWidth: scale(3),
-		borderBottomWidth: scale(3),
-		width: "70%",
+		borderWidth: scale(3),
 		padding: scale(8),
 		borderRadius: scale(25),
-		flexDirection: "column",
-		marginVertical: sizeConstants.s,
+		margin: sizeConstants.s,
 		marginTop: sizeConstants.l,
-		alignSelf: "center",
+		width: "45%",
 	},
 	cancelReoccuringText: {
 		color: "#FDF9F2",

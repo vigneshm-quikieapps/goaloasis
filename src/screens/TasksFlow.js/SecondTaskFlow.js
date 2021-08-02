@@ -38,12 +38,13 @@ const SecondTaskFlow = ({clickedGoal, clickedMilestone, route, setClickedGoal, s
 					taskData: [
 						...filteredTasks,
 						{
+							isCompleted: false,
 							task: taskName,
 							date: currentTaskData.date,
 							reoccuring: {
-								startDate: currentTaskData.date,
-								reoccuringType: "Daily",
-								reoccuringDays: reoccuringDefaultDailyArray,
+								startDate: null,
+								reoccuringType: "none",
+								reoccuringDays: [],
 							},
 						},
 					],
