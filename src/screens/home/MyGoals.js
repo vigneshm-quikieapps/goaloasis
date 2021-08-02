@@ -210,7 +210,7 @@ const MyGoals = ({
 		<StatusBarScreen style={styles.container}>
 			<TouchableOpacity
 				style={CommonStyles.titleContainer1}
-				onPress={!firstTime ? gotoTaskTutorial : gotoTodaysTask}
+				onPress={!firstTime ? gotoTaskTutorial : null}
 			>
 				<View style={{flexDirection: "row"}}>
 					<Text style={[CommonStyles.mainTitle, {marginBottom: sizeConstants.twelve}]}>

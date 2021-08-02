@@ -22,6 +22,7 @@ import {
 } from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
 import {addMilestoneToFirestore} from "../../firebase"
+import Spinner from "../../core/Spinner"
 
 const DailyTimeline = ({
 	allGoals,
