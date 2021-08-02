@@ -8,6 +8,7 @@ import {setBooleanFlag, setClickedGoal, setShowLoader, setHideLoader} from "./..
 import {Calendar} from "react-native-calendars"
 import {CustomDayComponentForCalendar} from "../../core/CommonComponents"
 import {addMilestoneToFirestore} from "../../firebase"
+import Spinner from "../../core/Spinner"
 
 const EditMilestone = ({
 	route,
@@ -58,8 +59,6 @@ const EditMilestone = ({
 	return (
 		<ScrollView contentContainerStyle={styles.container}>
 			<StatusBarScreen>
-				{loading ? <Spinner /> : null}
-
 				<View style={styles.titleContainer}>
 					<Text style={styles.titleText}>Edit Milestone</Text>
 				</View>
@@ -139,6 +138,7 @@ const EditMilestone = ({
 							}}
 						/>
 					</View>
+					{loading ? <Spinner /> : null}
 
 					<View style={styles.bottomBtnContainer}>
 						<TouchableOpacity style={styles.HelpBtn} onPress={handleMilestoneEdit}>
