@@ -2,21 +2,25 @@ import React, {useEffect, useState} from "react"
 import {StyleSheet, Text, TouchableOpacity, View, ScrollView, TextInput} from "react-native"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
-import {Calendar} from "react-native-calendars"
+import {Calendar, LocaleConfig} from "react-native-calendars"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import {Entypo} from "@expo/vector-icons"
-import {ColorConstants, CommonStyles, sizeConstants} from "../../core/styles"
+import {ColorConstants, commonDateFormat, CommonStyles, sizeConstants} from "../../core/constants"
 import {
-	checkDate,
+	calendarLocale,
 	CommonHomeButton,
 	CustomDayComponentForCalendar,
 	getAllDatesBetween,
-} from "../../core/CommonComponents"
-import Spinner from "../../core/Spinner"
+} from "../../components/CommonComponents"
+import Spinner from "../../components/Spinner"
 
 import {connect} from "react-redux"
 import {setClickedGoal, setBooleanFlag, setShowLoader, setHideLoader} from "../../redux/actions"
 import {addMilestoneToFirestore} from "../../firebase"
+import dayjs from "dayjs"
+
+LocaleConfig.locales["en"] = calendarLocale
+LocaleConfig.defaultLocale = "en"
 
 const Second = ({
 	route,
@@ -37,7 +41,9 @@ const Second = ({
 
 	const {reoccuring, reoccuringDays, taskDate, taskName} = route.params
 	const [tName, setTaskName] = useState(taskName)
-	const [clickedDate, setDate] = useState(taskDate ? new Date(taskDate) : new Date())
+	const [clickedDate, setDate] = useState(
+		taskDate ? dayjs(taskDate).format(commonDateFormat) : dayjs().format(commonDateFormat)
+	)
 
 	const getMarkedDates = () => {
 		var markedDates = getAllDatesBetween(clickedDate, clickedGoal.targetDate)
@@ -76,7 +82,8 @@ const Second = ({
 		arr.forEach((item) => {
 			let key = Object.keys(item)[0]
 			let value = item[key]
-			let dayIndex = new Date(key).getDay()
+
+			let dayIndex = dayjs(key).day()
 
 			if (reoccuring == "Weekly") {
 				if (reoccuringDays.length) {
@@ -176,8 +183,12 @@ const Second = ({
 
 					<Calendar
 						style={{paddingLeft: 20, paddingRight: 20}}
-						current={clickedDate ? new Date(clickedDate) : new Date()}
-						minDate={new Date()}
+						current={
+							clickedDate
+								? dayjs(clickedDate).format(commonDateFormat)
+								: dayjs().format(commonDateFormat)
+						}
+						minDate={dayjs().format(commonDateFormat)}
 						onDayPress={(day) => {
 							console.log("selected day", day)
 						}}

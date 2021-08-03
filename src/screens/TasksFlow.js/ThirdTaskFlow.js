@@ -10,22 +10,31 @@ import {
 } from "react-native"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
-import {Calendar} from "react-native-calendars"
+import {Calendar, LocaleConfig} from "react-native-calendars"
 import {Entypo} from "@expo/vector-icons"
-import {ColorConstants, CommonStyles, sizeConstants, height} from "../../core/styles"
+import {
+	ColorConstants,
+	CommonStyles,
+	sizeConstants,
+	height,
+	commonDateFormat,
+} from "../../core/constants"
 import StatusBarScreen from "./../MileStones/StatusBarScreen"
 import {
 	CommonHomeButton,
 	CustomDayComponentForCalendar,
-	getAllDatesBetween,
 	CommonPrevNextButton,
-	reoccuringDefaultDailyArray,
-} from "../../core/CommonComponents"
+	calendarLocale,
+} from "../../components/CommonComponents"
 import {connect} from "react-redux"
-import Spinner from "../../core/Spinner"
+import Spinner from "../../components/Spinner"
 
 import {addMilestoneToFirestore} from "../../firebase"
 import {setBooleanFlag, setClickedGoal, setShowLoader, setHideLoader} from "../../redux/actions"
+import dayjs from "dayjs"
+
+LocaleConfig.locales["en"] = calendarLocale
+LocaleConfig.defaultLocale = "en"
 
 const ThirdTaskFlow = ({
 	setShowLoader,
@@ -163,8 +172,12 @@ const ThirdTaskFlow = ({
 					</View>
 
 					<Calendar
-						current={clickedDate ? new Date(clickedDate) : new Date()}
-						minDate={new Date()}
+						current={
+							clickedDate
+								? dayjs(clickedDate).format(commonDateFormat)
+								: dayjs().format(commonDateFormat)
+						}
+						minDate={dayjs().format(commonDateFormat)}
 						maxDate={"2090-01-01"}
 						onMonthChange={(month) => {
 							console.log("month changed", month)

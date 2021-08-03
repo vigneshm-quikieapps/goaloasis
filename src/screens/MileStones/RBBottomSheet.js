@@ -2,7 +2,7 @@ import React, {useRef} from "react"
 import {StyleSheet, View, TouchableOpacity, Text} from "react-native"
 import RBSheet from "react-native-raw-bottom-sheet"
 import {useNavigation} from "@react-navigation/native"
-import {sizeConstants} from "./../../core/styles"
+import {sizeConstants} from "../../core/constants"
 import {
 	ScaledSheet,
 	verticalScale,

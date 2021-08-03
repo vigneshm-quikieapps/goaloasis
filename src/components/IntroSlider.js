@@ -6,7 +6,7 @@ import {setFirstTimeUser} from "../utils/asyncStorage"
 import authContext from "../context/auth/authContext"
 import StatusBarScreen from "../screens/MileStones/StatusBarScreen"
 import Constants from "expo-constants"
-import {CommonStyles, sizeConstants} from "./../core/styles"
+import {CommonStyles, sizeConstants} from "./../core/constants"
 
 const IntroSlider = ({data}) => {
 	// console.log("Data from the Intro Slider---->", data)

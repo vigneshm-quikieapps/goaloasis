@@ -3,12 +3,16 @@ import {StyleSheet, Text, View, TouchableOpacity, TextInput, ScrollView} from "r
 import {useNavigation} from "@react-navigation/native"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import {connect} from "react-redux"
-import {ColorConstants, sizeConstants} from "../../core/styles"
+import {ColorConstants, commonDateFormat, sizeConstants} from "../../core/constants"
 import {setBooleanFlag, setClickedGoal, setShowLoader, setHideLoader} from "./../../redux/actions"
-import {Calendar} from "react-native-calendars"
-import {CustomDayComponentForCalendar} from "../../core/CommonComponents"
+import {Calendar, LocaleConfig} from "react-native-calendars"
+import {calendarLocale, CustomDayComponentForCalendar} from "../../components/CommonComponents"
 import {addMilestoneToFirestore} from "../../firebase"
-import Spinner from "../../core/Spinner"
+import Spinner from "../../components/Spinner"
+import dayjs from "dayjs"
+
+LocaleConfig.locales["en"] = calendarLocale
+LocaleConfig.defaultLocale = "en"
 
 const EditMilestone = ({
 	route,
@@ -82,8 +86,8 @@ const EditMilestone = ({
 						</View>
 						<Text style={styles.headingText}>Edit target date</Text>
 						<Calendar
-							current={new Date(clickedDate)}
-							minDate={new Date()}
+							current={dayjs(clickedDate).format(commonDateFormat)}
+							minDate={dayjs().format(commonDateFormat)}
 							// maxDate={"2050-05-30"}
 							// onDayPress={(day) => {
 							// 	setDate(day.dateString)

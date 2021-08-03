@@ -8,8 +8,8 @@
 // import {Calendar, LocaleConfig} from "react-native-calendars"
 // import StatusBarScreen from "./StatusBarScreen"
 // import {Entypo} from "@expo/vector-icons"
-// import {ColorConstants, CommonStyles} from "../../core/styles"
-// import {CommonHomeButton} from "../../core/CommonComponents"
+// import {ColorConstants, CommonStyles} from "../../core/constants"
+// import {CommonHomeButton} from "../../components/CommonComponents"
 
 // const FifthMilestone = () => {
 // 	const navigation = useNavigation()

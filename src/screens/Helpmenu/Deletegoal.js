@@ -5,9 +5,9 @@ import {useNavigation} from "@react-navigation/native"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import {deleteGoalFromFirestore} from "../../firebase"
 import {connect} from "react-redux"
-import {sizeConstants} from "../../core/styles"
+import {sizeConstants} from "../../core/constants"
 import {setBooleanFlag, setHideLoader, setShowLoader} from "./../../redux/actions"
-import Spinner from "../../core/Spinner"
+import Spinner from "../../components/Spinner"
 
 const Deletegoal = (props) => {
 	const navigation = useNavigation()

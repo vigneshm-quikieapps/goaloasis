@@ -9,6 +9,8 @@ import Constants from "expo-constants"
 import colors from "../../colors"
 import {Dimensions} from "react-native"
 
+export const commonDateFormat = "YYYY-MM-DD"
+
 export const sizeConstants = {
 	negativeSixty: verticalScale(-160),
 	negativeSeventy: verticalScale(-70),

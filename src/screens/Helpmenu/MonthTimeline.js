@@ -10,9 +10,9 @@ import RBSheet from "react-native-raw-bottom-sheet"
 import {Calendar, LocaleConfig} from "react-native-calendars"
 import DatePicker from "react-native-date-picker"
 import TimelineScreen from "./Timeline"
-import {CommonHomeButton, convertToDateString, monthNames} from "../../core/CommonComponents"
+import {CommonHomeButton, monthNames} from "../../components/CommonComponents"
 import {connect} from "react-redux"
-import {ColorConstants, sizeConstants} from "../../core/styles"
+import {ColorConstants, sizeConstants} from "../../core/constants"
 import {
 	setAllGoals,
 	setShowLoader,
@@ -22,7 +22,8 @@ import {
 } from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
 import {addMilestoneToFirestore} from "../../firebase"
-import Spinner from "../../core/Spinner"
+import Spinner from "../../components/Spinner"
+import dayjs from "dayjs"
 
 const MonthTimeline = ({
 	setShowLoader,
@@ -36,9 +37,9 @@ const MonthTimeline = ({
 }) => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
-	const [date, setDate] = useState(new Date())
+	const [date, setDate] = useState(dayjs())
 	const [allMilestones, setAllMilestones] = useState([])
-	const [clickedMilestoneDate, setClickedMilestoneDate] = useState(new Date())
+	const [clickedMilestoneDate, setClickedMilestoneDate] = useState(dayjs())
 	const [clickedMilestoneName, setClickedMilestoneName] = useState("")
 	const [oldMilestone, setOldMilestone] = useState("")
 
@@ -46,9 +47,9 @@ const MonthTimeline = ({
 		var allMiles = []
 		allGoals.forEach((goal) => {
 			goal.goalMilestone.forEach((mile) => {
-				let date = new Date(mile.date)
-				var month = monthNames[date.getUTCMonth()]
-				var year = date.getUTCFullYear()
+				let date = dayjs(mile.date)
+				var month = monthNames[date.month()]
+				var year = date.year()
 
 				allMiles.push({
 					key: goal.id,
@@ -94,7 +95,8 @@ const MonthTimeline = ({
 				return {
 					...milestone,
 					milestone: clickedMilestoneName,
-					date: convertToDateString(clickedMilestoneDate),
+					// date: convertToDateString(clickedMilestoneDate),
+					date: dayjs(clickedMilestoneDate),
 				}
 			}
 			return milestone
@@ -171,7 +173,7 @@ const MonthTimeline = ({
 							(mile) => mile.milestone == item.title
 						)
 						setClickedGoal(currentGoal)
-						setClickedMilestoneDate(new Date(clickedMileObj.date))
+						setClickedMilestoneDate(dayjs(clickedMileObj.date))
 						refRBSheet.current.open()
 					}}
 				/>
@@ -215,7 +217,7 @@ const MonthTimeline = ({
 							locale="en"
 							fadeToColor="none"
 							dividerHeight={0}
-							minimumDate={new Date()}
+							minimumDate={dayjs()}
 						/>
 					</View>
 					<View style={styles.cnfrmBtnContainer}>
@@ -470,7 +472,7 @@ const styles = StyleSheet.create({
 // ]
 
 // for getting time from a date
-// let date = new Date(mile.date)
+// let date = dayjs(mile.date)
 // var hours = date.getHours()
 // var minutes = "0" + date.getMinutes()
 // var seconds = "0" + date.getSeconds()

@@ -5,7 +5,7 @@ import {useNavigation} from "@react-navigation/native"
 import {setBooleanFlag, setCurrentGoal, setShowLoader, setHideLoader} from "./../../redux/actions"
 import {connect} from "react-redux"
 import {updateGoalToFirestore} from "./../../firebase/index"
-import Spinner from "../../core/Spinner"
+import Spinner from "../../components/Spinner"
 
 const MarkCompleted = (props) => {
 	const navigation = useNavigation()

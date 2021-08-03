@@ -10,9 +10,9 @@ import RBSheet from "react-native-raw-bottom-sheet"
 import {Calendar, LocaleConfig} from "react-native-calendars"
 import DatePicker from "react-native-date-picker"
 import TimelineScreen from "./Timeline"
-import {CommonHomeButton, convertToDateString, monthNames} from "../../core/CommonComponents"
+import {CommonHomeButton, monthNames} from "../../components/CommonComponents"
 import {connect} from "react-redux"
-import {ColorConstants, sizeConstants} from "../../core/styles"
+import {ColorConstants, commonDateFormat, sizeConstants} from "../../core/constants"
 import {
 	setAllGoals,
 	setBooleanFlag,
@@ -22,7 +22,8 @@ import {
 } from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
 import {addMilestoneToFirestore} from "../../firebase"
-import Spinner from "../../core/Spinner"
+import Spinner from "../../components/Spinner"
+import dayjs from "dayjs"
 
 const DailyTimeline = ({
 	allGoals,
@@ -36,9 +37,9 @@ const DailyTimeline = ({
 }) => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
-	const [date, setDate] = useState(new Date())
+	const [date, setDate] = useState(dayjs())
 	const [allTasks, setAllTasks] = useState([])
-	const [clickedTaskDate, setClickedTaskDate] = useState(new Date())
+	const [clickedTaskDate, setClickedTaskDate] = useState(dayjs())
 	const [clickedTaskName, setClickedTaskName] = useState("")
 	const [clickedMilestone, setClickedMilestone] = useState("")
 	const [oldTask, setOldTask] = useState("")
@@ -49,7 +50,8 @@ const DailyTimeline = ({
 			goal.goalMilestone.forEach((mile) => {
 				if (mile.taskData.length) {
 					mile.taskData.forEach((task) => {
-						let date = convertToDateString(new Date(task.date))
+						// let date = convertToDateString(new Date(task.date))
+						let date = dayjs(task.date).format(commonDateFormat)
 						allTasks.push({
 							key: `${goal.id}_${mile.milestone}_${task.task}`,
 							title: task.task,
@@ -96,7 +98,8 @@ const DailyTimeline = ({
 					...mile,
 					taskData: mile.taskData.map((task) => {
 						if (task.task == oldTask) {
-							let date = convertToDateString(new Date(clickedTaskDate))
+							// let date = convertToDateString(new Date(clickedTaskDate))
+							let date = dayjs(clickedTaskDate)
 							return {
 								...task,
 								date: date,
@@ -181,7 +184,7 @@ const DailyTimeline = ({
 						var currentGoal = allGoals.find((goal) => goal.id == keyArr[0])
 						setClickedMilestone(keyArr[1])
 						setClickedGoal(currentGoal)
-						setClickedTaskDate(new Date(item.time))
+						setClickedTaskDate(dayjs(item.time))
 						refRBSheet.current.open()
 					}}
 				/>
@@ -225,7 +228,7 @@ const DailyTimeline = ({
 							locale="en"
 							fadeToColor="none"
 							dividerHeight={0}
-							minimumDate={new Date()}
+							minimumDate={dayjs()}
 						/>
 					</View>
 					<View style={styles.cnfrmBtnContainer}>

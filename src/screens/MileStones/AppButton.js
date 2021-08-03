@@ -1,6 +1,6 @@
 import React from "react"
 import {TouchableOpacity, StyleSheet, Text} from "react-native"
-import {sizeConstants} from "./../../core/styles"
+import {sizeConstants} from "../../core/constants"
 
 function AppButton({title, onPress, style}) {
 	return (

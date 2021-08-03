@@ -8,11 +8,17 @@ import {
 	ScrollView,
 	ImageBackground,
 } from "react-native"
-import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "./../../core/styles"
+import {
+	ColorConstants,
+	commonDateFormat,
+	commonImages,
+	CommonStyles,
+	sizeConstants,
+} from "./../../core/constants"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {Entypo} from "@expo/vector-icons"
-import {Calendar} from "react-native-calendars"
+import {Calendar, LocaleConfig} from "react-native-calendars"
 import StatusBarScreen from "./StatusBarScreen"
 import {connect} from "react-redux"
 import {
@@ -24,14 +30,19 @@ import {
 	setHideLoader,
 } from "./../../redux/actions"
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
-import Spinner from "./../../core/Spinner"
+import Spinner from "./../../components/Spinner"
 import Constants from "expo-constants"
 import {
+	calendarLocale,
 	CommonHomeButton,
 	CommonNextButton,
 	CommonPrevNextButton,
 	CustomDayComponentForCalendar,
-} from "../../core/CommonComponents"
+} from "../../components/CommonComponents"
+import dayjs from "dayjs"
+
+LocaleConfig.locales["en"] = calendarLocale
+LocaleConfig.defaultLocale = "en"
 
 const FirstMilestone = ({
 	addNewMilestone,
@@ -45,7 +56,7 @@ const FirstMilestone = ({
 	setHideLoader,
 }) => {
 	const [milestone, setMilestone] = useState("")
-	const [clickedDate, setDate] = useState(new Date())
+	const [clickedDate, setDate] = useState(dayjs().format(commonDateFormat))
 	const navigation = useNavigation()
 	// console.log("Solving the date issue", typeof clickedDate)
 
@@ -121,8 +132,8 @@ const FirstMilestone = ({
 							<Text style={styles.bigTitle}>Edit target date</Text>
 
 							<Calendar
-								current={new Date()}
-								minDate={new Date()}
+								current={dayjs().format(commonDateFormat)}
+								minDate={dayjs().format(commonDateFormat)}
 								// maxDate={"2050-05-30"}
 								// onDayPress={(day) => {
 								// 	setDate(day.dateString)

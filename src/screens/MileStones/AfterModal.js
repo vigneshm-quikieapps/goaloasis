@@ -4,18 +4,26 @@ import {StyleSheet, Text, TouchableOpacity, View, TextInput} from "react-native"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 
-import {Calendar} from "react-native-calendars"
+import {Calendar, LocaleConfig} from "react-native-calendars"
 import colors from "../../../colors"
 import StatusBarScreen from "./StatusBarScreen"
 
 import RBSheet from "react-native-raw-bottom-sheet"
-import {CommonHomeButton, CustomDayComponentForCalendar} from "../../core/CommonComponents"
-import {ColorConstants} from "../../core/styles"
+import {
+	calendarLocale,
+	CommonHomeButton,
+	CustomDayComponentForCalendar,
+} from "../../components/CommonComponents"
+import {ColorConstants, commonDateFormat} from "../../core/constants"
+import dayjs from "dayjs"
+
+LocaleConfig.locales["en"] = calendarLocale
+LocaleConfig.defaultLocale = "en"
 
 const AterModal = () => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
-	const [clickedDate, setDate] = useState(new Date())
+	const [clickedDate, setDate] = useState(dayjs().format(commonDateFormat))
 
 	return (
 		<StatusBarScreen style={styles.introContainer}>
@@ -114,7 +122,7 @@ const AterModal = () => {
 				</View>
 				<Calendar
 					// // Initially visible month. Default = Date()
-					current={new Date()}
+					current={dayjs().format(commonDateFormat)}
 					// // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
 					// minDate={"2001-05-10"}
 					// // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined

@@ -11,8 +11,8 @@ import Swipeout from "rc-swipeout"
 import {setFirstTimeForIndividualGoal} from "./../../redux/actions"
 import {getFirstTimeIndividual, setisFirstTimeIndividual} from "./../../utils/asyncStorage"
 import {connect} from "react-redux"
-import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/styles"
-import {CommonHomeButton} from "../../core/CommonComponents"
+import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/constants"
+import {CommonHomeButton} from "../../components/CommonComponents"
 import MilestoneCards from "../../components/MilestoneCards"
 
 const IndividualGoal = (props) => {

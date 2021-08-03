@@ -21,7 +21,7 @@ import StatusBarScreen from "../MileStones/StatusBarScreen"
 import Constants from "expo-constants"
 import {connect} from "react-redux"
 import AsyncStorage from "@react-native-community/async-storage"
-import Spinner from "./../../core/Spinner"
+import Spinner from "./../../components/Spinner"
 import {getAllGoalsFromFirestore} from "./../../firebase/index"
 
 import {
@@ -39,9 +39,16 @@ import {
 	getFirstTimeTaskTutorial,
 	getFirstTimeTimelineFlow,
 } from "./../../utils/asyncStorage"
-import {ColorConstants, CommonStyles, forGoals, sizeConstants} from "./../../core/styles"
+import {
+	ColorConstants,
+	commonDateFormat,
+	CommonStyles,
+	forGoals,
+	sizeConstants,
+} from "../../core/constants"
 import firestore from "@react-native-firebase/firestore"
-import {CommonHomeButton} from "../../core/CommonComponents"
+import {CommonHomeButton} from "../../components/CommonComponents"
+import dayjs from "dayjs"
 const Height = Dimensions.get("window").height
 import PushNotification, {Importance} from "react-native-push-notification"
 
@@ -116,14 +123,10 @@ const MyGoals = ({
 
 	const colorArray = Object.values(forGoals)
 
-	var today = new Date()
-	var dd = String(today.getDate()).padStart(2, "0")
-	var mm = String(today.getMonth() + 1).padStart(2, "0")
-	var yyyy = today.getFullYear()
+	var today = dayjs().format(commonDateFormat)
 
-	today = yyyy + "-" + mm + "-" + dd
 	console.log("loadinggggggg", loading)
-	// console.log("TODAYS DATE", today)
+
 	let count = 0
 
 	const getTodaysTasks = () => {

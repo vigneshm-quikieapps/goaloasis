@@ -12,12 +12,20 @@ import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import DatePicker from "react-native-date-picker"
 import AppButton from "./AppButton"
-import {Calendar} from "react-native-calendars"
+import {Calendar, LocaleConfig} from "react-native-calendars"
 import StatusBarScreen from "./StatusBarScreen"
 import {Entypo} from "@expo/vector-icons"
-import {ColorConstants, CommonStyles, sizeConstants} from "../../core/styles"
+import {ColorConstants, commonDateFormat, CommonStyles, sizeConstants} from "../../core/constants"
 import {connect} from "react-redux"
-import {CommonHomeButton, CustomDayComponentForCalendar} from "../../core/CommonComponents"
+import {
+	calendarLocale,
+	CommonHomeButton,
+	CustomDayComponentForCalendar,
+} from "../../components/CommonComponents"
+import dayjs from "dayjs"
+
+LocaleConfig.locales["en"] = calendarLocale
+LocaleConfig.defaultLocale = "en"
 
 const FourthMilestone = ({clickedGoal, newMileStone}) => {
 	const navigation = useNavigation()
@@ -30,10 +38,10 @@ const FourthMilestone = ({clickedGoal, newMileStone}) => {
 
 	let temp = newMileStone && newMileStone.length && newMileStone[0].milestone
 	const [milestone, setMilestone] = useState(temp)
-	const [value, onChange] = useState(new Date())
+	const [value, onChange] = useState(dayjs().format(commonDateFormat))
 	// const [date, setDate] = useState(null)
 	// console.log("DATE", date)
-	const [clickedDate, setDate] = useState(new Date())
+	const [clickedDate, setDate] = useState(dayjs().format(commonDateFormat))
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
 		<StatusBarScreen style={CommonStyles.introContainer}>
@@ -77,7 +85,7 @@ const FourthMilestone = ({clickedGoal, newMileStone}) => {
 
 					<Calendar
 						// // Initially visible month. Default = Date()
-						current={new Date()}
+						current={dayjs().format(commonDateFormat)}
 						// // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
 						// minDate={"2001-05-10"}
 						// // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
