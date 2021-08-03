@@ -157,7 +157,12 @@ const FirstTaskFlow = ({
 				</StatusBarScreen>
 			</ScrollView>
 
-			<CommonHomeButton click={() => navigation.navigate("particulargoal")} />
+			<CommonHomeButton
+				click={() => navigation.navigate("particulargoal")}
+				BackHandle={true}
+				normalBack={true}
+				clickforBack={() => navigation.navigate("particulargoal")}
+			/>
 		</ImageBackground>
 	)
 }

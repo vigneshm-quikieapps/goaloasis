@@ -262,6 +262,10 @@ const TimelineScreen = ({
 				click={() => navigation.navigate("mygoals")}
 				iconColor={"#E4AB76"}
 				size={40}
+				doNotWorkBackFunctionality={true}
+				BackHandle={true}
+				normalBack={true}
+				clickforBack={() => navigation.navigate("mygoals")}
 			/>
 		</ImageBackground>
 	)

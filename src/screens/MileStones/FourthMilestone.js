@@ -182,7 +182,12 @@ const FourthMilestone = ({clickedGoal, newMileStone}) => {
 					</TouchableOpacity> */}
 				</View>
 			</ScrollView>
-			<CommonHomeButton click={() => navigation.navigate("particulargoal")} size={44} />
+			<CommonHomeButton
+				click={() => navigation.navigate("particulargoal")}
+				size={44}
+				BackHandle={true}
+				clickforBack={() => navigation.navigate("particulargoal")}
+			/>
 		</StatusBarScreen>
 	)
 }

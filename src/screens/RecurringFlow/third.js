@@ -143,7 +143,11 @@ const Third = () => {
 					</TouchableOpacity> */}
 				</View>
 			</ScrollView>
-			<CommonHomeButton click={() => navigation.navigate("particulargoal")} />
+			<CommonHomeButton
+				click={() => navigation.navigate("particulargoal")}
+				BackHandle={true}
+				clickforBack={() => navigation.navigate("particulargoal")}
+			/>
 		</StatusBarScreen>
 	)
 }

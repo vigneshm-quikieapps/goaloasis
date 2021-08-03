@@ -87,7 +87,12 @@ const NameGoal = ({setCurrentGoal, currentGoal}) => {
 				) : (
 					<CommonPrevNextButton right={true} nextClick={nextScreen} size={50} />
 				)}
-				<CommonHomeButton click={gotoHome} />
+				<CommonHomeButton
+					click={gotoHome}
+					BackHandle={true}
+					normalBack={true}
+					clickforBack={gotoHome}
+				/>
 			</LinearGradient>
 			{/* </ImageBackground> */}
 		</View>

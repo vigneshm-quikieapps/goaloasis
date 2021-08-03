@@ -304,6 +304,7 @@ const DailyTimeline = ({
 				iconColor={"#E4AB76"}
 				size={40}
 				click={() => navigation.navigate("mygoals")}
+				doNotWorkBackFunctionality={true}
 			/>
 		</ImageBackground>
 	)

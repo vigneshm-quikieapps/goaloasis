@@ -107,6 +107,8 @@ const SixthMilestone = ({clickedGoal}) => {
 					navigation.navigate("particulargoal")
 				}}
 				size={44}
+				BackHandle={true}
+				clickforBack={() => navigation.navigate("particulargoal")}
 			/>
 		</ImageBackground>
 	)

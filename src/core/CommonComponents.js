@@ -1,6 +1,7 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
-import {Alert, StyleSheet, Text, TouchableOpacity, View} from "react-native"
+
+import {Alert, StyleSheet, Text, TouchableOpacity, View, BackHandler} from "react-native"
 import {CommonStyles, ColorConstants, sizeConstants, height} from "./styles"
 import colors from "../../colors"
 import Spinner from "./Spinner"
@@ -115,13 +116,39 @@ export const convertToDateString = (date) => {
 
 export const CommonHomeButton = ({
 	click = () => {},
+	clickforBack = () => {},
 	size = 44,
 	bgColor = ColorConstants.white,
 	iconColor = ColorConstants.lighterBlue,
 	iconName = "home",
+	BackHandle = false,
+	normalBack = false,
+	doNotWorkBackFunctionality = false,
 }) => {
 	const [scale, setScale] = useState(1)
-
+	if (BackHandle) {
+		console.log("back button working")
+		const backActionHandler = () => {
+			if (normalBack) {
+				clickforBack()
+				return true
+			} else {
+				Alert.alert("Alert!", "Are you sure you want to go Back?", [
+					{
+						text: "Cancel",
+						onPress: () => null,
+						style: "cancel",
+					},
+					{text: "YES", onPress: () => clickforBack()},
+				])
+				return true
+			}
+		}
+		useEffect(() => {
+			BackHandler.addEventListener("hardwareBackPress", backActionHandler)
+			return () => BackHandler.removeEventListener("hardwareBackPress", backActionHandler)
+		}, [])
+	}
 	return (
 		<View style={[CommonStyles.homeButtonContainer]}>
 			<TouchableOpacity
@@ -138,8 +165,19 @@ export const CommonHomeButton = ({
 					setScale(0.9)
 				}}
 				onPressOut={() => {
-					setScale(1)
-					click()
+					if (doNotWorkBackFunctionality) {
+						click()
+					} else {
+						setScale(1)
+						Alert.alert("Alert!", "Are you sure you want to go Home?", [
+							{
+								text: "Cancel",
+								onPress: () => null,
+								style: "cancel",
+							},
+							{text: "YES", onPress: () => click()},
+						])
+					}
 				}}
 			>
 				<MaterialCommunityIcons name={iconName} size={size} color={iconColor} />

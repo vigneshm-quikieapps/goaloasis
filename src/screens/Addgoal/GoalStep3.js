@@ -130,7 +130,12 @@ const GoalStep3 = ({setCurrentGoal, currentGoal, setShowLoader, loading, setHide
 					iconLeftColor={ColorConstants.lighterBlue}
 					iconRightColor={ColorConstants.lighterBlue}
 				/>
-				<CommonHomeButton click={gotoHome} />
+				<CommonHomeButton
+					click={gotoHome}
+					normalBack={true}
+					BackHandle={true}
+					clickforBack={gotoHome}
+				/>
 			</LinearGradient>
 		</View>
 	)

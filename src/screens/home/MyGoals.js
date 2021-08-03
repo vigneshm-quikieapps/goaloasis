@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useState} from "react"
+import React, {useEffect, useContext, useState, useFo} from "react"
 import {
 	StyleSheet,
 	Text,
@@ -9,6 +9,9 @@ import {
 	ScrollView,
 	Dimensions,
 	TouchableWithoutFeedback,
+	BackHandler,
+	TextInput,
+	Alert,
 } from "react-native"
 import {MaterialCommunityIcons, AntDesign} from "@expo/vector-icons"
 import {FontAwesome5} from "@expo/vector-icons"
@@ -40,6 +43,8 @@ import {ColorConstants, CommonStyles, forGoals, sizeConstants} from "./../../cor
 import firestore from "@react-native-firebase/firestore"
 import {CommonHomeButton} from "../../core/CommonComponents"
 const Height = Dimensions.get("window").height
+import PushNotification, {Importance} from "react-native-push-notification"
+
 const MyGoals = ({
 	testData,
 	setTestData,
@@ -120,6 +125,7 @@ const MyGoals = ({
 	console.log("loadinggggggg", loading)
 	// console.log("TODAYS DATE", today)
 	let count = 0
+
 	const getTodaysTasks = () => {
 		for (let i = 0; i < allGoals.length; i++) {
 			for (let j = 0; j < allGoals[i].goalMilestone.length; j++) {
@@ -166,24 +172,7 @@ const MyGoals = ({
 			console.error(error)
 		}
 	}
-	// const [checkIfAsyncIsEmpty, setcheckIfAsyncIsEmpty] = useState([])
 
-	// const checking = async () => {
-	// 	try {
-	// 		let keys = await AsyncStorage.getAllKeys()
-	// 		keys = keys.filter(
-	// 			(item) =>
-	// 				item !== "FirsttimeIndividual" &&
-	// 				item !== "FirsttimeTaskTutorial" &&
-	// 				item !== "FirsttimeTimelineFlow" &&
-	// 				item !== "Firsttime"
-	// 		)
-	// 		setcheckIfAsyncIsEmpty(keys)
-	// 	} catch (error) {
-	// 		console.log(error)
-	// 	}
-	// }
-	// console.log("CHECKINGGGG", checkIfAsyncIsEmpty.length)
 	useEffect(() => {
 		setShowLoader(true)
 
@@ -206,7 +195,101 @@ const MyGoals = ({
 
 		return parseInt(percentCompleted.toFixed(0))
 	}
-	console.log("allGoals", allGoals.length)
+	// HANDLING BACK BUTTON
+	const backActionHandler = () => {
+		Alert.alert("Alert!", "Are you sure you want to exit the App?", [
+			{
+				text: "Cancel",
+				onPress: () => null,
+				style: "cancel",
+			},
+			{text: "YES", onPress: () => BackHandler.exitApp()},
+		])
+		return true
+	}
+	useEffect(() => {
+		// Add event listener for hardware back button press on Android
+		BackHandler.addEventListener("hardwareBackPress", backActionHandler)
+
+		return () =>
+			// clear/remove event listener
+			BackHandler.removeEventListener("hardwareBackPress", backActionHandler)
+	}, [])
+
+	useEffect(() => {
+		PushNotification.localNotificationSchedule({
+			message: `You have ${taskCounter} task to complete Today`,
+			date: new Date(Date.now() + 60 * 1000), // in 60 secs
+			allowWhileIdle: false, // (optional) set notification to work while on doze, default: false
+
+			/* Android Only Properties */
+			repeatTime: 5, // (optional) Increment of configured repeateType. Check 'Repeating Notifications' section for more info.
+		})
+		PushNotification.createChannel(
+			{
+				channelId: "com.goal-oasis", // (required)
+				channelName: "My channel", // (required)
+				channelDescription: "A channel to categorise your notifications", // (optional) default: undefined.
+				playSound: false, // (optional) default: true
+				soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+				importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+				vibrate: true, // (optional) default: true. Creates the default vibration patten if true.import TodaysTask from './../TodaysTask/TodaysTask';
+			},
+			(created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+		)
+		PushNotification.configure({
+			channelId: "com.goal-oasis",
+			// (optional) Called when Token is generated (iOS and Android)
+			onRegister: function (token) {
+				console.log("TOKEN:", token)
+			},
+
+			// (required) Called when a remote is received or opened, or local notification is opened
+			onNotification: function (notification) {
+				console.log("NOTIFICATION:", notification)
+
+				// process the notification
+
+				// (required) Called when a remote is received or opened, or local notification is opened
+				// notification.finish(PushNotificationIOS.FetchResult.NoData)
+			},
+
+			// (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
+			onAction: function (notification) {
+				console.log("ACTION:", notification.action)
+				console.log("NOTIFICATION:", notification)
+			},
+
+			onRegistrationError: function (err) {
+				console.error(err.message, err)
+			},
+
+			permissions: {
+				alert: true,
+				badge: true,
+				sound: true,
+			},
+			popInitialNotification: true,
+
+			requestPermissions: true,
+		})
+		PushNotification.popInitialNotification((notification) => {
+			console.log("Initial Notification", notification)
+		})
+		testFunction()
+	}, [])
+	const testFunction = () => {
+		PushNotification.localNotification({
+			/* Android Only Properties */
+			channelId: "com.goal-oasis", // (required) channelId, if the channel doesn't exist, notification will not trigger.
+			ticker: "My Notification Ticker", // (optional)
+
+			/* iOS and Android properties */
+			id: 0, // (optional) Valid unique 32 bit integer specified as string. default: Autogenerated Unique ID
+			title: "Todays Tasks", // (optional)
+			message: `You have ${taskCounter} task to Complete by Today, ALL THE BEST`, // (required)
+		})
+	}
 	return (
 		<StatusBarScreen style={styles.container}>
 			<TouchableOpacity
@@ -336,6 +419,7 @@ const MyGoals = ({
 				// click={goToProblem}
 				iconColor={ColorConstants.white}
 				bgColor={ColorConstants.lighterBlue}
+				doNotWorkBackFunctionality={true}
 			/>
 		</StatusBarScreen>
 	)

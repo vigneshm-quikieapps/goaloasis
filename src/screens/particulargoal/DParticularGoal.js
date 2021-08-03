@@ -95,14 +95,15 @@ const DParticularGoals = ({clickedGoal}) => {
 						add a milestone and get on your way.
 					</Text>
 				</View>
-
-				{/* <View style={CommonStyles.bottomBtnContainer}>
-					<TouchableOpacity style={CommonStyles.bottomBtn} onPress={goBack}>
-						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
-					</TouchableOpacity>
-				</View> */}
 			</View>
-			<CommonHomeButton click={goBack} />
+
+			<CommonHomeButton
+				click={goBack}
+				doNotWorkBackFunctionality={true}
+				BackHandle={true}
+				normalBack={true}
+				clickforBack={() => navigation.navigate("mygoals")}
+			/>
 		</StatusBarScreen>
 	)
 }

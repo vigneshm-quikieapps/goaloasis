@@ -103,6 +103,9 @@ const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 					navigation.navigate("mygoals")
 				}}
 				size={44}
+				BackHandle={true}
+				normalBack={true}
+				clickforBack={() => navigation.goBack()}
 			/>
 		</ImageBackground>
 	)

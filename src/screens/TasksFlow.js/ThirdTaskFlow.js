@@ -236,7 +236,12 @@ const ThirdTaskFlow = ({
 					/>
 				</View>
 			</ScrollView>
-			<CommonHomeButton click={() => navigation.navigate("particulargoal")} />
+			<CommonHomeButton
+				click={() => navigation.navigate("particulargoal")}
+				BackHandle={true}
+				clickforBack={() => navigation.goBack()}
+				normalBack={true}
+			/>
 		</StatusBarScreen>
 	)
 }

@@ -238,6 +238,8 @@ const AllMilestonesScreen = (props) => {
 					iconColor={ColorConstants.white}
 					click={() => navigation.navigate("mygoals")}
 					bgColor={ColorConstants.lighterBlue}
+					BackHandle={true}
+					clickforBack={() => navigation.navigate("particulargoal")}
 				/>
 			</View>
 			<RBSheet

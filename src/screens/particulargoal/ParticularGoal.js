@@ -425,6 +425,10 @@ const ParticularGoal = (props) => {
 				click={() => {
 					navigation.navigate("mygoals")
 				}}
+				doNotWorkBackFunctionality={true}
+				BackHandle={true}
+				normalBack={true}
+				clickforBack={() => navigation.navigate("mygoals")}
 			/>
 		</StatusBarScreen>
 	)

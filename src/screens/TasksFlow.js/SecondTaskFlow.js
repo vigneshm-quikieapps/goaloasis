@@ -169,7 +169,12 @@ const SecondTaskFlow = ({
 				/>
 			</View>
 
-			<CommonHomeButton click={() => navigation.navigate("particulargoal")} />
+			<CommonHomeButton
+				click={() => navigation.navigate("particulargoal")}
+				BackHandle={true}
+				normalBack={true}
+				clickforBack={() => navigation.goBack()}
+			/>
 		</ImageBackground>
 	)
 }

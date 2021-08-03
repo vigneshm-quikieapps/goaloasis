@@ -190,7 +190,14 @@ const FirstMilestone = ({
 					<CommonPrevNextButton right={true} nextClick={nextScreen} size={50} bottom={0} />
 				)}
 
-				<CommonHomeButton click={handleHomeClick} size={44} />
+				<CommonHomeButton
+					click={handleHomeClick}
+					size={44}
+					pressedHome={true}
+					BackHandle={true}
+					normalBack={true}
+					clickforBack={() => navigation.goBack()}
+				/>
 			</View>
 		</ImageBackground>
 	)
