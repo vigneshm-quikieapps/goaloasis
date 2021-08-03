@@ -12,11 +12,11 @@ import {
 	setisFirstTimeIndividual,
 } from "./../../utils/asyncStorage"
 import {StatusBar} from "expo-status-bar"
-import {ColorConstants, CommonStyles, sizeConstants} from "../../core/styles"
+import {ColorConstants, CommonStyles, sizeConstants} from "../../core/constants"
 import AppButton from "./AppButton"
 import {connect} from "react-redux"
 import Swipeout from "rc-swipeout"
-import {CommonHomeButton} from "../../core/CommonComponents"
+import {CommonHomeButton} from "../../components/CommonComponents"
 
 const AllMilestonesScreen = (props) => {
 	const [DATA, setData] = useState([])

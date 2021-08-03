@@ -1,7 +1,6 @@
 import {addGoalDataToAsyncStorage, deleteGoalDataFromAsyncStorage} from "./../utils/asyncStorage"
 import firestore from "@react-native-firebase/firestore"
-import {firebaseConstants} from "./../core/styles"
-import {setAllGoals} from "../redux/actions"
+import {firebaseConstants} from "../core/constants"
 
 const {GOALS_COLLECTION} = firebaseConstants
 

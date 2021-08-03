@@ -2,8 +2,7 @@ import {Button, Modal, TouchableOpacity, View, Text, ImageBackground} from "reac
 import React, {useEffect, useState, useContext} from "react"
 import LottieView from "lottie-react-native"
 import {connect} from "react-redux"
-import {commonImages} from "../core/styles"
-import {ColorConstants} from "./../core/styles"
+import {ColorConstants} from "./../core/constants"
 
 const SplashScreen = (props) => {
 	useEffect(() => {

@@ -4,18 +4,18 @@ import {useNavigation} from "@react-navigation/native"
 import colors from "../../../colors"
 import {Entypo} from "@expo/vector-icons"
 import Constants from "expo-constants"
-import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/styles"
+import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/constants"
 import AppButton from "./../MileStones/AppButton"
 import {
 	CommonHomeButton,
 	CommonPrevNextButton,
 	reoccuringDefaultDailyArray,
-} from "../../core/CommonComponents"
+} from "../../components/CommonComponents"
 import DisableAppButton from "../MileStones/DisableAppButton"
 import {connect} from "react-redux"
 import {addMilestoneToFirestore} from "../../firebase"
 import {setShowLoader, setBooleanFlag, setClickedGoal, setHideLoader} from "../../redux/actions"
-import Spinner from "./../../core/Spinner"
+import Spinner from "./../../components/Spinner"
 
 const SecondTaskFlow = ({
 	setShowLoader,

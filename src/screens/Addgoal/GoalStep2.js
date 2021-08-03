@@ -3,10 +3,10 @@ import {StyleSheet, Text, TouchableOpacity, View, TextInput} from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
-import {ColorConstants, CommonStyles, sizeConstants} from "../../core/styles"
+import {ColorConstants, CommonStyles, sizeConstants} from "../../core/constants"
 import {setCurrentGoal} from "./../../redux/actions"
 import {connect} from "react-redux"
-import {CommonHomeButton, CommonPrevNextButton} from "../../core/CommonComponents"
+import {CommonHomeButton, CommonPrevNextButton} from "../../components/CommonComponents"
 const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 	const navigation = useNavigation()
 	const [description, setDescription] = useState("")

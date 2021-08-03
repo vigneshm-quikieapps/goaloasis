@@ -1,6 +1,6 @@
 import React from "react"
 import {TouchableOpacity, StyleSheet, Text, View} from "react-native"
-import {ColorConstants, sizeConstants} from "./../../core/styles"
+import {ColorConstants, sizeConstants} from "./../../core/constants"
 
 function DisableAppButton({title, onPress, style}) {
 	return (

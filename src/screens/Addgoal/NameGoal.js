@@ -5,11 +5,11 @@ import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {black} from "color-name"
 import GoalStep2 from "./GoalStep2"
-import {CommonStyles, sizeConstants} from "../../core/styles"
+import {CommonStyles, sizeConstants} from "../../core/constants"
 import {setCurrentGoal} from "./../../redux/actions"
 import {connect} from "react-redux"
-import {CommonHomeButton, CommonPrevNextButton} from "../../core/CommonComponents"
-import {ColorConstants} from "./../../core/styles"
+import {CommonHomeButton, CommonPrevNextButton} from "../../components/CommonComponents"
+import {ColorConstants} from "./../../core/constants"
 
 const NameGoal = ({setCurrentGoal, currentGoal}) => {
 	const navigation = useNavigation()

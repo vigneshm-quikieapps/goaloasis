@@ -8,12 +8,13 @@ import {connect} from "react-redux"
 import {updateGoalToFirestore} from "../../firebase"
 import {setClickedGoal, setShowLoader, setHideLoader} from "../../redux/actions"
 
-import Spinner from "./../../core/Spinner"
+import Spinner from "./../../components/Spinner"
+import dayjs from "dayjs"
 
 const EditGoalhelp = ({clickedGoal, setClickedGoal, setShowLoader, loading, setHideLoader}) => {
 	console.log(clickedGoal)
 	const [goalName, setGoalName] = useState(clickedGoal.name)
-	const [targetDate, setTargetDate] = useState(new Date(clickedGoal.targetDate))
+	const [targetDate, setTargetDate] = useState(dayjs(clickedGoal.targetDate))
 
 	const navigation = useNavigation()
 

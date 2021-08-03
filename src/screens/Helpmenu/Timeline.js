@@ -10,13 +10,14 @@ import RBSheet from "react-native-raw-bottom-sheet"
 import {Calendar, LocaleConfig} from "react-native-calendars"
 import DatePicker from "react-native-date-picker"
 import MonthTimeline from "./MonthTimeline"
-import {CommonHomeButton} from "../../core/CommonComponents"
+import {CommonHomeButton} from "../../components/CommonComponents"
 import {connect} from "react-redux"
-import {ColorConstants, sizeConstants} from "../../core/styles"
+import {ColorConstants, commonDateFormat, sizeConstants} from "../../core/constants"
 import {setAllGoals, setClickedGoal, setShowLoader, setHideLoader} from "../../redux/actions"
 import {updateGoalToFirestore} from "../../firebase"
 import AsyncStorage from "@react-native-community/async-storage"
-import Spinner from "../../core/Spinner"
+import Spinner from "../../components/Spinner"
+import dayjs from "dayjs"
 
 const TimelineScreen = ({
 	setShowLoader,
@@ -28,14 +29,13 @@ const TimelineScreen = ({
 }) => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
-	const [clickedGoalDate, setClickedGoalDate] = useState(new Date())
+	const [clickedGoalDate, setClickedGoalDate] = useState(dayjs())
 	const [clickedGoalName, setClickedGoalName] = useState("")
 	const [allGoalsforTimeline, setAllGoalsforTimeline] = useState([])
 
 	useEffect(() => {
 		let timelineData = allGoals.map((goal) => {
-			let date = new Date(goal.targetDate)
-			var year = date.getFullYear()
+			let year = dayjs(goal.targetDate).year()
 
 			return {
 				title: goal.name,
@@ -137,7 +137,7 @@ const TimelineScreen = ({
 						setClickedGoalName(item.title)
 						var currentGoal = allGoals.find((goal) => goal.name == item.title)
 						setClickedGoal(currentGoal)
-						setClickedGoalDate(new Date(currentGoal.targetDate))
+						setClickedGoalDate(dayjs(currentGoal.targetDate))
 						refRBSheet.current.open()
 					}}
 				/>
@@ -181,7 +181,7 @@ const TimelineScreen = ({
 							locale="en"
 							fadeToColor="none"
 							dividerHeight={0}
-							minimumDate={new Date()}
+							minimumDate={dayjs()}
 						/>
 					</View>
 					<View style={styles.cnfrmBtnContainer}>

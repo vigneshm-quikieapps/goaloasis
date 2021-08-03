@@ -9,12 +9,16 @@ import colors from "../../../colors"
 
 import {Entypo} from "@expo/vector-icons"
 import Constants from "expo-constants"
-import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/styles"
+import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/constants"
 import StatusBarScreen from "./StatusBarScreen"
 import {addNewMilestone, EditNewMilestone, setClickedGoal} from "./../../redux/actions"
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
 import {connect} from "react-redux"
-import {CommonHomeButton, CommonNextButton, CommonPrevNextButton} from "../../core/CommonComponents"
+import {
+	CommonHomeButton,
+	CommonNextButton,
+	CommonPrevNextButton,
+} from "../../components/CommonComponents"
 
 const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 	const navigation = useNavigation()

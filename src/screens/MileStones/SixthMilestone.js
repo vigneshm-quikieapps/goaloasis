@@ -8,20 +8,21 @@ import colors from "../../../colors"
 import {Entypo} from "@expo/vector-icons"
 
 import Constants from "expo-constants"
-import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/styles"
+import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/constants"
 import {
 	CommonHomeButton,
 	CommonNextButton,
 	CommonPrevButton,
 	CommonPrevNextButton,
-} from "../../core/CommonComponents"
+} from "../../components/CommonComponents"
 import {connect} from "react-redux"
 import {verticalScale} from "react-native-size-matters"
+import dayjs from "dayjs"
 const SixthMilestone = ({clickedGoal}) => {
 	const navigation = useNavigation()
 	let temp = clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].milestone
 	const [milestone, setMilestone] = useState(temp)
-	const [date, setDate] = useState(new Date())
+	const [date, setDate] = useState(dayjs())
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 
 	return (

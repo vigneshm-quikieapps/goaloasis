@@ -9,7 +9,7 @@ import {MaterialCommunityIcons, Fontisto, SimpleLineIcons} from "@expo/vector-ic
 import Constants from "expo-constants"
 import {connect} from "react-redux"
 import {setFirstTimeForTimeLine} from "../redux/actions"
-import {CommonStyles, sizeConstants} from "./../core/styles"
+import {CommonStyles, sizeConstants} from "./../core/constants"
 
 const TimelineFlowSlider = ({data, setFirstTimeForTimeLine}) => {
 	const navigation = useNavigation()

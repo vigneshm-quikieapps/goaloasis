@@ -7,14 +7,15 @@ import AppButton from "./AppButton"
 import colors from "../../../colors"
 import Constants from "expo-constants"
 import RBSheet from "react-native-raw-bottom-sheet"
-import {commonImages} from "../../core/styles"
-import {CommonHomeButton} from "../../core/CommonComponents"
+import {commonImages} from "../../core/constants"
+import {CommonHomeButton} from "../../components/CommonComponents"
+import dayjs from "dayjs"
 
 const SecondAfterModal = () => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
 
-	const [date, setDate] = useState(new Date())
+	const [date, setDate] = useState(dayjs())
 	const tip = () => <Text style={{fontWeight: "bold"}}>Tip:</Text>
 
 	return (

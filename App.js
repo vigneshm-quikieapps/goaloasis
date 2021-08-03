@@ -1,12 +1,8 @@
-import {StatusBar} from "expo-status-bar"
 import React from "react"
 import Routing from "./Routing"
 import AuthState from "./src/context/auth/AuthState"
-
 import store from "./src/redux/store"
 import {Provider} from "react-redux"
-import SplashScreen from "./src/assets/splashScreen"
-import Spinner from "./src/core/Spinner"
 
 export default function App() {
 	return (
@@ -14,7 +10,6 @@ export default function App() {
 			<AuthState>
 				<Routing />
 			</AuthState>
-			{/* <Spinner /> */}
 		</Provider>
 	)
 }

@@ -3,15 +3,15 @@ import {StyleSheet, Text, View, TouchableOpacity, FlatList, Alert} from "react-n
 import {Feather} from "@expo/vector-icons"
 import Swipeout from "rc-swipeout"
 import {MaterialCommunityIcons, AntDesign, MaterialIcons, Octicons} from "@expo/vector-icons"
-import {ColorConstants, sizeConstants} from "./../core/styles"
+import {ColorConstants, commonDateFormat, sizeConstants} from "../core/constants"
 import {useNavigation} from "@react-navigation/native"
 import {setClickedGoal, setClickedMilestone, setShowLoader, setHideLoader} from "./../redux/actions"
 import {LongPressGestureHandler, State} from "react-native-gesture-handler"
 
 import {connect} from "react-redux"
 import {addMilestoneToFirestore} from "./../firebase/index"
-import {convertToDateString} from "../core/CommonComponents"
 import {SnoozeIcon} from "../assets/customIcons"
+import dayjs from "dayjs"
 
 const MilestoneCards = ({
 	data,
@@ -76,6 +76,7 @@ const MilestoneCards = ({
 			{
 				text: "Yes",
 				onPress: () => {
+					setShowLoader(true)
 					let filteredMilestoneArr = clickedGoal.goalMilestone.filter(
 						(mile) => mile.milestone != milestoneName
 					)
@@ -83,13 +84,15 @@ const MilestoneCards = ({
 						...clickedGoal,
 						goalMilestone: filteredMilestoneArr,
 					}
-					setShowLoader(true)
 
 					addMilestoneToFirestore(clickedGoal, filteredMilestoneArr, () => {
 						setHideLoader(false)
 
 						setClickedGoal(updatedObj)
-						navigation.navigate("particulargoal")
+						let milesCount = updatedObj.goalMilestone.length
+						milesCount
+							? navigation.navigate("particulargoal")
+							: navigation.navigate("DParticularGoal")
 					})
 				},
 			},
@@ -113,7 +116,7 @@ const MilestoneCards = ({
 		])
 	}
 	const onLongPress = (event, name) => {
-		if (event.nativeEvent.state === State.ACTIVE) {
+		if (event === "allTasksCompleted" || event.nativeEvent.state === State.ACTIVE) {
 			// clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].isCompleted = true
 
 			let newMilestone = clickedGoal.goalMilestone.map((item) => {
@@ -186,12 +189,6 @@ const MilestoneCards = ({
 	}
 	const [upDown, setUpDown] = useState(false)
 
-	// if (fromIndividual !== null && fromIndividual !== undefined) {
-	// 	data = fromIndividual[fromIndividual.length - 1]
-	// if (fromParticularData !== null && fromParticularData !== undefined) {
-	// 	data = fromParticularData[fromParticularData.length - 1]
-	// }
-
 	const emptyComponent = () => {
 		return (
 			<View style={[styles.accordian, {alignSelf: "flex-end"}]}>
@@ -202,7 +199,7 @@ const MilestoneCards = ({
 		)
 	}
 
-	var milestoneDate = data ? convertToDateString(new Date(data.date)) : ""
+	var milestoneDate = data ? dayjs(data.date).format(commonDateFormat) : ""
 	let completedTasks =
 		data &&
 		data.taskData &&
@@ -211,7 +208,16 @@ const MilestoneCards = ({
 	let completedTaskCount = completedTasks && completedTasks.length
 	let totalTasks = data && data.taskData && data.taskData.length
 
-	useEffect(() => {}, [clickedGoal])
+	useEffect(() => {
+		if (data && !data.isCompleted) {
+			var crntMile = clickedGoal.goalMilestone.find((mile) => mile.milestone == data.milestone)
+			var totalTaskCount = crntMile && crntMile.taskData.length
+			var completedTasks = crntMile && crntMile.taskData.filter((tsk) => tsk.isCompleted == true)
+			if (totalTaskCount && completedTasks && totalTaskCount === completedTasks.length) {
+				onLongPress("allTasksCompleted", crntMile.milestone)
+			}
+		}
+	}, [clickedGoal])
 	return (
 		<View
 			style={{
@@ -294,7 +300,7 @@ const MilestoneCards = ({
 					}}
 					ListEmptyComponent={emptyComponent}
 					renderItem={(item) => {
-						let dateStr = convertToDateString(new Date(item.item.date))
+						let dateStr = dayjs(item.item.date).format(commonDateFormat)
 						let bottomItem = item.item.reoccuring
 							? item.item.reoccuring.reoccuringType == "Daily"
 								? "Reoccuring Daily"

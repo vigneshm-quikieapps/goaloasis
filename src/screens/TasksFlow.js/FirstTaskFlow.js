@@ -8,13 +8,19 @@ import {
 	ScrollView,
 	ImageBackground,
 } from "react-native"
-import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "./../../core/styles"
+import {
+	ColorConstants,
+	commonDateFormat,
+	commonImages,
+	CommonStyles,
+	sizeConstants,
+} from "./../../core/constants"
 
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {Entypo} from "@expo/vector-icons"
 
-import {Calendar} from "react-native-calendars"
+import {Calendar, LocaleConfig} from "react-native-calendars"
 import StatusBarScreen from "./../MileStones/StatusBarScreen"
 import {
 	addNewMilestone,
@@ -26,12 +32,16 @@ import {
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
 import {connect} from "react-redux"
 import {
-	checkDate,
+	calendarLocale,
 	CommonHomeButton,
 	CommonPrevNextButton,
 	CustomDayComponentForCalendar,
 	reoccuringDefaultDailyArray,
-} from "../../core/CommonComponents"
+} from "../../components/CommonComponents"
+import dayjs from "dayjs"
+
+LocaleConfig.locales["en"] = calendarLocale
+LocaleConfig.defaultLocale = "en"
 
 const FirstTaskFlow = ({
 	setTaskFlowData,
@@ -47,7 +57,7 @@ const FirstTaskFlow = ({
 	}, [])
 	const navigation = useNavigation()
 	const [taskName, setTaskName] = useState("")
-	const [clickedDate, setDate] = useState(new Date())
+	const [clickedDate, setDate] = useState(dayjs().format(commonDateFormat))
 
 	const nextScreen = () => {
 		navigation.navigate("secondtaskflow", {
@@ -97,8 +107,8 @@ const FirstTaskFlow = ({
 						</View>
 
 						<Calendar
-							current={new Date()}
-							minDate={new Date()}
+							current={dayjs().format(commonDateFormat)}
+							minDate={dayjs().format(commonDateFormat)}
 							hideArrows={false}
 							hideExtraDays={true}
 							disableMonthChange={false}

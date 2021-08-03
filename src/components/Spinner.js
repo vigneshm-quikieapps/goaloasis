@@ -3,7 +3,7 @@ import {View, ActivityIndicator, StyleSheet, Modal} from "react-native"
 import {connect} from "react-redux"
 import {setShowLoader} from "../redux/actions"
 import {setHideLoader} from "./../redux/actions"
-import {ColorConstants} from "./styles"
+import {ColorConstants} from "./../core/constants"
 
 const Spinner = ({size, loading, setHideLoader, setShowLoader, style}) => {
 	return (

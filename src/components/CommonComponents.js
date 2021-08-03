@@ -1,11 +1,29 @@
 import React, {useState} from "react"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {Alert, StyleSheet, Text, TouchableOpacity, View} from "react-native"
-import {CommonStyles, ColorConstants, sizeConstants, height} from "./styles"
+import {
+	CommonStyles,
+	ColorConstants,
+	sizeConstants,
+	height,
+	commonDataFormat,
+	commonDateFormat,
+} from "../core/constants"
 import colors from "../../colors"
-import Spinner from "./Spinner"
+import dayjs from "dayjs"
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore"
+dayjs.extend(isSameOrBefore)
 
 export const reoccuringDefaultDailyArray = [0, 1, 2, 3, 4, 5, 6]
+export const dayNames = [
+	"Sunday",
+	"Monday",
+	"Tuesday",
+	"Wednesday",
+	"Thursday",
+	"Friday",
+	"Saturday",
+]
 export const weekArray = ["S", "M", "T", "W", "T", "F", "S"]
 export const monthNames = [
 	"January",
@@ -35,82 +53,24 @@ export const monthNamesShort = [
 	"Nov",
 	"Dec",
 ]
-
-export const addDays = (date, noOfdays) => {
-	var newDate = new Date(date)
-	newDate.setDate(newDate.getDate() + noOfdays)
-	return newDate
+export const calendarLocale = {
+	monthNames: monthNames,
+	monthNamesShort: monthNamesShort,
+	dayNames: dayNames,
+	dayNamesShort: weekArray,
 }
 
 export const getAllDatesBetween = (startDate, endDate) => {
+	var tempDate = startDate
+	var targetDate = endDate
+	let isSmall = dayjs(tempDate).isSameOrBefore(targetDate)
 	let datesArr = []
-	var tempDate = new Date(startDate)
-	var targetDate = new Date(endDate)
-
-	while (
-		checkDate.compare(tempDate, targetDate) == -1 ||
-		checkDate.compare(tempDate, targetDate) == 0
-	) {
-		datesArr.push(convertToDateString(new Date(tempDate)))
-		tempDate = addDays(tempDate, 1)
+	while (isSmall) {
+		datesArr.push(dayjs(tempDate).format(commonDateFormat))
+		tempDate = dayjs(tempDate).add(1, "day")
+		isSmall = dayjs(tempDate).isSameOrBefore(targetDate)
 	}
 	return datesArr
-}
-
-export const checkDate = {
-	convert: function (d) {
-		// Converts the date in d to a date-object. The input can be:
-		//   a date object: returned without modification
-		//  an array      : Interpreted as [year,month,day]. NOTE: month is 0-11.
-		//   a number     : Interpreted as number of milliseconds
-		//                  since 1 Jan 1970 (a timestamp)
-		//   a string     : Any format supported by the javascript engine, like
-		//                  "YYYY/MM/DD", "MM/DD/YYYY", "Jan 31 2009" etc.
-		//  an object     : Interpreted as an object with year, month and date
-		//                  attributes.  **NOTE** month is 0-11.
-		return d.constructor === Date
-			? d
-			: d.constructor === Array
-			? new Date(d[0], d[1], d[2])
-			: d.constructor === Number
-			? new Date(d)
-			: d.constructor === String
-			? new Date(d)
-			: typeof d === "object"
-			? new Date(d.year, d.month, d.date)
-			: NaN
-	},
-	compare: function (a, b) {
-		// Compare two dates (could be of any type supported by the convert
-		// function above) and returns:
-		//  -1 : if a < b
-		//   0 : if a = b
-		//   1 : if a > b
-		// NaN : if a or b is an illegal date
-		// NOTE: The code inside isFinite does an assignment (=).
-		return isFinite((a = this.convert(a).valueOf())) && isFinite((b = this.convert(b).valueOf()))
-			? (a > b) - (a < b)
-			: NaN
-	},
-	inRange: function (d, start, end) {
-		// Checks if date in d is between dates in start and end.
-		// Returns a boolean or NaN:
-		//    true  : if d is between start and end (inclusive)
-		//    false : if d is before start or after end
-		//    NaN   : if one or more of the dates is illegal.
-		// NOTE: The code inside isFinite does an assignment (=).
-		return isFinite((d = this.convert(d).valueOf())) &&
-			isFinite((start = this.convert(start).valueOf())) &&
-			isFinite((end = this.convert(end).valueOf()))
-			? start <= d && d <= end
-			: NaN
-	},
-}
-
-export const convertToDateString = (date) => {
-	let month = date.getMonth() + 1
-	let day = date.getDate()
-	return `${date.getFullYear()}-${month < 10 ? "0" + month : month}-${day < 10 ? "0" + day : day}`
 }
 
 export const CommonHomeButton = ({
@@ -231,8 +191,8 @@ export const CommonPrevNextButton = ({
 }
 
 export const CustomDayComponentForCalendar = ({clickedDate, date, state, dayClick, marking}) => {
-	let today = convertToDateString(new Date())
-	let selectedDate = convertToDateString(new Date(clickedDate))
+	let today = dayjs().format(commonDateFormat)
+	let selectedDate = dayjs(clickedDate).format(commonDateFormat)
 	let isMarked = marking && marking.marked
 	let isStart = marking && marking.start
 	let isEnd = marking && marking.end

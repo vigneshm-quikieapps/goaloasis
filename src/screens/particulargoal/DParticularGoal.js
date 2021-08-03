@@ -6,15 +6,18 @@ import ProgressCircle from "react-native-progress-circle"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import RBBottomSheet from "../MileStones/RBBottomSheet"
 import {connect} from "react-redux"
-import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/styles"
+import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/constants"
 import {moderateScale, scale, verticalScale} from "react-native-size-matters"
-import {CommonHomeButton} from "../../core/CommonComponents"
+import {CommonHomeButton} from "../../components/CommonComponents"
 
 const DParticularGoals = ({clickedGoal}) => {
 	const navigation = useNavigation()
 
 	const goBack = () => {
 		navigation.goBack()
+	}
+	const goHome = () => {
+		navigation.navigate("mygoals")
 	}
 	return (
 		<StatusBarScreen style={styles.container}>
@@ -102,7 +105,7 @@ const DParticularGoals = ({clickedGoal}) => {
 					</TouchableOpacity>
 				</View> */}
 			</View>
-			<CommonHomeButton click={goBack} />
+			<CommonHomeButton click={goHome} />
 		</StatusBarScreen>
 	)
 }

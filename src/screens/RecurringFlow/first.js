@@ -6,8 +6,12 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import RBSheet from "react-native-raw-bottom-sheet"
 import SwitchSelector from "react-native-switch-selector"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
-import {CommonStyles, sizeConstants} from "../../core/styles"
-import {CommonHomeButton, reoccuringDefaultDailyArray, weekArray} from "../../core/CommonComponents"
+import {CommonStyles, sizeConstants} from "../../core/constants"
+import {
+	CommonHomeButton,
+	reoccuringDefaultDailyArray,
+	weekArray,
+} from "../../components/CommonComponents"
 import {setClickedGoal} from "./../../redux/actions"
 import {connect} from "react-redux"
 

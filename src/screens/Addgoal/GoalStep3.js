@@ -6,13 +6,14 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import DatePicker from "react-native-date-picker"
 import colors from "../../../colors"
 import AsyncStorage from "@react-native-community/async-storage"
-import {ColorConstants, CommonStyles, forGoals} from "../../core/styles"
+import {ColorConstants, CommonStyles, forGoals} from "../../core/constants"
 import firestore from "@react-native-firebase/firestore"
 import {setCurrentGoal, setHideLoader, setShowLoader} from "./../../redux/actions"
 import {addGoalToFirestore} from "./../../firebase"
 import {connect} from "react-redux"
-import {CommonHomeButton, CommonPrevNextButton} from "../../core/CommonComponents"
-import Spinner from "../../core/Spinner"
+import {CommonHomeButton, CommonPrevNextButton} from "../../components/CommonComponents"
+import Spinner from "../../components/Spinner"
+import dayjs from "dayjs"
 const colorArray = Object.values(forGoals)
 
 const GoalStep3 = ({setCurrentGoal, currentGoal, setShowLoader, loading, setHideLoader}) => {
@@ -42,7 +43,7 @@ const GoalStep3 = ({setCurrentGoal, currentGoal, setShowLoader, loading, setHide
 			setCurrentGoal(currentGoalObj)
 		})
 	}
-	const [date, setDate] = useState(new Date())
+	const [date, setDate] = useState(dayjs())
 
 	// TODO
 	console.log("LOADING", loading)
@@ -87,8 +88,8 @@ const GoalStep3 = ({setCurrentGoal, currentGoal, setShowLoader, loading, setHide
 								locale="en"
 								fadeToColor="none"
 								dividerHeight={0}
-								minimumDate={new Date()}
-								maximumDate={new Date("2090-01-01")}
+								minimumDate={dayjs()}
+								maximumDate={dayjs("2090-01-01")}
 							/>
 						</View>
 					</View>

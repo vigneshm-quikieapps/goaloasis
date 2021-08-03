@@ -5,7 +5,7 @@ import {useNavigation} from "@react-navigation/native"
 import MilestoneCards from "./MilestoneCards"
 import {connect} from "react-redux"
 import {getClickedGoalFromAsyncStorage} from "../utils/asyncStorage"
-import {sizeConstants, ColorConstants} from "../core/styles"
+import {sizeConstants, ColorConstants} from "../core/constants"
 
 const AllMilestones = ({data, boolean}) => {
 	const [upDown, setUpDown] = useState(false)
