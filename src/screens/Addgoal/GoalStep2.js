@@ -116,7 +116,9 @@ const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 					click={gotoHome}
 					normalBack={true}
 					BackHandle={true}
-					clickforBack={gotoHome}
+					clickforBack={() => {
+						navigation.navigate("addgoal")
+					}}
 				/>
 			</LinearGradient>
 		</View>

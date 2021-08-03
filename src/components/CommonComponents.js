@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
-import {Alert, StyleSheet, Text, TouchableOpacity, View} from "react-native"
+import {Alert, StyleSheet, Text, TouchableOpacity, View, BackHandler} from "react-native"
 import {
 	CommonStyles,
 	ColorConstants,
