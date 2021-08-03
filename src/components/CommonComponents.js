@@ -127,7 +127,6 @@ export const CommonHomeButton = ({
 					if (doNotWorkBackFunctionality) {
 						click()
 					} else {
-						setScale(1)
 						Alert.alert("Alert!", "Are you sure you want to go Home?", [
 							{
 								text: "Cancel",
@@ -137,6 +136,7 @@ export const CommonHomeButton = ({
 							{text: "YES", onPress: () => click()},
 						])
 					}
+					setScale(1)
 				}}
 			>
 				<MaterialCommunityIcons name={iconName} size={size} color={iconColor} />
