@@ -28,3 +28,5 @@ export const HIDE_LOADER = "hideLoader"
 
 // boolean
 export const SET_BOOLEAN_FLAG = "booleanflag"
+
+export const SET_TODAYS_ALL_TASK = "settingTodaysAllTasks"

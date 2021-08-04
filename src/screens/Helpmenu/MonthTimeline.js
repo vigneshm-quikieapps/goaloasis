@@ -12,7 +12,7 @@ import DatePicker from "react-native-date-picker"
 import TimelineScreen from "./Timeline"
 import {CommonHomeButton, monthNames} from "../../components/CommonComponents"
 import {connect} from "react-redux"
-import {ColorConstants, sizeConstants} from "../../core/constants"
+import {ColorConstants, commonDateFormat, CommonStyles, sizeConstants} from "../../core/constants"
 import {
 	setAllGoals,
 	setShowLoader,
@@ -137,32 +137,17 @@ const MonthTimeline = ({
 					Monthly Timeline
 				</Text>
 				<Timeline
-					style={styles.list}
+					style={CommonStyles.list}
 					data={allMilestones}
 					circleSize={10}
 					circleColor="#B3855C"
 					lineColor="#B3855C"
-					timeContainerStyle={{minWidth: 52, marginTop: -5}}
-					timeStyle={{
-						textAlign: "center",
-						backgroundColor: "#ff9797",
-						color: "white",
-						padding: 5,
-						borderRadius: 13,
-					}}
-					descriptionStyle={{color: "white"}}
-					options={{
-						style: {paddingTop: 0},
-					}}
+					timeContainerStyle={CommonStyles.timeContainerStyle}
+					timeStyle={CommonStyles.timeStyle}
+					descriptionStyle={[CommonStyles.descriptionStyle, {height: 0}]}
 					separator={false}
-					detailContainerStyle={{
-						marginBottom: 20,
-						paddingLeft: 5,
-						paddingRight: 5,
-						backgroundColor: "#588C8D",
-						borderRadius: 15,
-					}}
-					titleStyle={{color: "white"}}
+					detailContainerStyle={CommonStyles.detailContainerStyle}
+					titleStyle={CommonStyles.titleStyle}
 					columnFormat="two-column"
 					// onEventPress={(item) => alert(`${item.title} at ${item.time}`)}
 					onEventPress={(item) => {
@@ -353,8 +338,8 @@ const styles = StyleSheet.create({
 		marginTop: 30,
 	},
 	list: {
+		paddingVertical: sizeConstants.l,
 		flex: 1,
-		marginTop: 20,
 	},
 	title: {
 		fontSize: 16,

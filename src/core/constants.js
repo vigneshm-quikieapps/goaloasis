@@ -70,6 +70,7 @@ export const sizeConstants = {
 	fourty: verticalScale(40),
 	fourtyMX: moderateScale(40),
 	fourtyFour: verticalScale(44),
+	fourtyFiveX: scale(47),
 	fourtyFive: verticalScale(45),
 	fourtyEight: verticalScale(48),
 	xxxl: verticalScale(50),
@@ -532,7 +533,7 @@ export const CommonStyles = ScaledSheet.create({
 		// justifyContent: "center",
 		// alignItems: "center",
 
-		marginTop: sizeConstants.twentyMX,
+		marginTop: height > 700 ? sizeConstants.l : sizeConstants.xs,
 	},
 
 	doneText: {
@@ -866,6 +867,34 @@ export const CommonStyles = ScaledSheet.create({
 		backgroundColor: "#FDF9F2",
 		opacity: 0.5,
 	},
+
+	// timeline common styles
+
+	list: {
+		paddingVertical: sizeConstants.l,
+		flex: 1,
+	},
+	timeStyle: {
+		textAlign: "center",
+		backgroundColor: "#ff9797",
+		color: ColorConstants.white,
+		padding: 5,
+		marginTop: sizeConstants.s,
+		borderRadius: 13,
+	},
+
+	timeContainerStyle: {minWidth: sizeConstants.xxxl},
+	detailContainerStyle: {
+		marginVertical: sizeConstants.m,
+		paddingHorizontal: sizeConstants.m,
+		backgroundColor: "#588C8D",
+		borderRadius: 15,
+	},
+
+	titleStyle: {color: ColorConstants.white},
+	descriptionStyle: {color: ColorConstants.white},
+
+	// timeline common styles ends
 })
 
 export const firebaseConstants = {

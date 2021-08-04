@@ -33,6 +33,7 @@ import {
 	setAllGoals,
 	setShowLoader,
 	setHideLoader,
+	setTodaysAllTasks,
 } from "./../../redux/actions"
 import {
 	getClickedGoalFromAsyncStorage,
@@ -68,6 +69,7 @@ const MyGoals = ({
 	setShowLoader,
 	setHideLoader,
 	loading,
+	setTodaysAllTasks,
 }) => {
 	const [taskCounter, setTaskCounter] = useState(0)
 
@@ -105,6 +107,7 @@ const MyGoals = ({
 		navigation.navigate("taskTutorialSlide1")
 	}
 	const gotoTodaysTask = () => {
+		getAllTodaysTask()
 		navigation.navigate("todaysTask")
 	}
 
@@ -123,13 +126,12 @@ const MyGoals = ({
 
 	const colorArray = Object.values(forGoals)
 
-	var today = dayjs().format(commonDateFormat)
-
 	console.log("loadinggggggg", loading)
 
 	let count = 0
 
 	const getTodaysTasks = () => {
+		var today = dayjs().format(commonDateFormat)
 		for (let i = 0; i < allGoals.length; i++) {
 			for (let j = 0; j < allGoals[i].goalMilestone.length; j++) {
 				for (let k = 0; k < allGoals[i].goalMilestone[j].taskData.length; k++) {
@@ -149,6 +151,27 @@ const MyGoals = ({
 		}
 	}
 
+	const getAllTodaysTask = () => {
+		let allTodaysTask = []
+		let todayDateStr = dayjs().format(commonDateFormat)
+		allGoals.map((goal) => {
+			if (goal.goalMilestone.length) {
+				goal.goalMilestone.map((mile) => {
+					if (mile.taskData.length) {
+						mile.taskData.map((task) => {
+							let tempDateStr = dayjs(task.date).format(commonDateFormat)
+							if (tempDateStr === todayDateStr) {
+								console.log("task", JSON.stringify(mile), task)
+								allTodaysTask.push(task)
+							}
+						})
+					}
+				})
+			}
+		})
+		setTodaysAllTasks(allTodaysTask)
+		console.log("allGoals", allTodaysTask.length)
+	}
 	useEffect(() => {
 		getTodaysTasks()
 		setTaskCounter(count)
@@ -297,7 +320,7 @@ const MyGoals = ({
 		<StatusBarScreen style={styles.container}>
 			<TouchableOpacity
 				style={CommonStyles.titleContainer1}
-				onPress={!firstTime ? gotoTaskTutorial : null}
+				onPress={!firstTime ? gotoTaskTutorial : gotoTodaysTask}
 			>
 				<View style={{flexDirection: "row"}}>
 					<Text style={[CommonStyles.mainTitle, {marginBottom: sizeConstants.twelve}]}>
@@ -464,6 +487,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setHideLoader: (data) => {
 			dispatch(setHideLoader(data))
+		},
+		setTodaysAllTasks: (arr) => {
+			dispatch(setTodaysAllTasks(arr))
 		},
 	}
 }

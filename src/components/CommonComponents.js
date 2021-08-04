@@ -313,8 +313,8 @@ const styles = StyleSheet.create({
 	},
 
 	markedDateContainer: {
-		height: height <= 700 ? sizeConstants.twentyTwo : sizeConstants.twentySix,
-		width: sizeConstants.fiftyFive,
+		height: height > 700 ? sizeConstants.twentySix : sizeConstants.xxl,
+		width: sizeConstants.fourtyFiveX,
 		borderRadius: 0,
 		justifyContent: "center",
 		alignItems: "center",
@@ -322,8 +322,8 @@ const styles = StyleSheet.create({
 		margin: 0,
 	},
 	startConatainer: {
-		height: height <= 700 ? sizeConstants.twentyTwo : sizeConstants.twentySix,
-		width: sizeConstants.fiftyFive,
+		height: height > 700 ? sizeConstants.twentySix : sizeConstants.xxl,
+		width: sizeConstants.fourtyFiveX,
 		borderRadius: 0,
 		borderWidth: height < 700 ? 1 : 1.5,
 		justifyContent: "center",
@@ -336,8 +336,8 @@ const styles = StyleSheet.create({
 		borderColor: ColorConstants.white,
 	},
 	endContainer: {
-		height: height <= 700 ? sizeConstants.twentyTwo : sizeConstants.twentySix,
-		width: sizeConstants.fiftyFive,
+		height: height > 700 ? sizeConstants.twentySix : sizeConstants.xxl,
+		width: sizeConstants.fourtyFiveX,
 		borderRadius: 0,
 		justifyContent: "center",
 		alignItems: "center",
@@ -355,8 +355,9 @@ const styles = StyleSheet.create({
 		color: ColorConstants.mediumFaintBlue,
 	},
 	dayContainer: {
-		height: height <= 700 ? sizeConstants.twentyTwo : sizeConstants.twentySix,
-		width: height <= 700 ? sizeConstants.twentyTwo : sizeConstants.twentySix,
+		height: height <= 700 ? sizeConstants.twentyFour : sizeConstants.twentySix,
+		width: height <= 700 ? sizeConstants.twentyFour : sizeConstants.twentySix,
+
 		borderRadius: sizeConstants.eightyFive,
 		borderWidth: height < 700 ? 1 : 1.5,
 		borderColor: ColorConstants.transparent,
@@ -375,7 +376,13 @@ const styles = StyleSheet.create({
 	dayText: {
 		textAlign: "center",
 		color: ColorConstants.white,
-		fontSize: height < 700 ? sizeConstants.twelve : sizeConstants.thirteen,
+		fontSize: sizeConstants.thirteen,
+		flex: 1,
+		width: sizeConstants.thirty,
+		alignItems: "center",
+		justifyContent: "center",
+		flexWrap: "nowrap",
+		paddingTop: 1,
 	},
 	todayText: {
 		fontWeight: "bold",
