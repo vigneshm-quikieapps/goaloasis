@@ -2,7 +2,7 @@ import React, {useRef} from "react"
 import {StyleSheet, View, TouchableOpacity, Text} from "react-native"
 import RBSheet from "react-native-raw-bottom-sheet"
 import {useNavigation} from "@react-navigation/native"
-import {sizeConstants} from "../../core/constants"
+import {CommonStyles, sizeConstants} from "../../core/constants"
 import {
 	ScaledSheet,
 	verticalScale,
@@ -28,59 +28,74 @@ const RBBottomSheet = ({name = "MileStone Title", flag = true}) => {
 				</TouchableOpacity>
 			</View>
 
-			<RBSheet
-				height={500}
-				ref={refRBSheet}
-				closeOnDragDown={true}
-				closeOnPressMask={false}
-				customStyles={{
-					wrapper: {
-						backgroundColor: "transparent",
-					},
-					draggableIcon: {
-						backgroundColor: "#000",
-					},
-				}}
-			>
-				<View style={{alignItems: "center", marginTop: 20, width: "100%"}}>
-					<TouchableOpacity
-						style={styles.BottomTouch}
-						onPress={() => {
-							refRBSheet.current.close()
-							navigation.navigate("markcomplete")
+			<View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+				<RBSheet
+					height={470}
+					ref={refRBSheet}
+					closeOnDragDown={true}
+					closeOnPressMask={false}
+					customStyles={{
+						wrapper: {
+							backgroundColor: "transparent",
+							borderRadius: 50,
+						},
+						draggableIcon: {
+							backgroundColor: "#000",
+							borderRadius: 50,
+						},
+						container: {
+							borderTopRightRadius: 40,
+							borderTopLeftRadius: 40,
+						},
+					}}
+				>
+					<View
+						style={{
+							alignItems: "center",
+							justifyContent: "center",
+							marginTop: 20,
+							width: "100%",
 						}}
 					>
-						<Text style={styles.bottomText}>Mark Goal Complete</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={styles.BottomTouch}
-						onPress={() => {
-							refRBSheet.current.close()
-							navigation.navigate("editgoal")
-						}}
-					>
-						<Text style={styles.bottomText}>Edit Goal</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={styles.BottomTouch}
-						onPress={() => {
-							refRBSheet.current.close()
-							navigation.navigate("deletegoal")
-						}}
-					>
-						<Text style={styles.bottomText}>Delete Goal</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={styles.BottomTouch}
-						onPress={() => {
-							refRBSheet.current.close()
-							navigation.navigate("help")
-						}}
-					>
-						<Text style={styles.bottomText}>Tutorial</Text>
-					</TouchableOpacity>
-				</View>
-			</RBSheet>
+						<TouchableOpacity
+							style={styles.BottomTouch}
+							onPress={() => {
+								refRBSheet.current.close()
+								navigation.navigate("markcomplete")
+							}}
+						>
+							<Text style={styles.bottomText}>Mark Goal Complete</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.BottomTouch}
+							onPress={() => {
+								refRBSheet.current.close()
+								navigation.navigate("editgoal")
+							}}
+						>
+							<Text style={styles.bottomText}>Edit Goal</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.BottomTouch}
+							onPress={() => {
+								refRBSheet.current.close()
+								navigation.navigate("deletegoal")
+							}}
+						>
+							<Text style={styles.bottomText}>Delete Goal</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.BottomTouch}
+							onPress={() => {
+								refRBSheet.current.close()
+								navigation.navigate("help")
+							}}
+						>
+							<Text style={styles.bottomText}>Tutorial</Text>
+						</TouchableOpacity>
+					</View>
+				</RBSheet>
+			</View>
 		</View>
 	)
 }
@@ -92,7 +107,7 @@ const styles = StyleSheet.create({
 
 	mainTitle: {
 		color: "#333333",
-		fontSize: 25,
+		fontSize: sizeConstants.twentyX,
 		marginLeft: sizeConstants.xl,
 	},
 	threeDots: {
@@ -100,10 +115,10 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		position: "absolute",
 		right: scale(0),
-		bottom: verticalScale(6),
+		bottom: verticalScale(0.2),
 		margin: scale(10),
-		height: sizeConstants.fifteenMX,
-		width: scale(35),
+		width: verticalScale(40),
+		height: verticalScale(20),
 		borderRadius: scale(30),
 		alignItems: "center",
 		justifyContent: "center",
@@ -125,10 +140,13 @@ const styles = StyleSheet.create({
 		borderRightColor: "white",
 		justifyContent: "center",
 		alignItems: "center",
+		alignSelf: "center",
 	},
 	bottomText: {
-		fontSize: 24,
+		fontSize: sizeConstants.twentyX,
 		fontWeight: "bold",
 		color: "black",
+		alignSelf: "center",
+		textAlign: "center",
 	},
 })

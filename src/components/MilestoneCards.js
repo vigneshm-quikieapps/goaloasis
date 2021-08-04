@@ -269,7 +269,7 @@ const MilestoneCards = ({
 								{data && !data.isCompleted ? (
 									<View style={{alignItems: "center"}}>
 										<Text
-											style={{fontSize: 16, color: "#333333"}}
+											style={{fontSize: sizeConstants.sixteenX, color: "#333333"}} //16
 										>{`Task: ${completedTaskCount}/${totalTasks}`}</Text>
 										<Feather
 											name={upDown ? "chevron-up" : "chevron-down"}
@@ -422,12 +422,12 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 20,
 	},
 	mainTitle: {
-		fontSize: 19,
+		fontSize: sizeConstants.eighteenScale, //19
 		fontWeight: "bold",
 		color: "#333333",
 	},
 	subtitle: {
-		fontSize: 16,
+		fontSize: sizeConstants.sixteenX, //16
 		color: "#333333",
 	},
 	accordian: {

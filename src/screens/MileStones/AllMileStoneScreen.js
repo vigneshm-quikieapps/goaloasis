@@ -333,7 +333,8 @@ const styles = StyleSheet.create({
 	},
 	mainTitle: {
 		color: "#FBF5E9",
-		fontSize: 24,
+		fontSize: sizeConstants.twentyTwoScale, //25
+
 		marginLeft: 20,
 		fontWeight: "bold",
 	},
@@ -344,7 +345,8 @@ const styles = StyleSheet.create({
 	},
 
 	myGoalsText: {
-		fontSize: 25,
+		fontSize: sizeConstants.twentyTwoScale, //25
+
 		fontWeight: "bold",
 		color: "black",
 		marginHorizontal: 20,
@@ -377,7 +379,8 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	bottomText: {
-		fontSize: 24,
+		fontSize: sizeConstants.twentyTwoScale, //25
+
 		fontWeight: "bold",
 		color: "black",
 	},
@@ -385,7 +388,7 @@ const styles = StyleSheet.create({
 	// MODAL CODE
 
 	goalsText: {
-		fontSize: sizeConstants.sixteen,
+		fontSize: sizeConstants.sixteenX,
 	},
 	// goalsContainer: {
 	// 	flex: 0.75,
@@ -433,7 +436,7 @@ const styles = StyleSheet.create({
 
 	skipText: {
 		color: ColorConstants.darkGrey,
-		fontSize: sizeConstants.fifteenX,
+		fontSize: sizeConstants.sixteenX,
 	},
 	modalContentContainer: {
 		justifyContent: "center",
@@ -443,14 +446,15 @@ const styles = StyleSheet.create({
 	},
 
 	dataTextStyle: {
-		fontSize: sizeConstants.twentyX,
+		fontSize: sizeConstants.eighteenScale, //20
 		marginBottom: sizeConstants.m,
 		color: ColorConstants.faintBlack1,
 	},
-	contentText: {fontSize: sizeConstants.twentyX, color: ColorConstants.faintBlack1},
+	//20
+	contentText: {fontSize: sizeConstants.eighteenScale, color: ColorConstants.faintBlack1},
 	appBtn: {
 		backgroundColor: ColorConstants.lighterBlue,
-		fontSize: sizeConstants.fifteenMX,
+		fontSize: sizeConstants.sixteenX, //15
 		paddingVertical: sizeConstants.thirteen,
 		paddingHorizontal: 0,
 		width: "80%",

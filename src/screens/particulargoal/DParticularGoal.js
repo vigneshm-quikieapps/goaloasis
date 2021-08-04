@@ -1,5 +1,5 @@
 import React from "react"
-import {StyleSheet, Text, View, TouchableOpacity} from "react-native"
+import {StyleSheet, Text, View, TouchableOpacity, ScrollView} from "react-native"
 import {MaterialCommunityIcons, Entypo} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
 import ProgressCircle from "react-native-progress-circle"
@@ -23,7 +23,9 @@ const DParticularGoals = ({clickedGoal}) => {
 		<StatusBarScreen style={styles.container}>
 			<View style={CommonStyles.titleContainer}>
 				<RBBottomSheet name={clickedGoal.name} id={clickedGoal.name} />
-				<Text style={styles.subTitle}>{clickedGoal.description}</Text>
+				<ScrollView style={{height: 80}}>
+					<Text style={styles.subTitle}>{clickedGoal.description}</Text>
+				</ScrollView>
 
 				<View style={CommonStyles.trackingcont}>
 					<ProgressCircle
@@ -35,7 +37,7 @@ const DParticularGoals = ({clickedGoal}) => {
 						bgColor="#FBF5E9"
 					>
 						<View style={CommonStyles.percentageCont}>
-							<Text style={{fontSize: 16, color: "#333333"}}>Target Date</Text>
+							<Text style={{fontSize: sizeConstants.sixteenX, color: "#333333"}}>Target Date</Text>
 							<Text style={{fontWeight: "bold"}}>01/01/21</Text>
 						</View>
 					</ProgressCircle>
@@ -130,13 +132,13 @@ const styles = StyleSheet.create({
 	},
 
 	subTitle: {
-		fontSize: 16,
+		fontSize: sizeConstants.fourteenScale,
 		color: "#333333",
 		marginLeft: scale(20),
 	},
 
 	goalsText: {
-		fontSize: 16,
+		fontSize: sizeConstants.fourteenScale,
 		color: "#333333",
 	},
 	goalsContainer: {
@@ -154,13 +156,13 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	myGoalsText: {
-		fontSize: 25,
+		fontSize: sizeConstants.twentyTwoScale,
 		fontWeight: "bold",
 		color: "#333333",
 		marginHorizontal: verticalScale(20),
 	},
 	myGoalsubtext: {
-		fontSize: 16,
+		fontSize: sizeConstants.fourteenScale,
 		marginHorizontal: verticalScale(20),
 		marginTop: sizeConstants.m,
 		color: "#333333",

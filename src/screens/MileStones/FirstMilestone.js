@@ -244,11 +244,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(FirstMilestone)
 const styles = StyleSheet.create({
 	mainTitle: {
 		color: ColorConstants.faintWhite,
-		fontSize: sizeConstants.xxl,
+		fontSize: sizeConstants.twentyTwoScale, //25
 		marginLeft: sizeConstants.twentyMX,
 	},
 	subTitle: {
-		fontSize: 16,
+		fontSize: sizeConstants.sixteenX, //16
 		color: "#FDF9F2",
 		paddingLeft: sizeConstants.twentyOne,
 		marginTop: sizeConstants.l,
@@ -310,14 +310,14 @@ const styles = StyleSheet.create({
 		borderRadius: sizeConstants.fifty,
 		marginTop: sizeConstants.three,
 		paddingLeft: sizeConstants.twentyMX,
-		fontSize: sizeConstants.nineteenX,
+		fontSize: sizeConstants.eighteenScale, //19
 		color: ColorConstants.faintBlack2,
 		elevation: sizeConstants.m,
 	},
 
 	bigTitle: {
 		color: ColorConstants.whitishBlue,
-		fontSize: 25,
+		fontSize: sizeConstants.twentyTwoScale, //25
 		marginLeft: sizeConstants.fourteenMX,
 		fontWeight: "bold",
 		marginTop: sizeConstants.fourteenMX,

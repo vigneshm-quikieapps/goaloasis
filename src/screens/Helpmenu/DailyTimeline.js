@@ -141,7 +141,7 @@ const DailyTimeline = ({
 					style={{
 						alignSelf: "center",
 						color: "#B3855C",
-						fontSize: 20,
+						fontSize: sizeConstants.eighteenScale, //20
 						fontWeight: "bold",
 					}}
 				>
@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 	},
 	title: {
-		fontSize: 16,
+		fontSize: sizeConstants.sixteenX, //16
 		fontWeight: "bold",
 	},
 	descriptionContainer: {
@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
 	},
 	mainTitle: {
 		color: "#FDF9F2",
-		fontSize: 25,
+		fontSize: sizeConstants.twentyTwoScale, //25
 		fontWeight: "bold",
 	},
 	textInput: {
@@ -410,7 +410,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "#FDF9F2",
 		borderRadius: 50,
 		paddingLeft: 20,
-		fontSize: 19,
+		fontSize: sizeConstants.eighteenScale, //19
 		color: "#666666",
 		elevation: 10,
 		marginVertical: 30,
@@ -433,7 +433,7 @@ const styles = StyleSheet.create({
 		// marginVertical: 20,
 	},
 	btnText: {
-		fontSize: sizeConstants.xl,
+		fontSize: sizeConstants.eighteenScale,
 		color: ColorConstants.darkFaintBlue,
 		fontWeight: "bold",
 	},

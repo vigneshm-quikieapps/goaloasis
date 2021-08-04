@@ -198,11 +198,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(FirstTaskFlow)
 const styles = StyleSheet.create({
 	mainTitle: {
 		color: ColorConstants.faintWhite,
-		fontSize: sizeConstants.xxl,
+		fontSize: sizeConstants.eighteenScale, //25
 		marginLeft: sizeConstants.twentyMX,
 	},
 	subTitle: {
-		fontSize: 16,
+		fontSize: sizeConstants.sixteenX, //16
 		color: ColorConstants.faintWhite,
 		paddingLeft: sizeConstants.twentyOne,
 		marginTop: sizeConstants.l,
@@ -261,14 +261,14 @@ const styles = StyleSheet.create({
 		borderRadius: sizeConstants.fifty,
 		marginTop: sizeConstants.three,
 		paddingLeft: sizeConstants.twentyMX,
-		fontSize: 19,
+		fontSize: sizeConstants.eighteenScale, //19
 		color: ColorConstants.faintBlack2,
 		elevation: sizeConstants.m,
 	},
 
 	bigTitle: {
 		color: ColorConstants.whitishBlue,
-		fontSize: sizeConstants.thirty,
+		fontSize: sizeConstants.twentyFourScale, //30
 		marginLeft: sizeConstants.fourteen,
 		fontWeight: "bold",
 		marginTop: sizeConstants.fourteen,

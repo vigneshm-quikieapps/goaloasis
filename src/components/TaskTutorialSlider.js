@@ -20,6 +20,7 @@ import Swipeout from "rc-swipeout"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {SnoozeIcon} from "../assets/customIcons"
 import {AntDesign} from "@expo/vector-icons"
+import {sizeConstants} from "../core/constants"
 
 const TaskTutorialSlider = ({data, setFirstTime, loading, helpMenu = false}) => {
 	const [taskCompleted, setCompleted] = useState(false)
@@ -217,7 +218,8 @@ const styles = StyleSheet.create({
 	},
 	SkipText: {
 		color: "#FDF9F2",
-		fontSize: 19,
+		fontSize: sizeConstants.sixteenX, //19
+
 		textAlign: "left",
 	},
 	image: {
@@ -249,13 +251,14 @@ const styles = StyleSheet.create({
 		marginHorizontal: 20,
 	},
 	title: {
-		fontSize: 25,
+		fontSize: sizeConstants.twentyTwoScale, //25
+
 		textAlign: "left",
 		fontWeight: "bold",
 		color: "white",
 	},
 	subTitle: {
-		fontSize: 19,
+		fontSize: sizeConstants.sixteenX, //19
 		letterSpacing: 0.7,
 		color: "rgba(255, 255, 255, 0.651)",
 		marginTop: 30,
@@ -298,12 +301,13 @@ const styles = StyleSheet.create({
 		borderRadius: 51,
 	},
 	btnText: {
-		fontSize: 19,
+		fontSize: sizeConstants.sixteenX, //19
 		color: "#666666",
 		letterSpacing: 1.2,
 	},
 	btnTextCompleted: {
-		fontSize: 19,
+		fontSize: sizeConstants.sixteenX, //19
+
 		color: "#666666",
 		letterSpacing: 1.2,
 		textDecorationLine: "line-through",

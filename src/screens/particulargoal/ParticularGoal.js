@@ -157,7 +157,7 @@ const ParticularGoal = (props) => {
 									</Text>
 								) : null}
 								{page == 2 ? (
-									<Text style={[{fontSize: 16}, CommonStyles.bold]}>
+									<Text style={[{fontSize: sizeConstants.sixteenX}, CommonStyles.bold]}>
 										Swipe left
 										<Text style={CommonStyles.fontW100}> if you want to </Text>
 										delete or edit the milestone
@@ -201,7 +201,7 @@ const ParticularGoal = (props) => {
 												>
 													<Text
 														style={{
-															fontSize: 16,
+															fontSize: sizeConstants.sixteenX,
 															fontWeight: "bold",
 															alignSelf: "center",
 															color: ColorConstants.faintBlack1,
@@ -283,7 +283,7 @@ const ParticularGoal = (props) => {
 											color: ColorConstants.faintBlack1,
 											width: "100%",
 											paddingVertical: sizeConstants.s,
-											fontSize: 19,
+											fontSize: sizeConstants.sixteenX,
 											elevation: 7,
 											fontWeight: "bold",
 											alignSelf: "center",
@@ -299,7 +299,9 @@ const ParticularGoal = (props) => {
 				{/* MODAL CODE END */}
 				<RBBottomSheet name={props.clickedGoal.name} />
 
-				<Text style={styles.subTitle}>{props.clickedGoal.description}</Text>
+				<ScrollView>
+					<Text style={styles.subTitle}>{props.clickedGoal.description}</Text>
+				</ScrollView>
 				<View style={CommonStyles.trackingcont}>
 					<ProgressCircle
 						percent={goalCompletedPercent}
@@ -310,8 +312,12 @@ const ParticularGoal = (props) => {
 						bgColor="#FBF5E9"
 					>
 						<View style={CommonStyles.percentageCont}>
-							<Text style={{fontSize: 16, color: "#333333"}}>Target Date</Text>
-							<Text style={{fontWeight: "bold", fontSize: 16, color: "#333333"}}>01/01/21</Text>
+							<Text style={{fontSize: sizeConstants.sixteenX, color: "#333333"}}>Target Date</Text>
+							<Text
+								style={{fontWeight: "bold", fontSize: sizeConstants.sixteenX, color: "#333333"}}
+							>
+								01/01/21
+							</Text>
 						</View>
 					</ProgressCircle>
 
@@ -463,13 +469,14 @@ const styles = StyleSheet.create({
 	},
 
 	subTitle: {
-		fontSize: 16,
+		fontSize: sizeConstants.sixteenX, //16
 		color: "#333333",
 		marginLeft: scale(20),
+		marginRight: scale(20),
 	},
 
 	goalsText: {
-		fontSize: sizeConstants.sixteen,
+		fontSize: sizeConstants.sixteenx, //19
 		color: "black",
 	},
 	goalsContainer: {
@@ -478,7 +485,7 @@ const styles = StyleSheet.create({
 		borderTopRightRadius: sizeConstants.fourty,
 	},
 	btnText: {
-		fontSize: 16,
+		fontSize: sizeConstants.sixteenX,
 		color: ColorConstants.faintBlack1,
 		fontWeight: "bold",
 		textAlign: "center",
@@ -494,13 +501,13 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	myGoalsText: {
-		fontSize: sizeConstants.xxl,
+		fontSize: sizeConstants.twentyTwoScale,
 		fontWeight: "bold",
 		color: "black",
 		marginHorizontal: verticalScale(20),
 	},
 	myGoalsubtext: {
-		fontSize: 16,
+		fontSize: sizeConstants.sixteenx,
 		marginHorizontal: verticalScale(20),
 		marginTop: sizeConstants.m,
 		color: "#333333",
@@ -553,7 +560,7 @@ const styles = StyleSheet.create({
 
 	skipText: {
 		color: ColorConstants.darkGrey,
-		fontSize: 16,
+		fontSize: sizeConstants.sixteenx,
 	},
 	modalContentContainer: {
 		justifyContent: "center",
@@ -563,15 +570,15 @@ const styles = StyleSheet.create({
 	},
 
 	dataTextStyle: {
-		fontSize: 16,
+		fontSize: sizeConstants.sixteenX,
 		marginBottom: sizeConstants.m,
 		color: ColorConstants.faintBlack1,
 	},
-	contentText: {fontSize: 16, color: ColorConstants.faintBlack1},
+	contentText: {fontSize: sizeConstants.sixteenX, color: ColorConstants.faintBlack1},
 
 	appBtn: {
 		backgroundColor: ColorConstants.lighterBlue,
-		fontSize: 14,
+		fontSize: sizeConstants.fourteenScale,
 		paddingVertical: sizeConstants.thirteenMX,
 		color: ColorConstants.faintBlack1,
 	},

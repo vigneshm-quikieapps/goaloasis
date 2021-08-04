@@ -82,12 +82,12 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 20,
 	},
 	mainTitle: {
-		fontSize: 19,
+		fontSize: sizeConstants.eighteenScale, //19
 		fontWeight: "bold",
 		color: "black",
 	},
 	subtitle: {
-		fontSize: 16,
+		fontSize: sizeConstants.sixteenX, //16
 	},
 	accordian: {
 		backgroundColor: "#CDE8E6",

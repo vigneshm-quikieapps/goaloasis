@@ -10,7 +10,7 @@ const TaskTutorialSlide1 = ({route}) => {
 		color2: "#E6AB76",
 		screen: 1,
 	})
-	console.log("HELPMENU from slider 1", route)
+	// console.log("HELPMENU from slider 1", route)
 
 	return <TaskTutorialSlider data={screenData} helpMenu={helpMenu} />
 }

@@ -144,7 +144,12 @@ const TimelineFlowSlider = ({data, setFirstTimeForTimeLine}) => {
 								justifyContent: "center",
 							}}
 						>
-							<Text style={{color: "white", alignSelf: "center", fontSize: 20}}>Milestone</Text>
+							{/* 20 */}
+							<Text
+								style={{color: "white", alignSelf: "center", fontSize: sizeConstants.eighteenScale}}
+							>
+								Milestone
+							</Text>
 						</View>
 					</View>
 					<SimpleLineIcons

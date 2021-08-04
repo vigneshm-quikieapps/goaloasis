@@ -3,7 +3,7 @@ import {StyleSheet, Text, View, TouchableOpacity} from "react-native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
 import {CommonHomeButton} from "../../components/CommonComponents"
-import {ColorConstants} from "../../core/constants"
+import {ColorConstants, sizeConstants} from "../../core/constants"
 // import {getFirstTimeUser} from "./src/utils/asyncStorage"
 // import {setisFirstTimeTaskTutorial} from "./../../utils/asyncStorage"
 // import {setFirstTime} from "../../redux/actions"
@@ -44,7 +44,7 @@ const Helpmenu = ({setFirstTime, setFirstTimeForIndividualGoal}) => {
 				<View style={{flex: 1, justifyContent: "center"}}>
 					<Text
 						style={{
-							fontSize: 30,
+							fontSize: sizeConstants.twentyFourScale, //25
 							color: "white",
 							fontWeight: "bold",
 							marginLeft: 20,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
 	},
 	mainTitle: {
 		color: "black",
-		fontSize: 24,
+		fontSize: sizeConstants.twentyTwoScale, //24
 		marginLeft: 20,
 		fontWeight: "bold",
 		textAlign: "center",
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
 		marginVertical: 20,
 	},
 	btnText: {
-		fontSize: 20,
+		fontSize: sizeConstants.eighteenScale, //20
 		color: "black",
 		fontWeight: "bold",
 	},

@@ -6,6 +6,7 @@ import {setBooleanFlag, setCurrentGoal, setShowLoader, setHideLoader} from "./..
 import {connect} from "react-redux"
 import {updateGoalToFirestore} from "./../../firebase/index"
 import Spinner from "../../components/Spinner"
+import {sizeConstants} from "../../core/constants"
 
 const MarkCompleted = (props) => {
 	const navigation = useNavigation()
@@ -38,11 +39,21 @@ const MarkCompleted = (props) => {
 
 			<View style={styles.goalsContainer}>
 				<View style={{marginTop: 50, marginLeft: 20}}>
-					<Text style={{color: "#333333", fontSize: 24, fontWeight: "bold"}}>
+					{/* 24, 16 */}
+					<Text
+						style={{color: "#333333", fontSize: sizeConstants.twentyTwoScale, fontWeight: "bold"}}
+					>
 						Mark Goal Complete
 					</Text>
 
-					<Text style={{color: "#333333", fontSize: 16, lineHeight: 32, width: "80%"}}>
+					<Text
+						style={{
+							color: "#333333",
+							fontSize: sizeConstants.sixteenX,
+							lineHeight: 32,
+							width: "80%",
+						}}
+					>
 						Goal will crossed out your timeline but not deleted
 					</Text>
 				</View>
@@ -129,7 +140,7 @@ const styles = StyleSheet.create({
 		marginVertical: 20,
 	},
 	btnText: {
-		fontSize: 20,
+		fontSize: sizeConstants.eighteenScale, //20
 		color: "#666666",
 		fontWeight: "bold",
 	},

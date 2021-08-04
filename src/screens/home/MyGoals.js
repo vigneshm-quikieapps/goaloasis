@@ -367,7 +367,14 @@ const MyGoals = ({
 												shadowColor="#999"
 												bgColor="#FBF5E9"
 											>
-												<Text style={{fontSize: 25, color: getColor(index), fontWeight: "bold"}}>
+												<Text
+													style={{
+														fontSize: sizeConstants.twentyTwoScale, //25
+														color: getColor(index),
+														fontWeight: "bold",
+														padding: 10,
+													}}
+												>
 													{task.isCompleted ? "100%" : `${completedPercent}%`}
 												</Text>
 											</ProgressCircle>

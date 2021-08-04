@@ -10,6 +10,7 @@ import {setClickedGoal, setShowLoader, setHideLoader} from "../../redux/actions"
 
 import Spinner from "./../../components/Spinner"
 import dayjs from "dayjs"
+import {sizeConstants} from "../../core/constants"
 
 const EditGoalhelp = ({clickedGoal, setClickedGoal, setShowLoader, loading, setHideLoader}) => {
 	console.log(clickedGoal)
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
 	},
 	SkipText: {
 		color: "#FDF9F2",
-		fontSize: 19,
+		fontSize: sizeConstants.eighteenScale, //19
 		textAlign: "left",
 	},
 
@@ -135,13 +136,13 @@ const styles = StyleSheet.create({
 	},
 
 	title: {
-		fontSize: 25,
+		fontSize: sizeConstants.twentyTwoScale, //25
 		textAlign: "left",
 		fontWeight: "bold",
 		color: "white",
 	},
 	subTitle: {
-		fontSize: 19,
+		fontSize: sizeConstants.eighteenScale, //19
 		letterSpacing: 0.7,
 		color: "rgba(255, 255, 255, 0.651)",
 		marginTop: 30,
@@ -173,7 +174,7 @@ const styles = StyleSheet.create({
 		borderRadius: 25,
 	},
 	btnText: {
-		fontSize: 19,
+		fontSize: sizeConstants.eighteenScale, //19
 		color: "#666666",
 		letterSpacing: 1.2,
 	},
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
 		borderRadius: 50,
 		marginTop: 50,
 		paddingLeft: 20,
-		fontSize: 19,
+		fontSize: sizeConstants.eighteenScale, //19
 		color: "#666666",
 		elevation: 10,
 	},

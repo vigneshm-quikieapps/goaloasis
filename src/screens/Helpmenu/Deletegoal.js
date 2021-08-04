@@ -34,8 +34,21 @@ const Deletegoal = (props) => {
 
 			<View style={styles.goalsContainer}>
 				<View style={{marginTop: 50, marginLeft: 20}}>
-					<Text style={{color: "#333333", fontSize: 24, fontWeight: "bold"}}>Delete Goal</Text>
-					<Text style={{color: "#333333", fontSize: 16, lineHeight: 32, width: "80%"}}>
+					{/* 24, 16 */}
+					<Text
+						style={{color: "#333333", fontSize: sizeConstants.twentyTwoScale, fontWeight: "bold"}}
+					>
+						Delete Goal
+					</Text>
+
+					<Text
+						style={{
+							color: "#333333",
+							fontSize: sizeConstants.sixteenX,
+							lineHeight: 32,
+							width: "80%",
+						}}
+					>
 						Goal will be deleted and removed from your timeline
 					</Text>
 				</View>
@@ -84,16 +97,14 @@ const styles = StyleSheet.create({
 		height: 180,
 		backgroundColor: "#588C8D",
 		justifyContent: "center",
-		borderBottomLeftRadius: 70,
+		borderBottomLeftRadius: 50,
 	},
-
 	goalsContainer: {
 		flex: 1,
 		backgroundColor: "#FBF5E9",
 		borderTopRightRadius: 70,
 		marginTop: -50,
 	},
-
 	bottomBtnContainer: {
 		width: "100%",
 		position: "absolute",
@@ -102,27 +113,26 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	bottomBtn: {
-		height: 75,
-		width: 75,
-		borderRadius: 75 / 2,
+		height: sizeConstants.seventyFive,
+		width: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive,
 		backgroundColor: "#7EC8C9",
 		elevation: 5,
 		justifyContent: "center",
 		alignItems: "center",
 	},
-
 	HelpBtn: {
 		backgroundColor: "#76BBBC",
 		height: sizeConstants.xxxl,
 		width: "75%",
-		borderRadius: 60,
+		borderRadius: sizeConstants.sixty,
 		justifyContent: "center",
 		alignItems: "center",
 		elevation: 10,
 		// marginVertical: 20,
 	},
 	btnText: {
-		fontSize: 20,
+		fontSize: sizeConstants.eighteenScale, //20
 		color: "#666666",
 		fontWeight: "bold",
 	},
