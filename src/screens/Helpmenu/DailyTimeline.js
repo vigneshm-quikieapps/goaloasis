@@ -1,5 +1,13 @@
 import React, {useEffect, useRef, useState} from "react"
-import {StyleSheet, Text, TouchableOpacity, View, TextInput, ImageBackground} from "react-native"
+import {
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+	TextInput,
+	ImageBackground,
+	Dimensions,
+} from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
 import Timeline from "react-native-timeline-flatlist"
@@ -12,7 +20,13 @@ import DatePicker from "react-native-date-picker"
 import TimelineScreen from "./Timeline"
 import {CommonHomeButton, monthNames} from "../../components/CommonComponents"
 import {connect} from "react-redux"
-import {ColorConstants, commonDateFormat, sizeConstants} from "../../core/constants"
+import {
+	ColorConstants,
+	commonDateFormat,
+	CommonStyles,
+	height,
+	sizeConstants,
+} from "../../core/constants"
 import {
 	setAllGoals,
 	setBooleanFlag,
@@ -148,32 +162,17 @@ const DailyTimeline = ({
 					Daily Timeline
 				</Text>
 				<Timeline
-					style={styles.list}
+					style={CommonStyles.list}
 					data={allTasks}
 					circleSize={10}
 					circleColor="#B3855C"
 					lineColor="#B3855C"
-					timeContainerStyle={{minWidth: 52, marginTop: -5}}
-					timeStyle={{
-						textAlign: "center",
-						backgroundColor: "#ff9797",
-						color: "white",
-						padding: 5,
-						borderRadius: 13,
-					}}
-					descriptionStyle={{color: "white"}}
-					options={{
-						style: {paddingTop: 0},
-					}}
+					timeContainerStyle={CommonStyles.timeContainerStyle}
+					timeStyle={CommonStyles.timeStyle}
+					descriptionStyle={[CommonStyles.descriptionStyle, {height: 0}]}
 					separator={false}
-					detailContainerStyle={{
-						marginBottom: 20,
-						paddingLeft: 5,
-						paddingRight: 5,
-						backgroundColor: "#588C8D",
-						borderRadius: 15,
-					}}
-					titleStyle={{color: "white"}}
+					detailContainerStyle={CommonStyles.detailContainerStyle}
+					titleStyle={CommonStyles.titleStyle}
 					columnFormat="two-column"
 					// onEventPress={(item) => alert(`${item.title} at ${item.time}`)}
 					onEventPress={(item) => {
@@ -192,7 +191,7 @@ const DailyTimeline = ({
 
 			{/* RB-Bottom Sheet */}
 			<RBSheet
-				height={600}
+				height={height * 0.885}
 				ref={refRBSheet}
 				closeOnDragDown={true}
 				closeOnPressMask={false}

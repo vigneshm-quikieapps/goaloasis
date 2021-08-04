@@ -13,7 +13,7 @@ import MilestoneCards from "../../components/MilestoneCards"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import RBBottomSheet from "../MileStones/RBBottomSheet"
 import {CommonHomeButton} from "../../components/CommonComponents"
-import {CommonStyles} from "../../core/constants"
+import {CommonStyles, height} from "../../core/constants"
 import {sizeConstants, ColorConstants} from "../../core/constants"
 import {scale, verticalScale} from "react-native-size-matters"
 import GestureRecognizer from "react-native-swipe-gestures"
@@ -164,13 +164,13 @@ const ParticularGoal = (props) => {
 									</Text>
 								) : null}
 							</View>
-							<View style={{height: "50%", marginHorizontal: 15}}>
+							<View style={{height: "30%", marginHorizontal: 15}}>
 								<View
 									style={{
 										width: "100%",
-										position: "absolute",
+										// position: "absolute",
 										alignItems: "center",
-										bottom: -50,
+										// bottom: -50,
 									}}
 								>
 									{page == 0 ? (
@@ -541,9 +541,10 @@ const styles = StyleSheet.create({
 	modalContainer: {
 		flex: 1,
 		backgroundColor: ColorConstants.lightestBlue,
-		marginVertical: sizeConstants.hundred,
+		marginVertical: height * 0.21,
 		marginHorizontal: sizeConstants.mThirty,
 		borderRadius: sizeConstants.m,
+		minHeight: height * 0.48,
 	},
 	modalInnerContainer: {
 		flexDirection: "row",

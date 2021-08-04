@@ -5,7 +5,13 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {Calendar, LocaleConfig} from "react-native-calendars"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import {Entypo} from "@expo/vector-icons"
-import {ColorConstants, commonDateFormat, CommonStyles, sizeConstants} from "../../core/constants"
+import {
+	ColorConstants,
+	commonDateFormat,
+	CommonStyles,
+	height,
+	sizeConstants,
+} from "../../core/constants"
 import {
 	calendarLocale,
 	CommonHomeButton,
@@ -163,11 +169,13 @@ const Second = ({
 							value={taskName}
 						/>
 					</View>
-					<View style={[CommonStyles.editContainer, {marginVertical: 20}]}>
+					<View style={[CommonStyles.editContainer, {marginVertical: height > 700 ? 20 : 0}]}>
 						<Text style={CommonStyles.editOccuringText}>Edit Reoccuring</Text>
 					</View>
 					<View style={CommonStyles.calendarContainer}>
-						<Text style={[CommonStyles.targetDate, {marginTop: sizeConstants.xs}]}>
+						<Text
+							style={[CommonStyles.targetDate, {marginTop: height > 700 ? sizeConstants.xs : 0}]}
+						>
 							Reoccuring Date
 						</Text>
 

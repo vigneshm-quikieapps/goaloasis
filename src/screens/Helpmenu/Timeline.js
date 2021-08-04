@@ -12,12 +12,13 @@ import DatePicker from "react-native-date-picker"
 import MonthTimeline from "./MonthTimeline"
 import {CommonHomeButton} from "../../components/CommonComponents"
 import {connect} from "react-redux"
-import {ColorConstants, commonDateFormat, sizeConstants} from "../../core/constants"
+import {ColorConstants, commonDateFormat, CommonStyles, sizeConstants} from "../../core/constants"
 import {setAllGoals, setClickedGoal, setShowLoader, setHideLoader} from "../../redux/actions"
 import {updateGoalToFirestore} from "../../firebase"
 import AsyncStorage from "@react-native-community/async-storage"
 import Spinner from "../../components/Spinner"
 import dayjs from "dayjs"
+import {Constants} from "react-native-unimodules"
 
 const TimelineScreen = ({
 	setShowLoader,
@@ -106,32 +107,17 @@ const TimelineScreen = ({
 					Yearly Timeline
 				</Text>
 				<Timeline
-					style={styles.list}
+					style={CommonStyles.list}
 					data={allGoalsforTimeline}
 					circleSize={10}
 					circleColor="#B3855C"
 					lineColor="#B3855C"
-					timeContainerStyle={{minWidth: 52, marginTop: -5}}
-					timeStyle={{
-						textAlign: "center",
-						backgroundColor: "#ff9797",
-						color: "white",
-						padding: 5,
-						borderRadius: 13,
-					}}
-					descriptionStyle={{color: "white"}}
-					options={{
-						style: {paddingTop: 0},
-					}}
+					timeContainerStyle={CommonStyles.timeContainerStyle}
+					timeStyle={CommonStyles.timeStyle}
+					descriptionStyle={CommonStyles.descriptionStyle}
 					separator={false}
-					detailContainerStyle={{
-						marginBottom: 20,
-						paddingLeft: 5,
-						paddingRight: 5,
-						backgroundColor: "#588C8D",
-						borderRadius: 15,
-					}}
-					titleStyle={{color: "white"}}
+					detailContainerStyle={CommonStyles.detailContainerStyle}
+					titleStyle={CommonStyles.titleStyle}
 					columnFormat="two-column"
 					onEventPress={(item) => {
 						setClickedGoalName(item.title)

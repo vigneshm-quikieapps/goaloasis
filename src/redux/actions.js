@@ -106,3 +106,10 @@ export const setBooleanFlag = (data) => {
 		value: data,
 	}
 }
+
+export const setTodaysAllTasks = (data) => {
+	return {
+		type: actionTypes.SET_TODAYS_ALL_TASK,
+		value: data,
+	}
+}

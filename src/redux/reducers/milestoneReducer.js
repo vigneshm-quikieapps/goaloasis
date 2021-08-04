@@ -14,6 +14,7 @@ const initialState = {
 	clickedMilestone: "",
 	allGoals: [],
 	loading: false,
+	todayAllTasksArr: [],
 }
 
 console.log("NEW MILESTONE DATA", initialState.newMileStone)
@@ -134,7 +135,11 @@ const milestoneReducer = (state = initialState, action) => {
 				...state,
 				booleanFlag: action.value,
 			}
-
+		case actionTypes.SET_TODAYS_ALL_TASK:
+			return {
+				...state,
+				todayAllTasksArr: action.value,
+			}
 		default:
 			return state
 	}
