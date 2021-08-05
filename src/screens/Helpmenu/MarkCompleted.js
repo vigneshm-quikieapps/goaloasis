@@ -49,7 +49,7 @@ const MarkCompleted = (props) => {
 					<Text
 						style={{
 							color: "#333333",
-							fontSize: sizeConstants.sixteenX,
+							fontSize: sizeConstants.fourteenScale,
 							lineHeight: 32,
 							width: "80%",
 						}}

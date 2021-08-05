@@ -269,7 +269,7 @@ const MilestoneCards = ({
 								{data && !data.isCompleted ? (
 									<View style={{alignItems: "center"}}>
 										<Text
-											style={{fontSize: sizeConstants.sixteenX, color: "#333333"}} //16
+											style={{fontSize: sizeConstants.fourteenScale, color: "#333333"}} //16
 										>{`Task: ${completedTaskCount}/${totalTasks}`}</Text>
 										<Feather
 											name={upDown ? "chevron-up" : "chevron-down"}
@@ -352,8 +352,8 @@ const MilestoneCards = ({
 												onPress={() => {}}
 											>
 												<View>
-													<Text style={styles.mainTitle}>{item.item.task}</Text>
-													<Text style={styles.subtitle}>{bottomItem}</Text>
+													<Text style={styles.mainTitleTask}>{item.item.task}</Text>
+													<Text style={styles.subtitleTask}>{bottomItem}</Text>
 												</View>
 												{item.item.isCompleted ? (
 													<View>
@@ -427,7 +427,17 @@ const styles = StyleSheet.create({
 		color: "#333333",
 	},
 	subtitle: {
-		fontSize: sizeConstants.sixteenX, //16
+		fontSize: sizeConstants.fourteenScale, //16
+		color: "#333333",
+	},
+
+	mainTitleTask: {
+		fontSize: sizeConstants.sixteenX, //19
+		fontWeight: "bold",
+		color: "#333333",
+	},
+	subtitleTask: {
+		fontSize: sizeConstants.twelveScale, //16
 		color: "#333333",
 	},
 	accordian: {

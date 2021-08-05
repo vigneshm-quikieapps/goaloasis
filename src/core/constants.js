@@ -35,6 +35,7 @@ export const sizeConstants = {
 	m: verticalScale(10),
 	mX: scale(10),
 	twelve: verticalScale(12),
+	twelveScale: scale(12),
 	thirteen: verticalScale(13),
 	thirteenX: scale(13),
 	thirteenMX: moderateScale(13),
@@ -167,6 +168,14 @@ export const forGoals = {
 	sixth: "#B8534F",
 }
 
+export const goalsColorArray = [
+	forGoals.first,
+	forGoals.second,
+	forGoals.third,
+	forGoals.fourth,
+	forGoals.fifth,
+	forGoals.sixth,
+]
 export const content = {
 	My_Milestone:
 		"It looks like you don’t have a plan to achieve your goal yet. Don’t worry! Tap (+) to add a milestone and get on your way.",
@@ -195,7 +204,7 @@ export const CommonStyles = ScaledSheet.create({
 
 	SkipText: {
 		color: ColorConstants.faintWhite,
-		fontSize: sizeConstants.sixteenX, //19
+		fontSize: sizeConstants.fourteenScale, //19
 		textAlign: "left",
 	},
 	progressContainer: {
@@ -232,7 +241,7 @@ export const CommonStyles = ScaledSheet.create({
 
 	//cricket
 	subTitle: {
-		fontSize: sizeConstants.sixteenX, //19
+		fontSize: sizeConstants.fourteenScale, //19
 		// letterSpacing: 0.7,
 		color: ColorConstants.faintWhite,
 		marginTop: sizeConstants.thirty,
@@ -256,7 +265,7 @@ export const CommonStyles = ScaledSheet.create({
 	},
 
 	btnText: {
-		fontSize: sizeConstants.sixteenX, //19
+		fontSize: sizeConstants.eighteenScale, //19
 		color: ColorConstants.faintBlack2,
 		// letterSpacing: "1.2@s",
 	},
@@ -366,7 +375,7 @@ export const CommonStyles = ScaledSheet.create({
 		margin: scale(1),
 	},
 	enterTask: {
-		fontSize: sizeConstants.sixteenX, //16
+		fontSize: sizeConstants.fourteenScale, //16
 		color: "#FDF9F2",
 		marginLeft: scale(21),
 	},
@@ -421,7 +430,7 @@ export const CommonStyles = ScaledSheet.create({
 	},
 	cancelReoccuringText: {
 		color: "#FDF9F2",
-		fontSize: sizeConstants.eighteenScale, //19
+		fontSize: sizeConstants.fourteenScale, //19
 	},
 	bottomBtn: {
 		height: sizeConstants.seventyFive,
@@ -515,7 +524,7 @@ export const CommonStyles = ScaledSheet.create({
 
 	reoccuring: {color: ColorConstants.faintWhite, fontSize: sizeConstants.eighteenScale}, //19
 	milestoneText: {
-		fontSize: sizeConstants.sixteenX,
+		fontSize: sizeConstants.fourteenScale, //16
 		color: ColorConstants.faintWhite,
 		marginLeft: sizeConstants.twentyOne,
 		// marginTop: sizeConstants.twentyX,
@@ -563,7 +572,7 @@ export const CommonStyles = ScaledSheet.create({
 	},
 
 	targetDate: {
-		fontSize: sizeConstants.sixteenX, //16
+		fontSize: sizeConstants.fourteenScale, //16
 		color: ColorConstants.faintBlack1,
 		alignSelf: "center",
 		marginLeft: sizeConstants.twentyMX,
@@ -714,7 +723,7 @@ export const CommonStyles = ScaledSheet.create({
 	// milestone starts
 
 	subTitleMilestone: {
-		fontSize: sizeConstants.sixteenX,
+		fontSize: sizeConstants.fourteenScale, ///16
 		color: ColorConstants.faintWhite,
 		marginLeft: sizeConstants.twentyOne,
 		paddingLeft: sizeConstants.five,
@@ -739,7 +748,7 @@ export const CommonStyles = ScaledSheet.create({
 	},
 
 	done: {
-		fontSize: sizeConstants.sixteenX,
+		fontSize: sizeConstants.fourteenScale, //16
 		color: "#89B3B2",
 
 		position: "absolute",

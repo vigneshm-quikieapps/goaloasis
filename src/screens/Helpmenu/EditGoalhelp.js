@@ -124,11 +124,6 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		marginHorizontal: 26,
 	},
-	SkipText: {
-		color: "#FDF9F2",
-		fontSize: sizeConstants.eighteenScale, //19
-		textAlign: "left",
-	},
 
 	textContainer: {
 		marginTop: 30,
@@ -141,12 +136,7 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		color: "white",
 	},
-	subTitle: {
-		fontSize: sizeConstants.eighteenScale, //19
-		letterSpacing: 0.7,
-		color: "rgba(255, 255, 255, 0.651)",
-		marginTop: 30,
-	},
+
 	btnContainer: {
 		position: "absolute",
 		bottom: 70,
@@ -173,11 +163,7 @@ const styles = StyleSheet.create({
 		height: 50,
 		borderRadius: 25,
 	},
-	btnText: {
-		fontSize: sizeConstants.eighteenScale, //19
-		color: "#666666",
-		letterSpacing: 1.2,
-	},
+
 	textInput: {
 		width: 314,
 		height: 50,

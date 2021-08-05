@@ -44,7 +44,7 @@ const Helpmenu = ({setFirstTime, setFirstTimeForIndividualGoal}) => {
 				<View style={{flex: 1, justifyContent: "center"}}>
 					<Text
 						style={{
-							fontSize: sizeConstants.twentyFourScale, //25
+							fontSize: sizeConstants.twentyTwoScale, //25
 							color: "white",
 							fontWeight: "bold",
 							marginLeft: 20,

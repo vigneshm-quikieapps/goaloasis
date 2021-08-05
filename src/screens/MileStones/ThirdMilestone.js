@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
 	},
 
 	subTitle: {
-		fontSize: sizeConstants.sixteenX, //16
+		fontSize: sizeConstants.fourteenScale, //16
 
 		color: ColorConstants.faintWhite,
 		marginLeft: sizeConstants.twentyOne,
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
 	},
 	milestoneText: {
 		marginTop: sizeConstants.twentyX,
-		fontSize: sizeConstants.sixteenX, //16
+		fontSize: sizeConstants.fourteenScale, //16
 
 		color: ColorConstants.faintWhite,
 		marginLeft: sizeConstants.twentyOne,

@@ -45,8 +45,13 @@ const Third = () => {
 					</View>
 					<View style={CommonStyles.calendarContainer}>
 						<Text style={CommonStyles.targetDate}>Reoccuring Date</Text>
-						<TouchableOpacity onPress={() => navigation.navigate("FifthMilestone")}>
-							<Text style={CommonStyles.done}>Done</Text>
+						<TouchableOpacity
+							onPress={() => {
+								navigation.navigate("secondtaskflow")
+							}}
+							style={{alignSelf: "flex-end"}}
+						>
+							<Text style={[CommonStyles.done, {color: ColorConstants.faintWhite}]}>Done</Text>
 						</TouchableOpacity>
 					</View>
 

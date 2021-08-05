@@ -37,7 +37,9 @@ const DParticularGoals = ({clickedGoal}) => {
 						bgColor="#FBF5E9"
 					>
 						<View style={CommonStyles.percentageCont}>
-							<Text style={{fontSize: sizeConstants.sixteenX, color: "#333333"}}>Target Date</Text>
+							<Text style={{fontSize: sizeConstants.fourteenScale, color: "#333333"}}>
+								Target Date
+							</Text>
 							<Text style={{fontWeight: "bold"}}>01/01/21</Text>
 						</View>
 					</ProgressCircle>

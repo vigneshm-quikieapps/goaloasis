@@ -130,7 +130,8 @@ const MonthTimeline = ({
 					style={{
 						alignSelf: "center",
 						color: "#B3855C",
-						fontSize: sizeConstants.eighteenScale, //20
+						fontSize: sizeConstants.eighteenScale, //19
+						textAlign: "center",
 
 						fontWeight: "bold",
 					}}
@@ -337,13 +338,14 @@ const styles = StyleSheet.create({
 		flex: 1,
 		padding: 20,
 		marginTop: 30,
+		justifyContent: "center",
 	},
 	list: {
 		paddingVertical: sizeConstants.l,
 		flex: 1,
 	},
 	title: {
-		fontSize: sizeConstants.sixteenX, //16
+		fontSize: sizeConstants.fourteenScale, //16
 		fontWeight: "bold",
 	},
 	descriptionContainer: {

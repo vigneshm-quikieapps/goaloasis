@@ -117,7 +117,7 @@ const TodaysTask = ({todayAllTasksArr}) => {
 		<StatusBarScreen style={styles.container}>
 			<ImageBackground style={styles.container} source={backImg} resizeMode="stretch">
 				<TouchableOpacity style={styles.titleContainer}>
-					<Text style={styles.mainTitle}>Today’s tasksss</Text>
+					<Text style={styles.mainTitle}>Today’s tasks</Text>
 				</TouchableOpacity>
 				<FlatList
 					data={todayAllTasksArr}
@@ -138,7 +138,7 @@ const TodaysTask = ({todayAllTasksArr}) => {
 								},
 							]}
 						>
-							<Entypo name="home" size={40} color="#7ec8c9" />
+							<Entypo name="home" size={40} color="#7ec8c9" style={{zIndex: -1}} />
 						</View>
 					</TouchableOpacity>
 				</View>
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
 		borderRadius: 51,
 	},
 	btnText: {
-		fontSize: 19,
+		fontSize: sizeConstants.eighteenScale, //19
 		color: "#666666",
 		letterSpacing: 1.2,
 	},
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
 	},
 	mainTitle: {
 		color: "#FBF5E9",
-		fontSize: 25,
+		fontSize: sizeConstants.twentyTwoScale, //25
 		fontWeight: "bold",
 		marginLeft: 20,
 		marginVertical: 30,
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 20,
 	},
 	mainTitleButton: {
-		fontSize: 19,
+		fontSize: sizeConstants.eighteenScale, //19
 		fontWeight: "bold",
 		color: "#333333",
 	},

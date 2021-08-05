@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
 
 	mainTitle: {
 		color: "#333333",
-		fontSize: sizeConstants.twentyX,
+		fontSize: sizeConstants.twentyTwoScale,
 		marginLeft: sizeConstants.xl,
 	},
 	threeDots: {

@@ -9,7 +9,7 @@ import {MaterialCommunityIcons, Fontisto, SimpleLineIcons} from "@expo/vector-ic
 import Constants from "expo-constants"
 import {connect} from "react-redux"
 import {setFirstTimeForTimeLine} from "../redux/actions"
-import {CommonStyles, sizeConstants} from "./../core/constants"
+import {ColorConstants, CommonStyles, sizeConstants} from "./../core/constants"
 
 const TimelineFlowSlider = ({data, setFirstTimeForTimeLine}) => {
 	const navigation = useNavigation()
@@ -105,10 +105,10 @@ const TimelineFlowSlider = ({data, setFirstTimeForTimeLine}) => {
 
 				<View style={CommonStyles.textContainer}>
 					<Text style={CommonStyles.title}>{title}</Text>
-					<Text style={[CommonStyles.subTitle, {marginTop: sizeConstants.m, textAlign: "left"}]}>
+					<Text style={[styles.subTitle, {marginTop: sizeConstants.m, textAlign: "left"}]}>
 						{subTitle1}
 					</Text>
-					<Text style={[CommonStyles.subTitle, {marginTop: sizeConstants.m, textAlign: "left"}]}>
+					<Text style={[styles.subTitle, {marginTop: sizeConstants.m, textAlign: "left"}]}>
 						{" "}
 						{subTitle2}
 					</Text>
@@ -240,3 +240,14 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(TimelineFlowSlider)
+
+const styles = StyleSheet.create({
+	subTitle: {
+		fontSize: sizeConstants.fourteenScale, //19
+		// fontSize: sizeConstants.sixteenX, //19
+
+		letterSpacing: 0.7,
+		color: ColorConstants.faintWhite,
+		marginTop: sizeConstants.thirty,
+	},
+})

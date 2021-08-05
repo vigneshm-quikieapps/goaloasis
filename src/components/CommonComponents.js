@@ -376,7 +376,7 @@ const styles = StyleSheet.create({
 	dayText: {
 		textAlign: "center",
 		color: ColorConstants.white,
-		fontSize: sizeConstants.thirteen,
+		fontSize: sizeConstants.mX,
 		flex: 1,
 		width: sizeConstants.thirty,
 		alignItems: "center",

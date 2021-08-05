@@ -37,7 +37,7 @@ const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 
 					<View style={CommonStyles.textContainer}>
 						<Text style={CommonStyles.title}>Why is it important?</Text>
-						<Text style={CommonStyles.subTitle}>
+						<Text style={styles.subTitle}>
 							Write out what this goal means to you and make sure it’s something important.
 						</Text>
 
@@ -140,5 +140,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(GoalStep2)
 const styles = StyleSheet.create({
 	introContainer: {
 		flex: 1,
+	},
+	subTitle: {
+		// fontSize: sizeConstants.sixteenX, //19
+		fontSize: sizeConstants.fourteenScale, //19
+
+		letterSpacing: 0.7,
+		color: ColorConstants.faintWhite,
+		marginTop: sizeConstants.thirty,
 	},
 })

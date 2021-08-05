@@ -106,18 +106,13 @@ const Second = ({
 		return finalObj
 	}
 
-	const setReoccuring = () => {
-		nextScreen()
-	}
-
-	const navigationCallback = () => {
-		setBooleanFlag(true)
-		navigation.navigate("particulargoal")
-	}
+	const navigationCallback = () => {}
 
 	const nextScreen = () => {
+		setShowLoader(true)
+
 		let newMilestoneItemWithTask = clickedGoal.goalMilestone.map((item) => {
-			if (item.milestone == clickedMilestone) {
+			if (item.milestone === clickedMilestone) {
 				let filteredTasks = item.taskData.filter((tsk) => tsk.task != tName)
 				return {
 					...item,
@@ -142,18 +137,19 @@ const Second = ({
 			...clickedGoal,
 			goalMilestone: newMilestoneItemWithTask,
 		}
-		setShowLoader(true)
 		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask, () => {
-			setHideLoader(false)
 			setClickedGoal(updatedObj)
-			navigationCallback()
+			setBooleanFlag(true)
+
+			setHideLoader(false)
+
+			navigation.navigate("particulargoal")
 		})
 	}
 
 	return (
 		<StatusBarScreen style={styles.introContainer}>
 			{loading ? <Spinner /> : null}
-
 			<ScrollView>
 				<View>
 					<View style={{flexDirection: "row"}}>
@@ -179,16 +175,10 @@ const Second = ({
 							Reoccuring Date
 						</Text>
 
-						<TouchableOpacity
-							onPress={() => {
-								setReoccuring()
-								//  navigation.navigate("FifthMilestone")
-							}}
-						>
-							<Text style={[CommonStyles.done]}>Done</Text>
+						<TouchableOpacity onPress={() => nextScreen()} style={{alignSelf: "flex-end"}}>
+							<Text style={[CommonStyles.done, {color: ColorConstants.faintWhite}]}>Done</Text>
 						</TouchableOpacity>
 					</View>
-
 					<Calendar
 						style={{paddingLeft: 20, paddingRight: 20}}
 						current={
@@ -253,11 +243,7 @@ const Second = ({
 					/>
 					<TouchableOpacity
 						style={[CommonStyles.containerMilestone, {marginTop: sizeConstants.xs}]}
-						onPress={() => {
-							// navigation.navigate("third")
-							setReoccuring()
-							// navigation.navigate("particulargoal")
-						}}
+						onPress={nextScreen}
 					>
 						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
 					</TouchableOpacity>

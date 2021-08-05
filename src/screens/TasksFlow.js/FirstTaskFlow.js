@@ -101,9 +101,23 @@ const FirstTaskFlow = ({
 
 						<View style={CommonStyles.calendarContainer}>
 							<Text style={CommonStyles.targetDate}>Target Date</Text>
-							<TouchableOpacity onPress={() => {}} style={{alignSelf: "flex-end"}}>
-								<Text style={CommonStyles.done}>Done</Text>
-							</TouchableOpacity>
+							{taskName === "" ? (
+								<TouchableOpacity
+									onPress={() => {}}
+									style={{alignSelf: "flex-end", backgroundColor: "pink"}}
+								>
+									<Text style={CommonStyles.done}>Done</Text>
+								</TouchableOpacity>
+							) : (
+								<TouchableOpacity
+									onPress={() => {
+										navigation.navigate("secondtaskflow")
+									}}
+									style={{alignSelf: "flex-end"}}
+								>
+									<Text style={[CommonStyles.done, {color: ColorConstants.faintWhite}]}>Done</Text>
+								</TouchableOpacity>
+							)}
 						</View>
 
 						<Calendar
@@ -202,7 +216,7 @@ const styles = StyleSheet.create({
 		marginLeft: sizeConstants.twentyMX,
 	},
 	subTitle: {
-		fontSize: sizeConstants.sixteenX, //16
+		fontSize: sizeConstants.fourteenScale, //16
 		color: ColorConstants.faintWhite,
 		paddingLeft: sizeConstants.twentyOne,
 		marginTop: sizeConstants.l,
@@ -268,7 +282,7 @@ const styles = StyleSheet.create({
 
 	bigTitle: {
 		color: ColorConstants.whitishBlue,
-		fontSize: sizeConstants.twentyFourScale, //30
+		fontSize: sizeConstants.twentyTwoScale, //30
 		marginLeft: sizeConstants.fourteen,
 		fontWeight: "bold",
 		marginTop: sizeConstants.fourteen,

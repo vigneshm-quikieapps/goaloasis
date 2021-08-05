@@ -6,7 +6,13 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import DatePicker from "react-native-date-picker"
 import colors from "../../../colors"
 import AsyncStorage from "@react-native-community/async-storage"
-import {ColorConstants, CommonStyles, forGoals} from "../../core/constants"
+import {
+	ColorConstants,
+	CommonStyles,
+	forGoals,
+	goalsColorArray,
+	sizeConstants,
+} from "../../core/constants"
 import firestore from "@react-native-firebase/firestore"
 import {setCurrentGoal, setHideLoader, setShowLoader} from "./../../redux/actions"
 import {addGoalToFirestore} from "./../../firebase"
@@ -14,7 +20,7 @@ import {connect} from "react-redux"
 import {CommonHomeButton, CommonPrevNextButton} from "../../components/CommonComponents"
 import Spinner from "../../components/Spinner"
 import dayjs from "dayjs"
-const colorArray = Object.values(forGoals)
+// const colorArray = Object.values(forGoals)
 
 const GoalStep3 = ({setCurrentGoal, currentGoal, setShowLoader, loading, setHideLoader}) => {
 	const navigation = useNavigation()
@@ -47,17 +53,9 @@ const GoalStep3 = ({setCurrentGoal, currentGoal, setShowLoader, loading, setHide
 
 	// TODO
 	console.log("LOADING", loading)
+
 	const getColorForGoal = () => {
-		let len = 0
-		firestore()
-			.collection("Goals")
-			.get()
-			.then((snap) => {
-				size = snap.size // will return the collection size
-				len = snap.size
-			})
-		let a = len % 6
-		return colorArray[a]
+		return goalsColorArray[allGoals.length]
 	}
 
 	return (
@@ -74,7 +72,7 @@ const GoalStep3 = ({setCurrentGoal, currentGoal, setShowLoader, loading, setHide
 
 					<View style={CommonStyles.textContainer}>
 						<Text style={CommonStyles.title}>Your target date</Text>
-						<Text style={CommonStyles.subTitle}>
+						<Text style={styles.subTitle}>
 							When your goal is time-bound, it become measurable. Don’t stress over it if you are
 							unsure about the exact date. You can always adjust later.
 						</Text>
@@ -169,5 +167,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(GoalStep3)
 const styles = StyleSheet.create({
 	introContainer: {
 		flex: 1,
+	},
+	subTitle: {
+		// fontSize: sizeConstants.sixteenX, //19
+		fontSize: sizeConstants.fourteenScale, //19
+
+		letterSpacing: 0.7,
+		color: ColorConstants.faintWhite,
+		marginTop: sizeConstants.thirty,
 	},
 })

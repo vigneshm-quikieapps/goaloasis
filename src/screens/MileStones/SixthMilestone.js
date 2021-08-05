@@ -133,7 +133,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(SixthMilestone)
 
 const styles = StyleSheet.create({
 	subTitle: {
-		fontSize: sizeConstants.sixteenX, //16
+		fontSize: sizeConstants.fourteenScale, //16
 		color: ColorConstants.faintWhite,
 		marginLeft: sizeConstants.twentyMX,
 		marginRight: sizeConstants.mX,

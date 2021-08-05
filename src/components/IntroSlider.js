@@ -6,7 +6,7 @@ import {setFirstTimeUser} from "../utils/asyncStorage"
 import authContext from "../context/auth/authContext"
 import StatusBarScreen from "../screens/MileStones/StatusBarScreen"
 import Constants from "expo-constants"
-import {CommonStyles, sizeConstants} from "./../core/constants"
+import {ColorConstants, CommonStyles, sizeConstants} from "./../core/constants"
 
 const IntroSlider = ({data}) => {
 	// console.log("Data from the Intro Slider---->", data)
@@ -100,7 +100,7 @@ const IntroSlider = ({data}) => {
 
 				<View style={CommonStyles.textContainer}>
 					<Text style={CommonStyles.title}>{title}</Text>
-					<Text style={CommonStyles.subTitle}>{subTitle}</Text>
+					<Text style={styles.subTitle}>{subTitle}</Text>
 				</View>
 
 				<View style={CommonStyles.btnContainer}>
@@ -119,5 +119,14 @@ const IntroSlider = ({data}) => {
 		</ImageBackground>
 	)
 }
+const styles = StyleSheet.create({
+	subTitle: {
+		//  fontSize: sizeConstants.sixteenX, //19
+		fontSize: sizeConstants.fourteenScale, //19
 
+		letterSpacing: 0.7,
+		color: ColorConstants.faintWhite,
+		marginTop: sizeConstants.thirty,
+	},
+})
 export default IntroSlider

@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
 		marginLeft: sizeConstants.twentyMX,
 	},
 	subTitle: {
-		fontSize: sizeConstants.sixteenX, //16
+		fontSize: sizeConstants.fourteenScale, //16
 		color: "#FDF9F2",
 		paddingLeft: sizeConstants.twentyOne,
 		marginTop: sizeConstants.l,

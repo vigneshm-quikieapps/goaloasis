@@ -102,6 +102,8 @@ const TimelineScreen = ({
 						color: "#B3855C",
 						fontSize: sizeConstants.eighteenScale, //20
 						fontWeight: "bold",
+
+						textAlign: "center",
 					}}
 				>
 					Yearly Timeline
@@ -301,13 +303,14 @@ const styles = StyleSheet.create({
 		flex: 1,
 		padding: 20,
 		marginTop: 30,
+		justifyContent: "center",
 	},
 	list: {
 		flex: 1,
 		paddingTop: 20,
 	},
 	title: {
-		fontSize: sizeConstants.sixteenX, //16
+		fontSize: sizeConstants.fourteenScale, //16
 		fontWeight: "bold",
 	},
 	descriptionContainer: {

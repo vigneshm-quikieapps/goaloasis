@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		top: "50%",
 		left: "40%",
+		zIndex: 11,
 	},
 })
 

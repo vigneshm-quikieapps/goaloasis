@@ -126,7 +126,7 @@ const MyGoals = ({
 
 	const colorArray = Object.values(forGoals)
 
-	console.log("loadinggggggg", loading)
+	// console.log("loadinggggggg", loading)
 
 	let count = 0
 
@@ -139,10 +139,10 @@ const MyGoals = ({
 						let taskDatee = JSON.stringify(allGoals[i].goalMilestone[j].taskData[k].date)
 
 						if (taskDatee.match(today)) {
-							console.log(
-								"taskDateeee",
-								JSON.stringify(allGoals[i].goalMilestone[j].taskData[0].date)
-							)
+							// console.log(
+							// 	"taskDateeee",
+							// 	JSON.stringify(allGoals[i].goalMilestone[j].taskData[0].date)
+							// )
 							count = count + 1
 						}
 					}
@@ -395,7 +395,7 @@ const MyGoals = ({
 														fontSize: sizeConstants.twentyTwoScale, //25
 														color: getColor(index),
 														fontWeight: "bold",
-														padding: 10,
+														padding: sizeConstants.eight,
 													}}
 												>
 													{task.isCompleted ? "100%" : `${completedPercent}%`}
@@ -411,7 +411,7 @@ const MyGoals = ({
 							<TouchableOpacity
 								style={CommonStyles.logoContainer}
 								onPress={() => {
-									if (allGoals.length == 0 || allGoals.length < 6) {
+									if (allGoals.length >= 0 || allGoals.length < 6) {
 										gotoGoal()
 									} else {
 										alert("You cannot add more than 6 Goals.")

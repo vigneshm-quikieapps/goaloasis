@@ -43,7 +43,7 @@ const NameGoal = ({setCurrentGoal, currentGoal}) => {
 
 					<View style={CommonStyles.textContainer}>
 						<Text style={CommonStyles.title}>Name your goal</Text>
-						<Text style={CommonStyles.subTitle}>
+						<Text style={styles.subTitle}>
 							Be specific, try to put a real and exact figure on it. Make sure it’s achievable so
 							that you build on your momentum.
 						</Text>
@@ -117,5 +117,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(NameGoal)
 const styles = StyleSheet.create({
 	introContainer: {
 		flex: 1,
+	},
+	subTitle: {
+		fontSize: sizeConstants.fourteenScale, //19
+		// fontSize: sizeConstants.sixteenX, //19
+
+		letterSpacing: 0.7,
+		color: ColorConstants.faintWhite,
+		marginTop: sizeConstants.thirty,
 	},
 })
