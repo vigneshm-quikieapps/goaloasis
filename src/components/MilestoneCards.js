@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {StyleSheet, Text, View, TouchableOpacity, FlatList, Alert} from "react-native"
+import {StyleSheet, Text, View, TouchableOpacity, FlatList, Alert, ScrollView} from "react-native"
 import {Feather} from "@expo/vector-icons"
 import Swipeout from "rc-swipeout"
 import {MaterialCommunityIcons, AntDesign, MaterialIcons, Octicons} from "@expo/vector-icons"
@@ -261,10 +261,10 @@ const MilestoneCards = ({
 								style={[styles.TouchContainer, style]}
 								onPress={() => setUpDown(!upDown)}
 							>
-								<View>
+								<ScrollView>
 									<Text style={styles.mainTitle}>{data && data.milestone}</Text>
 									<Text style={styles.subtitle}>{milestoneDate}</Text>
-								</View>
+								</ScrollView>
 
 								{data && !data.isCompleted ? (
 									<View style={{alignItems: "center"}}>
@@ -419,7 +419,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
-		paddingHorizontal: 20,
+		paddingHorizontal: sizeConstants.twentyOneScale,
 	},
 	mainTitle: {
 		fontSize: sizeConstants.eighteenScale, //19
@@ -442,24 +442,24 @@ const styles = StyleSheet.create({
 	},
 	accordian: {
 		backgroundColor: "#CDE8E6",
-		height: 70,
+		height: sizeConstants.seventy,
 		width: "90%",
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
-		paddingHorizontal: 20,
-		borderRadius: 20,
+		paddingHorizontal: sizeConstants.twentyX,
+		borderRadius: sizeConstants.twentyX,
 		marginTop: sizeConstants.xl,
-		marginLeft: 50,
+		marginLeft: sizeConstants.xxxlScale,
 	},
 	taskAccordion: {
 		backgroundColor: "#CDE8E6",
-		height: 70,
+		height: sizeConstants.seventy,
 		width: "90%",
 		flexDirection: "row",
 		alignItems: "center",
 		alignSelf: "flex-end",
-		borderRadius: 20,
+		borderRadius: sizeConstants.twentyX,
 		marginTop: sizeConstants.xl,
 		elevation: 0,
 	},

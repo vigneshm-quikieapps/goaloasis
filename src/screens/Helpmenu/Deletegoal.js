@@ -97,13 +97,13 @@ const styles = StyleSheet.create({
 		height: 180,
 		backgroundColor: "#588C8D",
 		justifyContent: "center",
-		borderBottomLeftRadius: 50,
+		borderBottomLeftRadius: sizeConstants.xxxl,
 	},
 	goalsContainer: {
 		flex: 1,
 		backgroundColor: "#FBF5E9",
-		borderTopRightRadius: 70,
-		marginTop: -50,
+		borderTopRightRadius: sizeConstants.seventyScale,
+		marginTop: sizeConstants.negativeFifty,
 	},
 	bottomBtnContainer: {
 		width: "100%",

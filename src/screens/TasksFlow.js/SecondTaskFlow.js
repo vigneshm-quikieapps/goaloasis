@@ -4,7 +4,13 @@ import {useNavigation} from "@react-navigation/native"
 import colors from "../../../colors"
 import {Entypo} from "@expo/vector-icons"
 import Constants from "expo-constants"
-import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/constants"
+import {
+	ColorConstants,
+	commonImages,
+	CommonStyles,
+	sizeConstants,
+	TaskColorArray,
+} from "../../core/constants"
 import AppButton from "./../MileStones/AppButton"
 import {
 	CommonHomeButton,
@@ -26,6 +32,7 @@ const SecondTaskFlow = ({
 	route,
 	setClickedGoal,
 	setBooleanFlag,
+	allGoals,
 }) => {
 	const navigation = useNavigation()
 	const {currentTaskData} = route.params
@@ -43,6 +50,13 @@ const SecondTaskFlow = ({
 		let newMilestoneItemWithTask = clickedGoal.goalMilestone.map((item) => {
 			if (item.milestone == clickedMilestone) {
 				let filteredTasks = item.taskData.filter((tsk) => tsk.task != taskName)
+				let index = 0
+				for (let i = 0; i < allGoals.length; i++) {
+					if (allGoals[i].color === clickedGoal.color) {
+						index = i
+						break
+					}
+				}
 				return {
 					...item,
 					taskData: [
@@ -51,6 +65,7 @@ const SecondTaskFlow = ({
 							isCompleted: false,
 							task: taskName,
 							date: currentTaskData.date,
+							color: TaskColorArray[index],
 							reoccuring: {
 								startDate: null,
 								reoccuringType: "none",
@@ -107,6 +122,7 @@ const SecondTaskFlow = ({
 					placeholder="Type Here"
 					value={taskName}
 					onChangeText={(text) => setTaskName(text)}
+					maxLength={28}
 				/>
 			</View>
 
@@ -185,6 +201,7 @@ const mapStateToProps = (state) => {
 		clickedGoal: state.milestone.clickedGoal,
 		clickedMilestone: state.milestone.clickedMilestone,
 		loading: state.milestone.loading,
+		allGoals: state.milestone.allGoals,
 	}
 }
 

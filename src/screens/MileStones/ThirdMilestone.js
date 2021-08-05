@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
 		marginLeft: sizeConstants.twentyOne,
 		marginTop: sizeConstants.m,
 		paddingLeft: sizeConstants.three,
-		paddingRight: sizeConstants.xs,
+		marginRight: sizeConstants.twentyOne,
 	},
 	mainTitle: {
 		color: ColorConstants.faintWhite,
@@ -182,9 +182,9 @@ const styles = StyleSheet.create({
 		borderRadius: sizeConstants.seventyFive,
 	},
 	nextBtn: {
-		width: 50,
-		height: 50,
-		borderRadius: 25,
+		width: sizeConstants.xxxl,
+		height: sizeConstants.xxxl,
+		borderRadius: sizeConstants.xxxl,
 	},
 	textInput: {
 		width: sizeConstants.threeFourTeen,

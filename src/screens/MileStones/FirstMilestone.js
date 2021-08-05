@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {
 	StyleSheet,
 	Text,
@@ -13,6 +13,8 @@ import {
 	commonDateFormat,
 	commonImages,
 	CommonStyles,
+	goalsColorArray,
+	milestoneColorArray,
 	sizeConstants,
 } from "./../../core/constants"
 import {useNavigation} from "@react-navigation/native"
@@ -54,13 +56,20 @@ const FirstMilestone = ({
 	setShowLoader,
 	loading,
 	setHideLoader,
+	allGoals,
 }) => {
 	const [milestone, setMilestone] = useState("")
 	const [clickedDate, setDate] = useState(dayjs().format(commonDateFormat))
 	const navigation = useNavigation()
-	// console.log("Solving the date issue", typeof clickedDate)
 
 	const nextScreen = () => {
+		let index = 0
+		for (let i = 0; i < allGoals.length; i++) {
+			if (allGoals[i].color === clickedGoal.color) {
+				index = i
+				break
+			}
+		}
 		let milestoneArr = [
 			...clickedGoal.goalMilestone,
 			{
@@ -68,6 +77,7 @@ const FirstMilestone = ({
 				date: clickedDate,
 				taskData: [],
 				isCompleted: false,
+				color: milestoneColorArray[index],
 			},
 		]
 
@@ -124,6 +134,7 @@ const FirstMilestone = ({
 									style={styles.textInput}
 									placeholder="Type Here"
 									onChangeText={(text) => setMilestone(text)}
+									maxLength={28}
 								/>
 							</View>
 							<Text style={styles.subTitle}>
@@ -220,6 +231,7 @@ const mapStateToProps = (state) => {
 		clickedGoal: state.milestone.clickedGoal,
 		clickedMilestone: state.milestone.clickedMilestone,
 		loading: state.milestone.loading,
+		allGoals: state.milestone.allGoals,
 	}
 }
 

@@ -14,15 +14,24 @@ import {
 	sizeConstants,
 } from "../../core/constants"
 import firestore from "@react-native-firebase/firestore"
-import {setCurrentGoal, setHideLoader, setShowLoader} from "./../../redux/actions"
+import {setAllGoals, setCurrentGoal, setHideLoader, setShowLoader} from "./../../redux/actions"
 import {addGoalToFirestore} from "./../../firebase"
 import {connect} from "react-redux"
 import {CommonHomeButton, CommonPrevNextButton} from "../../components/CommonComponents"
 import Spinner from "../../components/Spinner"
 import dayjs from "dayjs"
+import {scale} from "react-native-size-matters"
 // const colorArray = Object.values(forGoals)
 
-const GoalStep3 = ({setCurrentGoal, currentGoal, setShowLoader, loading, setHideLoader}) => {
+const GoalStep3 = ({
+	setCurrentGoal,
+	currentGoal,
+	setShowLoader,
+	loading,
+	setAllGoals,
+	allGoals,
+	setHideLoader,
+}) => {
 	const navigation = useNavigation()
 
 	const gotoHome = () => {
@@ -72,7 +81,7 @@ const GoalStep3 = ({setCurrentGoal, currentGoal, setShowLoader, loading, setHide
 
 					<View style={CommonStyles.textContainer}>
 						<Text style={CommonStyles.title}>Your target date</Text>
-						<Text style={styles.subTitle}>
+						<Text style={CommonStyles.goalsubTitle}>
 							When your goal is time-bound, it become measurable. Don’t stress over it if you are
 							unsure about the exact date. You can always adjust later.
 						</Text>
@@ -141,11 +150,12 @@ const GoalStep3 = ({setCurrentGoal, currentGoal, setShowLoader, loading, setHide
 		</View>
 	)
 }
-
+setAllGoals
 const mapStateToProps = (state) => {
 	return {
 		currentGoal: state.milestone.currentGoal,
 		loading: state.milestone.loading,
+		allGoals: state.milestone.allGoals,
 	}
 }
 
@@ -160,6 +170,9 @@ const mapDispatchToProps = (dispatch) => {
 		setHideLoader: (data) => {
 			dispatch(setHideLoader(data))
 		},
+		setAllGoals: (data) => {
+			dispatch(setAllGoals(data))
+		},
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(GoalStep3)
@@ -167,13 +180,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(GoalStep3)
 const styles = StyleSheet.create({
 	introContainer: {
 		flex: 1,
-	},
-	subTitle: {
-		// fontSize: sizeConstants.sixteenX, //19
-		fontSize: sizeConstants.fourteenScale, //19
-
-		letterSpacing: 0.7,
-		color: ColorConstants.faintWhite,
-		marginTop: sizeConstants.thirty,
 	},
 })

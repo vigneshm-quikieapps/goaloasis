@@ -98,6 +98,7 @@ const First = ({route, clickedMilestone}) => {
 					placeholder="Type Here"
 					onChangeText={(text) => setTaskName(text)}
 					value={tName}
+					maxLength={28}
 				/>
 			</View>
 			<Text style={CommonStyles.firstSubTitle}>Edit reoccuring</Text>

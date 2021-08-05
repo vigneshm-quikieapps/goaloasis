@@ -95,6 +95,7 @@ const FirstTaskFlow = ({
 								style={styles.textInput}
 								placeholder="Type Here"
 								onChangeText={(text) => setTaskName(text)}
+								maxLength={28}
 							/>
 						</View>
 						<Text style={styles.bigTitle}>Edit target date</Text>

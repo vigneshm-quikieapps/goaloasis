@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	titleContainer: {
-		height: 170,
+		height: sizeConstants.oneEightyScale,
 		backgroundColor: "#588C8D",
 		justifyContent: "center",
 	},
@@ -108,21 +108,21 @@ const styles = StyleSheet.create({
 	goalsContainer: {
 		flex: 1,
 		backgroundColor: "#FBF5E9",
-		borderTopRightRadius: 70,
-		marginTop: -50,
+		borderTopRightRadius: sizeConstants.seventy,
+		marginTop: sizeConstants.negativeFifty,
 	},
 
 	bottomBtnContainer: {
 		width: "100%",
 		position: "absolute",
-		bottom: 150,
+		bottom: sizeConstants.oneFifty,
 		justifyContent: "center",
 		alignItems: "center",
 	},
 	bottomBtn: {
-		height: 75,
-		width: 75,
-		borderRadius: 75 / 2,
+		height: sizeConstants.seventyFive,
+		width: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive,
 		backgroundColor: "#7EC8C9",
 		elevation: 5,
 		justifyContent: "center",
@@ -131,13 +131,13 @@ const styles = StyleSheet.create({
 
 	HelpBtn: {
 		backgroundColor: "#76BBBC",
-		height: 70,
+		height: sizeConstants.seventyFive,
 		width: "75%",
-		borderRadius: 60,
+		borderRadius: sizeConstants.sixty,
 		justifyContent: "center",
 		alignItems: "center",
 		elevation: 10,
-		marginVertical: 20,
+		marginVertical: sizeConstants.xl,
 	},
 	btnText: {
 		fontSize: sizeConstants.eighteenScale, //20

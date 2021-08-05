@@ -163,6 +163,7 @@ const Second = ({
 							placeholder="Type Here"
 							onChangeText={(text) => setTaskName(text)}
 							value={taskName}
+							maxLength={28}
 						/>
 					</View>
 					<View style={[CommonStyles.editContainer, {marginVertical: height > 700 ? 20 : 0}]}>

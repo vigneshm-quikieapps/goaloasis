@@ -7,6 +7,8 @@ import {ColorConstants, CommonStyles, sizeConstants} from "../../core/constants"
 import {setCurrentGoal} from "./../../redux/actions"
 import {connect} from "react-redux"
 import {CommonHomeButton, CommonPrevNextButton} from "../../components/CommonComponents"
+import {scale} from "react-native-size-matters"
+
 const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 	const navigation = useNavigation()
 	const [description, setDescription] = useState("")
@@ -37,10 +39,9 @@ const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 
 					<View style={CommonStyles.textContainer}>
 						<Text style={CommonStyles.title}>Why is it important?</Text>
-						<Text style={styles.subTitle}>
+						<Text style={CommonStyles.goalsubTitle}>
 							Write out what this goal means to you and make sure it’s something important.
 						</Text>
-
 						<View style={CommonStyles.centerCont}>
 							<TextInput
 								style={[CommonStyles.textInput, {marginTop: sizeConstants.xxxl}]}
@@ -48,6 +49,7 @@ const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 								// multiline={true}
 								// numberOfLines={4}
 								onChangeText={(text) => setDescription(text)}
+								maxLength={35}
 							/>
 						</View>
 					</View>
@@ -140,13 +142,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(GoalStep2)
 const styles = StyleSheet.create({
 	introContainer: {
 		flex: 1,
-	},
-	subTitle: {
-		// fontSize: sizeConstants.sixteenX, //19
-		fontSize: sizeConstants.fourteenScale, //19
-
-		letterSpacing: 0.7,
-		color: ColorConstants.faintWhite,
-		marginTop: sizeConstants.thirty,
 	},
 })

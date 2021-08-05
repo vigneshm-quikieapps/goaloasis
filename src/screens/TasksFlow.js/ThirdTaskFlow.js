@@ -18,6 +18,7 @@ import {
 	sizeConstants,
 	height,
 	commonDateFormat,
+	TaskColorArray,
 } from "../../core/constants"
 import StatusBarScreen from "./../MileStones/StatusBarScreen"
 import {
@@ -45,6 +46,7 @@ const ThirdTaskFlow = ({
 	clickedMilestone,
 	setBooleanFlag,
 	setClickedGoal,
+	allGoals,
 }) => {
 	const navigation = useNavigation()
 	const {currentTaskData} = route.params
@@ -69,6 +71,13 @@ const ThirdTaskFlow = ({
 		let newMilestoneItemWithTask = clickedGoal.goalMilestone.map((item) => {
 			if (item.milestone == clickedMilestone) {
 				let filteredTasks = item.taskData.filter((tsk) => tsk.task != taskName)
+				let index = 0
+				for (let i = 0; i < allGoals.length; i++) {
+					if (allGoals[i].color === clickedGoal.color) {
+						index = i
+						break
+					}
+				}
 				return {
 					...item,
 					taskData: [
@@ -77,6 +86,7 @@ const ThirdTaskFlow = ({
 							isCompleted: false,
 							task: taskName,
 							date: clickedDate,
+							color: TaskColorArray[index],
 							reoccuring: {
 								startDate: null,
 								reoccuringType: "none",
@@ -127,6 +137,7 @@ const ThirdTaskFlow = ({
 								placeholder="Type Here"
 								value={taskName}
 								onChangeText={(text) => setTaskName(text)}
+								maxLength={28}
 							/>
 						</View>
 					</TouchableOpacity>
@@ -261,6 +272,7 @@ const mapStateToProps = (state) => {
 		clickedGoal: state.milestone.clickedGoal,
 		clickedMilestone: state.milestone.clickedMilestone,
 		loading: state.milestone.loading,
+		allGoals: state.milestone.allGoals,
 	}
 }
 const mapDispatchToProps = (dispatch) => {

@@ -55,15 +55,22 @@ export const sizeConstants = {
 	xl: verticalScale(20),
 	twentyX: scale(20), //dipak
 	twentyMX: scale(20),
+	twentyOneScale: scale(21),
+
 	twentyOne: moderateScale(21),
 	twentyTwo: verticalScale(22),
 	twentyTwoScale: scale(22), //dipak
 	twentyFour: verticalScale(24),
 	twentyFourScale: scale(24), //dipak
+	twentyFiveScale: scale(25), //dipak
+
 	xxl: verticalScale(25),
 	twentySix: verticalScale(26),
+	twentySixScale: scale(26),
 	twentySeven: verticalScale(27),
 	twentyEight: verticalScale(28),
+	thirtyScale: scale(30),
+
 	thirty: verticalScale(30),
 	mThirty: moderateScale(30),
 	thirtyOne: verticalScale(31),
@@ -80,9 +87,13 @@ export const sizeConstants = {
 	fourtyFive: verticalScale(45),
 	fourtyEight: verticalScale(48),
 	xxxl: verticalScale(50),
+	xxxl: verticalScale(50),
+	xxxlScale: scale(50),
 	fifty: moderateScale(50),
 	fiftyHalf: scale(50.5),
 	fiftyFive: verticalScale(55),
+	sixtyScale: scale(60),
+
 	sixty: verticalScale(60),
 	mSixty: moderateScale(60),
 	sixtyFive: verticalScale(65),
@@ -92,6 +103,7 @@ export const sizeConstants = {
 	seventyFive: verticalScale(75),
 	seventyFiveMX: moderateScale(75),
 	eighty: verticalScale(80),
+	eightyThree: verticalScale(83),
 	eightyFive: verticalScale(85),
 	ninety: verticalScale(90),
 	ninetySeven: verticalScale(97),
@@ -106,6 +118,10 @@ export const sizeConstants = {
 	oneFourtyFive: verticalScale(145),
 	oneFifty: verticalScale(150),
 	oneFiftyX: scale(150),
+	oneSixtyScale: verticalScale(160),
+
+	oneEightyScale: scale(170),
+
 	oneEighty: verticalScale(180),
 	oneEightyScale: scale(180),
 	twoHundred: verticalScale(200),
@@ -176,6 +192,16 @@ export const goalsColorArray = [
 	forGoals.fifth,
 	forGoals.sixth,
 ]
+export const milestoneColorArray = [
+	"#7EC8C9",
+	"#99838F",
+	"#9788B3",
+	"#E6AB76",
+	"#799A97",
+	"#CD8784",
+]
+export const TaskColorArray = ["#BFE4E4", "#CCC1C7", "#C3BBD4", "#FFCB9C", "#B2C5C3", "#E3BAB9"]
+
 export const content = {
 	My_Milestone:
 		"It looks like you don’t have a plan to achieve your goal yet. Don’t worry! Tap (+) to add a milestone and get on your way.",
@@ -285,6 +311,15 @@ export const CommonStyles = ScaledSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-between",
 		marginHorizontal: sizeConstants.twentySix,
+	},
+	goalsubTitle: {
+		fontSize: sizeConstants.fourteenScale, //19
+		// fontSize: sizeConstants.sixteenX, //19
+
+		letterSpacing: scale(0.7),
+
+		color: ColorConstants.faintWhite,
+		marginTop: sizeConstants.thirty,
 	},
 
 	// sliders common styles ends

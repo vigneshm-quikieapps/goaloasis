@@ -11,6 +11,7 @@ import {setClickedGoal, setShowLoader, setHideLoader} from "../../redux/actions"
 import Spinner from "./../../components/Spinner"
 import dayjs from "dayjs"
 import {sizeConstants} from "../../core/constants"
+import {scale} from "react-native-size-matters"
 
 const EditGoalhelp = ({clickedGoal, setClickedGoal, setShowLoader, loading, setHideLoader}) => {
 	console.log(clickedGoal)
@@ -119,58 +120,53 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	headerMargin: {
-		marginTop: 40,
+		marginTop: sizeConstants.fourty,
 		flexDirection: "row",
 		justifyContent: "space-between",
-		marginHorizontal: 26,
+		marginHorizontal: sizeConstants.twentySix,
 	},
-
 	textContainer: {
-		marginTop: 30,
-		marginHorizontal: 20,
+		marginTop: sizeConstants.thirty,
+		marginHorizontal: sizeConstants.twentyX,
 	},
-
 	title: {
 		fontSize: sizeConstants.twentyTwoScale, //25
 		textAlign: "left",
 		fontWeight: "bold",
 		color: "white",
 	},
-
 	btnContainer: {
 		position: "absolute",
-		bottom: 70,
+		bottom: sizeConstants.seventy,
 		width: "100%",
 		justifyContent: "center",
 		alignItems: "center",
 	},
 	nextBtnContainer: {
-		bottom: 45,
+		bottom: sizeConstants.fourtyFive,
 		justifyContent: "space-around",
 		flexDirection: "row",
 	},
-
 	btnStyling: {
 		justifyContent: "center",
 		alignItems: "center",
 		backgroundColor: "white",
-		width: 75,
-		height: 75,
-		borderRadius: 75 / 2,
+		width: sizeConstants.seventyFive,
+		height: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive,
 	},
 	nextBtn: {
-		width: 50,
-		height: 50,
-		borderRadius: 25,
+		width: sizeConstants.xxxl,
+		height: sizeConstants.xxxl,
+		borderRadius: sizeConstants.xxxl,
 	},
-
 	textInput: {
-		width: 314,
-		height: 50,
+		width: sizeConstants.threeFourTeen,
+		height: sizeConstants.xxxl,
 		backgroundColor: "#FDF9F2",
-		borderRadius: 50,
-		marginTop: 50,
-		paddingLeft: 20,
+		borderRadius: sizeConstants.xxxl,
+		marginTop: sizeConstants.xxxl,
+		paddingLeft: sizeConstants.twentyX,
 		fontSize: sizeConstants.eighteenScale, //19
 		color: "#666666",
 		elevation: 10,

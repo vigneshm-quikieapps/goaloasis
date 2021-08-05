@@ -328,14 +328,14 @@ const styles = StyleSheet.create({
 		marginRight: sizeConstants.xl,
 	},
 	titleContainer: {
-		height: 50,
+		height: sizeConstants.xxxl,
 		justifyContent: "center",
 	},
 	mainTitle: {
 		color: "#FBF5E9",
 		fontSize: sizeConstants.twentyTwoScale, //25
 
-		marginLeft: 20,
+		marginLeft: sizeConstants.twentyX,
 		fontWeight: "bold",
 	},
 	goalsContainer: {
@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
 
 		fontWeight: "bold",
 		color: "black",
-		marginHorizontal: 20,
+		marginHorizontal: sizeConstants.twentyX,
 	},
 
 	bottomBtnContainer: {
@@ -360,9 +360,9 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	bottomBtn: {
-		height: 75,
-		width: 75,
-		borderRadius: 75 / 2,
+		height: sizeConstants.seventyFive,
+		width: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive,
 		backgroundColor: ColorConstants.lighterBlue,
 		elevation: 5,
 		justifyContent: "center",
@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
 	},
 
 	BottomTouch: {
-		height: 100,
+		height: sizeConstants.hundred,
 		width: "100%",
 		borderWidth: 1,
 		borderLeftColor: "white",

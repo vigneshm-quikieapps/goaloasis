@@ -226,7 +226,7 @@ export const CommonPrevNextButton = ({
 		</View>
 	)
 }
-
+export const customTimelineFlatList = ({}) => {}
 export const CustomDayComponentForCalendar = ({clickedDate, date, state, dayClick, marking}) => {
 	let today = dayjs().format(commonDateFormat)
 	let selectedDate = dayjs(clickedDate).format(commonDateFormat)

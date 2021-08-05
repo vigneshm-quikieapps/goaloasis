@@ -151,9 +151,9 @@ const styles = StyleSheet.create({
 	},
 
 	nextBtn: {
-		width: 50,
-		height: 50,
-		borderRadius: 25,
+		width: sizeConstants.xxxl,
+		height: sizeConstants.xxxl,
+		borderRadius: sizeConstants.xxxl,
 	},
 	textInput: {
 		width: sizeConstants.threeFourTeen,

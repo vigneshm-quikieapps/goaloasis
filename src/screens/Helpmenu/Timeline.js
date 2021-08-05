@@ -47,6 +47,8 @@ const TimelineScreen = ({
 		setAllGoalsforTimeline(timelineData)
 	}, [allGoals])
 
+	// console.log("popopop", allGoalsforTimeline[0].color)
+
 	useEffect(() => {
 		importData()
 	}, [clickedGoal])
@@ -102,7 +104,6 @@ const TimelineScreen = ({
 						color: "#B3855C",
 						fontSize: sizeConstants.eighteenScale, //20
 						fontWeight: "bold",
-
 						textAlign: "center",
 					}}
 				>
@@ -118,7 +119,7 @@ const TimelineScreen = ({
 					timeStyle={CommonStyles.timeStyle}
 					descriptionStyle={CommonStyles.descriptionStyle}
 					separator={false}
-					detailContainerStyle={CommonStyles.detailContainerStyle}
+					detailContainerStyle={[CommonStyles.detailContainerStyle]}
 					titleStyle={CommonStyles.titleStyle}
 					columnFormat="two-column"
 					onEventPress={(item) => {
@@ -301,13 +302,13 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		flex: 1,
-		padding: 20,
-		marginTop: 30,
+		padding: sizeConstants.twentyX,
+		marginTop: sizeConstants.thirtyScale,
 		justifyContent: "center",
 	},
 	list: {
 		flex: 1,
-		paddingTop: 20,
+		paddingTop: sizeConstants.twentyX,
 	},
 	title: {
 		fontSize: sizeConstants.fourteenScale, //16
@@ -315,29 +316,29 @@ const styles = StyleSheet.create({
 	},
 	descriptionContainer: {
 		flexDirection: "row",
-		paddingRight: 50,
+		paddingRight: sizeConstants.xxxl,
 	},
 	image: {
-		width: 50,
-		height: 50,
-		borderRadius: 25,
+		width: sizeConstants.xxxl,
+		height: sizeConstants.xxxl,
+		borderRadius: sizeConstants.xxxl,
 	},
 	textDescription: {
-		marginLeft: 10,
+		marginLeft: sizeConstants.mX,
 		color: "gray",
 	},
 	bottomBtnContainer: {
 		width: "100%",
 		position: "absolute",
-		bottom: 50,
+		bottom: sizeConstants.xxxl,
 		justifyContent: "center",
 		alignItems: "center",
 		flexDirection: "row",
 	},
 	bottomBtn: {
-		height: 75,
-		width: 75,
-		borderRadius: 75 / 2,
+		height: sizeConstants.seventyFive,
+		width: sizeConstants.seventyFive,
+		borderRadius: sizeConstants.seventyFive,
 		backgroundColor: "white",
 		elevation: 5,
 		justifyContent: "center",
@@ -351,13 +352,13 @@ const styles = StyleSheet.create({
 	textInput: {
 		width: 314,
 		backgroundColor: "#FDF9F2",
-		borderRadius: 50,
-		paddingLeft: 20,
+		borderRadius: sizeConstants.xxxl,
+		paddingLeft: sizeConstants.twentyX,
 		fontSize: sizeConstants.eighteenScale, //19
 		color: "#666666",
 		elevation: 10,
-		marginVertical: 30,
-		padding: 10,
+		marginVertical: sizeConstants.thirty,
+		padding: sizeConstants.mX,
 	},
 
 	cnfrmBtnContainer: {
@@ -370,7 +371,7 @@ const styles = StyleSheet.create({
 		backgroundColor: ColorConstants.white,
 		height: sizeConstants.xxxl,
 		width: "75%",
-		borderRadius: 60,
+		borderRadius: sizeConstants.sixty,
 		justifyContent: "center",
 		alignItems: "center",
 		elevation: 10,

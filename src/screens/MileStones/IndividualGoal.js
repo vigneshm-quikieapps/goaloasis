@@ -408,9 +408,9 @@ const styles = StyleSheet.create({
 	},
 
 	percentageCont: {
-		height: 160,
-		width: 160,
-		borderRadius: 80,
+		height: sizeConstants.oneSixtyScale,
+		width: sizeConstants.oneSixtyScale,
+		borderRadius: sizeConstants.oneSixtyScale,
 		backgroundColor: ColorConstants.lightestYellow,
 		borderWidth: sizeConstants.five,
 		borderColor: ColorConstants.lightestBlue,

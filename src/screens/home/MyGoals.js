@@ -170,11 +170,13 @@ const MyGoals = ({
 			}
 		})
 		setTodaysAllTasks(allTodaysTask)
-		console.log("allGoals", allTodaysTask.length)
+		console.log("allGoals", allTodaysTask)
 	}
 	useEffect(() => {
 		getTodaysTasks()
 		setTaskCounter(count)
+		console.log("All goals", allGoals)
+		console.log("All goals length", allGoals.length)
 	}, [allGoals])
 
 	const importData = async () => {

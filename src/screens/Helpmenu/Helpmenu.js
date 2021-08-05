@@ -119,28 +119,28 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	titleContainer: {
-		height: 90,
+		height: sizeConstants.ninety,
 		backgroundColor: "#FBF5E9",
 		justifyContent: "center",
 	},
 	mainTitle: {
 		color: "black",
 		fontSize: sizeConstants.twentyTwoScale, //24
-		marginLeft: 20,
+		marginLeft: sizeConstants.twentyX,
 		fontWeight: "bold",
 		textAlign: "center",
 	},
 	goalsContainer: {
 		flex: 1,
 		backgroundColor: "#588C8D",
-		borderTopRightRadius: 70,
+		borderTopRightRadius: sizeConstants.seventyScale,
 	},
 	viewTap: {
-		height: 6,
-		width: 60,
+		height: sizeConstants.six,
+		width: sizeConstants.sixtyScale,
 		backgroundColor: "#7EC8C9",
-		marginVertical: 10,
-		borderRadius: 30,
+		marginVertical: sizeConstants.m,
+		borderRadius: sizeConstants.thirtyScale,
 		opacity: 0.5,
 	},
 

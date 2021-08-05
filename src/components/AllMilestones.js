@@ -69,17 +69,17 @@ export default connect(mapStateToProps, mapDispatchToProps)(AllMilestones)
 const styles = StyleSheet.create({
 	mileStones: {
 		alignItems: "center",
-		marginVertical: 10,
+		marginVertical: sizeConstants.m,
 	},
 	TouchContainer: {
 		width: "90%",
 		backgroundColor: "#FDF9F2",
-		height: 83,
-		borderRadius: 20,
+		height: sizeConstants.eightyThree,
+		borderRadius: sizeConstants.xl,
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
-		paddingHorizontal: 20,
+		paddingHorizontal: sizeConstants.twentyX,
 	},
 	mainTitle: {
 		fontSize: sizeConstants.eighteenScale, //19
@@ -91,15 +91,15 @@ const styles = StyleSheet.create({
 	},
 	accordian: {
 		backgroundColor: "#CDE8E6",
-		height: 70,
+		height: sizeConstants.seventy,
 		width: "75%",
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
-		paddingHorizontal: 20,
-		borderRadius: 20,
-		marginTop: 10,
-		marginLeft: 50,
-		marginVertical: 10,
+		paddingHorizontal: sizeConstants.twentyX,
+		borderRadius: sizeConstants.twentyX,
+		marginTop: sizeConstants.m,
+		marginLeft: sizeConstants.xxxlScale,
+		marginVertical: sizeConstants.m,
 	},
 })
