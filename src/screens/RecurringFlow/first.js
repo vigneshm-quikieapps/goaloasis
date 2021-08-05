@@ -6,7 +6,7 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import RBSheet from "react-native-raw-bottom-sheet"
 import SwitchSelector from "react-native-switch-selector"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
-import {CommonStyles, sizeConstants} from "../../core/constants"
+import {ColorConstants, CommonStyles, sizeConstants} from "../../core/constants"
 import {
 	CommonHomeButton,
 	reoccuringDefaultDailyArray,
@@ -57,10 +57,10 @@ const First = ({route, clickedMilestone}) => {
 				closeOnPressMask={false}
 				customStyles={{
 					wrapper: {
-						backgroundColor: "transparent",
+						backgroundColor: ColorConstants.transparent,
 					},
 					draggableIcon: {
-						backgroundColor: "#000",
+						backgroundColor: ColorConstants.black,
 					},
 				}}
 			>
@@ -91,7 +91,7 @@ const First = ({route, clickedMilestone}) => {
 					</TouchableOpacity>
 				</View>
 			</RBSheet>
-			<Text style={[CommonStyles.enterTask, {marginTop: 10}]}>Enter Task</Text>
+			<Text style={[CommonStyles.enterTask, {marginTop: sizeConstants.m}]}>Enter Task</Text>
 			<View style={CommonStyles.centerCont}>
 				<TextInput
 					style={CommonStyles.textInput}
@@ -103,20 +103,20 @@ const First = ({route, clickedMilestone}) => {
 			<Text style={CommonStyles.firstSubTitle}>Edit reoccuring</Text>
 
 			<SwitchSelector
-				style={{marginTop: 35, paddingLeft: 20, paddingRight: 20}}
+				style={{marginTop: sizeConstants.thirtyFive, paddingHorizontal: sizeConstants.twentyX}}
 				options={options}
 				initial={0}
 				onPress={(value) => setToggle(value)}
 				textColor="#333333"
 				selectedColor="#333333"
 				buttonColor="#FDF9F2"
-				borderColor="#76BBBC"
+				borderColor={ColorConstants.darkBlue}
 				hasPadding
 				testID="gender-switch-selector"
 				accessibilityLabel="gender-switch-selector"
-				backgroundColor="#76BBBC"
-				height={60}
-				fontSize={27}
+				backgroundColor={ColorConstants.darkBlue}
+				height={sizeConstants.xxxl}
+				fontSize={sizeConstants.twentyTwoScale}
 			/>
 			{toggle == "Weekly" && (
 				<View style={CommonStyles.toggle}>
@@ -212,12 +212,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(First)
 
 const styles = StyleSheet.create({
 	introContainer: {
-		backgroundColor: "#588C8D",
+		backgroundColor: ColorConstants.darkFaintBlue,
 	},
 
 	daySelected: {
-		backgroundColor: "#FDF9F2",
+		backgroundColor: ColorConstants.faintWhite,
 		margin: sizeConstants.four,
 	},
-	daySelectedText: {color: "#76BBBC"},
+	daySelectedText: {color: ColorConstants.darkBlue},
 })

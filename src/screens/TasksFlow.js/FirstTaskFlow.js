@@ -261,9 +261,9 @@ const styles = StyleSheet.create({
 		alignSelf: "flex-end",
 	},
 	nextBtn: {
-		width: 50,
-		height: 50,
-		borderRadius: 25,
+		width: sizeConstants.fiftyX,
+		height: sizeConstants.fiftyX,
+		borderRadius: sizeConstants.xxl,
 		marginRight: sizeConstants.fourtyMX,
 		marginBottom: sizeConstants.twentyMX,
 		marginTop: sizeConstants.m,

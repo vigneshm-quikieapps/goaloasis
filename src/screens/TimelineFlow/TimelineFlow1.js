@@ -1,5 +1,6 @@
 import React, {useState} from "react"
 import {Text, View} from "react-native"
+import {ColorConstants} from "../../core/constants"
 import TimelineFlowSlider from "./../../components/TimelineFlowSlider"
 const TimelineFlow1 = () => {
 	const [screenData] = useState({
@@ -15,8 +16,8 @@ const TimelineFlow1 = () => {
 		task: "Task",
 		milestone: "Milestone",
 		goal: "Goal",
-		color1: "#B3855C",
-		color2: "#E6AB76",
+		color1: ColorConstants.timelineSkinDarker,
+		color2: ColorConstants.timelineSkinDark,
 		screen: 1,
 	})
 

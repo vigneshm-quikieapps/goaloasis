@@ -11,6 +11,7 @@ import {
 	CommonStyles,
 	height,
 	sizeConstants,
+	width,
 } from "../../core/constants"
 import {
 	calendarLocale,
@@ -148,15 +149,20 @@ const Second = ({
 	}
 
 	return (
-		<StatusBarScreen style={styles.introContainer}>
+		<StatusBarScreen style={CommonStyles.introContainer}>
 			{loading ? <Spinner /> : null}
 			<ScrollView>
 				<View>
 					<View style={{flexDirection: "row"}}>
 						<Text style={CommonStyles.mainTitle}>{clickedMilestone}</Text>
-						<Entypo name="cross" color="#FDF9F2" size={38} style={CommonStyles.cross} />
+						<Entypo
+							name="cross"
+							color={ColorConstants.faintWhite}
+							size={38}
+							style={CommonStyles.cross}
+						/>
 					</View>
-					<Text style={[CommonStyles.enterTask, {marginTop: 10}]}>Enter Task</Text>
+					<Text style={[CommonStyles.enterTask, {marginTop: sizeConstants.m}]}>Enter Task</Text>
 					<View style={CommonStyles.centerCont}>
 						<TextInput
 							style={CommonStyles.textInput}
@@ -165,7 +171,12 @@ const Second = ({
 							value={taskName}
 						/>
 					</View>
-					<View style={[CommonStyles.editContainer, {marginVertical: height > 700 ? 20 : 0}]}>
+					<View
+						style={[
+							CommonStyles.editContainer,
+							{marginVertical: height > 700 ? sizeConstants.xl : 0},
+						]}
+					>
 						<Text style={CommonStyles.editOccuringText}>Edit Reoccuring</Text>
 					</View>
 					<View style={CommonStyles.calendarContainer}>
@@ -179,68 +190,70 @@ const Second = ({
 							<Text style={[CommonStyles.done, {color: ColorConstants.faintWhite}]}>Done</Text>
 						</TouchableOpacity>
 					</View>
-					<Calendar
-						style={{paddingLeft: 20, paddingRight: 20}}
-						current={
-							clickedDate
-								? dayjs(clickedDate).format(commonDateFormat)
-								: dayjs().format(commonDateFormat)
-						}
-						minDate={dayjs().format(commonDateFormat)}
-						onDayPress={(day) => {
-							console.log("selected day", day)
-						}}
-						onDayLongPress={(day) => {
-							console.log("selected day", day)
-						}}
-						onMonthChange={(month) => {
-							console.log("month changed", month)
-						}}
-						hideArrows={false}
-						hideExtraDays={true}
-						disableMonthChange={false}
-						hideDayNames={false}
-						showWeekNumbers={false}
-						onPressArrowLeft={(subtractMonth) => subtractMonth()}
-						onPressArrowRight={(addMonth) => addMonth()}
-						disableArrowLeft={false}
-						enableSwipeMonths={true}
-						theme={{
-							backgroundColor: "#588C8D",
-							calendarBackground: "#588C8D",
-							textSectionTitleColor: "#FDF9F2",
-							textSectionTitleDisabledColor: "#d9e1e8",
-							selectedDayBackgroundColor: "#FDF9F2",
-							selectedDayTextColor: "black",
-							todayTextColor: "#00adf5",
-							dayTextColor: "#FDF9F2",
-							textDisabledColor: "#d9e1e8",
-							dotColor: "#FDF9F2",
-							selectedDotColor: "#FDF9F2",
-							arrowColor: "#FDF9F2",
-							disabledArrowColor: "#d9e1e8",
-							monthTextColor: "#FDF9F2",
-							indicatorColor: "blue",
-							textDayFontFamily: "monospace",
-							textMonthFontFamily: "monospace",
-							textDayHeaderFontFamily: "monospace",
-							textDayFontWeight: "300",
-							textMonthFontWeight: "bold",
-							textDayHeaderFontWeight: "300",
-						}}
-						markedDates={clickedDate ? getMarkedDates() : {}}
-						dayComponent={({date, state, marking}) => {
-							return (
-								<CustomDayComponentForCalendar
-									date={date}
-									state={state}
-									clickedDate={clickedDate}
-									dayClick={setDate}
-									marking={marking}
-								/>
-							)
-						}}
-					/>
+					<View style={{paddingHorizontal: width * 0.04}}>
+						<Calendar
+							current={
+								clickedDate
+									? dayjs(clickedDate).format(commonDateFormat)
+									: dayjs().format(commonDateFormat)
+							}
+							minDate={dayjs().format(commonDateFormat)}
+							onDayPress={(day) => {
+								console.log("selected day", day)
+							}}
+							onDayLongPress={(day) => {
+								console.log("selected day", day)
+							}}
+							onMonthChange={(month) => {
+								console.log("month changed", month)
+							}}
+							hideArrows={false}
+							hideExtraDays={true}
+							disableMonthChange={false}
+							hideDayNames={false}
+							showWeekNumbers={false}
+							onPressArrowLeft={(subtractMonth) => subtractMonth()}
+							onPressArrowRight={(addMonth) => addMonth()}
+							disableArrowLeft={false}
+							enableSwipeMonths={true}
+							theme={{
+								backgroundColor: ColorConstants.darkFaintBlue,
+								calendarBackground: ColorConstants.darkFaintBlue,
+								textSectionTitleColor: ColorConstants.faintWhite,
+								textSectionTitleDisabledColor: "#d9e1e8",
+								selectedDayBackgroundColor: ColorConstants.faintWhite,
+								selectedDayTextColor: "black",
+								todayTextColor: "#00adf5",
+								dayTextColor: ColorConstants.faintWhite,
+								textDisabledColor: "#d9e1e8",
+								dotColor: ColorConstants.faintWhite,
+								selectedDotColor: ColorConstants.faintWhite,
+								arrowColor: ColorConstants.faintWhite,
+								disabledArrowColor: "#d9e1e8",
+								monthTextColor: ColorConstants.faintWhite,
+								indicatorColor: "blue",
+								textDayFontFamily: "monospace",
+								textMonthFontFamily: "monospace",
+								textDayHeaderFontFamily: "monospace",
+								textDayFontWeight: "300",
+								textMonthFontWeight: "bold",
+								textDayHeaderFontWeight: "300",
+							}}
+							markedDates={clickedDate ? getMarkedDates() : {}}
+							dayComponent={({date, state, marking}) => {
+								return (
+									<CustomDayComponentForCalendar
+										date={date}
+										state={state}
+										clickedDate={clickedDate}
+										dayClick={setDate}
+										marking={marking}
+									/>
+								)
+							}}
+						/>
+					</View>
+
 					<TouchableOpacity
 						style={[CommonStyles.containerMilestone, {marginTop: sizeConstants.xs}]}
 						onPress={nextScreen}
@@ -291,13 +304,6 @@ const mapDispatchToProps = (dispatch) => {
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Second)
-
-const styles = StyleSheet.create({
-	introContainer: {
-		flex: 1,
-		backgroundColor: "#588C8D",
-	},
-})
 
 // const setReoccuring = () => {
 // 	let newMilestoneItemWithTaskReoccuring = clickedGoal.goalMilestone.map((item) => {

@@ -1,11 +1,12 @@
 import React, {useState} from "react"
 import TaskTutorialSlider from "../../components/TaskTutorialSlider"
+import {ColorConstants} from "../../core/constants"
 const TaskTutorialSlide2 = () => {
 	const [screenData] = useState({
 		title: "Snoozing Tasks",
 		subTitle: "Swipe right to snooze a task to tommorow",
-		color1: "#B3855C",
-		color2: "#E6AB76",
+		color1: ColorConstants.timelineSkinDarker,
+		color2: ColorConstants.timelineSkinDark,
 		screen: 2,
 	})
 

@@ -34,7 +34,6 @@ const EditGoalhelp = ({clickedGoal, setClickedGoal, setShowLoader, loading, setH
 		setShowLoader(true)
 		updateGoalToFirestore(updatedObj, clickedGoal.name, () => {
 			setHideLoader(false)
-
 			navigation.navigate("mygoals")
 			setClickedGoal(updatedObj)
 		})

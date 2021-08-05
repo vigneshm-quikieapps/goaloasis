@@ -8,6 +8,7 @@ import {
 	height,
 	commonDataFormat,
 	commonDateFormat,
+	width,
 } from "../core/constants"
 import colors from "../../colors"
 import dayjs from "dayjs"
@@ -313,8 +314,8 @@ const styles = StyleSheet.create({
 	},
 
 	markedDateContainer: {
-		height: height > 700 ? sizeConstants.twentySix : sizeConstants.xxl,
-		width: sizeConstants.fourtyFiveX,
+		height: sizeConstants.xxl,
+		width: width / 7.825,
 		borderRadius: 0,
 		justifyContent: "center",
 		alignItems: "center",
@@ -322,8 +323,8 @@ const styles = StyleSheet.create({
 		margin: 0,
 	},
 	startConatainer: {
-		height: height > 700 ? sizeConstants.twentySix : sizeConstants.xxl,
-		width: sizeConstants.fourtyFiveX,
+		height: sizeConstants.xxl,
+		width: width / 7.825,
 		borderRadius: 0,
 		borderWidth: height < 700 ? 1 : 1.5,
 		justifyContent: "center",
@@ -336,8 +337,8 @@ const styles = StyleSheet.create({
 		borderColor: ColorConstants.white,
 	},
 	endContainer: {
-		height: height > 700 ? sizeConstants.twentySix : sizeConstants.xxl,
-		width: sizeConstants.fourtyFiveX,
+		height: sizeConstants.xxl,
+		width: width / 7.825,
 		borderRadius: 0,
 		justifyContent: "center",
 		alignItems: "center",
@@ -376,7 +377,7 @@ const styles = StyleSheet.create({
 	dayText: {
 		textAlign: "center",
 		color: ColorConstants.white,
-		fontSize: sizeConstants.mX,
+		fontSize: sizeConstants.thirteenX,
 		flex: 1,
 		width: sizeConstants.thirty,
 		alignItems: "center",

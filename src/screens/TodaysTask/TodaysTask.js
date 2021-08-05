@@ -19,7 +19,7 @@ import ProgressCircle from "react-native-progress-circle"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import Constants from "expo-constants"
 import {LongPressGestureHandler, State} from "react-native-gesture-handler"
-import {ColorConstants, commonImages, sizeConstants} from "../../core/constants"
+import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/constants"
 import {SnoozeIcon} from "../../assets/customIcons"
 import Swipeout from "rc-swipeout"
 import {connect} from "react-redux"
@@ -203,8 +203,8 @@ const TodaysTask = ({todayAllTasksArr, allGoals, setClickedGoal, setTodaysAllTas
 	}
 	useEffect(() => {}, [todayAllTasksArr])
 	return (
-		<StatusBarScreen style={styles.container}>
-			<ImageBackground style={styles.container} source={backImg} resizeMode="stretch">
+		<StatusBarScreen style={CommonStyles.introContainer}>
+			<ImageBackground style={CommonStyles.introContainer} source={backImg} resizeMode="stretch">
 				<TouchableOpacity style={styles.titleContainer}>
 					<Text style={styles.mainTitle}>Today’s tasks</Text>
 				</TouchableOpacity>
@@ -228,7 +228,12 @@ const TodaysTask = ({todayAllTasksArr, allGoals, setClickedGoal, setTodaysAllTas
 								},
 							]}
 						>
-							<Entypo name="home" size={40} color="#7ec8c9" style={{zIndex: -1}} />
+							<Entypo
+								name="home"
+								size={40}
+								color={ColorConstants.lighterBlue}
+								style={{zIndex: -1}}
+							/>
 						</View>
 					</TouchableOpacity>
 				</View>
@@ -256,12 +261,8 @@ const mapDispatchToProps = (dispatch) => {
 }
 export default connect(mapStateToProps, mapDispatchToProps)(TodaysTask)
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#588C8D",
-	},
 	btnContainer: {
-		marginLeft: 20,
+		marginLeft: sizeConstants.twentyX,
 		width: "100%",
 		justifyContent: "flex-start",
 		alignItems: "flex-start",
@@ -269,65 +270,54 @@ const styles = StyleSheet.create({
 	btnStyling: {
 		justifyContent: "center",
 		alignItems: "flex-start",
-		backgroundColor: "white",
-		width: 314,
-		height: 50,
-		paddingLeft: 20,
-		borderRadius: 51,
+		backgroundColor: ColorConstants.white,
+		width: sizeConstants.threeFourTeen,
+		height: sizeConstants.fiftyX,
+		paddingLeft: sizeConstants.twentyX,
+		borderRadius: sizeConstants.xxxl,
 	},
 	btnText: {
 		fontSize: sizeConstants.eighteenScale, //19
-		color: "#666666",
+		color: ColorConstants.faintBlack2,
 		letterSpacing: 1.2,
 	},
 	titleContainer: {
 		height: 95 - Constants.statusBarHeight,
-		backgroundColor: "#588C8D",
+		backgroundColor: ColorConstants.darkFaintBlue,
 		justifyContent: "center",
 	},
 	mainTitle: {
-		color: "#FBF5E9",
+		color: ColorConstants.lightestYellow,
 		fontSize: sizeConstants.twentyTwoScale, //25
 		fontWeight: "bold",
-		marginLeft: 20,
-		marginVertical: 30,
+		marginLeft: sizeConstants.twentyX,
+		marginVertical: sizeConstants.mThirty,
 	},
 
 	circleLogo: {
-		height: 70,
-		width: 70,
-		borderRadius: 50,
-		borderWidth: 5,
-		borderColor: "#7ec8c9",
+		height: sizeConstants.seventyScale,
+		width: sizeConstants.seventyScale,
+		borderRadius: sizeConstants.xxxl,
+		borderWidth: sizeConstants.s,
+		borderColor: ColorConstants.lighterBlue,
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "#fff",
-	},
-
-	bottomBtn: {
-		height: 75,
-		width: 75,
-		borderRadius: 75 / 2,
-		backgroundColor: "#7EC8C9",
-		elevation: 5,
-		justifyContent: "center",
-		alignItems: "center",
+		backgroundColor: ColorConstants.white,
 	},
 
 	bottomContainer: {
-		height: 90,
-		backgroundColor: "#fff",
-		borderTopEndRadius: 60,
-
+		height: sizeConstants.ninetyX,
+		backgroundColor: ColorConstants.white,
+		borderTopEndRadius: sizeConstants.mSixty,
 		alignItems: "center",
 	},
 	queIcon: {
-		padding: 30,
+		padding: sizeConstants.mThirty,
 		alignItems: "flex-end",
 	},
 
 	taskAccordion: {
-		height: 50,
+		height: sizeConstants.fiftyX,
 		backgroundColor: ColorConstants.white,
 		paddingVertical: sizeConstants.s,
 		width: "85%",
@@ -360,7 +350,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
-		paddingHorizontal: 20,
+		paddingHorizontal: sizeConstants.twentyX,
 	},
 	mainTitleButton: {
 		fontSize: sizeConstants.eighteenScale, //19
@@ -370,7 +360,7 @@ const styles = StyleSheet.create({
 	btnTextCompleted: {
 		fontSize: sizeConstants.fourteenScale, //19
 
-		color: "#666666",
+		color: ColorConstants.faintBlack2,
 		letterSpacing: 1.2,
 		textDecorationLine: "line-through",
 		textDecorationStyle: "solid",
