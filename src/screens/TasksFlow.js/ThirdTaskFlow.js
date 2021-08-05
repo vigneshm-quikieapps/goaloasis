@@ -145,16 +145,27 @@ const ThirdTaskFlow = ({
 						{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
 					</Text>
 
-					<View style={CommonStyles.calendarContainer}>
+					<View style={[CommonStyles.calendarContainer, CommonStyles.targetAndDoneContainer]}>
 						<Text style={CommonStyles.targetDate}>Target Date</Text>
 
 						<TouchableOpacity
+							activeOpacity={taskName !== "" ? 0.5 : 1}
 							onPress={() => {
-								navigation.navigate("first")
+								taskName != "" && nextScreen()
 							}}
 							style={{alignSelf: "flex-end"}}
 						>
-							<Text style={[CommonStyles.done, {color: ColorConstants.faintWhite}]}>Done</Text>
+							<Text
+								style={[
+									CommonStyles.done,
+									{
+										color: (activeOpacity =
+											taskName !== "" ? ColorConstants.faintWhite : ColorConstants.whiteOp50),
+									},
+								]}
+							>
+								Done
+							</Text>
 						</TouchableOpacity>
 
 						{/* <Text
@@ -174,9 +185,6 @@ const ThirdTaskFlow = ({
 						>
 							Target Date
 						</Text> */}
-						<TouchableOpacity>
-							<Text style={CommonStyles.done}>Done</Text>
-						</TouchableOpacity>
 					</View>
 
 					<Calendar

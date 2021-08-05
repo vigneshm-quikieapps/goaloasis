@@ -70,17 +70,19 @@ const FourthMilestone = ({clickedGoal, newMileStone}) => {
 						{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
 					</Text>
 
-					<View style={CommonStyles.calendarContainer}>
+					<View style={[CommonStyles.calendarContainer, CommonStyles.targetAndDoneContainer]}>
 						<Text style={CommonStyles.targetDate}>Target Date</Text>
-						{/* {clickedDate !== null ? ( */}
+
 						<TouchableOpacity onPress={() => navigation.navigate("SixthMilestone")}>
-							<Text style={[CommonStyles.done, {color: ColorConstants.faintWhite}]}>Done</Text>
+							<Text
+								style={[
+									CommonStyles.done,
+									{color: milestone != "" ? ColorConstants.faintWhite : ColorConstants.whiteOp50},
+								]}
+							>
+								Done
+							</Text>
 						</TouchableOpacity>
-						{/* // ) : (
-						// 	<TouchableOpacity>
-						// 		<Text style={CommonStyles.done}>Done</Text>
-						// 	</TouchableOpacity>
-						// )} */}
 					</View>
 
 					<Calendar

@@ -93,7 +93,7 @@ const SecondTaskFlow = ({
 
 	return (
 		<ImageBackground
-			style={[styles.introContainer, styles.image, CommonStyles.pr10]}
+			style={[CommonStyles.introContainer, styles.image, CommonStyles.pr10]}
 			source={commonImages.secondImage}
 			resizeMode="stretch"
 		>
@@ -128,7 +128,10 @@ const SecondTaskFlow = ({
 
 			{taskName === "" ? (
 				<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter]}>
-					<DisableAppButton title="Edit Date" style={{backgroundColor: "#C0E5E4"}} />
+					<DisableAppButton
+						title="Edit Date"
+						style={{backgroundColor: ColorConstants.lightestBlue}}
+					/>
 				</View>
 			) : (
 				<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter]}>
@@ -152,36 +155,15 @@ const SecondTaskFlow = ({
 			<View style={styles.nextBtnContainer}>
 				<View style={styles.nextBtnInner}>
 					<View></View>
-					{/* <View>
-						<TouchableOpacity
-							style={[styles.btnStylingRight, styles.nextBtn]}
-							onPress={() => navigation.navigate("thirdtaskflow")}
-						>
-							<MaterialCommunityIcons
-								name="chevron-right"
-								size={sizeConstants.fifty}
-								color="#7EC8C9"
-							/>
-						</TouchableOpacity>
-					</View> */}
 				</View>
-
-				{/* <View style={CommonStyles.alignItemsCenter}>
-					<TouchableOpacity style={styles.btnStyling}>
-						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
-					</TouchableOpacity>
-				</View> */}
-				{/* <CommonPrevNextButton right={true} nextClick={() => navigation.navigate("thirdtaskflow")} /> */}
 
 				<CommonPrevNextButton
 					right={true}
 					style={taskName === "" ? {backgroundColor: ColorConstants.whiteOp50} : {}}
 					nextClick={() => {
 						taskName === "" ? null : nextScreen()
-						// navigation.navigate("thirdtaskflow")
 					}}
 					size={50}
-					// bottom={0}
 				/>
 			</View>
 
@@ -195,7 +177,6 @@ const SecondTaskFlow = ({
 	)
 }
 const mapStateToProps = (state) => {
-	console.log("TASK FLOW DATA", state.taskFlowData)
 	return {
 		taskFlowData: state.milestone.taskFlowData,
 		clickedGoal: state.milestone.clickedGoal,
@@ -220,11 +201,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SecondTaskFlow)
 const styles = StyleSheet.create({
-	introContainer: {
-		flex: 1,
-		backgroundColor: ColorConstants.darkFaintBlue,
-	},
-
 	subTitle: {
 		fontSize: sizeConstants.fourteenScale, //16
 
@@ -249,7 +225,7 @@ const styles = StyleSheet.create({
 	bottomBtn: {
 		height: sizeConstants.seventyFive,
 		width: sizeConstants.seventyFive,
-		borderRadius: sizeConstants.seventyFive / 2,
+		borderRadius: sizeConstants.seventyFive,
 		backgroundColor: ColorConstants.white,
 		elevation: sizeConstants.s,
 		justifyContent: "center",
@@ -261,7 +237,7 @@ const styles = StyleSheet.create({
 		backgroundColor: colors.faint,
 		width: sizeConstants.seventyFive,
 		height: sizeConstants.seventyFive,
-		borderRadius: sizeConstants.seventyFive / 2,
+		borderRadius: sizeConstants.seventyFive,
 	},
 	btnStyling: {
 		justifyContent: "center",
@@ -269,12 +245,12 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 		width: sizeConstants.seventyFive,
 		height: sizeConstants.seventyFive,
-		borderRadius: sizeConstants.seventyFive / 2,
+		borderRadius: sizeConstants.seventyFive,
 	},
 	nextBtn: {
-		width: 50,
-		height: 50,
-		borderRadius: 25,
+		width: sizeConstants.fiftyX,
+		height: sizeConstants.fiftyX,
+		borderRadius: sizeConstants.xxl,
 	},
 	textInput: {
 		width: sizeConstants.threeFourTeen,

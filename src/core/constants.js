@@ -78,18 +78,21 @@ export const sizeConstants = {
 	thirtyThree: verticalScale(33),
 	thirtyFour: verticalScale(34),
 	thirtyFive: verticalScale(35),
+	thirtyFiveX: scale(35),
 	thirtySix: verticalScale(36),
 	thirtyEight: verticalScale(38),
 	fourty: verticalScale(40),
 	fourtyMX: moderateScale(40),
 	fourtyFour: verticalScale(44),
-	fourtyFiveX: scale(47),
+	fourtyFiveX: scale(45),
 	fourtyFive: verticalScale(45),
+	fourtySeven: verticalScale(49),
 	fourtyEight: verticalScale(48),
 	xxxl: verticalScale(50),
 	xxxl: verticalScale(50),
 	xxxlScale: scale(50),
 	fifty: moderateScale(50),
+	fiftyX: scale(50),
 	fiftyHalf: scale(50.5),
 	fiftyFive: verticalScale(55),
 	sixtyScale: scale(60),
@@ -106,6 +109,7 @@ export const sizeConstants = {
 	eightyThree: verticalScale(83),
 	eightyFive: verticalScale(85),
 	ninety: verticalScale(90),
+	ninetyX: scale(90),
 	ninetySeven: verticalScale(97),
 	hundred: verticalScale(100),
 	hundredMX: moderateScale(100),
@@ -179,7 +183,7 @@ export const forGoals = {
 	first: ColorConstants.darkFaintBlue,
 	second: "#553144",
 	third: "#6A5593",
-	fourth: "#B3855C",
+	fourth: ColorConstants.timelineSkinDarker,
 	fifth: "#3F6E6A",
 	sixth: "#B8534F",
 }
@@ -332,7 +336,7 @@ export const CommonStyles = ScaledSheet.create({
 		marginTop: sizeConstants.three,
 		paddingLeft: sizeConstants.twentyX,
 		fontSize: sizeConstants.eighteenScale,
-		color: "#666666",
+		color: ColorConstants.faintBlack2,
 		elevation: sizeConstants.m,
 	},
 
@@ -351,7 +355,7 @@ export const CommonStyles = ScaledSheet.create({
 		width: sizeConstants.fifty,
 		height: sizeConstants.fifty,
 		borderRadius: moderateScale(50),
-		backgroundColor: "#FDF9F2",
+		backgroundColor: ColorConstants.faintWhite,
 	},
 	homeContainer: {
 		alignItems: "center",
@@ -386,7 +390,7 @@ export const CommonStyles = ScaledSheet.create({
 	// Reoccuring Flow
 	// first
 	mainTitle: {
-		color: "#FDF9F2",
+		color: ColorConstants.faintWhite,
 		fontSize: sizeConstants.twentyTwoScale, //25
 		marginLeft: verticalScale(21),
 	},
@@ -411,7 +415,7 @@ export const CommonStyles = ScaledSheet.create({
 	},
 	enterTask: {
 		fontSize: sizeConstants.fourteenScale, //16
-		color: "#FDF9F2",
+		color: ColorConstants.faintWhite,
 		marginLeft: scale(21),
 	},
 	BottomTouch: {
@@ -442,20 +446,20 @@ export const CommonStyles = ScaledSheet.create({
 		width: sizeConstants.fourty,
 		borderRadius: sizeConstants.xl,
 		justifyContent: "center",
-		backgroundColor: "#76BBBC",
+		backgroundColor: ColorConstants.darkBlue,
 		margin: sizeConstants.four,
 	},
 	daysText: {
 		alignSelf: "center",
 		fontSize: sizeConstants.eighteenScale,
-		color: "#FDF9F2",
+		color: ColorConstants.faintWhite,
 	},
 	cancelReoccuring: {
 		justifyContent: "center",
 		alignItems: "center",
 		alignSelf: "center",
 		// backgroundColor: "#588C8D",
-		borderColor: "#FDF9F2",
+		borderColor: ColorConstants.faintWhite,
 		borderWidth: scale(3),
 		padding: scale(8),
 		borderRadius: scale(25),
@@ -464,14 +468,14 @@ export const CommonStyles = ScaledSheet.create({
 		width: "45%",
 	},
 	cancelReoccuringText: {
-		color: "#FDF9F2",
+		color: ColorConstants.faintWhite,
 		fontSize: sizeConstants.fourteenScale, //19
 	},
 	bottomBtn: {
 		height: sizeConstants.seventyFive,
 		width: sizeConstants.seventyFive,
 		borderRadius: sizeConstants.seventyFive,
-		backgroundColor: "#FDF9F2",
+		backgroundColor: ColorConstants.faintWhite,
 		// elevation: scale(5),
 		justifyContent: "center",
 		alignItems: "center",
@@ -493,7 +497,11 @@ export const CommonStyles = ScaledSheet.create({
 		marginTop: sizeConstants.m,
 		marginLeft: sizeConstants.twentyOne,
 	},
-	editOccuringText: {fontSize: sizeConstants.twentyTwoScale, color: "#FDF9F2", fontWeight: "bold"},
+	editOccuringText: {
+		fontSize: sizeConstants.twentyTwoScale,
+		color: ColorConstants.faintWhite,
+		fontWeight: "bold",
+	},
 
 	reoccuringDateContainer: {
 		//modal styles starts
@@ -593,15 +601,15 @@ export const CommonStyles = ScaledSheet.create({
 
 	doneText: {
 		fontSize: sizeConstants.fourteenScale,
-		color: "#FDF9F2",
+		color: ColorConstants.faintWhite,
 		// position: "absolute",
 		// left: sizeConstants.xxxl,
 	},
 	container: {
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "#588C8D",
-		borderColor: "#FDF9F2",
+		backgroundColor: ColorConstants.darkFaintBlue,
+		borderColor: ColorConstants.faintWhite,
 		marginBottom: sizeConstants.xl,
 		// marginTop: sizeConstants.m,
 	},
@@ -641,14 +649,14 @@ export const CommonStyles = ScaledSheet.create({
 	// },
 	titleContainer1: {
 		height: scale(90) - Constants.statusBarHeight,
-		backgroundColor: "#588C8D",
+		backgroundColor: ColorConstants.darkFaintBlue,
 		justifyContent: "center",
 	},
 
 	viewTap: {
 		height: sizeConstants.six,
 		width: scale(60),
-		backgroundColor: "#588C8D",
+		backgroundColor: ColorConstants.darkFaintBlue,
 		marginVertical: sizeConstants.m,
 		borderRadius: sizeConstants.thirty,
 		opacity: 0.5,
@@ -656,7 +664,7 @@ export const CommonStyles = ScaledSheet.create({
 	myGoalsText: {
 		fontSize: sizeConstants.twentyTwoScale,
 		fontWeight: "bold",
-		color: "#588C8D",
+		color: ColorConstants.darkFaintBlue,
 		marginHorizontal: scale(20),
 		marginBottom: sizeConstants.m,
 	},
@@ -674,7 +682,7 @@ export const CommonStyles = ScaledSheet.create({
 	},
 	goalText: {
 		fontSize: sizeConstants.sixteenX,
-		color: "#666666",
+		color: ColorConstants.faintBlack2,
 		textAlign: "center",
 
 		// maxWidth: scale(100),
@@ -686,19 +694,19 @@ export const CommonStyles = ScaledSheet.create({
 		width: sizeConstants.seventyFive,
 		borderRadius: sizeConstants.seventyFive,
 		borderWidth: sizeConstants.s,
-		borderColor: "#588C8D",
+		borderColor: ColorConstants.darkFaintBlue,
 		justifyContent: "center",
 		alignItems: "center",
 	},
 	iconVertical: {
 		height: sizeConstants.thirty,
 		width: scale(4),
-		backgroundColor: "#588C8D",
+		backgroundColor: ColorConstants.darkFaintBlue,
 	},
 	iconHorizontal: {
 		height: sizeConstants.four,
 		width: scale(30),
-		backgroundColor: "#588C8D",
+		backgroundColor: ColorConstants.darkFaintBlue,
 		position: "absolute",
 	},
 
@@ -769,15 +777,15 @@ export const CommonStyles = ScaledSheet.create({
 		fontSize: sizeConstants.eighteenScale,
 		alignSelf: "center",
 		marginLeft: scale(20),
-		color: "#FDF9F2",
+		color: ColorConstants.faintWhite,
 		marginTop: sizeConstants.m,
 	},
 
 	container: {
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "#588C8D",
-		borderColor: "#FDF9F2",
+		backgroundColor: ColorConstants.darkFaintBlue,
+		borderColor: ColorConstants.faintWhite,
 		marginBottom: sizeConstants.xl,
 		marginTop: sizeConstants.m,
 	},
@@ -785,17 +793,13 @@ export const CommonStyles = ScaledSheet.create({
 	done: {
 		fontSize: sizeConstants.fourteenScale, //16
 		color: "#89B3B2",
-
-		position: "absolute",
-		bottom: 0,
-		right: sizeConstants.xxl,
 	},
 
 	// MyGoals Home Screen
 
 	goalsContainer: {
 		flex: 1,
-		backgroundColor: "#FBF5E9",
+		backgroundColor: ColorConstants.lightestYellow,
 		borderTopRightRadius: sizeConstants.seventy,
 	},
 
@@ -805,7 +809,7 @@ export const CommonStyles = ScaledSheet.create({
 		width: sizeConstants.hundred,
 		borderRadius: sizeConstants.hundred,
 		borderWidth: sizeConstants.s,
-		borderColor: "#588C8D",
+		borderColor: ColorConstants.darkFaintBlue,
 		justifyContent: "center",
 		alignItems: "center",
 	},
@@ -913,14 +917,14 @@ export const CommonStyles = ScaledSheet.create({
 		height: sizeConstants.oneThirty,
 		width: sizeConstants.oneThirty,
 		borderRadius: sizeConstants.oneFifty,
-		backgroundColor: "#FBF5E9",
+		backgroundColor: ColorConstants.lightestYellow,
 		borderWidth: 8,
-		borderColor: "#C0E5E4",
+		borderColor: ColorConstants.lightestBlue,
 		justifyContent: "center",
 		alignItems: "center",
 	},
 	textDisableBackgroundColor: {
-		backgroundColor: "#FDF9F2",
+		backgroundColor: ColorConstants.faintWhite,
 		opacity: 0.5,
 	},
 
@@ -943,7 +947,7 @@ export const CommonStyles = ScaledSheet.create({
 	detailContainerStyle: {
 		marginVertical: sizeConstants.m,
 		paddingHorizontal: sizeConstants.m,
-		backgroundColor: "#588C8D",
+		backgroundColor: ColorConstants.darkFaintBlue,
 		borderRadius: 15,
 	},
 
@@ -951,6 +955,13 @@ export const CommonStyles = ScaledSheet.create({
 	descriptionStyle: {color: ColorConstants.white},
 
 	// timeline common styles ends
+
+	targetAndDoneContainer: {
+		flexDirection: "row",
+		marginLeft: "35%",
+		justifyContent: "space-between",
+		paddingRight: "7%",
+	},
 })
 
 export const firebaseConstants = {

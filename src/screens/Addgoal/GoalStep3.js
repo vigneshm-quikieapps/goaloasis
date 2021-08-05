@@ -8,6 +8,7 @@ import colors from "../../../colors"
 import AsyncStorage from "@react-native-community/async-storage"
 import {
 	ColorConstants,
+	commonDateFormat,
 	CommonStyles,
 	forGoals,
 	goalsColorArray,
@@ -44,7 +45,7 @@ const GoalStep3 = ({
 	const storeData = () => {
 		let currentGoalObj = {
 			...currentGoal,
-			targetDate: date.toISOString(),
+			targetDate: date,
 			createdAt: firestore.FieldValue.serverTimestamp(),
 			goalMilestone: [],
 			color: getColorForGoal(),
@@ -88,8 +89,10 @@ const GoalStep3 = ({
 						<View style={[CommonStyles.centerCont, {height: 250}]}>
 							<DatePicker
 								androidVariant="iosClone"
-								date={date}
-								onDateChange={setDate}
+								date={dayjs(date)}
+								onDateChange={(date) => {
+									setDate(dayjs(date).format(commonDateFormat))
+								}}
 								mode="date"
 								textColor="#ffffff"
 								locale="en"

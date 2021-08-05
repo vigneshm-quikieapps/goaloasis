@@ -161,8 +161,11 @@ const MyGoals = ({
 						mile.taskData.map((task) => {
 							let tempDateStr = dayjs(task.date).format(commonDateFormat)
 							if (tempDateStr === todayDateStr) {
-								console.log("task", JSON.stringify(mile), task)
-								allTodaysTask.push(task)
+								let newTaskObj = {
+									...task,
+									key: `${task.task}_${mile.milestone}_${goal.name}`,
+								}
+								allTodaysTask.push(newTaskObj)
 							}
 						})
 					}
@@ -170,7 +173,6 @@ const MyGoals = ({
 			}
 		})
 		setTodaysAllTasks(allTodaysTask)
-		console.log("allGoals", allTodaysTask)
 	}
 	useEffect(() => {
 		getTodaysTasks()

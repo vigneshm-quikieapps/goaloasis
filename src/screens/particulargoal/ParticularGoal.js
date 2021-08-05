@@ -13,7 +13,7 @@ import MilestoneCards from "../../components/MilestoneCards"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import RBBottomSheet from "../MileStones/RBBottomSheet"
 import {CommonHomeButton} from "../../components/CommonComponents"
-import {CommonStyles, height} from "../../core/constants"
+import {commonDateFormat, CommonStyles, height} from "../../core/constants"
 import {sizeConstants, ColorConstants} from "../../core/constants"
 import {scale, verticalScale} from "react-native-size-matters"
 import GestureRecognizer from "react-native-swipe-gestures"
@@ -27,6 +27,7 @@ import {setBooleanFlag, setFirstTimeForIndividualGoal} from "../../redux/actions
 import AppButton from "../MileStones/AppButton"
 import Swipeout from "rc-swipeout"
 import {LongPressGestureHandler, State} from "react-native-gesture-handler"
+import dayjs from "dayjs"
 
 const ParticularGoal = (props) => {
 	const navigation = useNavigation()
@@ -322,7 +323,7 @@ const ParticularGoal = (props) => {
 									color: "#333333",
 								}}
 							>
-								01/01/21
+								{dayjs(props.clickedGoal.targetDate).format(commonDateFormat)}
 							</Text>
 						</View>
 					</ProgressCircle>

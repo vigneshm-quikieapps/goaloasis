@@ -29,7 +29,7 @@ const Third = () => {
 	const [clickedDate, setDate] = useState(dayjs().format(commonDateFormat))
 
 	return (
-		<StatusBarScreen style={styles.introContainer}>
+		<StatusBarScreen style={CommonStyles.introContainer}>
 			<ScrollView>
 				<View style={{flex: 1}}>
 					<View style={{flexDirection: "row"}}>
@@ -166,10 +166,3 @@ const Third = () => {
 }
 
 export default Third
-
-const styles = StyleSheet.create({
-	introContainer: {
-		flex: 1,
-		backgroundColor: "#588C8D",
-	},
-})
