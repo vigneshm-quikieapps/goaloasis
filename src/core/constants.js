@@ -758,10 +758,6 @@ export const CommonStyles = ScaledSheet.create({
 	done: {
 		fontSize: sizeConstants.fourteenScale, //16
 		color: "#89B3B2",
-
-		position: "absolute",
-		bottom: 0,
-		right: sizeConstants.xxl,
 	},
 
 	// MyGoals Home Screen
@@ -924,6 +920,13 @@ export const CommonStyles = ScaledSheet.create({
 	descriptionStyle: {color: ColorConstants.white},
 
 	// timeline common styles ends
+
+	targetAndDoneContainer: {
+		flexDirection: "row",
+		marginLeft: "35%",
+		justifyContent: "space-between",
+		paddingRight: "7%",
+	},
 })
 
 export const firebaseConstants = {

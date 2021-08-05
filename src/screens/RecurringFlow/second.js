@@ -179,7 +179,7 @@ const Second = ({
 					>
 						<Text style={CommonStyles.editOccuringText}>Edit Reoccuring</Text>
 					</View>
-					<View style={CommonStyles.calendarContainer}>
+					<View style={[CommonStyles.calendarContainer, CommonStyles.targetAndDoneContainer]}>
 						<Text
 							style={[CommonStyles.targetDate, {marginTop: height > 700 ? sizeConstants.xs : 0}]}
 						>
