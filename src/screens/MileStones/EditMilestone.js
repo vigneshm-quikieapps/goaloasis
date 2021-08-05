@@ -4,7 +4,7 @@ import {useNavigation} from "@react-navigation/native"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import {connect} from "react-redux"
 import {ColorConstants, commonDateFormat, sizeConstants} from "../../core/constants"
-import {setBooleanFlag, setClickedGoal, setShowLoader, setHideLoader} from "./../../redux/actions"
+import {setBooleanFlag, setClickedGoal, setShowLoader} from "./../../redux/actions"
 import {Calendar, LocaleConfig} from "react-native-calendars"
 import {calendarLocale, CustomDayComponentForCalendar} from "../../components/CommonComponents"
 import {addMilestoneToFirestore} from "../../firebase"
@@ -22,7 +22,6 @@ const EditMilestone = ({
 	booleanFlag,
 	setShowLoader,
 	loading,
-	setHideLoader,
 }) => {
 	const {milestoneName, date: mileDate} = route.params
 
@@ -54,7 +53,7 @@ const EditMilestone = ({
 		setShowLoader(true)
 
 		addMilestoneToFirestore(clickedGoal, newMilestoneArr, () => {
-			setHideLoader(false)
+			setShowLoader(false)
 
 			navigation.navigate("particulargoal")
 			setBooleanFlag(!booleanFlag)
@@ -173,9 +172,6 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setShowLoader: (data) => {
 			dispatch(setShowLoader(data))
-		},
-		setHideLoader: (data) => {
-			dispatch(setHideLoader(data))
 		},
 	}
 }

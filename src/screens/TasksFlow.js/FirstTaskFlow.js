@@ -78,16 +78,18 @@ const FirstTaskFlow = ({
 			<ScrollView style={CommonStyles.mainContainer}>
 				<StatusBarScreen>
 					<View style={CommonStyles.flexOne}>
-						<View style={CommonStyles.flexDirectionRow}>
-							<Text style={CommonStyles.mainTitle}>{clickedMilestone}</Text>
-							<Entypo
-								name="cross"
-								color={ColorConstants.faintWhite}
-								size={38}
-								style={CommonStyles.cross}
-								onPress={() => navigation.navigate("DParticularGoal")}
-							/>
-						</View>
+						<ScrollView>
+							<View style={CommonStyles.flexDirectionRow}>
+								<Text style={CommonStyles.mainTitle}>{clickedMilestone}</Text>
+								<Entypo
+									name="cross"
+									color={ColorConstants.faintWhite}
+									size={38}
+									style={CommonStyles.cross}
+									onPress={() => navigation.navigate("DParticularGoal")}
+								/>
+							</View>
+						</ScrollView>
 
 						<Text style={styles.subTitle}>Enter Task</Text>
 						<View style={styles.centerCont}>
@@ -108,7 +110,7 @@ const FirstTaskFlow = ({
 								onPress={() => {
 									taskName !== "" && nextScreen()
 								}}
-								style={{alignSelf: "flex-end"}}
+								style={{position: "absolute", right: 25}}
 							>
 								<Text
 									style={[

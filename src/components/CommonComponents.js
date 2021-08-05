@@ -377,13 +377,13 @@ const styles = StyleSheet.create({
 	dayText: {
 		textAlign: "center",
 		color: ColorConstants.white,
-		fontSize: sizeConstants.thirteenX,
+		fontSize: height > 700 ? sizeConstants.thirteenX : sizeConstants.twelve,
 		flex: 1,
 		width: sizeConstants.thirty,
 		alignItems: "center",
 		justifyContent: "center",
 		flexWrap: "nowrap",
-		paddingTop: 1,
+		// paddingTop: 1,
 	},
 	todayText: {
 		fontWeight: "bold",

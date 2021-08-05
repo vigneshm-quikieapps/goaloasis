@@ -124,11 +124,6 @@ const milestoneReducer = (state = initialState, action) => {
 				...state,
 				loading: action.value,
 			}
-		case actionTypes.HIDE_LOADER:
-			return {
-				...state,
-				loading: action.value,
-			}
 
 		case actionTypes.SET_BOOLEAN_FLAG:
 			return {

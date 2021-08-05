@@ -29,7 +29,6 @@ import {
 	setClickedGoal,
 	setClickedMilestone,
 	setShowLoader,
-	setHideLoader,
 } from "./../../redux/actions"
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
 import Spinner from "./../../components/Spinner"
@@ -55,7 +54,7 @@ const FirstMilestone = ({
 	setClickedMilestone,
 	setShowLoader,
 	loading,
-	setHideLoader,
+
 	allGoals,
 }) => {
 	const [milestone, setMilestone] = useState("")
@@ -96,7 +95,7 @@ const FirstMilestone = ({
 		setShowLoader(true)
 
 		addMilestoneToFirestore(clickedGoal, milestoneArr, () => {
-			setHideLoader(false)
+			setShowLoader(false)
 			navigation.navigate("ThirdMileStone")
 
 			setClickedGoal(updatedObj)
@@ -244,9 +243,6 @@ const mapDispatchToProps = (dispatch) => {
 		setClickedMilestone: (task) => dispatch(setClickedMilestone(task)),
 		setShowLoader: (data) => {
 			dispatch(setShowLoader(data))
-		},
-		setHideLoader: (data) => {
-			dispatch(setHideLoader(data))
 		},
 	}
 }

@@ -27,13 +27,7 @@ import {
 	height,
 	sizeConstants,
 } from "../../core/constants"
-import {
-	setAllGoals,
-	setBooleanFlag,
-	setClickedGoal,
-	setShowLoader,
-	setHideLoader,
-} from "../../redux/actions"
+import {setAllGoals, setBooleanFlag, setClickedGoal, setShowLoader} from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
 import {addMilestoneToFirestore} from "../../firebase"
 import Spinner from "../../components/Spinner"
@@ -47,7 +41,6 @@ const DailyTimeline = ({
 	booleanFlag,
 	setShowLoader,
 	loading,
-	setHideLoader,
 }) => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
@@ -134,7 +127,7 @@ const DailyTimeline = ({
 		setShowLoader(true)
 
 		addMilestoneToFirestore(clickedGoal, newMilestoneArray, () => {
-			setHideLoader(false)
+			setShowLoader(false)
 
 			setClickedGoal(updatedObj)
 			setBooleanFlag(!booleanFlag)
@@ -335,9 +328,6 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setShowLoader: (data) => {
 			dispatch(setShowLoader(data))
-		},
-		setHideLoader: (data) => {
-			dispatch(setHideLoader(data))
 		},
 	}
 }

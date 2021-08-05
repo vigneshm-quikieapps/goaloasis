@@ -93,13 +93,6 @@ export const setShowLoader = (data) => {
 	}
 }
 
-export const setHideLoader = (data) => {
-	return {
-		type: actionTypes.HIDE_LOADER,
-		value: data,
-	}
-}
-
 export const setBooleanFlag = (data) => {
 	return {
 		type: actionTypes.SET_BOOLEAN_FLAG,

@@ -72,8 +72,10 @@ const FourthMilestone = ({clickedGoal, newMileStone}) => {
 
 					<View style={[CommonStyles.calendarContainer, CommonStyles.targetAndDoneContainer]}>
 						<Text style={CommonStyles.targetDate}>Target Date</Text>
-
-						<TouchableOpacity onPress={() => navigation.navigate("SixthMilestone")}>
+						<TouchableOpacity
+							onPress={() => navigation.navigate("SixthMilestone")}
+							style={{position: "absolute", right: 25}}
+						>
 							<Text
 								style={[
 									CommonStyles.done,
