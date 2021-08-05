@@ -113,7 +113,12 @@ const TaskTutorialSlider = ({data, setFirstTime, loading, helpMenu = false}) => 
 						<LongPressGestureHandler onHandlerStateChange={onLongPress} minDurationMs={800}>
 							<View>
 								<TouchableOpacity style={styles.centerBtn}>
-									<Text style={taskCompleted ? styles.btnTextCompleted : styles.btnText}>
+									<Text
+										style={[
+											taskCompleted ? styles.btnTextCompleted : styles.btnText,
+											{fontSize: sizeConstants.sixteenX},
+										]}
+									>
 										{taskCompleted ? "Completed Task" : "Long Press"}
 									</Text>
 								</TouchableOpacity>
@@ -141,7 +146,9 @@ const TaskTutorialSlider = ({data, setFirstTime, loading, helpMenu = false}) => 
 									disabled={false}
 								>
 									<View style={styles.swipeBtnStyling}>
-										<Text style={styles.btnText}>Swipe right</Text>
+										<Text style={[styles.btnText, {fontSize: sizeConstants.sixteenX}]}>
+											Swipe right
+										</Text>
 									</View>
 								</Swipeout>
 							)}
@@ -301,7 +308,7 @@ const styles = StyleSheet.create({
 		borderRadius: sizeConstants.xxxl,
 	},
 	btnText: {
-		fontSize: sizeConstants.fourteenScale, //19
+		fontSize: sizeConstants.sixteenX, //19
 		color: "#666666",
 		letterSpacing: 1.2,
 	},
@@ -315,7 +322,7 @@ const styles = StyleSheet.create({
 	},
 	swipeButton: {
 		alignContent: "center",
-		borderRadius: sizeConstants.twentyTwo,
+		borderRadius: sizeConstants.xxxl,
 		backgroundColor: "#fff",
 		overflow: "hidden",
 		marginLeft: sizeConstants.twentyOneScale,

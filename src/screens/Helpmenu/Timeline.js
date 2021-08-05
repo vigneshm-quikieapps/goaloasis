@@ -13,7 +13,7 @@ import MonthTimeline from "./MonthTimeline"
 import {CommonHomeButton} from "../../components/CommonComponents"
 import {connect} from "react-redux"
 import {ColorConstants, commonDateFormat, CommonStyles, sizeConstants} from "../../core/constants"
-import {setAllGoals, setClickedGoal, setShowLoader, setHideLoader} from "../../redux/actions"
+import {setAllGoals, setClickedGoal, setShowLoader} from "../../redux/actions"
 import {updateGoalToFirestore} from "../../firebase"
 import AsyncStorage from "@react-native-community/async-storage"
 import Spinner from "../../components/Spinner"
@@ -23,7 +23,7 @@ import {Constants} from "react-native-unimodules"
 const TimelineScreen = ({
 	setShowLoader,
 	loading,
-	setHideLoader,
+
 	allGoals,
 	clickedGoal,
 	setClickedGoal,
@@ -84,7 +84,7 @@ const TimelineScreen = ({
 		setShowLoader(true)
 
 		updateGoalToFirestore(updatedObj, clickedGoal.name, () => {
-			setHideLoader(false)
+			setShowLoader(false)
 
 			setClickedGoal(updatedObj)
 			refRBSheet.current.close()
@@ -278,9 +278,6 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setShowLoader: (data) => {
 			dispatch(setShowLoader(data))
-		},
-		setHideLoader: (data) => {
-			dispatch(setHideLoader(data))
 		},
 	}
 }

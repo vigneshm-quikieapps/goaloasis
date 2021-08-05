@@ -6,14 +6,14 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import DatePicker from "react-native-date-picker"
 import {connect} from "react-redux"
 import {updateGoalToFirestore} from "../../firebase"
-import {setClickedGoal, setShowLoader, setHideLoader} from "../../redux/actions"
+import {setClickedGoal, setShowLoader} from "../../redux/actions"
 
 import Spinner from "./../../components/Spinner"
 import dayjs from "dayjs"
 import {sizeConstants} from "../../core/constants"
 import {scale} from "react-native-size-matters"
 
-const EditGoalhelp = ({clickedGoal, setClickedGoal, setShowLoader, loading, setHideLoader}) => {
+const EditGoalhelp = ({clickedGoal, setClickedGoal, setShowLoader, loading}) => {
 	console.log(clickedGoal)
 	const [goalName, setGoalName] = useState(clickedGoal.name)
 	const [targetDate, setTargetDate] = useState(dayjs(clickedGoal.targetDate))
@@ -34,7 +34,7 @@ const EditGoalhelp = ({clickedGoal, setClickedGoal, setShowLoader, loading, setH
 		}
 		setShowLoader(true)
 		updateGoalToFirestore(updatedObj, clickedGoal.name, () => {
-			setHideLoader(false)
+			setShowLoader(false)
 			navigation.navigate("mygoals")
 			setClickedGoal(updatedObj)
 		})
@@ -101,9 +101,6 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setShowLoader: (data) => {
 			dispatch(setShowLoader(data))
-		},
-		setHideLoader: (data) => {
-			dispatch(setHideLoader(data))
 		},
 	}
 }

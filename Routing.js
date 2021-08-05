@@ -9,14 +9,16 @@ import {getFirstTimeUser} from "./src/utils/asyncStorage"
 import authContext from "./src/context/auth/authContext"
 import TimelineFlowSlider from "./src/components/TimelineFlowSlider"
 import SplashScreen from "./src/assets/splashScreen"
+import Spinner from "./src/components/Spinner"
+import {connect} from "react-redux"
 
-export default function Routing() {
+const Routing = ({loading}) => {
 	const AuthContext = useContext(authContext)
 	const {reload} = AuthContext
 
 	useEffect(() => {
 		fetchData()
-	}, [reload])
+	}, [reload, loading])
 
 	const [firstTime, setFirstTime] = useState()
 	// console.log("TESTING--->", firstTime)
@@ -29,9 +31,14 @@ export default function Routing() {
 		<NavigationContainer>
 			{hasSplashScreenLoaded ? (
 				firstTime === null ? (
-					<IntroStack />
+					<>
+						<IntroStack />
+					</>
 				) : (
-					<MainStack />
+					<>
+						<MainStack />
+						{loading ? <Spinner /> : null}
+					</>
 				)
 			) : (
 				<SplashScreen
@@ -44,3 +51,15 @@ export default function Routing() {
 		</NavigationContainer>
 	)
 }
+
+const mapStateToProps = (state) => {
+	return {
+		loading: state.milestone.loading,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Routing)

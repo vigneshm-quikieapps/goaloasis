@@ -31,7 +31,7 @@ import {connect} from "react-redux"
 import Spinner from "../../components/Spinner"
 
 import {addMilestoneToFirestore} from "../../firebase"
-import {setBooleanFlag, setClickedGoal, setShowLoader, setHideLoader} from "../../redux/actions"
+import {setBooleanFlag, setClickedGoal, setShowLoader} from "../../redux/actions"
 import dayjs from "dayjs"
 
 LocaleConfig.locales["en"] = calendarLocale
@@ -40,7 +40,6 @@ LocaleConfig.defaultLocale = "en"
 const ThirdTaskFlow = ({
 	setShowLoader,
 	loading,
-	setHideLoader,
 	clickedGoal,
 	route,
 	clickedMilestone,
@@ -105,7 +104,7 @@ const ThirdTaskFlow = ({
 
 		setShowLoader(true)
 		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask, () => {
-			setHideLoader(false)
+			setShowLoader(false)
 
 			setClickedGoal(updatedObj)
 			navigationCallback()
@@ -153,7 +152,7 @@ const ThirdTaskFlow = ({
 							onPress={() => {
 								taskName != "" && nextScreen()
 							}}
-							style={{alignSelf: "flex-end"}}
+							style={{position: "absolute", right: 25}}
 						>
 							<Text
 								style={[
@@ -293,9 +292,6 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setShowLoader: (data) => {
 			dispatch(setShowLoader(data))
-		},
-		setHideLoader: (data) => {
-			dispatch(setHideLoader(data))
 		},
 	}
 }

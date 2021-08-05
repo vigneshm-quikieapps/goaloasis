@@ -24,9 +24,15 @@ import {SnoozeIcon} from "../../assets/customIcons"
 import Swipeout from "rc-swipeout"
 import {connect} from "react-redux"
 import {addMilestoneToFirestore} from "../../firebase"
-import {setClickedGoal, setTodaysAllTasks} from "../../redux/actions"
+import {setClickedGoal, setShowLoader, setTodaysAllTasks} from "../../redux/actions"
 
-const TodaysTask = ({todayAllTasksArr, allGoals, setClickedGoal, setTodaysAllTasks}) => {
+const TodaysTask = ({
+	todayAllTasksArr,
+	allGoals,
+	setClickedGoal,
+	setTodaysAllTasks,
+	setShowLoader,
+}) => {
 	const navigation = useNavigation()
 	const backImg = commonImages.thirdImage
 
@@ -65,6 +71,7 @@ const TodaysTask = ({todayAllTasksArr, allGoals, setClickedGoal, setTodaysAllTas
 		</View>
 	)
 	const deleteTask = (task, mile, goal) => {
+		setShowLoader(true)
 		let updatedTasksArr = todayAllTasksArr.filter(
 			(taskObj) => taskObj.key != `${task}_${mile}_${goal}`
 		)
@@ -87,10 +94,12 @@ const TodaysTask = ({todayAllTasksArr, allGoals, setClickedGoal, setTodaysAllTas
 		addMilestoneToFirestore(currentGoalObj, newMileArray, () => {
 			setClickedGoal(updatedObj)
 			setTodaysAllTasks(updatedTasksArr)
+			setShowLoader(false)
 		})
 	}
 
 	const completeTask = (task, mile, goal) => {
+		setShowLoader(true)
 		let updatedTasksArr = todayAllTasksArr.map((taskObj) => {
 			if (taskObj.key == `${task}_${mile}_${goal}`) {
 				return {
@@ -126,6 +135,7 @@ const TodaysTask = ({todayAllTasksArr, allGoals, setClickedGoal, setTodaysAllTas
 		addMilestoneToFirestore(currentGoalObj, newMileArray, () => {
 			setClickedGoal(updatedObj)
 			setTodaysAllTasks(updatedTasksArr)
+			setShowLoader(false)
 		})
 	}
 	const renderItem = ({item}) => (
@@ -161,6 +171,7 @@ const TodaysTask = ({todayAllTasksArr, allGoals, setClickedGoal, setTodaysAllTas
 						handleTaskComplete(event, item.key.split("_"))
 					}}
 					minDurationMs={800}
+					style={{backgroundColor: ColorConstants.faintWhite}}
 				>
 					<View style={[styles.swipableBtnContainer]}>
 						<TouchableOpacity style={[styles.TouchContainer]} onPress={() => {}}>
@@ -204,6 +215,7 @@ const TodaysTask = ({todayAllTasksArr, allGoals, setClickedGoal, setTodaysAllTas
 	useEffect(() => {}, [todayAllTasksArr])
 	return (
 		<StatusBarScreen style={CommonStyles.introContainer}>
+			{/* <Spinner /> */}
 			<ImageBackground style={CommonStyles.introContainer} source={backImg} resizeMode="stretch">
 				<TouchableOpacity style={styles.titleContainer}>
 					<Text style={styles.mainTitle}>Today’s tasks</Text>
@@ -218,25 +230,19 @@ const TodaysTask = ({todayAllTasksArr, allGoals, setClickedGoal, setTodaysAllTas
 					<AntDesign name="questioncircleo" size={50} color={"#fff"} />
 				</View>
 
-				<View style={styles.bottomContainer}>
-					<TouchableOpacity onPress={gotoHome}>
-						<View
-							style={[
-								styles.circleLogo,
-								{
-									transform: [{translateY: -38}],
-								},
-							]}
-						>
-							<Entypo
-								name="home"
-								size={40}
-								color={ColorConstants.lighterBlue}
-								style={{zIndex: -1}}
-							/>
-						</View>
-					</TouchableOpacity>
-				</View>
+				<TouchableOpacity
+					onPress={gotoHome}
+					style={{
+						alignSelf: "center",
+						transform: [{translateY: 38}],
+						zIndex: 15,
+					}}
+				>
+					<View style={[styles.circleLogo]}>
+						<Entypo name="home" size={40} color={ColorConstants.lighterBlue} />
+					</View>
+				</TouchableOpacity>
+				<View style={[styles.bottomContainer, {overflow: "visible"}]}></View>
 			</ImageBackground>
 		</StatusBarScreen>
 	)
@@ -246,6 +252,7 @@ const mapStateToProps = (state) => {
 		todayAllTasksArr: state.milestone.todayAllTasksArr,
 		allGoals: state.milestone.allGoals,
 		clickedGoal: state.milestone.clickedGoal,
+		loading: state.milestone.loading,
 	}
 }
 
@@ -256,6 +263,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setTodaysAllTasks: (taskArr) => {
 			dispatch(setTodaysAllTasks(taskArr))
+		},
+		setShowLoader: (flag) => {
+			dispatch(setShowLoader(flag))
 		},
 	}
 }

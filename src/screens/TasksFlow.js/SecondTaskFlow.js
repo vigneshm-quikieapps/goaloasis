@@ -20,13 +20,12 @@ import {
 import DisableAppButton from "../MileStones/DisableAppButton"
 import {connect} from "react-redux"
 import {addMilestoneToFirestore} from "../../firebase"
-import {setShowLoader, setBooleanFlag, setClickedGoal, setHideLoader} from "../../redux/actions"
+import {setShowLoader, setBooleanFlag, setClickedGoal} from "../../redux/actions"
 import Spinner from "./../../components/Spinner"
 
 const SecondTaskFlow = ({
 	setShowLoader,
 	loading,
-	setHideLoader,
 	clickedGoal,
 	clickedMilestone,
 	route,
@@ -84,7 +83,7 @@ const SecondTaskFlow = ({
 		setShowLoader(true)
 
 		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask, () => {
-			setHideLoader(false)
+			setShowLoader(false)
 
 			setClickedGoal(updatedObj)
 			navigationCallback()
@@ -193,9 +192,6 @@ const mapDispatchToProps = (dispatch) => {
 		setBooleanFlag: (task) => dispatch(setBooleanFlag(task)),
 		setShowLoader: (data) => {
 			dispatch(setShowLoader(data))
-		},
-		setHideLoader: (data) => {
-			dispatch(setHideLoader(data))
 		},
 	}
 }

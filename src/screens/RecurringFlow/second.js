@@ -22,7 +22,7 @@ import {
 import Spinner from "../../components/Spinner"
 
 import {connect} from "react-redux"
-import {setClickedGoal, setBooleanFlag, setShowLoader, setHideLoader} from "../../redux/actions"
+import {setClickedGoal, setBooleanFlag, setShowLoader} from "../../redux/actions"
 import {addMilestoneToFirestore} from "../../firebase"
 import dayjs from "dayjs"
 
@@ -38,7 +38,6 @@ const Second = ({
 	setClickedGoal,
 	setShowLoader,
 	loading,
-	setHideLoader,
 }) => {
 	const navigation = useNavigation()
 
@@ -142,7 +141,7 @@ const Second = ({
 			setClickedGoal(updatedObj)
 			setBooleanFlag(true)
 
-			setHideLoader(false)
+			setShowLoader(false)
 
 			navigation.navigate("particulargoal")
 		})
@@ -187,7 +186,10 @@ const Second = ({
 							Reoccuring Date
 						</Text>
 
-						<TouchableOpacity onPress={() => nextScreen()} style={{alignSelf: "flex-end"}}>
+						<TouchableOpacity
+							onPress={() => nextScreen()}
+							style={{position: "absolute", right: 25}}
+						>
 							<Text style={[CommonStyles.done, {color: ColorConstants.faintWhite}]}>Done</Text>
 						</TouchableOpacity>
 					</View>
@@ -298,9 +300,6 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setShowLoader: (data) => {
 			dispatch(setShowLoader(data))
-		},
-		setHideLoader: (data) => {
-			dispatch(setHideLoader(data))
 		},
 	}
 }

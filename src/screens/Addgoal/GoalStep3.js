@@ -15,7 +15,7 @@ import {
 	sizeConstants,
 } from "../../core/constants"
 import firestore from "@react-native-firebase/firestore"
-import {setAllGoals, setCurrentGoal, setHideLoader, setShowLoader} from "./../../redux/actions"
+import {setAllGoals, setCurrentGoal, setShowLoader} from "./../../redux/actions"
 import {addGoalToFirestore} from "./../../firebase"
 import {connect} from "react-redux"
 import {CommonHomeButton, CommonPrevNextButton} from "../../components/CommonComponents"
@@ -31,7 +31,6 @@ const GoalStep3 = ({
 	loading,
 	setAllGoals,
 	allGoals,
-	setHideLoader,
 }) => {
 	const navigation = useNavigation()
 
@@ -54,7 +53,7 @@ const GoalStep3 = ({
 		setShowLoader(true)
 
 		addGoalToFirestore(currentGoalObj, () => {
-			setHideLoader(false)
+			setShowLoader(false)
 			navigation.navigate("mygoals")
 			setCurrentGoal(currentGoalObj)
 		})
@@ -170,9 +169,7 @@ const mapDispatchToProps = (dispatch) => {
 		setShowLoader: (data) => {
 			dispatch(setShowLoader(data))
 		},
-		setHideLoader: (data) => {
-			dispatch(setHideLoader(data))
-		},
+
 		setAllGoals: (data) => {
 			dispatch(setAllGoals(data))
 		},

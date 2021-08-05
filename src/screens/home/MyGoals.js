@@ -32,7 +32,6 @@ import {
 	setClickedGoal,
 	setAllGoals,
 	setShowLoader,
-	setHideLoader,
 	setTodaysAllTasks,
 } from "./../../redux/actions"
 import {
@@ -67,7 +66,6 @@ const MyGoals = ({
 	clickedGoal,
 	newMileStone,
 	setShowLoader,
-	setHideLoader,
 	loading,
 	setTodaysAllTasks,
 }) => {
@@ -208,7 +206,7 @@ const MyGoals = ({
 
 		importData()
 
-		setHideLoader(false)
+		setShowLoader(false)
 	}, [currentGoal, booleanFlag, clickedGoal])
 
 	const getGoalCompletionPercent = (goalObj) => {
@@ -496,9 +494,7 @@ const mapDispatchToProps = (dispatch) => {
 		setShowLoader: (data) => {
 			dispatch(setShowLoader(data))
 		},
-		setHideLoader: (data) => {
-			dispatch(setHideLoader(data))
-		},
+
 		setTodaysAllTasks: (arr) => {
 			dispatch(setTodaysAllTasks(arr))
 		},

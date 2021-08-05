@@ -295,7 +295,7 @@ export const CommonStyles = ScaledSheet.create({
 	},
 
 	btnText: {
-		fontSize: sizeConstants.eighteenScale, //19
+		fontSize: sizeConstants.sixteenX, //19
 		color: ColorConstants.faintBlack2,
 		// letterSpacing: "1.2@s",
 	},
@@ -959,9 +959,8 @@ export const CommonStyles = ScaledSheet.create({
 
 	targetAndDoneContainer: {
 		flexDirection: "row",
-		marginLeft: "35%",
-		justifyContent: "space-between",
-		paddingRight: "7%",
+
+		justifyContent: "center",
 	},
 })
 

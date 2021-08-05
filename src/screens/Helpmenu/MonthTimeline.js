@@ -13,13 +13,7 @@ import TimelineScreen from "./Timeline"
 import {CommonHomeButton, monthNames} from "../../components/CommonComponents"
 import {connect} from "react-redux"
 import {ColorConstants, commonDateFormat, CommonStyles, sizeConstants} from "../../core/constants"
-import {
-	setAllGoals,
-	setShowLoader,
-	setHideLoader,
-	setBooleanFlag,
-	setClickedGoal,
-} from "../../redux/actions"
+import {setAllGoals, setShowLoader, setBooleanFlag, setClickedGoal} from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
 import {addMilestoneToFirestore} from "../../firebase"
 import Spinner from "../../components/Spinner"
@@ -28,7 +22,7 @@ import dayjs from "dayjs"
 const MonthTimeline = ({
 	setShowLoader,
 	loading,
-	setHideLoader,
+
 	allGoals,
 	clickedGoal,
 	setClickedGoal,
@@ -109,7 +103,7 @@ const MonthTimeline = ({
 		setShowLoader(true)
 
 		addMilestoneToFirestore(clickedGoal, newMilestoneArray, () => {
-			setHideLoader(false)
+			setShowLoader(false)
 
 			setClickedGoal(updatedObj)
 			setBooleanFlag(!booleanFlag)
@@ -312,9 +306,6 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setShowLoader: (data) => {
 			dispatch(setShowLoader(data))
-		},
-		setHideLoader: (data) => {
-			dispatch(setHideLoader(data))
 		},
 	}
 }

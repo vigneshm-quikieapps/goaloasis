@@ -2,13 +2,12 @@ import React from "react"
 import {View, ActivityIndicator, StyleSheet, Modal} from "react-native"
 import {connect} from "react-redux"
 import {setShowLoader} from "../redux/actions"
-import {setHideLoader} from "./../redux/actions"
 import {ColorConstants} from "./../core/constants"
 
-const Spinner = ({size, loading, setHideLoader, setShowLoader, style}) => {
+const Spinner = ({size, loading, setShowLoader, style}) => {
 	return (
 		<View style={[styles.spinnerStyle, style]}>
-			<ActivityIndicator size="large" color="#7EC8C9" />
+			<ActivityIndicator hidesWhenStopped={true} size="large" color="#7EC8C9" />
 		</View>
 	)
 }
@@ -25,7 +24,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		top: "50%",
 		left: "40%",
-		zIndex: 11,
+		zIndex: 100,
 	},
 })
 
@@ -37,10 +36,6 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		setShowLoader: () => {
 			dispatch(setShowLoader())
-		},
-
-		setHideLoader: () => {
-			dispatch(setHideLoader())
 		},
 	}
 }

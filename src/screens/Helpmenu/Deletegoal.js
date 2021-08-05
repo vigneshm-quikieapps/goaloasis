@@ -6,7 +6,7 @@ import StatusBarScreen from "../MileStones/StatusBarScreen"
 import {deleteGoalFromFirestore} from "../../firebase"
 import {connect} from "react-redux"
 import {sizeConstants} from "../../core/constants"
-import {setBooleanFlag, setHideLoader, setShowLoader} from "./../../redux/actions"
+import {setBooleanFlag, setShowLoader} from "./../../redux/actions"
 import Spinner from "../../components/Spinner"
 
 const Deletegoal = (props) => {
@@ -23,7 +23,7 @@ const Deletegoal = (props) => {
 	const deleteConfirm = () => {
 		props.setShowLoader(true)
 		deleteGoalFromFirestore(props.clickedGoal, () => {
-			props.setHideLoader(false)
+			props.setShowLoader(false)
 			navigation.navigate("mygoals")
 			props.setBooleanFlag(!props.booleanFlag)
 		})
@@ -79,9 +79,6 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setShowLoader: (data) => {
 			dispatch(setShowLoader(data))
-		},
-		setHideLoader: (data) => {
-			dispatch(setHideLoader(data))
 		},
 	}
 }

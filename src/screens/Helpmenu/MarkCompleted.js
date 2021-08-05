@@ -2,7 +2,7 @@ import React from "react"
 import {StyleSheet, Text, View, TouchableOpacity} from "react-native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
-import {setBooleanFlag, setCurrentGoal, setShowLoader, setHideLoader} from "./../../redux/actions"
+import {setBooleanFlag, setCurrentGoal, setShowLoader} from "./../../redux/actions"
 import {connect} from "react-redux"
 import {updateGoalToFirestore} from "./../../firebase/index"
 import Spinner from "../../components/Spinner"
@@ -27,7 +27,7 @@ const MarkCompleted = (props) => {
 		props.setShowLoader(true)
 		updateGoalToFirestore(updatedObj, null, () => {
 			console.log("TESTINNNNGNNGGG")
-			props.setHideLoader(false)
+			props.setShowLoader(false)
 			props.setBooleanFlag(!props.booleanFlag)
 			navigation.navigate("mygoals")
 		})
@@ -87,9 +87,6 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setShowLoader: (data) => {
 			dispatch(setShowLoader(data))
-		},
-		setHideLoader: (data) => {
-			dispatch(setHideLoader(data))
 		},
 	}
 }

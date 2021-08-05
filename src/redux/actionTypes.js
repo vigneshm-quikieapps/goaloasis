@@ -23,8 +23,7 @@ export const SET_CLICKED_MILESTONE = "settingClickedMilestone"
 export const SET_ALL_GOALS = "settingAllGoals"
 
 // Loader
-export const SET_LOADER = "loader"
-export const HIDE_LOADER = "hideLoader"
+export const SET_LOADER = "Showingloader"
 
 // boolean
 export const SET_BOOLEAN_FLAG = "booleanflag"
