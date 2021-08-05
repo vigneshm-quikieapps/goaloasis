@@ -6,9 +6,16 @@ import ProgressCircle from "react-native-progress-circle"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import RBBottomSheet from "../MileStones/RBBottomSheet"
 import {connect} from "react-redux"
-import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/constants"
+import {
+	ColorConstants,
+	commonDateFormat,
+	commonImages,
+	CommonStyles,
+	sizeConstants,
+} from "../../core/constants"
 import {moderateScale, scale, verticalScale} from "react-native-size-matters"
 import {CommonHomeButton} from "../../components/CommonComponents"
+import dayjs from "dayjs"
 
 const DParticularGoals = ({clickedGoal}) => {
 	const navigation = useNavigation()
@@ -40,7 +47,9 @@ const DParticularGoals = ({clickedGoal}) => {
 							<Text style={{fontSize: sizeConstants.fourteenScale, color: "#333333"}}>
 								Target Date
 							</Text>
-							<Text style={{fontWeight: "bold"}}>01/01/21</Text>
+							<Text style={{fontWeight: "bold"}}>
+								{dayjs(clickedGoal.targetDate).format(commonDateFormat)}
+							</Text>
 						</View>
 					</ProgressCircle>
 

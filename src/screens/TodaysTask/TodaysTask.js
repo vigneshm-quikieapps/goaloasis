@@ -18,22 +18,23 @@ import {useNavigation} from "@react-navigation/native"
 import ProgressCircle from "react-native-progress-circle"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import Constants from "expo-constants"
-import {LongPressGestureHandler} from "react-native-gesture-handler"
-import {ColorConstants, sizeConstants} from "../../core/constants"
+import {LongPressGestureHandler, State} from "react-native-gesture-handler"
+import {ColorConstants, commonImages, sizeConstants} from "../../core/constants"
 import {SnoozeIcon} from "../../assets/customIcons"
 import Swipeout from "rc-swipeout"
 import {connect} from "react-redux"
+import {addMilestoneToFirestore} from "../../firebase"
+import {setClickedGoal, setTodaysAllTasks} from "../../redux/actions"
 
-const TodaysTask = ({todayAllTasksArr}) => {
+const TodaysTask = ({todayAllTasksArr, allGoals, setClickedGoal, setTodaysAllTasks}) => {
 	const navigation = useNavigation()
-	const backImg = require("./../../assets/images/third.png")
+	const backImg = commonImages.thirdImage
 
 	const gotoHome = () => {
 		navigation.navigate("mygoals")
 	}
-	const deleteTaskAlert = (taskName) => {
-		console.log("deletingggg")
-		return Alert.alert(taskName, "Delete this Task?", [
+	const deleteTaskAlert = (keyArr) =>
+		Alert.alert(keyArr[0], "Delete this Task?", [
 			{
 				text: "No",
 				onPress: () => console.log("Cancel Pressed"),
@@ -41,15 +42,17 @@ const TodaysTask = ({todayAllTasksArr}) => {
 			},
 			{
 				text: "Yes",
-				onPress: () => {},
+				onPress: () => {
+					deleteTask(keyArr[0], keyArr[1], keyArr[2])
+				},
 			},
 		])
-	}
-	const deleteTaskIcon = (task) => (
+
+	const deleteTaskIcon = (key) => (
 		<View>
 			<TouchableOpacity
 				onPress={() => {
-					deleteTaskAlert(task)
+					deleteTaskAlert(key.split("_"))
 				}}
 			>
 				<MaterialCommunityIcons
@@ -61,7 +64,70 @@ const TodaysTask = ({todayAllTasksArr}) => {
 			</TouchableOpacity>
 		</View>
 	)
+	const deleteTask = (task, mile, goal) => {
+		let updatedTasksArr = todayAllTasksArr.filter(
+			(taskObj) => taskObj.key != `${task}_${mile}_${goal}`
+		)
 
+		let currentGoalObj = allGoals.find((goalobj) => goalobj.name == goal)
+		let newMileArray = currentGoalObj.goalMilestone.map((mileItem) => {
+			if (mileItem.milestone == mile) {
+				return {
+					...mileItem,
+					taskData: mileItem.taskData.filter((taskItem) => taskItem.task != task),
+				}
+			}
+			return mileItem
+		})
+		let updatedObj = {
+			...currentGoalObj,
+			goalMilestone: newMileArray,
+		}
+
+		addMilestoneToFirestore(currentGoalObj, newMileArray, () => {
+			setClickedGoal(updatedObj)
+			setTodaysAllTasks(updatedTasksArr)
+		})
+	}
+
+	const completeTask = (task, mile, goal) => {
+		let updatedTasksArr = todayAllTasksArr.map((taskObj) => {
+			if (taskObj.key == `${task}_${mile}_${goal}`) {
+				return {
+					...taskObj,
+					isCompleted: true,
+				}
+			}
+			return taskObj
+		})
+		let currentGoalObj = allGoals.find((goalobj) => goalobj.name == goal)
+		let newMileArray = currentGoalObj.goalMilestone.map((mileItem) => {
+			if (mileItem.milestone == mile) {
+				return {
+					...mileItem,
+					taskData: mileItem.taskData.map((taskItem) => {
+						if (taskItem.task == task) {
+							return {
+								...taskItem,
+								isCompleted: true,
+							}
+						}
+						return taskItem
+					}),
+				}
+			}
+			return mileItem
+		})
+		let updatedObj = {
+			...currentGoalObj,
+			goalMilestone: newMileArray,
+		}
+
+		addMilestoneToFirestore(currentGoalObj, newMileArray, () => {
+			setClickedGoal(updatedObj)
+			setTodaysAllTasks(updatedTasksArr)
+		})
+	}
 	const renderItem = ({item}) => (
 		<View style={[styles.swipeButton, styles.taskAccordion]}>
 			<Swipeout
@@ -71,14 +137,14 @@ const TodaysTask = ({todayAllTasksArr}) => {
 							<SnoozeIcon bgColor={ColorConstants.snoozeIconBg} color={ColorConstants.faintWhite} />
 						),
 						onPress: () => {
-							console.log("Snoozziingg")
+							console.log("Snoozing")
 						},
 						style: {backgroundColor: ColorConstants.snoozeIconBg},
 					},
 				]}
 				right={[
 					{
-						text: deleteTaskIcon(item.task),
+						text: deleteTaskIcon(item.key),
 
 						onPress: () => {},
 						style: {backgroundColor: ColorConstants.snoozeIconBg},
@@ -90,14 +156,20 @@ const TodaysTask = ({todayAllTasksArr}) => {
 				autoClose={true}
 				disabled={false}
 			>
-				<LongPressGestureHandler onHandlerStateChange={(event) => {}} minDurationMs={800}>
+				<LongPressGestureHandler
+					onHandlerStateChange={(event) => {
+						handleTaskComplete(event, item.key.split("_"))
+					}}
+					minDurationMs={800}
+				>
 					<View style={[styles.swipableBtnContainer]}>
-						<TouchableOpacity
-							style={[styles.TouchContainer, {backgroundColor: "#CDE8E6"}]}
-							onPress={() => {}}
-						>
+						<TouchableOpacity style={[styles.TouchContainer]} onPress={() => {}}>
 							<View>
-								<Text style={styles.mainTitleButton}>{item.task}</Text>
+								<Text
+									style={[styles.mainTitleButton, item.isCompleted ? styles.btnTextCompleted : {}]}
+								>
+									{item.task}
+								</Text>
 							</View>
 							{item.isCompleted ? (
 								<View>
@@ -112,7 +184,24 @@ const TodaysTask = ({todayAllTasksArr}) => {
 			</Swipeout>
 		</View>
 	)
+	const emptyComponent = () => (
+		<View style={[styles.swipeButton, styles.taskAccordion]}>
+			<View style={[styles.swipableBtnContainer]}>
+				<TouchableOpacity activeOpacity={1} style={[styles.TouchContainer]} onPress={() => {}}>
+					<View>
+						<Text style={styles.mainTitleButton}>There are no tasks for today</Text>
+					</View>
+				</TouchableOpacity>
+			</View>
+		</View>
+	)
 
+	const handleTaskComplete = (event, keyArr) => {
+		if (event.nativeEvent.state === State.ACTIVE) {
+			completeTask(keyArr[0], keyArr[1], keyArr[2])
+		}
+	}
+	useEffect(() => {}, [todayAllTasksArr])
 	return (
 		<StatusBarScreen style={styles.container}>
 			<ImageBackground style={styles.container} source={backImg} resizeMode="stretch">
@@ -122,7 +211,8 @@ const TodaysTask = ({todayAllTasksArr}) => {
 				<FlatList
 					data={todayAllTasksArr}
 					renderItem={renderItem}
-					keyExtractor={(item, key) => `${item.task}_${key}`}
+					ListEmptyComponent={emptyComponent}
+					keyExtractor={(item, key) => `${item.key}_${key}`}
 				/>
 				<View style={styles.queIcon}>
 					<AntDesign name="questioncircleo" size={50} color={"#fff"} />
@@ -147,11 +237,22 @@ const TodaysTask = ({todayAllTasksArr}) => {
 	)
 }
 const mapStateToProps = (state) => {
-	return {todayAllTasksArr: state.milestone.todayAllTasksArr}
+	return {
+		todayAllTasksArr: state.milestone.todayAllTasksArr,
+		allGoals: state.milestone.allGoals,
+		clickedGoal: state.milestone.clickedGoal,
+	}
 }
 
 const mapDispatchToProps = (dispatch) => {
-	return {}
+	return {
+		setClickedGoal: (clickedGoalObj) => {
+			dispatch(setClickedGoal(clickedGoalObj))
+		},
+		setTodaysAllTasks: (taskArr) => {
+			dispatch(setTodaysAllTasks(taskArr))
+		},
+	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(TodaysTask)
 const styles = StyleSheet.create({
@@ -227,7 +328,7 @@ const styles = StyleSheet.create({
 
 	taskAccordion: {
 		height: 50,
-		backgroundColor: "#CDE8E6",
+		backgroundColor: ColorConstants.white,
 		paddingVertical: sizeConstants.s,
 		width: "85%",
 		flexDirection: "row",
@@ -254,7 +355,7 @@ const styles = StyleSheet.create({
 	},
 	TouchContainer: {
 		width: "100%",
-		backgroundColor: "#FDF9F2",
+		backgroundColor: ColorConstants.white,
 		height: sizeConstants.hundredMX,
 		flexDirection: "row",
 		justifyContent: "space-between",
@@ -265,5 +366,13 @@ const styles = StyleSheet.create({
 		fontSize: sizeConstants.eighteenScale, //19
 		fontWeight: "bold",
 		color: "#333333",
+	},
+	btnTextCompleted: {
+		fontSize: sizeConstants.fourteenScale, //19
+
+		color: "#666666",
+		letterSpacing: 1.2,
+		textDecorationLine: "line-through",
+		textDecorationStyle: "solid",
 	},
 })

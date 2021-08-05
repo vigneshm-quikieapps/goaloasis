@@ -8,6 +8,7 @@ import colors from "../../../colors"
 import AsyncStorage from "@react-native-community/async-storage"
 import {
 	ColorConstants,
+	commonDateFormat,
 	CommonStyles,
 	forGoals,
 	goalsColorArray,
@@ -22,7 +23,14 @@ import Spinner from "../../components/Spinner"
 import dayjs from "dayjs"
 // const colorArray = Object.values(forGoals)
 
-const GoalStep3 = ({setCurrentGoal, currentGoal, setShowLoader, loading, setHideLoader}) => {
+const GoalStep3 = ({
+	setCurrentGoal,
+	currentGoal,
+	setShowLoader,
+	loading,
+	setHideLoader,
+	allGoals,
+}) => {
 	const navigation = useNavigation()
 
 	const gotoHome = () => {
@@ -35,7 +43,7 @@ const GoalStep3 = ({setCurrentGoal, currentGoal, setShowLoader, loading, setHide
 	const storeData = () => {
 		let currentGoalObj = {
 			...currentGoal,
-			targetDate: date.toISOString(),
+			targetDate: date,
 			createdAt: firestore.FieldValue.serverTimestamp(),
 			goalMilestone: [],
 			color: getColorForGoal(),
@@ -79,8 +87,10 @@ const GoalStep3 = ({setCurrentGoal, currentGoal, setShowLoader, loading, setHide
 						<View style={[CommonStyles.centerCont, {height: 250}]}>
 							<DatePicker
 								androidVariant="iosClone"
-								date={date}
-								onDateChange={setDate}
+								date={dayjs(date)}
+								onDateChange={(date) => {
+									setDate(dayjs(date).format(commonDateFormat))
+								}}
 								mode="date"
 								textColor="#ffffff"
 								locale="en"
@@ -146,6 +156,7 @@ const mapStateToProps = (state) => {
 	return {
 		currentGoal: state.milestone.currentGoal,
 		loading: state.milestone.loading,
+		allGoals: state.milestone.allGoals,
 	}
 }
 
