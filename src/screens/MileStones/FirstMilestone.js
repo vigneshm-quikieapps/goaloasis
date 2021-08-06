@@ -31,7 +31,6 @@ import {
 	setShowLoader,
 } from "./../../redux/actions"
 import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
-import Spinner from "./../../components/Spinner"
 import Constants from "expo-constants"
 import {
 	calendarLocale,
@@ -111,8 +110,6 @@ const FirstMilestone = ({
 	return (
 		<ImageBackground style={[styles.image]} source={commonImages.secondImage} resizeMode="stretch">
 			<View style={{flex: 1}}>
-				{loading ? <Spinner /> : null}
-
 				<View>
 					<ScrollView>
 						<StatusBarScreen>

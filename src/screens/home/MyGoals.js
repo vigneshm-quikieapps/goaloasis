@@ -21,7 +21,6 @@ import StatusBarScreen from "../MileStones/StatusBarScreen"
 import Constants from "expo-constants"
 import {connect} from "react-redux"
 import AsyncStorage from "@react-native-community/async-storage"
-import Spinner from "./../../components/Spinner"
 import {getAllGoalsFromFirestore} from "./../../firebase/index"
 
 import {
@@ -360,7 +359,6 @@ const MyGoals = ({
 				<View>
 					<Text style={CommonStyles.myGoalsText}>My goals</Text>
 				</View>
-				{loading ? <Spinner /> : null}
 
 				<ScrollView
 					contentContainerStyle={{

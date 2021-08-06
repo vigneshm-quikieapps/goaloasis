@@ -19,7 +19,6 @@ import {
 	CustomDayComponentForCalendar,
 	getAllDatesBetween,
 } from "../../components/CommonComponents"
-import Spinner from "../../components/Spinner"
 
 import {connect} from "react-redux"
 import {setClickedGoal, setBooleanFlag, setShowLoader} from "../../redux/actions"
@@ -149,7 +148,6 @@ const Second = ({
 
 	return (
 		<StatusBarScreen style={CommonStyles.introContainer}>
-			{loading ? <Spinner /> : null}
 			<ScrollView>
 				<View>
 					<View style={{flexDirection: "row"}}>

@@ -30,7 +30,7 @@ import {
 import {setAllGoals, setBooleanFlag, setClickedGoal, setShowLoader} from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
 import {addMilestoneToFirestore} from "../../firebase"
-import Spinner from "../../components/Spinner"
+
 import dayjs from "dayjs"
 
 const DailyTimeline = ({
@@ -141,8 +141,6 @@ const DailyTimeline = ({
 			source={require("../../assets/images/timeline.png")}
 			resizeMode="stretch"
 		>
-			{loading ? <Spinner /> : null}
-
 			<View style={styles.container}>
 				<Text
 					style={{

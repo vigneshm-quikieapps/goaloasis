@@ -8,7 +8,6 @@ import {connect} from "react-redux"
 import {updateGoalToFirestore} from "../../firebase"
 import {setClickedGoal, setShowLoader} from "../../redux/actions"
 
-import Spinner from "./../../components/Spinner"
 import dayjs from "dayjs"
 import {sizeConstants} from "../../core/constants"
 import {scale} from "react-native-size-matters"
@@ -56,7 +55,6 @@ const EditGoalhelp = ({clickedGoal, setClickedGoal, setShowLoader, loading}) => 
 								}}
 							/>
 						</View>
-						{loading ? <Spinner /> : null}
 
 						<Text style={[styles.title, {marginTop: 50, marginLeft: 20}]}>Edit target date</Text>
 						<View style={[styles.centerCont, {height: 250}]}>

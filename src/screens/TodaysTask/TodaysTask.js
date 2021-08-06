@@ -215,7 +215,6 @@ const TodaysTask = ({
 	useEffect(() => {}, [todayAllTasksArr])
 	return (
 		<StatusBarScreen style={CommonStyles.introContainer}>
-			{/* <Spinner /> */}
 			<ImageBackground style={CommonStyles.introContainer} source={backImg} resizeMode="stretch">
 				<TouchableOpacity style={styles.titleContainer}>
 					<Text style={styles.mainTitle}>Today’s tasks</Text>
