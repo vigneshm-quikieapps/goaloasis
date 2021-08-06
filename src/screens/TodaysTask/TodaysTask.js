@@ -175,20 +175,20 @@ const TodaysTask = ({
 				>
 					<View style={[styles.swipableBtnContainer]}>
 						<TouchableOpacity style={[styles.TouchContainer]} onPress={() => {}}>
-							<View>
+							<ScrollView horizontal={true}>
 								<Text
 									style={[styles.mainTitleButton, item.isCompleted ? styles.btnTextCompleted : {}]}
 								>
 									{item.task}
 								</Text>
-							</View>
-							{item.isCompleted ? (
+							</ScrollView>
+							{/* {item.isCompleted ? (
 								<View>
 									<Text style={{color: ColorConstants.gray, fontWeight: "bold"}}>
 										TASK COMPLETED
 									</Text>
 								</View>
-							) : null}
+							) : null} */}
 						</TouchableOpacity>
 					</View>
 				</LongPressGestureHandler>
@@ -321,8 +321,9 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	queIcon: {
-		padding: sizeConstants.mThirty,
-		alignItems: "flex-end",
+		bottom: sizeConstants.hundred,
+		position: "absolute",
+		right: sizeConstants.xxl,
 	},
 
 	taskAccordion: {
