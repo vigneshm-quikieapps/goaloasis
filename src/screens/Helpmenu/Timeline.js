@@ -18,6 +18,7 @@ import {updateGoalToFirestore} from "../../firebase"
 import AsyncStorage from "@react-native-community/async-storage"
 import dayjs from "dayjs"
 import {Constants} from "react-native-unimodules"
+import {height} from "./../../core/constants"
 
 const TimelineScreen = ({
 	setShowLoader,
@@ -149,7 +150,7 @@ const TimelineScreen = ({
 
 			{/* RB-Bottom Sheet */}
 			<RBSheet
-				height={470}
+				height={height * 0.885}
 				ref={refRBSheet}
 				closeOnDragDown={true}
 				closeOnPressMask={false}

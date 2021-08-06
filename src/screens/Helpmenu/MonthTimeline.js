@@ -16,6 +16,7 @@ import {ColorConstants, commonDateFormat, CommonStyles, sizeConstants} from "../
 import {setAllGoals, setShowLoader, setBooleanFlag, setClickedGoal} from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
 import {addMilestoneToFirestore} from "../../firebase"
+import {height} from "./../../core/constants"
 import dayjs from "dayjs"
 
 const MonthTimeline = ({
@@ -159,7 +160,7 @@ const MonthTimeline = ({
 
 			{/* RB-Bottom Sheet */}
 			<RBSheet
-				height={470}
+				height={height * 0.885}
 				ref={refRBSheet}
 				closeOnDragDown={true}
 				closeOnPressMask={false}
