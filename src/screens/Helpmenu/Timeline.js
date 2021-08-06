@@ -169,8 +169,11 @@ const TimelineScreen = ({
 					},
 				}}
 			>
-				<LinearGradient colors={["#588C8D", "#7EC8C9"]} style={{padding: 50, flex: 1}}>
-					<View>
+				<LinearGradient
+					colors={["#588C8D", "#7EC8C9"]}
+					style={{padding: 50, flex: 1, justifycontent: "center"}}
+				>
+					<View style={{alignSelf: "center"}}>
 						<Text style={styles.mainTitle}>Edit Name of Goal</Text>
 						<View>
 							<TextInput
@@ -178,6 +181,7 @@ const TimelineScreen = ({
 								placeholder="Type Here"
 								value={clickedGoalName}
 								onChangeText={setClickedGoalName}
+								maxLength={15}
 							/>
 						</View>
 					</View>

@@ -202,8 +202,11 @@ const DailyTimeline = ({
 					},
 				}}
 			>
-				<LinearGradient colors={["#588C8D", "#7EC8C9"]} style={{padding: 50, flex: 1}}>
-					<View>
+				<LinearGradient
+					colors={["#588C8D", "#7EC8C9"]}
+					style={{padding: 50, flex: 1, justifycontent: "center"}}
+				>
+					<View style={{alignSelf: "center"}}>
 						<Text style={styles.mainTitle}>Edit Name of Task</Text>
 						<View>
 							<TextInput
@@ -211,6 +214,7 @@ const DailyTimeline = ({
 								placeholder="Type Here"
 								value={clickedTaskName}
 								onChangeText={setClickedTaskName}
+								maxLength={28}
 							/>
 						</View>
 					</View>
