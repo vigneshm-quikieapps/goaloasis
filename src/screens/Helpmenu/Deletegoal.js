@@ -7,7 +7,6 @@ import {deleteGoalFromFirestore} from "../../firebase"
 import {connect} from "react-redux"
 import {sizeConstants} from "../../core/constants"
 import {setBooleanFlag, setShowLoader} from "./../../redux/actions"
-import Spinner from "../../components/Spinner"
 
 const Deletegoal = (props) => {
 	const navigation = useNavigation()
@@ -52,7 +51,6 @@ const Deletegoal = (props) => {
 						Goal will be deleted and removed from your timeline
 					</Text>
 				</View>
-				{props.loading ? <Spinner /> : null}
 
 				<View style={styles.bottomBtnContainer}>
 					<TouchableOpacity style={styles.HelpBtn} onPress={deleteConfirm}>

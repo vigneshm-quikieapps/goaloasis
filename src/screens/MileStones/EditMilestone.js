@@ -8,7 +8,6 @@ import {setBooleanFlag, setClickedGoal, setShowLoader} from "./../../redux/actio
 import {Calendar, LocaleConfig} from "react-native-calendars"
 import {calendarLocale, CustomDayComponentForCalendar} from "../../components/CommonComponents"
 import {addMilestoneToFirestore} from "../../firebase"
-import Spinner from "../../components/Spinner"
 import dayjs from "dayjs"
 
 LocaleConfig.locales["en"] = calendarLocale
@@ -141,7 +140,6 @@ const EditMilestone = ({
 							}}
 						/>
 					</View>
-					{loading ? <Spinner /> : null}
 
 					<View style={styles.bottomBtnContainer}>
 						<TouchableOpacity style={styles.HelpBtn} onPress={handleMilestoneEdit}>

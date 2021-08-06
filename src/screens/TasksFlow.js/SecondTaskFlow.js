@@ -21,7 +21,6 @@ import DisableAppButton from "../MileStones/DisableAppButton"
 import {connect} from "react-redux"
 import {addMilestoneToFirestore} from "../../firebase"
 import {setShowLoader, setBooleanFlag, setClickedGoal} from "../../redux/actions"
-import Spinner from "./../../components/Spinner"
 
 const SecondTaskFlow = ({
 	setShowLoader,
@@ -96,8 +95,6 @@ const SecondTaskFlow = ({
 			source={commonImages.secondImage}
 			resizeMode="stretch"
 		>
-			{loading ? <Spinner /> : null}
-
 			<View style={[CommonStyles.flexDirectionRow, {marginTop: Constants.statusBarHeight}]}>
 				<Text style={CommonStyles.mainTitle}>{clickedMilestone}</Text>
 				<Entypo

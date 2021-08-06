@@ -5,7 +5,6 @@ import {useNavigation} from "@react-navigation/native"
 import {setBooleanFlag, setCurrentGoal, setShowLoader} from "./../../redux/actions"
 import {connect} from "react-redux"
 import {updateGoalToFirestore} from "./../../firebase/index"
-import Spinner from "../../components/Spinner"
 import {sizeConstants} from "../../core/constants"
 
 const MarkCompleted = (props) => {
@@ -57,7 +56,7 @@ const MarkCompleted = (props) => {
 						Goal will crossed out your timeline but not deleted
 					</Text>
 				</View>
-				{props.loading ? <Spinner style={{bottom: 20}} /> : null}
+
 				<View style={styles.bottomBtnContainer}>
 					<TouchableOpacity style={styles.HelpBtn} onPress={gotoHome}>
 						<Text style={styles.btnText}>Confirm</Text>

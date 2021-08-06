@@ -16,7 +16,6 @@ import {ColorConstants, commonDateFormat, CommonStyles, sizeConstants} from "../
 import {setAllGoals, setShowLoader, setBooleanFlag, setClickedGoal} from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
 import {addMilestoneToFirestore} from "../../firebase"
-import Spinner from "../../components/Spinner"
 import dayjs from "dayjs"
 
 const MonthTimeline = ({
@@ -117,8 +116,6 @@ const MonthTimeline = ({
 			source={require("../../assets/images/timeline.png")}
 			resizeMode="stretch"
 		>
-			{loading ? <Spinner /> : null}
-
 			<View style={styles.container}>
 				<Text
 					style={{

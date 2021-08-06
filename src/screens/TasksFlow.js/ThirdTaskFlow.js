@@ -28,7 +28,6 @@ import {
 	calendarLocale,
 } from "../../components/CommonComponents"
 import {connect} from "react-redux"
-import Spinner from "../../components/Spinner"
 
 import {addMilestoneToFirestore} from "../../firebase"
 import {setBooleanFlag, setClickedGoal, setShowLoader} from "../../redux/actions"
@@ -113,8 +112,6 @@ const ThirdTaskFlow = ({
 
 	return (
 		<StatusBarScreen style={CommonStyles.introContainer}>
-			{loading ? <Spinner /> : null}
-
 			<ScrollView>
 				<View style={CommonStyles.flexOne}>
 					<View style={CommonStyles.flexDirectionRow}>

@@ -16,7 +16,6 @@ import {ColorConstants, commonDateFormat, CommonStyles, sizeConstants} from "../
 import {setAllGoals, setClickedGoal, setShowLoader} from "../../redux/actions"
 import {updateGoalToFirestore} from "../../firebase"
 import AsyncStorage from "@react-native-community/async-storage"
-import Spinner from "../../components/Spinner"
 import dayjs from "dayjs"
 import {Constants} from "react-native-unimodules"
 
@@ -214,8 +213,6 @@ const TimelineScreen = ({
 					marginLeft: sizeConstants.thirty,
 				}}
 			>
-				{loading ? <Spinner /> : null}
-
 				<TouchableOpacity
 					style={{
 						height: sizeConstants.xxxl,

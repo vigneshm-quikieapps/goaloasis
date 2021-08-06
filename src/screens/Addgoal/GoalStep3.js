@@ -19,7 +19,7 @@ import {setAllGoals, setCurrentGoal, setShowLoader} from "./../../redux/actions"
 import {addGoalToFirestore} from "./../../firebase"
 import {connect} from "react-redux"
 import {CommonHomeButton, CommonPrevNextButton} from "../../components/CommonComponents"
-import Spinner from "../../components/Spinner"
+
 import dayjs from "dayjs"
 import {scale} from "react-native-size-matters"
 // const colorArray = Object.values(forGoals)
@@ -70,8 +70,6 @@ const GoalStep3 = ({
 	return (
 		<View style={styles.introContainer}>
 			<LinearGradient colors={["#588C8D", "#7EC8C9"]} style={{flex: 1}}>
-				{loading ? <Spinner /> : null}
-
 				<View style={{flex: 1}}>
 					<View style={CommonStyles.progressContainer}>
 						<View style={CommonStyles.progress}></View>
