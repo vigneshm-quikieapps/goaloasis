@@ -612,6 +612,7 @@ export const CommonStyles = ScaledSheet.create({
 		borderColor: ColorConstants.faintWhite,
 		marginBottom: sizeConstants.xl,
 		// marginTop: sizeConstants.m,
+		textAlign: "center",
 	},
 
 	targetDate: {
