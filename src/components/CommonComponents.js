@@ -227,14 +227,12 @@ export const CommonPrevNextButton = ({
 		</View>
 	)
 }
-export const customTimelineFlatList = ({}) => {}
 export const CustomDayComponentForCalendar = ({clickedDate, date, state, dayClick, marking}) => {
 	let today = dayjs().format(commonDateFormat)
 	let selectedDate = dayjs(clickedDate).format(commonDateFormat)
 	let isMarked = marking && marking.marked
 	let isStart = marking && marking.start
 	let isEnd = marking && marking.end
-
 	return (
 		<View style={styles.mainDayContainer}>
 			{state == "disabled" ? (
@@ -280,6 +278,14 @@ export const CustomDayComponentForCalendar = ({clickedDate, date, state, dayClic
 					</View>
 				</TouchableOpacity>
 			)}
+		</View>
+	)
+}
+export const CustomTimelineFlatList = ({allGoals}) => {
+	console.log("ALL GOLbbgbggbAS", allGoals)
+	return (
+		<View style={{backgroundColor: "green"}}>
+			<Text>Dipak</Text>
 		</View>
 	)
 }

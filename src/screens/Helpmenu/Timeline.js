@@ -42,15 +42,18 @@ const TimelineScreen = ({
 				title: goal.name,
 				description: goal.description,
 				time: year,
+				// color: goal.color,
 			}
 		})
 		setAllGoalsforTimeline(timelineData)
 	}, [allGoals])
 
 	// console.log("popopop", allGoalsforTimeline[0].color)
+	console.log("allGoalsforTimeline", allGoalsforTimeline)
 
 	useEffect(() => {
 		importData()
+		// console.log("pppppppppppppppppppp", allGoalsforTimeline[0].color)
 	}, [clickedGoal])
 
 	const importData = async () => {
@@ -120,6 +123,19 @@ const TimelineScreen = ({
 					descriptionStyle={CommonStyles.descriptionStyle}
 					separator={false}
 					detailContainerStyle={[CommonStyles.detailContainerStyle]}
+					// detailContainerStyle={
+					// 	allGoalsforTimeline.color === "#588C8D"
+					// 		? styles.detailContainerStyle1
+					// 		: allGoalsforTimeline.color === "#553144"
+					// 		? styles.detailContainerStyle2
+					// 		: allGoalsforTimeline.color === "#6A5593"
+					// 		? styles.detailContainerStyle3
+					// 		: allGoalsforTimeline.color === "#B3855C"
+					// 		? styles.detailContainerStyle4
+					// 		: allGoalsforTimeline.color === "#3F6E6A"
+					// 		? styles.detailContainerStyle5
+					// 		: styles.detailContainerStyle6
+					// }
 					titleStyle={CommonStyles.titleStyle}
 					columnFormat="two-column"
 					onEventPress={(item) => {
@@ -134,16 +150,22 @@ const TimelineScreen = ({
 
 			{/* RB-Bottom Sheet */}
 			<RBSheet
-				height={600}
+				height={470}
 				ref={refRBSheet}
 				closeOnDragDown={true}
 				closeOnPressMask={false}
 				customStyles={{
 					wrapper: {
 						backgroundColor: "transparent",
+						borderRadius: 50,
 					},
 					draggableIcon: {
 						backgroundColor: "#000",
+						borderRadius: 50,
+					},
+					container: {
+						borderTopRightRadius: 40,
+						borderTopLeftRadius: 40,
 					},
 				}}
 			>
@@ -160,7 +182,7 @@ const TimelineScreen = ({
 						</View>
 					</View>
 					<Text style={styles.mainTitle}>Edit Target Date</Text>
-					<View style={{marginTop: 30}}>
+					<View style={{marginTop: sizeConstants.thirty}}>
 						<DatePicker
 							androidVariant="iosClone"
 							date={clickedGoalDate}
@@ -196,10 +218,10 @@ const TimelineScreen = ({
 
 				<TouchableOpacity
 					style={{
-						height: 50,
-						width: 50,
-						marginBottom: 10,
-						borderRadius: 25,
+						height: sizeConstants.xxxl,
+						width: sizeConstants.xxxl,
+						marginBottom: sizeConstants.m,
+						borderRadius: sizeConstants.xxxl,
 						backgroundColor: "#F8E6D3",
 						justifyContent: "center",
 					}}
@@ -217,9 +239,9 @@ const TimelineScreen = ({
 				<TouchableOpacity
 					style={{
 						justifyContent: "center",
-						height: 50,
-						width: 50,
-						borderRadius: 25,
+						height: sizeConstants.xxxl,
+						width: sizeConstants.xxxl,
+						borderRadius: sizeConstants.xxxl,
 						backgroundColor: "#F8E6D3",
 					}}
 				>
@@ -241,7 +263,7 @@ const TimelineScreen = ({
 					style={{
 						position: "absolute",
 						right: 0,
-						marginRight: 35,
+						marginRight: sizeConstants.thirtyFiveX,
 					}}
 				>
 					<AntDesign name="questioncircleo" size={53} color="white" />
@@ -285,6 +307,43 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(mapStateToProps, mapDispatchToProps)(TimelineScreen)
 
 const styles = StyleSheet.create({
+	detailContainerStyle1: {
+		marginVertical: sizeConstants.m,
+		paddingHorizontal: sizeConstants.m,
+		backgroundColor: "#588C8D",
+		borderRadius: 15,
+	},
+	detailContainerStyle2: {
+		marginVertical: sizeConstants.m,
+		paddingHorizontal: sizeConstants.m,
+		backgroundColor: "#553144",
+		borderRadius: 15,
+	},
+	detailContainerStyle3: {
+		marginVertical: sizeConstants.m,
+		paddingHorizontal: sizeConstants.m,
+		backgroundColor: "#6A5593",
+		borderRadius: 15,
+	},
+	detailContainerStyle4: {
+		marginVertical: sizeConstants.m,
+		paddingHorizontal: sizeConstants.m,
+		backgroundColor: "#B3855C",
+		borderRadius: 15,
+	},
+	detailContainerStyle5: {
+		marginVertical: sizeConstants.m,
+		paddingHorizontal: sizeConstants.m,
+		backgroundColor: "#3F6E6A",
+		borderRadius: 15,
+	},
+	detailContainerStyle6: {
+		marginVertical: sizeConstants.m,
+		paddingHorizontal: sizeConstants.m,
+		// backgroundColor: "#B8534F",
+		backgroundColor: "green",
+		borderRadius: 15,
+	},
 	introContainer: {
 		flex: 1,
 	},

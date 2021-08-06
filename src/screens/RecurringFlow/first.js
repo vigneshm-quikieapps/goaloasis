@@ -51,16 +51,22 @@ const First = ({route, clickedMilestone}) => {
 				</TouchableOpacity>
 			</View>
 			<RBSheet
-				height={500}
+				height={470}
 				ref={refRBSheet}
 				closeOnDragDown={true}
 				closeOnPressMask={false}
 				customStyles={{
 					wrapper: {
 						backgroundColor: ColorConstants.transparent,
+						borderRadius: 50,
 					},
 					draggableIcon: {
 						backgroundColor: ColorConstants.black,
+						borderRadius: 50,
+					},
+					container: {
+						borderTopRightRadius: 40,
+						borderTopLeftRadius: 40,
 					},
 				}}
 			>

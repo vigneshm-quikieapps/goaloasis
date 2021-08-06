@@ -243,16 +243,22 @@ const AllMilestonesScreen = (props) => {
 				/>
 			</View>
 			<RBSheet
-				height={500}
+				height={470}
 				ref={refRBSheet}
 				closeOnDragDown={true}
 				closeOnPressMask={false}
 				customStyles={{
 					wrapper: {
 						backgroundColor: "transparent",
+						borderRadius: 50,
 					},
 					draggableIcon: {
 						backgroundColor: "#000",
+						borderRadius: 50,
+					},
+					container: {
+						borderTopRightRadius: 40,
+						borderTopLeftRadius: 40,
 					},
 				}}
 			>

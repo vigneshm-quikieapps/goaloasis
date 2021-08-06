@@ -78,18 +78,19 @@ const FirstTaskFlow = ({
 			<ScrollView style={CommonStyles.mainContainer}>
 				<StatusBarScreen>
 					<View style={CommonStyles.flexOne}>
-						<ScrollView>
-							<View style={CommonStyles.flexDirectionRow}>
+						<View style={CommonStyles.flexDirectionRow}>
+							<ScrollView>
 								<Text style={CommonStyles.mainTitle}>{clickedMilestone}</Text>
-								<Entypo
-									name="cross"
-									color={ColorConstants.faintWhite}
-									size={38}
-									style={CommonStyles.cross}
-									onPress={() => navigation.navigate("DParticularGoal")}
-								/>
-							</View>
-						</ScrollView>
+							</ScrollView>
+
+							<Entypo
+								name="cross"
+								color={ColorConstants.faintWhite}
+								size={38}
+								style={CommonStyles.cross}
+								onPress={() => navigation.navigate("DParticularGoal")}
+							/>
+						</View>
 
 						<Text style={styles.subTitle}>Enter Task</Text>
 						<View style={styles.centerCont}>

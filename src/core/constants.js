@@ -267,6 +267,8 @@ export const CommonStyles = ScaledSheet.create({
 		textAlign: "left",
 		fontWeight: "bold",
 		color: ColorConstants.faintWhite,
+		// fontFamily: "AvenirLTStd-Black",
+		// fontFamily:""
 	},
 
 	//cricket
