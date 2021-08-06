@@ -402,17 +402,25 @@ export const CommonStyles = ScaledSheet.create({
 		right: scale(0),
 		margin: scale(10),
 		backgroundColor: "#538586",
-		height: sizeConstants.thirty,
-		width: scale(35),
+		height: verticalScale(27),
+		width: scale(40),
 		borderRadius: scale(30),
 		alignItems: "center",
 		justifyContent: "center",
 	},
+	// dots: {
+	// 	backgroundColor: "black",
+	// 	height: sizeConstants.six,
+	// 	width: scale(5),
+	// 	borderRadius: sizeConstants.four,
+	// 	margin: scale(1),
+	// },
 	dots: {
 		backgroundColor: "black",
-		height: sizeConstants.six,
-		width: scale(5),
-		borderRadius: sizeConstants.four,
+		height: sizeConstants.eight,
+		width: sizeConstants.eight,
+		borderRadius: sizeConstants.eight,
+
 		margin: scale(1),
 	},
 	enterTask: {
@@ -430,7 +438,7 @@ export const CommonStyles = ScaledSheet.create({
 		alignItems: "center",
 	},
 	bottomText: {
-		fontSize: sizeConstants.eighteenScale, //19
+		fontSize: sizeConstants.twentyX, //19
 		fontWeight: "bold",
 		color: "#333333",
 	},

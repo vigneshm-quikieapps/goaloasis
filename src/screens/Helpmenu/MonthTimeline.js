@@ -179,8 +179,11 @@ const MonthTimeline = ({
 					},
 				}}
 			>
-				<LinearGradient colors={["#588C8D", "#7EC8C9"]} style={{padding: 50, flex: 1}}>
-					<View>
+				<LinearGradient
+					colors={["#588C8D", "#7EC8C9"]}
+					style={{padding: 50, flex: 1, justifycontent: "center"}}
+				>
+					<View style={{alignSelf: "center"}}>
 						<Text style={styles.mainTitle}>Edit Name of Milestone</Text>
 						<View>
 							<TextInput
@@ -188,6 +191,7 @@ const MonthTimeline = ({
 								placeholder="Type Here"
 								value={clickedMilestoneName}
 								onChangeText={setClickedMilestoneName}
+								maxLength={28}
 							/>
 						</View>
 					</View>
