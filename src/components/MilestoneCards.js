@@ -347,20 +347,31 @@ const MilestoneCards = ({
 									>
 										<View style={[styles.swipableBtnContainer]}>
 											<TouchableOpacity
-												style={[styles.TouchContainer, style, {backgroundColor: "#CDE8E6"}]}
+												style={[
+													styles.TouchContainer,
+													style,
+													item.item.isCompleted ? styles.back : styles.back2,
+												]}
 												onPress={() => {}}
 											>
 												<View>
-													<Text style={styles.mainTitleTask}>{item.item.task}</Text>
+													<Text
+														style={[
+															styles.mainTitleTask,
+															// item.item.isCompleted ? styles.btnTextCompleted : {},
+														]}
+													>
+														{item.item.isCompleted ? "Completed Task" : item.item.task}
+													</Text>
 													<Text style={styles.subtitleTask}>{bottomItem}</Text>
 												</View>
-												{item.item.isCompleted ? (
+												{/* {item.item.isCompleted ? (
 													<View>
 														<Text style={{color: ColorConstants.gray, fontWeight: "bold"}}>
 															TASK COMPLETED
 														</Text>
 													</View>
-												) : null}
+												) : null} */}
 											</TouchableOpacity>
 										</View>
 									</LongPressGestureHandler>
@@ -467,5 +478,20 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		marginTop: sizeConstants.xxl,
 		elevation: 10,
+	},
+	btnTextCompleted: {
+		fontSize: sizeConstants.fourteenScale, //19
+
+		color: ColorConstants.faintBlack2,
+		letterSpacing: 1.2,
+		textDecorationLine: "line-through",
+		textDecorationStyle: "solid",
+	},
+	back: {
+		backgroundColor: "#CDE8E6",
+	},
+
+	back2: {
+		backgroundColor: "#7EC8C9",
 	},
 })
