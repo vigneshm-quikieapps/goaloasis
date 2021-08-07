@@ -91,7 +91,7 @@ const SecondTaskFlow = ({
 
 	return (
 		<ImageBackground
-			style={[CommonStyles.introContainer, styles.image, CommonStyles.pr10]}
+			style={[CommonStyles.introContainer]}
 			source={commonImages.secondImage}
 			resizeMode="stretch"
 		>
@@ -105,7 +105,8 @@ const SecondTaskFlow = ({
 						backgroundColor: ColorConstants.greyishBlue,
 						borderRadius: sizeConstants.twentyMX,
 						position: "absolute",
-						right: 0,
+						top: sizeConstants.s,
+						right: sizeConstants.m,
 					}}
 					onPress={() => navigation.navigate("DParticularGoal")}
 				/>
@@ -200,8 +201,7 @@ const styles = StyleSheet.create({
 		color: ColorConstants.faintWhite,
 		marginLeft: sizeConstants.twentyOne,
 		marginTop: sizeConstants.m,
-		paddingLeft: sizeConstants.three,
-		paddingRight: sizeConstants.xs,
+		paddingHorizontal: sizeConstants.three,
 	},
 	// mainTitle: {
 	// 	color: ColorConstants.faintWhite,
@@ -255,6 +255,7 @@ const styles = StyleSheet.create({
 		fontSize: sizeConstants.eighteenScale, //19
 		color: ColorConstants.faintBlack2,
 		elevation: sizeConstants.m,
+		alignSelf: "center",
 	},
 
 	cross: {

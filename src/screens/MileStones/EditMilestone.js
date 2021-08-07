@@ -33,6 +33,7 @@ const EditMilestone = ({
 	}, [])
 
 	const handleMilestoneEdit = () => {
+		setShowLoader(true)
 		let newMilestoneArr = clickedGoal.goalMilestone.map((item) => {
 			if (item.milestone == milestoneName) {
 				return {
@@ -49,7 +50,6 @@ const EditMilestone = ({
 			goalMilestone: newMilestoneArr,
 		}
 		setClickedGoal(updatedObj)
-		setShowLoader(true)
 
 		addMilestoneToFirestore(clickedGoal, newMilestoneArr, () => {
 			setShowLoader(false)
