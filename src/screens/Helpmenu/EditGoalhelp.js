@@ -53,6 +53,7 @@ const EditGoalhelp = ({clickedGoal, setClickedGoal, setShowLoader, loading}) => 
 								onChangeText={(text) => {
 									setGoalName(text)
 								}}
+								maxLength={15}
 							/>
 						</View>
 

@@ -48,6 +48,7 @@ const SixthMilestone = ({clickedGoal}) => {
 					placeholder="Type here"
 					onChangeText={(text) => setMilestone(text)}
 					value={milestone}
+					maxLength={28}
 				/>
 			</TouchableOpacity>
 			<Text style={styles.subTitle}>

@@ -201,7 +201,8 @@ const styles = StyleSheet.create({
 		color: ColorConstants.faintWhite,
 		marginLeft: sizeConstants.twentyOne,
 		marginTop: sizeConstants.m,
-		paddingHorizontal: sizeConstants.three,
+		paddingLeft: sizeConstants.three,
+		marginRight: sizeConstants.twentyOne,
 	},
 	// mainTitle: {
 	// 	color: ColorConstants.faintWhite,

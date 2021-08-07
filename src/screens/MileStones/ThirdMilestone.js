@@ -59,6 +59,7 @@ const ThirdMilestone = ({addNewMilestone, newMileStone, clickedGoal}) => {
 							placeholder="Type here"
 							onChangeText={(text) => setMilestone(text)}
 							value={milestone}
+							maxLength={28}
 						/>
 					</View>
 					<Text style={styles.subTitle}>
