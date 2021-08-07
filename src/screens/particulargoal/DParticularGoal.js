@@ -114,7 +114,7 @@ const DParticularGoals = ({clickedGoal}) => {
 			</View>
 
 			<CommonHomeButton
-				click={goBack}
+				click={() => navigation.navigate("mygoals")}
 				doNotWorkBackFunctionality={true}
 				BackHandle={true}
 				normalBack={true}
