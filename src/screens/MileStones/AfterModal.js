@@ -16,6 +16,7 @@ import {
 } from "../../components/CommonComponents"
 import {ColorConstants, commonDateFormat} from "../../core/constants"
 import dayjs from "dayjs"
+import {height} from "./../../core/constants"
 
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"
@@ -37,7 +38,7 @@ const AterModal = () => {
 					</TouchableOpacity>
 				</View>
 				<RBSheet
-					height={500}
+					height={height * 0.885}
 					ref={refRBSheet}
 					closeOnDragDown={true}
 					closeOnPressMask={false}

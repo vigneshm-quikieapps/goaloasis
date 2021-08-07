@@ -10,6 +10,7 @@ import RBSheet from "react-native-raw-bottom-sheet"
 import {commonImages} from "../../core/constants"
 import {CommonHomeButton} from "../../components/CommonComponents"
 import dayjs from "dayjs"
+import {height} from "./../../core/constants"
 
 const SecondAfterModal = () => {
 	const navigation = useNavigation()
@@ -33,7 +34,7 @@ const SecondAfterModal = () => {
 				</TouchableOpacity>
 			</View>
 			<RBSheet
-				height={500}
+				height={height * 0.7}
 				ref={refRBSheet}
 				closeOnDragDown={true}
 				closeOnPressMask={false}

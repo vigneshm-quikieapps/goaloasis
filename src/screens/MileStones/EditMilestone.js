@@ -80,6 +80,7 @@ const EditMilestone = ({
 								placeholder="Type Here"
 								onChangeText={(text) => setMilestone(text)}
 								value={milestone}
+								maxLength={28}
 							/>
 						</View>
 						<Text style={styles.headingText}>Edit target date</Text>
@@ -246,7 +247,7 @@ const styles = StyleSheet.create({
 	},
 	headingText: {
 		color: ColorConstants.white,
-		fontSize: sizeConstants.xxl,
+		fontSize: sizeConstants.twentyTwoScale,
 		fontWeight: "bold",
 		marginTop: sizeConstants.s,
 	},

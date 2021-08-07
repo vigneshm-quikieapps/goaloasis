@@ -17,6 +17,10 @@ import AppButton from "./AppButton"
 import {connect} from "react-redux"
 import Swipeout from "rc-swipeout"
 import {CommonHomeButton} from "../../components/CommonComponents"
+import {height} from "./../../core/constants"
+import {scale} from "react-native-size-matters"
+import {verticalScale} from "react-native-size-matters"
+import GestureRecognizer from "react-native-swipe-gestures"
 
 const AllMilestonesScreen = (props) => {
 	const [DATA, setData] = useState([])
@@ -59,166 +63,42 @@ const AllMilestonesScreen = (props) => {
 
 	return (
 		<StatusBarScreen style={styles.container}>
-			<TouchableOpacity onPress={() => refRBSheet.current.open()}>
-				<View style={{justifyContent: "flex-end", flexDirection: "row", margin: 20}}>
-					<View
-						style={{backgroundColor: "black", height: 8, width: 8, borderRadius: 4, margin: 1}}
-					></View>
-					<View
-						style={{backgroundColor: "black", height: 8, width: 8, borderRadius: 4, margin: 1}}
-					></View>
-					<View
-						style={{backgroundColor: "black", height: 8, width: 8, borderRadius: 4, margin: 1}}
-					></View>
-				</View>
+			<TouchableOpacity
+				onPress={() => refRBSheet.current.open()}
+				style={[styles.threeDots, {marginTop: verticalScale(35)}]}
+			>
+				<View style={CommonStyles.dots} />
+				<View style={CommonStyles.dots} />
+				<View style={CommonStyles.dots} />
 			</TouchableOpacity>
 
 			<View style={styles.titleContainer}></View>
-			{/* MODAL CODE START */}
-			{/* <Modal animationType="slide" transparent={true} visible={modalVisible}>
-				<View style={[CommonStyles.mainContainer, styles.blackOp60]}>
-					<View style={styles.modalContainer}>
-						<View style={styles.modalInnerContainer}>
-							<View
-								style={[
-									styles.modalCommonStyle,
-									CommonStyles.ML30,
-									{backgroundColor: page >= 0 ? "white" : "gray"},
-								]}
-							/>
-							<View
-								style={[styles.modalCommonStyle, {backgroundColor: page >= 1 ? "white" : "gray"}]}
-							/>
-							<View
-								style={[styles.modalCommonStyle, {backgroundColor: page >= 2 ? "white" : "gray"}]}
-							/>
-							<TouchableOpacity onPress={() => closeModal()}>
-								<Text style={[styles.skipText, CommonStyles.ML30]}>Skip</Text>
-							</TouchableOpacity>
-						</View>
-
-						<View style={[styles.modalContentContainer, {marginTop: page === 0 ? 30 : 0}]}>
-							<Text style={styles.dataTextStyle}>{dataText[page]}</Text>
-							{page == 0 ? (
-								<Text style={[styles.contentText, CommonStyles.bold]}>
-									Long press
-									<Text style={CommonStyles.fontW100}> on the milestone when ready to </Text>
-									mark complete
-								</Text>
-							) : null}
-							{page == 1 ? (
-								<Text style={[styles.contentText, CommonStyles.bold]}>
-									Swipe right
-									<Text style={CommonStyles.fontW100}> on the milestone if you want to </Text>
-									add a task
-									<Text style={CommonStyles.fontW100}> within the milestone.</Text>
-								</Text>
-							) : null}
-							{page == 2 ? (
-								<Text style={[{fontSize: sizeConstants.twentyX}, CommonStyles.bold]}>
-									Swipe left
-									<Text style={CommonStyles.fontW100}> if you want to </Text>
-									delete or edit the milestone
-								</Text>
-							) : null}
-						</View>
-
-						<View
-							style={{
-								alignItems: "center",
-								marginTop: page == 0 ? 20 : 50,
-							}}
-						>
-							{page == 0 ? (
-								<AppButton title={buttonText[page]} style={styles.appBtn} />
-							) : page == 1 ? (
-								<Swipeout
-									left={[
-										{
-											text: "ADD",
-											onPress: () => {},
-											style: CommonStyles.bgWhite,
-										},
-									]}
-									autoClose={true}
-									disabled={false}
-									style={CommonStyles.borderRadius30}
-								>
-									<View style={CommonStyles.modalBottomBtn}>
-										<Text style={CommonStyles.btnText}>{buttonText[page]}</Text>
-									</View>
-								</Swipeout>
-							) : (
-								// <AppButton
-								// 	title={buttonText[page]}
-								// 	style={{
-								// 		backgroundColor: "#7EC8C9",
-								// 		fontSize: 15,
-								// 		paddingTop: 13,
-								// 		paddingBottom: 13,
-								// 		color: "#333333",
-								// 	}}
-								// />
-
-								<Swipeout
-									right={[
-										{
-											text: (
-												<View style={CommonStyles.flexDirectionRow}>
-													<View style={styles.swipableBtnIconContainer}>
-														<AntDesign name="delete" size={24} color={ColorConstants.black} />
-													</View>
-													<View style={styles.swipableBtnIconContainer}>
-														<MaterialIcons name="edit" size={24} color={ColorConstants.black} />
-													</View>
-												</View>
-											),
-											onPress: () => {},
-											style: CommonStyles.bgWhite,
-										},
-									]}
-									autoClose={true}
-									disabled={false}
-									style={[CommonStyles.borderRadius30]}
-								>
-									<View style={styles.btnTextContainer}>
-										<Text style={[CommonStyles.btnText, {color: ColorConstants.black}]}>
-											{buttonText[page]}
-										</Text>
-									</View>
-								</Swipeout>
-							)}
-							<AppButton
-								title="Next"
-								style={{
-									backgroundColor: ColorConstants.faintWhite,
-									color: ColorConstants.faintBlack1,
-									width: "80%",
-								}}
-								onPress={() => (page === 2 ? closeModal() : setPageNo(page + 1))}
-							/>
-						</View>
-					</View>
-				</View>
-			</Modal> */}
-			{/* MODAL CODE END */}
 
 			<View style={styles.goalsContainer}>
-				<View style={{marginTop: sizeConstants.xxl, flexDirection: "row"}}>
-					<View>
-						<Text style={styles.myGoalsText}>My milestones</Text>
+				<GestureRecognizer
+					onSwipeDown={() => {
+						navigation.navigate("particulargoal", {
+							paramsItinerary: true,
+						})
+					}}
+					// style={{backgroundColor: "#ff0000"}}
+				>
+					<View style={{marginTop: sizeConstants.xxl, flexDirection: "row"}}>
+						<View>
+							<Text style={styles.myGoalsText}>My milestones</Text>
+						</View>
+						<View style={styles.viewTap}>
+							<Entypo
+								name="plus"
+								size={33}
+								color="#66A3A4"
+								onPress={() => {
+									navigation.navigate("FirstMilestone")
+								}}
+							/>
+						</View>
 					</View>
-					<View style={styles.viewTap}>
-						<Entypo
-							name="plus"
-							size={33}
-							color="#66A3A4"
-							onPress={() => {
-								navigation.navigate("FirstMilestone")
-							}}
-						/>
-					</View>
-				</View>
+				</GestureRecognizer>
 
 				<View>
 					<AllMilestones data={DATA} />
@@ -238,12 +118,14 @@ const AllMilestonesScreen = (props) => {
 					iconColor={ColorConstants.white}
 					click={() => navigation.navigate("mygoals")}
 					bgColor={ColorConstants.lighterBlue}
+					doNotWorkBackFunctionality={true}
 					BackHandle={true}
+					normalBack={true}
 					clickforBack={() => navigation.navigate("particulargoal")}
 				/>
 			</View>
 			<RBSheet
-				height={470}
+				height={height * 0.7}
 				ref={refRBSheet}
 				closeOnDragDown={true}
 				closeOnPressMask={false}
@@ -309,17 +191,6 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 	},
-	// viewTap: {
-	// 	flexDirection: "row-reverse",
-	// 	margin: 120,
-	// 	height: 35,
-	// 	width: 35,
-	// 	backgroundColor: "white",
-	// 	marginVertical: 10,
-	// 	borderRadius: 35 / 2,
-	// 	justifyContent: "center",
-	// 	alignItems: "center",
-	// },
 	viewTap: {
 		height: sizeConstants.thirtyFive,
 		width: sizeConstants.thirtyFive,
@@ -478,5 +349,18 @@ const styles = StyleSheet.create({
 		backgroundColor: ColorConstants.lighterBlue,
 		width: sizeConstants.twoSeventyMX,
 		height: sizeConstants.seventy,
+	},
+	threeDots: {
+		backgroundColor: "#F4EFE7",
+		flexDirection: "row",
+		position: "absolute",
+		right: scale(0),
+		// bottom: verticalScale(0.2),
+		margin: scale(10),
+		width: verticalScale(40),
+		height: verticalScale(27),
+		borderRadius: scale(30),
+		alignItems: "center",
+		justifyContent: "center",
 	},
 })

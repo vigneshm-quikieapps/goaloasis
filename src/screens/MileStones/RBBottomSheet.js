@@ -3,6 +3,7 @@ import {StyleSheet, View, TouchableOpacity, Text} from "react-native"
 import RBSheet from "react-native-raw-bottom-sheet"
 import {useNavigation} from "@react-navigation/native"
 import {CommonStyles, sizeConstants} from "../../core/constants"
+import {height} from "./../../core/constants"
 import {
 	ScaledSheet,
 	verticalScale,
@@ -30,7 +31,7 @@ const RBBottomSheet = ({name = "MileStone Title", flag = true}) => {
 
 			<View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 				<RBSheet
-					height={470}
+					height={height * 0.7}
 					ref={refRBSheet}
 					closeOnDragDown={true}
 					closeOnPressMask={false}

@@ -30,7 +30,6 @@ import {
 import {setAllGoals, setBooleanFlag, setClickedGoal, setShowLoader} from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
 import {addMilestoneToFirestore} from "../../firebase"
-
 import dayjs from "dayjs"
 
 const DailyTimeline = ({

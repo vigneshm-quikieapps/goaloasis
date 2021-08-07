@@ -14,6 +14,7 @@ import {
 } from "../../components/CommonComponents"
 import {setClickedGoal} from "./../../redux/actions"
 import {connect} from "react-redux"
+import {height} from "./../../core/constants"
 
 const First = ({route, clickedMilestone}) => {
 	const navigation = useNavigation()
@@ -51,7 +52,7 @@ const First = ({route, clickedMilestone}) => {
 				</TouchableOpacity>
 			</View>
 			<RBSheet
-				height={470}
+				height={height * 0.7}
 				ref={refRBSheet}
 				closeOnDragDown={true}
 				closeOnPressMask={false}
