@@ -38,7 +38,7 @@ const ParticularGoal = (props) => {
 	const [goalCompletedPercent, setGoalPercent] = useState(0)
 
 	useEffect(() => {
-		setModalVisible(false)
+		// setModalVisible(false)
 		getClickedGoalFromAsyncStorage(props.clickedGoal.name).then((goal) => {
 			let goals = JSON.parse(goal)
 			setData(goals.goalMilestone)

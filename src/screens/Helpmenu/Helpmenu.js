@@ -12,7 +12,7 @@ import AsyncStorage from "@react-native-community/async-storage"
 import {setisFirstTimeIndividual} from "../../utils/asyncStorage"
 import {setFirstTimeForIndividualGoal} from "../../redux/actions"
 
-const Helpmenu = ({setFirstTime, setFirstTimeForIndividualGoal}) => {
+const Helpmenu = ({setFirstTime, setFirstTimeForIndividualGoal, clickedGoal}) => {
 	const navigation = useNavigation()
 
 	const handleOpenNewGoal = () => {
@@ -29,7 +29,7 @@ const Helpmenu = ({setFirstTime, setFirstTimeForIndividualGoal}) => {
 	const gotoTodaysTask = () => {
 		navigation.navigate("taskTutorialSlide1", {helpMenu: true})
 	}
-
+	console.log("PRINTED CLICKED GOAL", clickedGoal.goalMilestone.length)
 	return (
 		<View style={styles.container}>
 			<View style={styles.titleContainer}>
@@ -57,10 +57,17 @@ const Helpmenu = ({setFirstTime, setFirstTimeForIndividualGoal}) => {
 						<TouchableOpacity
 							style={styles.HelpBtn}
 							onPress={() => {
-								setisFirstTimeIndividual("null").then(() => {
-									setFirstTimeForIndividualGoal("null")
-									navigation.navigate("particulargoal")
-								})
+								{
+									clickedGoal.goalMilestone.length === 0
+										? setisFirstTimeIndividual("null").then(() => {
+												setFirstTimeForIndividualGoal("null")
+												navigation.navigate("DParticularGoal")
+										  })
+										: setisFirstTimeIndividual("null").then(() => {
+												setFirstTimeForIndividualGoal("null")
+												navigation.navigate("particulargoal")
+										  })
+								}
 							}}
 						>
 							<Text style={styles.btnText}>Goal Screen</Text>
@@ -99,6 +106,7 @@ const Helpmenu = ({setFirstTime, setFirstTimeForIndividualGoal}) => {
 const mapStateToProps = (state) => {
 	return {
 		firstTime: state.milestone.firstTime,
+		clickedGoal: state.milestone.clickedGoal,
 	}
 }
 
