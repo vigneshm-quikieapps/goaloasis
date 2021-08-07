@@ -68,6 +68,10 @@ const FirstMilestone = ({
 				break
 			}
 		}
+		//
+		//
+		//
+		//
 		let milestoneArr = [
 			...clickedGoal.goalMilestone,
 			{
