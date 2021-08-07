@@ -91,7 +91,7 @@ const SecondTaskFlow = ({
 
 	return (
 		<ImageBackground
-			style={[CommonStyles.introContainer, styles.image, CommonStyles.pr10]}
+			style={[CommonStyles.introContainer]}
 			source={commonImages.secondImage}
 			resizeMode="stretch"
 		>
@@ -105,49 +105,49 @@ const SecondTaskFlow = ({
 						backgroundColor: ColorConstants.greyishBlue,
 						borderRadius: sizeConstants.twentyMX,
 						position: "absolute",
-						right: 0,
+						top: sizeConstants.s,
+						right: sizeConstants.m,
 					}}
 					onPress={() => navigation.navigate("DParticularGoal")}
 				/>
 			</View>
-			<View style={{justifyContent: "center", alignContent: "center"}}>
-				<Text style={styles.milestoneText}>Enter Task</Text>
-				<View style={CommonStyles.centerCont}>
-					<TextInput
-						style={styles.textInput}
-						placeholder="Type Here"
-						value={taskName}
-						onChangeText={(text) => setTaskName(text)}
-						maxLength={28}
+
+			<Text style={styles.milestoneText}>Enter Task</Text>
+			<View style={CommonStyles.centerCont}>
+				<TextInput
+					style={styles.textInput}
+					placeholder="Type Here"
+					value={taskName}
+					onChangeText={(text) => setTaskName(text)}
+					maxLength={28}
+				/>
+			</View>
+
+			{taskName === "" ? (
+				<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter]}>
+					<DisableAppButton
+						title="Edit Date"
+						style={{backgroundColor: ColorConstants.lightestBlue}}
 					/>
 				</View>
+			) : (
+				<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter]}>
+					<AppButton
+						onPress={() => {
+							navigation.navigate("thirdtaskflow", {
+								currentTaskData: {taskDate: currentTaskData.date, taskName: taskName},
+							})
+						}}
+						title="Edit Date"
+						style={styles.editButton}
+					/>
+				</View>
+			)}
 
-				{taskName === "" ? (
-					<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter, {alignSelf: "center"}]}>
-						<DisableAppButton
-							title="Edit Date"
-							style={{backgroundColor: ColorConstants.lightestBlue}}
-						/>
-					</View>
-				) : (
-					<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter, {alignSelf: "center"}]}>
-						<AppButton
-							onPress={() => {
-								navigation.navigate("thirdtaskflow", {
-									currentTaskData: {taskDate: currentTaskData.date, taskName: taskName},
-								})
-							}}
-							title="Edit Date"
-							style={styles.editButton}
-						/>
-					</View>
-				)}
-
-				<Text style={styles.subTitle}>
-					{tip()} adding a target date will help you stay on track. Dont't worry! You can always
-					change it.
-				</Text>
-			</View>
+			<Text style={styles.subTitle}>
+				{tip()} adding a target date will help you stay on track. Dont't worry! You can always
+				change it.
+			</Text>
 
 			<View style={styles.nextBtnContainer}>
 				<View style={styles.nextBtnInner}>

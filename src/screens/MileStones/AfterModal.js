@@ -7,6 +7,7 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {Calendar, LocaleConfig} from "react-native-calendars"
 import colors from "../../../colors"
 import StatusBarScreen from "./StatusBarScreen"
+
 import RBSheet from "react-native-raw-bottom-sheet"
 import {
 	calendarLocale,

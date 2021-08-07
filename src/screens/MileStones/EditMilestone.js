@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
 		marginVertical: sizeConstants.xxl,
 	},
 	titleText: {
-		color: ColorConstants.faintWhite,
+		color: ColorConstants.timelineSkinDarker,
 		fontSize: sizeConstants.nineteen,
 		fontWeight: "bold",
 	},

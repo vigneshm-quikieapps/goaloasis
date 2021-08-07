@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	queIcon: {
-		bottom: sizeConstants.hundred,
+		bottom: sizeConstants.oneTwentyEight,
 		position: "absolute",
 		right: sizeConstants.xxl,
 	},

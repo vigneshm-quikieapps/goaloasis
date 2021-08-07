@@ -125,16 +125,18 @@ const AllMilestonesScreen = (props) => {
 				/>
 			</View>
 			<RBSheet
-					height={height * 0.7}
+				height={height * 0.7}
 				ref={refRBSheet}
 				closeOnDragDown={true}
 				closeOnPressMask={false}
 				customStyles={{
 					wrapper: {
 						backgroundColor: "transparent",
+						borderRadius: 50,
 					},
 					draggableIcon: {
 						backgroundColor: "#000",
+						borderRadius: 50,
 					},
 					container: {
 						borderTopRightRadius: 40,
@@ -189,7 +191,6 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 	},
-
 	viewTap: {
 		height: sizeConstants.thirtyFive,
 		width: sizeConstants.thirtyFive,

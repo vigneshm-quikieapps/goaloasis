@@ -261,6 +261,7 @@ export const CommonStyles = ScaledSheet.create({
 	centerCont: {
 		justifyContent: "center",
 		alignItems: "center",
+		alignSelf: "center",
 	},
 	title: {
 		fontSize: sizeConstants.twentyTwoScale, //25
