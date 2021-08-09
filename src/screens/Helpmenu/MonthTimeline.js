@@ -50,12 +50,16 @@ const MonthTimeline = ({
 					title: mile.milestone,
 					description: "",
 					time: `${month}, ${year}`,
+					date: dayjs(mile.date).toDate(),
 				})
 			})
 		})
 
 		setAllMilestones(allMiles)
 	}, [allGoals])
+
+	allMilestones.sort((a, b) => b.date - a.date)
+	allMilestones.reverse()
 
 	useEffect(() => {
 		importData()

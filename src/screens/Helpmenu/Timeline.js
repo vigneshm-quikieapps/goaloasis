@@ -37,23 +37,23 @@ const TimelineScreen = ({
 	useEffect(() => {
 		let timelineData = allGoals.map((goal) => {
 			let year = dayjs(goal.targetDate).year()
+			let date = dayjs(goal.targetDate).toDate()
 
 			return {
 				title: goal.name,
 				description: goal.description,
 				time: year,
-				// color: goal.color,
+				date: date,
 			}
 		})
+
 		setAllGoalsforTimeline(timelineData)
 	}, [allGoals])
 
-	// console.log("popopop", allGoalsforTimeline[0].color)
-	console.log("allGoalsforTimeline", allGoalsforTimeline)
-
+	allGoalsforTimeline.sort((a, b) => b.date - a.date)
+	allGoalsforTimeline.reverse()
 	useEffect(() => {
 		importData()
-		// console.log("pppppppppppppppppppp", allGoalsforTimeline[0].color)
 	}, [clickedGoal])
 
 	const importData = async () => {

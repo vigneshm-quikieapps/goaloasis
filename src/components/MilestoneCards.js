@@ -24,6 +24,8 @@ const MilestoneCards = ({
 	loading,
 }) => {
 	const navigation = useNavigation()
+	const [isMilestoneCompleted, setIsMilestoneCompleted] = useState(false)
+	// console.log("CLICKED GOAL", clickedGoal.goalMilestone[0].taskData)
 	const icons = (milestoneObj) => (
 		<View style={{flexDirection: "row", justifyContent: "space-between"}}>
 			<TouchableOpacity
@@ -117,10 +119,19 @@ const MilestoneCards = ({
 	const onLongPress = (event, name) => {
 		if (event === "allTasksCompleted" || event.nativeEvent.state === State.ACTIVE) {
 			// clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].isCompleted = true
-
+			console.log("CAME HERE")
 			let newMilestone = clickedGoal.goalMilestone.map((item) => {
 				if (item.milestone === name) {
-					return {...item, isCompleted: true}
+					return {
+						...item,
+						isCompleted: true,
+						taskData: item.taskData.map((task) => {
+							return {
+								...task,
+								isCompleted: true,
+							}
+						}),
+					}
 				} else {
 					return item
 				}
@@ -164,7 +175,9 @@ const MilestoneCards = ({
 			})
 		}
 	}
-
+	if (data && data.isCompleted) {
+		data.taskData.map((i) => {})
+	}
 	handleTaskDelete = (clickedTask, currentMilestone) => {
 		let newMilestone = clickedGoal.goalMilestone.map((item) => {
 			if (item.milestone === currentMilestone) {
@@ -187,6 +200,7 @@ const MilestoneCards = ({
 		})
 	}
 	const [upDown, setUpDown] = useState(false)
+	const [upDown1, setUpDown1] = useState(false)
 
 	const emptyComponent = () => {
 		return (
@@ -217,6 +231,12 @@ const MilestoneCards = ({
 			}
 		}
 	}, [clickedGoal])
+
+	// useEffect(() => {
+	// 	if (data && data.taskData) {
+	// 		console.log("DATA>TASKDAAT", data)
+	// 	}
+	// }, [clickedGoal])
 	return (
 		<View
 			style={{
@@ -291,7 +311,9 @@ const MilestoneCards = ({
 
 			{upDown && data && (
 				<FlatList
-					data={data.taskData}
+					data={data.taskData.filter((item) => {
+						return item.isCompleted != true
+					})}
 					listKey={(item, index) => {
 						return (
 							this.props.index + "_" + index + "_" + item.id + "_" + moment().valueOf().toString()
@@ -305,7 +327,10 @@ const MilestoneCards = ({
 								? "Reoccuring Daily"
 								: dateStr
 							: dateStr
-
+						let flag = data.taskData.filter((item) => {
+							return item.isCompleted === true
+						})
+						console.log("FLAGGGGGG", flag)
 						return (
 							<View style={[styles.swipeButton, styles.taskAccordion]}>
 								<Swipeout
@@ -351,27 +376,103 @@ const MilestoneCards = ({
 													styles.TouchContainer,
 													style,
 													item.item.isCompleted ? styles.back : styles.back2,
+													// styles.back2,
 												]}
+												// onPress={() => {}}
+												onPress={() => setUpDown1(!upDown1)}
+											>
+												<View>
+													<Text style={[styles.mainTitleTask]}>
+														{/* {item.item.isCompleted ? "Completed Task" : item.item.task} */}
+														{/* {!item.item.isCompleted ? item.item.task : null} */}
+
+														{item.item.task}
+													</Text>
+
+													<Text style={styles.subtitleTask}>{bottomItem}</Text>
+												</View>
+											</TouchableOpacity>
+										</View>
+									</LongPressGestureHandler>
+								</Swipeout>
+							</View>
+						)
+					}}
+					keyExtractor={(item) => item.milestone}
+					extraData={null}
+				/>
+			)}
+
+			{/* FOR COMPLETED TASKS */}
+			{upDown1 && data && (
+				<FlatList
+					data={data.taskData.filter((item) => {
+						return item.isCompleted === true
+					})}
+					listKey={(item, index) => {
+						return (
+							this.props.index + "_" + index + "_" + item.id + "_" + moment().valueOf().toString()
+						)
+					}}
+					renderItem={(item) => {
+						let dateStr = dayjs(item.item.date).format(commonDateFormat)
+						let bottomItem = item.item.reoccuring
+							? item.item.reoccuring.reoccuringType == "Daily"
+								? "Reoccuring Daily"
+								: dateStr
+							: dateStr
+
+						return (
+							<View style={[styles.swipeButton, styles.taskAccordion]}>
+								<Swipeout
+									left={[
+										{
+											text: (
+												<SnoozeIcon
+													bgColor={ColorConstants.snoozeIconBg}
+													color={ColorConstants.faintWhite}
+												/>
+											),
+											onPress: () => {
+												console.log("Snoozziingg")
+											},
+											style: {backgroundColor: ColorConstants.snoozeIconBg},
+										},
+									]}
+									right={[
+										{
+											text: deleteTaskIcon(item.item.task, data.milestone),
+
+											onPress: () => {
+												deleteTaskAlert(item.item.task, data.milestone)
+											},
+											style: {backgroundColor: ColorConstants.snoozeIconBg},
+										},
+									]}
+									style={{backgroundColor: "#CDE8E6"}}
+									autoClose={true}
+									disabled={false}
+								>
+									<LongPressGestureHandler
+										onHandlerStateChange={(event) => {
+											handleTaskLongPress(event, item.item.task, data.milestone)
+										}}
+										minDurationMs={800}
+									>
+										<View style={[styles.swipableBtnContainer]}>
+											<TouchableOpacity
+												style={[styles.TouchContainer, style, styles.back]}
 												onPress={() => {}}
 											>
 												<View>
-													<Text
-														style={[
-															styles.mainTitleTask,
-															// item.item.isCompleted ? styles.btnTextCompleted : {},
-														]}
-													>
-														{item.item.isCompleted ? "Completed Task" : item.item.task}
-													</Text>
+													<Text style={[styles.mainTitleTask]}>Completed Task</Text>
 													<Text style={styles.subtitleTask}>{bottomItem}</Text>
 												</View>
-												{/* {item.item.isCompleted ? (
-													<View>
-														<Text style={{color: ColorConstants.gray, fontWeight: "bold"}}>
-															TASK COMPLETED
-														</Text>
-													</View>
-												) : null} */}
+												<Feather
+													name={upDown ? "chevron-up" : "chevron-down"}
+													size={25}
+													color="black"
+												/>
 											</TouchableOpacity>
 										</View>
 									</LongPressGestureHandler>

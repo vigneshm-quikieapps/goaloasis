@@ -411,7 +411,7 @@ const MyGoals = ({
 							<TouchableOpacity
 								style={CommonStyles.logoContainer}
 								onPress={() => {
-									if (allGoals.length >= 0 || allGoals.length < 6) {
+									if (allGoals.length == 0 || allGoals.length < 6) {
 										gotoGoal()
 									} else {
 										alert("You cannot add more than 6 Goals.")

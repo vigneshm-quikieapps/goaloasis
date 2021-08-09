@@ -58,11 +58,14 @@ const DailyTimeline = ({
 					mile.taskData.forEach((task) => {
 						// let date = convertToDateString(new Date(task.date))
 						let date = dayjs(task.date).format(commonDateFormat)
+						let sortDate = dayjs(task.date).toDate()
+
 						allTasks.push({
 							key: `${goal.id}_${mile.milestone}_${task.task}`,
 							title: task.task,
 							description: "",
 							time: date,
+							date: sortDate,
 						})
 					})
 				}
@@ -71,6 +74,9 @@ const DailyTimeline = ({
 		setAllTasks(allTasks)
 	}, [allGoals])
 
+	allTasks.sort((a, b) => b.date - a.date)
+
+	allTasks.reverse()
 	useEffect(() => {
 		importData()
 	}, [booleanFlag])
