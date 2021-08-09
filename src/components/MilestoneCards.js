@@ -201,6 +201,9 @@ const MilestoneCards = ({
 	}
 	const [upDown, setUpDown] = useState(false)
 	const [upDown1, setUpDown1] = useState(false)
+	const [allIncompleteTasks, setAllIncompleteTasks] = useState([])
+	const [allCompleteTasks, setAllCompleteTasks] = useState([])
+	const [firstCompletedTask, setFirstCompletedTask] = useState({})
 
 	const emptyComponent = () => {
 		return (
@@ -225,7 +228,21 @@ const MilestoneCards = ({
 		if (data && !data.isCompleted) {
 			var crntMile = clickedGoal.goalMilestone.find((mile) => mile.milestone == data.milestone)
 			var totalTaskCount = crntMile && crntMile.taskData.length
-			var completedTasks = crntMile && crntMile.taskData.filter((tsk) => tsk.isCompleted == true)
+			var completedTasks = []
+			var inCompletedTasks = []
+
+			crntMile &&
+				crntMile.taskData.forEach((tsk) => {
+					if (tsk.isCompleted == true) {
+						completedTasks.push(tsk)
+					} else {
+						inCompletedTasks.push(tsk)
+					}
+				})
+
+			setAllIncompleteTasks(inCompletedTasks)
+			setAllCompleteTasks(completedTasks.filter((task, index) => index != 0))
+			setFirstCompletedTask(completedTasks.length ? completedTasks[0] : {})
 			if (totalTaskCount && completedTasks && totalTaskCount === completedTasks.length) {
 				onLongPress("allTasksCompleted", crntMile.milestone)
 			}
@@ -309,11 +326,9 @@ const MilestoneCards = ({
 				</Swipeout>
 			</View>
 
-			{upDown && data && (
+			{upDown && allIncompleteTasks && allIncompleteTasks.length && (
 				<FlatList
-					data={data.taskData.filter((item) => {
-						return item.isCompleted != true
-					})}
+					data={allIncompleteTasks}
 					listKey={(item, index) => {
 						return (
 							this.props.index + "_" + index + "_" + item.id + "_" + moment().valueOf().toString()
@@ -378,8 +393,7 @@ const MilestoneCards = ({
 													item.item.isCompleted ? styles.back : styles.back2,
 													// styles.back2,
 												]}
-												// onPress={() => {}}
-												onPress={() => setUpDown1(!upDown1)}
+												onPress={() => {}}
 											>
 												<View>
 													<Text style={[styles.mainTitleTask]}>
@@ -404,11 +418,10 @@ const MilestoneCards = ({
 			)}
 
 			{/* FOR COMPLETED TASKS */}
-			{upDown1 && data && (
+
+			{upDown1 && allCompleteTasks && allCompleteTasks.length && (
 				<FlatList
-					data={data.taskData.filter((item) => {
-						return item.isCompleted === true
-					})}
+					data={allCompleteTasks}
 					listKey={(item, index) => {
 						return (
 							this.props.index + "_" + index + "_" + item.id + "_" + moment().valueOf().toString()
@@ -468,11 +481,6 @@ const MilestoneCards = ({
 													<Text style={[styles.mainTitleTask]}>Completed Task</Text>
 													<Text style={styles.subtitleTask}>{bottomItem}</Text>
 												</View>
-												<Feather
-													name={upDown ? "chevron-up" : "chevron-down"}
-													size={25}
-													color="black"
-												/>
 											</TouchableOpacity>
 										</View>
 									</LongPressGestureHandler>
@@ -483,6 +491,66 @@ const MilestoneCards = ({
 					keyExtractor={(item) => item.milestone}
 					extraData={null}
 				/>
+			)}
+
+			{upDown && firstCompletedTask != {} && (
+				<View style={[styles.swipeButton, styles.taskAccordion]}>
+					<Swipeout
+						left={[
+							{
+								text: (
+									<SnoozeIcon
+										bgColor={ColorConstants.snoozeIconBg}
+										color={ColorConstants.faintWhite}
+									/>
+								),
+								onPress: () => {
+									console.log("Snoozziingg")
+								},
+								style: {backgroundColor: ColorConstants.snoozeIconBg},
+							},
+						]}
+						right={[
+							{
+								text: deleteTaskIcon(firstCompletedTask.task, data && data.milestone),
+
+								onPress: () => {
+									deleteTaskAlert(firstCompletedTask.task, data && data.milestone)
+								},
+								style: {backgroundColor: ColorConstants.snoozeIconBg},
+							},
+						]}
+						style={{backgroundColor: "#CDE8E6"}}
+						autoClose={true}
+						disabled={false}
+					>
+						<LongPressGestureHandler
+							onHandlerStateChange={(event) => {
+								handleTaskLongPress(event, firstCompletedTask.task, data && data.milestone)
+							}}
+							minDurationMs={800}
+						>
+							<View style={[styles.swipableBtnContainer]}>
+								<TouchableOpacity
+									style={[styles.TouchContainer, style, styles.back]}
+									onPress={() => setUpDown1(!upDown1)}
+								>
+									<View>
+										<Text style={[styles.mainTitleTask]}>Completed Task</Text>
+										<Text style={styles.subtitleTask}>
+											{firstCompletedTask.reoccuring
+												? firstCompletedTask.reoccuring.reoccuringType == "Daily"
+													? "Reoccuring Daily"
+													: dayjs(firstCompletedTask.date).format(commonDateFormat)
+												: dayjs(firstCompletedTask.date).format(commonDateFormat)}
+										</Text>
+									</View>
+									<Feather name={upDown1 ? "chevron-up" : "chevron-down"} size={25} color="black" />
+								</TouchableOpacity>
+							</View>
+						</LongPressGestureHandler>
+					</Swipeout>
+				</View>
 			)}
 		</View>
 	)
