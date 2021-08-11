@@ -13,6 +13,7 @@ import {
 import colors from "../../colors"
 import dayjs from "dayjs"
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore"
+import Second from "./../screens/RecurringFlow/second"
 dayjs.extend(isSameOrBefore)
 
 export const reoccuringDefaultDailyArray = [0, 1, 2, 3, 4, 5, 6]
@@ -233,6 +234,11 @@ export const CustomDayComponentForCalendar = ({clickedDate, date, state, dayClic
 	let isMarked = marking && marking.marked
 	let isStart = marking && marking.start
 	let isEnd = marking && marking.end
+	// console.log("SELECTED DATE", selectedDate)
+	// console.log("isMarked", isMarked)
+	// console.log("isStart", isStart)
+	// console.log("isEnd", isEnd)
+	// console.log("TODAY", today)
 	return (
 		<View style={styles.mainDayContainer}>
 			{state == "disabled" ? (
@@ -243,6 +249,7 @@ export const CustomDayComponentForCalendar = ({clickedDate, date, state, dayClic
 				<TouchableOpacity
 					onPress={() => {
 						dayClick(date.dateString)
+						console.log("dayClick(date.dateString)", date.dateString)
 					}}
 				>
 					<View

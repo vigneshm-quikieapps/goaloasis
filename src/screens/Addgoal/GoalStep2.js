@@ -12,6 +12,7 @@ import {scale} from "react-native-size-matters"
 const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 	const navigation = useNavigation()
 	const [description, setDescription] = useState("")
+	console.log("DESCRIPTION", description)
 
 	const nextScreen = () => {
 		let currentGoalObj = {
@@ -44,12 +45,17 @@ const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 						</Text>
 						<View style={CommonStyles.centerCont}>
 							<TextInput
-								style={[CommonStyles.textInput, {marginTop: sizeConstants.xxxl}]}
+								style={[
+									CommonStyles.textInput,
+									{marginTop: sizeConstants.xxxl, height: 80, borderRadius: 30},
+								]}
 								placeholder="Type Here"
 								// multiline={true}
 								// numberOfLines={4}
 								onChangeText={(text) => setDescription(text)}
 								maxLength={35}
+								multiline={true}
+								numberOfLines={4}
 							/>
 						</View>
 					</View>

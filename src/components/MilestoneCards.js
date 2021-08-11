@@ -12,6 +12,7 @@ import {connect} from "react-redux"
 import {addMilestoneToFirestore} from "./../firebase/index"
 import {SnoozeIcon} from "../assets/customIcons"
 import dayjs from "dayjs"
+import PushNotification, {Importance} from "react-native-push-notification"
 
 const MilestoneCards = ({
 	data,
@@ -20,6 +21,7 @@ const MilestoneCards = ({
 	clickedMilestone,
 	clickedGoal,
 	style,
+	allGoals,
 	setShowLoader,
 	loading,
 }) => {
@@ -140,6 +142,13 @@ const MilestoneCards = ({
 				...clickedGoal,
 				goalMilestone: newMilestone,
 			}
+			// PushNotification.localNotification({
+			// 	channelId: "com.goal-oasis",
+			// 	ticker: "My Notification Ticker",
+			// 	id: 0,
+			// 	title: "Congratulations",
+			// 	message: `Your ${name} Milestone is Completed`,
+			// })
 
 			addMilestoneToFirestore(clickedGoal, newMilestone, () => {
 				setClickedGoal(updatedObj)
@@ -228,32 +237,49 @@ const MilestoneCards = ({
 		if (data && !data.isCompleted) {
 			var crntMile = clickedGoal.goalMilestone.find((mile) => mile.milestone == data.milestone)
 			var totalTaskCount = crntMile && crntMile.taskData.length
-			var completedTasks = []
+
+			if (totalTaskCount && completedTasks && totalTaskCount === completedTasks.length) {
+				PushNotification.localNotification({
+					channelId: "com.goal-oasis",
+					ticker: "My Notification Ticker",
+					id: 0,
+					title: "Congratulations",
+					message: `Your ${crntMile.milestone} Milestone is Completed`,
+				})
+				onLongPress("allTasksCompleted", crntMile.milestone)
+			}
+		}
+
+		getDataAboutCurrentMilestone()
+	}, [clickedGoal, allGoals])
+
+	const getDataAboutCurrentMilestone = () => {
+		if (data && !data.isCompleted) {
+			var crntMile = clickedGoal.goalMilestone.find((mile) => mile.milestone == data.milestone)
+			var allCompletedTask = []
 			var inCompletedTasks = []
 
 			crntMile &&
 				crntMile.taskData.forEach((tsk) => {
 					if (tsk.isCompleted == true) {
-						completedTasks.push(tsk)
+						allCompletedTask.push(tsk)
 					} else {
 						inCompletedTasks.push(tsk)
 					}
 				})
 
 			setAllIncompleteTasks(inCompletedTasks)
-			setAllCompleteTasks(completedTasks.filter((task, index) => index != 0))
-			setFirstCompletedTask(completedTasks.length ? completedTasks[0] : {})
-			if (totalTaskCount && completedTasks && totalTaskCount === completedTasks.length) {
-				onLongPress("allTasksCompleted", crntMile.milestone)
-			}
-		}
-	}, [clickedGoal])
 
-	// useEffect(() => {
-	// 	if (data && data.taskData) {
-	// 		console.log("DATA>TASKDAAT", data)
-	// 	}
-	// }, [clickedGoal])
+			setAllCompleteTasks(
+				allCompletedTask.filter((task, index) => {
+					console.log("task filter", index != 0)
+					return index != 0
+				})
+			)
+			setFirstCompletedTask(allCompletedTask.length ? completedTasks[0] : {})
+		}
+	}
+
 	return (
 		<View
 			style={{
@@ -266,7 +292,6 @@ const MilestoneCards = ({
 						{
 							text: <MaterialCommunityIcons name="plus" size={40} color="#77777B" />,
 							onPress: () => {
-								console.log("setting clicked milestone:", data && data.milestone)
 								data && data.milestone && setClickedMilestone(data.milestone)
 								navigation.navigate("firsttaskflow")
 							},
@@ -295,7 +320,39 @@ const MilestoneCards = ({
 						<View style={[styles.swipableBtnContainer]}>
 							<TouchableOpacity
 								style={[styles.TouchContainer, style]}
-								onPress={() => setUpDown(!upDown)}
+								onPress={() => {
+									if (!data.isCompleted) {
+										getDataAboutCurrentMilestone()
+										setUpDown1(false)
+										setUpDown(!upDown)
+										console.log(
+											"allIncompleteTasks gggggggggggggggggggggg",
+											allIncompleteTasks.length
+										)
+
+										console.log("working 1")
+									} else {
+										let temp = []
+										var temp1 = clickedGoal.goalMilestone.find(
+											(mile) => mile.milestone == data.milestone
+										)
+
+										temp1 &&
+											temp1.taskData.forEach((tsk) => {
+												if (tsk.isCompleted == true) {
+													temp.push(tsk)
+												}
+											})
+
+										setAllCompleteTasks(temp)
+										console.log("allIncompleteTasks", allCompleteTasks.length)
+										setUpDown1(!upDown1)
+										setUpDown(false)
+
+										console.log("working 2")
+									}
+									console.log("working 3")
+								}}
 							>
 								<ScrollView>
 									<Text style={styles.mainTitle}>{data && data.milestone}</Text>
@@ -326,7 +383,7 @@ const MilestoneCards = ({
 				</Swipeout>
 			</View>
 
-			{upDown && allIncompleteTasks && allIncompleteTasks.length && (
+			{upDown && allIncompleteTasks && allIncompleteTasks.length ? (
 				<FlatList
 					data={allIncompleteTasks}
 					listKey={(item, index) => {
@@ -342,10 +399,7 @@ const MilestoneCards = ({
 								? "Reoccuring Daily"
 								: dateStr
 							: dateStr
-						let flag = data.taskData.filter((item) => {
-							return item.isCompleted === true
-						})
-						console.log("FLAGGGGGG", flag)
+
 						return (
 							<View style={[styles.swipeButton, styles.taskAccordion]}>
 								<Swipeout
@@ -387,21 +441,11 @@ const MilestoneCards = ({
 									>
 										<View style={[styles.swipableBtnContainer]}>
 											<TouchableOpacity
-												style={[
-													styles.TouchContainer,
-													style,
-													item.item.isCompleted ? styles.back : styles.back2,
-													// styles.back2,
-												]}
+												style={[styles.TouchContainer, style, styles.back2]}
 												onPress={() => {}}
 											>
 												<View>
-													<Text style={[styles.mainTitleTask]}>
-														{/* {item.item.isCompleted ? "Completed Task" : item.item.task} */}
-														{/* {!item.item.isCompleted ? item.item.task : null} */}
-
-														{item.item.task}
-													</Text>
+													<Text style={[styles.mainTitleTask]}>{item.item.task}</Text>
 
 													<Text style={styles.subtitleTask}>{bottomItem}</Text>
 												</View>
@@ -415,17 +459,15 @@ const MilestoneCards = ({
 					keyExtractor={(item) => item.milestone}
 					extraData={null}
 				/>
-			)}
+			) : null}
 
 			{/* FOR COMPLETED TASKS */}
 
-			{upDown1 && allCompleteTasks && allCompleteTasks.length && (
+			{upDown1 && allCompleteTasks && allCompleteTasks.length ? (
 				<FlatList
 					data={allCompleteTasks}
 					listKey={(item, index) => {
-						return (
-							this.props.index + "_" + index + "_" + item.id + "_" + moment().valueOf().toString()
-						)
+						return index + "_" + item.id + "_" + moment().valueOf().toString()
 					}}
 					renderItem={(item) => {
 						let dateStr = dayjs(item.item.date).format(commonDateFormat)
@@ -491,9 +533,9 @@ const MilestoneCards = ({
 					keyExtractor={(item) => item.milestone}
 					extraData={null}
 				/>
-			)}
+			) : null}
 
-			{upDown && firstCompletedTask != {} && (
+			{upDown && firstCompletedTask && firstCompletedTask.task ? (
 				<View style={[styles.swipeButton, styles.taskAccordion]}>
 					<Swipeout
 						left={[
@@ -533,7 +575,11 @@ const MilestoneCards = ({
 							<View style={[styles.swipableBtnContainer]}>
 								<TouchableOpacity
 									style={[styles.TouchContainer, style, styles.back]}
-									onPress={() => setUpDown1(!upDown1)}
+									onPress={() => {
+										getDataAboutCurrentMilestone()
+
+										setUpDown1(!upDown1)
+									}}
 								>
 									<View>
 										<Text style={[styles.mainTitleTask]}>Completed Task</Text>
@@ -551,7 +597,7 @@ const MilestoneCards = ({
 						</LongPressGestureHandler>
 					</Swipeout>
 				</View>
-			)}
+			) : null}
 		</View>
 	)
 }
@@ -561,6 +607,7 @@ const mapStateToProps = (state) => {
 		clickedMilestone: state.milestone.clickedMilestone,
 		clickedGoal: state.milestone.clickedGoal,
 		loading: state.milestone.loading,
+		allGoals: state.milestone.allGoals,
 	}
 }
 

@@ -6,6 +6,7 @@ import {
 	View,
 	TextInput,
 	ImageBackground,
+	Animated,
 	Dimensions,
 } from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
@@ -31,6 +32,7 @@ import {setAllGoals, setBooleanFlag, setClickedGoal, setShowLoader} from "../../
 import AsyncStorage from "@react-native-community/async-storage"
 import {addMilestoneToFirestore} from "../../firebase"
 import dayjs from "dayjs"
+import GestureHandler, {PinchGestureHandler, State} from "react-native-gesture-handler"
 
 const DailyTimeline = ({
 	allGoals,
@@ -139,52 +141,84 @@ const DailyTimeline = ({
 			refRBSheet.current.close()
 		})
 	}
+	scale = new Animated.Value(1)
+	_onPinchGestureEvent = Animated.event([{nativeEvent: {scale: scale}}], {
+		useNativeDriver: true,
+	})
 
+	_onPinchHandlerStateChange = (event) => {
+		// if (event.nativeEvent.oldState === State.ACTIVE && 1 < event.nativeEvent.scale) {
+		// 	Animated.spring(this.scale, {
+		// 		toValue: 1,
+		// 		useNativeDriver: true,
+		// 		bounciness: 1,
+		// 	}).start()
+
+		// 	console.log("EVENT 1", event.nativeEvent)
+		// 	navigation.navigate("monthTimeline")
+		// }
+
+		if (event.nativeEvent.oldState === State.ACTIVE && 1 >= event.nativeEvent.scale) {
+			Animated.spring(this.scale, {
+				toValue: 1,
+				useNativeDriver: true,
+				bounciness: 1,
+			}).start()
+
+			console.log("EVENT 1", event.nativeEvent)
+			navigation.navigate("monthTimeline")
+		}
+	}
 	return (
 		<ImageBackground
 			style={{width: "100%", height: "100%"}}
 			source={require("../../assets/images/timeline.png")}
 			resizeMode="stretch"
 		>
-			<View style={styles.container}>
-				<Text
-					style={{
-						alignSelf: "center",
-						color: "#B3855C",
-						fontSize: sizeConstants.eighteenScale, //20
-						fontWeight: "bold",
-						textAlign: "center",
-					}}
-				>
-					Daily Timeline
-				</Text>
-				<Timeline
-					style={CommonStyles.list}
-					data={allTasks}
-					circleSize={10}
-					circleColor="#B3855C"
-					lineColor="#B3855C"
-					timeContainerStyle={CommonStyles.timeContainerStyle}
-					timeStyle={CommonStyles.timeStyle}
-					descriptionStyle={[CommonStyles.descriptionStyle, {height: 0}]}
-					separator={false}
-					detailContainerStyle={CommonStyles.detailContainerStyle}
-					titleStyle={CommonStyles.titleStyle}
-					columnFormat="two-column"
-					// onEventPress={(item) => alert(`${item.title} at ${item.time}`)}
-					onEventPress={(item) => {
-						let keyArr = item.key.split("_")
+			<PinchGestureHandler
+				onGestureEvent={_onPinchGestureEvent}
+				onHandlerStateChange={_onPinchHandlerStateChange}
+			>
+				<Animated.View style={[styles.container, {transform: [{scale: scale}]}]}>
+					<Text
+						style={{
+							alignSelf: "center",
+							color: "#B3855C",
+							fontSize: sizeConstants.eighteenScale, //20
+							fontWeight: "bold",
+							textAlign: "center",
+						}}
+					>
+						Daily Timeline
+					</Text>
+					<Timeline
+						style={CommonStyles.list}
+						data={allTasks}
+						circleSize={10}
+						circleColor="#B3855C"
+						lineColor="#B3855C"
+						timeContainerStyle={CommonStyles.timeContainerStyle}
+						timeStyle={CommonStyles.timeStyle}
+						descriptionStyle={[CommonStyles.descriptionStyle, {height: 0}]}
+						separator={false}
+						detailContainerStyle={CommonStyles.detailContainerStyle}
+						titleStyle={CommonStyles.titleStyle}
+						columnFormat="two-column"
+						// onEventPress={(item) => alert(`${item.title} at ${item.time}`)}
+						onEventPress={(item) => {
+							let keyArr = item.key.split("_")
 
-						setClickedTaskName(item.title)
-						setOldTask(keyArr[2])
-						var currentGoal = allGoals.find((goal) => goal.id == keyArr[0])
-						setClickedMilestone(keyArr[1])
-						setClickedGoal(currentGoal)
-						setClickedTaskDate(dayjs(item.time))
-						refRBSheet.current.open()
-					}}
-				/>
-			</View>
+							setClickedTaskName(item.title)
+							setOldTask(keyArr[2])
+							var currentGoal = allGoals.find((goal) => goal.id == keyArr[0])
+							setClickedMilestone(keyArr[1])
+							setClickedGoal(currentGoal)
+							setClickedTaskDate(dayjs(item.time))
+							refRBSheet.current.open()
+						}}
+					/>
+				</Animated.View>
+			</PinchGestureHandler>
 
 			{/* RB-Bottom Sheet */}
 			<RBSheet

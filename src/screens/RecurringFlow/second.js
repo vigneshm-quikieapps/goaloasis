@@ -42,6 +42,7 @@ const Second = ({
 
 	useEffect(() => {
 		getMarkedDates()
+		filterObject()
 	}, [])
 
 	const {reoccuring, reoccuringDays, taskDate, taskName} = route.params
@@ -49,6 +50,20 @@ const Second = ({
 	const [clickedDate, setDate] = useState(
 		taskDate ? dayjs(taskDate).format(commonDateFormat) : dayjs().format(commonDateFormat)
 	)
+
+	let startDate
+	let endDate
+	const filterObject = () => {
+		let allDatesData = clickedDate ? getMarkedDates() : null
+		var result = Object.keys(allDatesData).map((key) => [String(key), allDatesData[key]])
+		startDate = result[0]
+		result[0] = startDate
+
+		const newResult = result.filter((item) => {
+			return item[0] !== clickedDate
+		})
+		console.log("NEW RESULT", newResult)
+	}
 
 	const getMarkedDates = () => {
 		var markedDates = getAllDatesBetween(clickedDate, clickedGoal.targetDate)
@@ -65,6 +80,7 @@ const Second = ({
 			let obj = {}
 			obj[date] = markedObj
 			if (index == 0) {
+				startDate = date
 				obj[date] = {
 					...markedObj,
 					start: true,
@@ -72,6 +88,7 @@ const Second = ({
 			}
 
 			if (index == markedDates.length - 1) {
+				endDate = date
 				obj[date] = {
 					...markedObj,
 					end: true,
@@ -80,6 +97,7 @@ const Second = ({
 			return obj
 		})
 		let allDatesObj = convertArrToObj(finalArr)
+
 		return allDatesObj
 	}
 	const convertArrToObj = (arr) => {

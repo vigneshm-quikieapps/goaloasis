@@ -1,5 +1,13 @@
 import React, {useEffect, useRef, useState} from "react"
-import {StyleSheet, Text, TouchableOpacity, View, TextInput, ImageBackground} from "react-native"
+import {
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+	TextInput,
+	Animated,
+	ImageBackground,
+} from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
 import Timeline from "react-native-timeline-flatlist"
@@ -18,6 +26,7 @@ import AsyncStorage from "@react-native-community/async-storage"
 import {addMilestoneToFirestore} from "../../firebase"
 import {height} from "./../../core/constants"
 import dayjs from "dayjs"
+import GestureHandler, {PinchGestureHandler, State} from "react-native-gesture-handler"
 
 const MonthTimeline = ({
 	setShowLoader,
@@ -114,54 +123,85 @@ const MonthTimeline = ({
 			refRBSheet.current.close()
 		})
 	}
+	scale = new Animated.Value(1)
+	_onPinchGestureEvent = Animated.event([{nativeEvent: {scale: scale}}], {
+		useNativeDriver: true,
+	})
 
+	_onPinchHandlerStateChange = (event) => {
+		if (event.nativeEvent.oldState === State.ACTIVE && 1 < event.nativeEvent.scale) {
+			Animated.spring(this.scale, {
+				toValue: 1,
+				useNativeDriver: true,
+				bounciness: 1,
+			}).start()
+
+			console.log("EVENT 1", event.nativeEvent)
+			navigation.navigate("DailyTimeline")
+		}
+
+		if (event.nativeEvent.oldState === State.ACTIVE && 1 >= event.nativeEvent.scale) {
+			Animated.spring(this.scale, {
+				toValue: 1,
+				useNativeDriver: true,
+				bounciness: 1,
+			}).start()
+
+			console.log("EVENT 1", event.nativeEvent)
+			navigation.navigate("timeline")
+		}
+	}
 	return (
 		<ImageBackground
 			style={{width: "100%", height: "100%"}}
 			source={require("../../assets/images/timeline.png")}
 			resizeMode="stretch"
 		>
-			<View style={styles.container}>
-				<Text
-					style={{
-						alignSelf: "center",
-						color: "#B3855C",
-						fontSize: sizeConstants.eighteenScale, //19
-						textAlign: "center",
+			<PinchGestureHandler
+				onGestureEvent={_onPinchGestureEvent}
+				onHandlerStateChange={_onPinchHandlerStateChange}
+			>
+				<Animated.View style={[styles.container, {transform: [{scale: scale}]}]}>
+					<Text
+						style={{
+							alignSelf: "center",
+							color: "#B3855C",
+							fontSize: sizeConstants.eighteenScale, //19
+							textAlign: "center",
 
-						fontWeight: "bold",
-					}}
-				>
-					Monthly Timeline
-				</Text>
-				<Timeline
-					style={CommonStyles.list}
-					data={allMilestones}
-					circleSize={10}
-					circleColor="#B3855C"
-					lineColor="#B3855C"
-					timeContainerStyle={CommonStyles.timeContainerStyle}
-					timeStyle={CommonStyles.timeStyle}
-					descriptionStyle={[CommonStyles.descriptionStyle, {height: 0}]}
-					separator={false}
-					detailContainerStyle={CommonStyles.detailContainerStyle}
-					titleStyle={CommonStyles.titleStyle}
-					columnFormat="two-column"
-					// onEventPress={(item) => alert(`${item.title} at ${item.time}`)}
-					onEventPress={(item) => {
-						setClickedMilestoneName(item.title)
-						setOldMilestone(item.title)
-						var currentGoal = allGoals.find((goal) => goal.id == item.key)
-						let clickedMileObj = currentGoal.goalMilestone.find(
-							(mile) => mile.milestone == item.title
-						)
-						setClickedGoal(currentGoal)
-						setClickedMilestoneDate(dayjs(clickedMileObj.date))
-						refRBSheet.current.open()
-					}}
-				/>
-			</View>
-
+							fontWeight: "bold",
+						}}
+					>
+						Monthly Timeline
+					</Text>
+					<Timeline
+						style={CommonStyles.list}
+						data={allMilestones}
+						circleSize={10}
+						circleColor="#B3855C"
+						lineColor="#B3855C"
+						timeContainerStyle={CommonStyles.timeContainerStyle}
+						timeStyle={CommonStyles.timeStyle}
+						descriptionStyle={[CommonStyles.descriptionStyle, {height: 0}]}
+						separator={false}
+						detailContainerStyle={CommonStyles.detailContainerStyle}
+						titleStyle={CommonStyles.titleStyle}
+						columnFormat="two-column"
+						// onEventPress={(item) => alert(`${item.title} at ${item.time}`)}
+						onEventPress={(item) => {
+							setClickedMilestoneName(item.title)
+							setOldMilestone(item.title)
+							var currentGoal = allGoals.find((goal) => goal.id == item.key)
+							let clickedMileObj = currentGoal.goalMilestone.find(
+								(mile) => mile.milestone == item.title
+							)
+							setClickedGoal(currentGoal)
+							setClickedMilestoneDate(dayjs(clickedMileObj.date))
+							refRBSheet.current.open()
+						}}
+					/>
+				</Animated.View>
+			</PinchGestureHandler>
 			{/* RB-Bottom Sheet */}
 			<RBSheet
 				height={height * 0.885}

@@ -1,5 +1,14 @@
 import React, {useRef, useState, useEffect} from "react"
-import {StyleSheet, Text, TouchableOpacity, View, TextInput, ImageBackground} from "react-native"
+import {
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+	TextInput,
+	ImageBackground,
+	Animated,
+	Dimensions,
+} from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
 import Timeline from "react-native-timeline-flatlist"
@@ -19,6 +28,7 @@ import AsyncStorage from "@react-native-community/async-storage"
 import dayjs from "dayjs"
 import {Constants} from "react-native-unimodules"
 import {height} from "./../../core/constants"
+import GestureHandler, {PinchGestureHandler, State} from "react-native-gesture-handler"
 
 const TimelineScreen = ({
 	setShowLoader,
@@ -94,59 +104,95 @@ const TimelineScreen = ({
 		})
 	}
 
+	scale = new Animated.Value(1)
+	_onPinchGestureEvent = Animated.event([{nativeEvent: {scale: scale}}], {
+		useNativeDriver: true,
+	})
+
+	_onPinchHandlerStateChange = (event) => {
+		if (event.nativeEvent.oldState === State.ACTIVE && 1 < event.nativeEvent.scale) {
+			Animated.spring(this.scale, {
+				toValue: 1,
+				useNativeDriver: true,
+				bounciness: 1,
+			}).start()
+
+			console.log("EVENT 1", event.nativeEvent)
+			navigation.navigate("monthTimeline")
+		}
+
+		// if (event.nativeEvent.oldState === State.ACTIVE && 1 >= event.nativeEvent.scale) {
+		// 	Animated.spring(this.scale, {
+		// 		toValue: 1,
+		// 		useNativeDriver: true,
+		// 		bounciness: 1,
+		// 	}).start()
+
+		// 	console.log("EVENT 1", event.nativeEvent)
+		// 	navigation.navigate("mygoals")
+		// }
+	}
 	return (
 		<ImageBackground
-			style={{width: "100%", height: "100%"}}
+			style={{
+				width: "100%",
+				height: "100%",
+			}}
 			source={require("../../assets/images/timeline.png")}
 			resizeMode="stretch"
 		>
-			<View style={styles.container}>
-				<Text
-					style={{
-						alignSelf: "center",
-						color: "#B3855C",
-						fontSize: sizeConstants.eighteenScale, //20
-						fontWeight: "bold",
-						textAlign: "center",
-					}}
-				>
-					Yearly Timeline
-				</Text>
-				<Timeline
-					style={CommonStyles.list}
-					data={allGoalsforTimeline}
-					circleSize={10}
-					circleColor="#B3855C"
-					lineColor="#B3855C"
-					timeContainerStyle={CommonStyles.timeContainerStyle}
-					timeStyle={CommonStyles.timeStyle}
-					descriptionStyle={CommonStyles.descriptionStyle}
-					separator={false}
-					detailContainerStyle={[CommonStyles.detailContainerStyle]}
-					// detailContainerStyle={
-					// 	allGoalsforTimeline.color === "#588C8D"
-					// 		? styles.detailContainerStyle1
-					// 		: allGoalsforTimeline.color === "#553144"
-					// 		? styles.detailContainerStyle2
-					// 		: allGoalsforTimeline.color === "#6A5593"
-					// 		? styles.detailContainerStyle3
-					// 		: allGoalsforTimeline.color === "#B3855C"
-					// 		? styles.detailContainerStyle4
-					// 		: allGoalsforTimeline.color === "#3F6E6A"
-					// 		? styles.detailContainerStyle5
-					// 		: styles.detailContainerStyle6
-					// }
-					titleStyle={CommonStyles.titleStyle}
-					columnFormat="two-column"
-					onEventPress={(item) => {
-						setClickedGoalName(item.title)
-						var currentGoal = allGoals.find((goal) => goal.name == item.title)
-						setClickedGoal(currentGoal)
-						setClickedGoalDate(dayjs(currentGoal.targetDate))
-						refRBSheet.current.open()
-					}}
-				/>
-			</View>
+			<PinchGestureHandler
+				onGestureEvent={_onPinchGestureEvent}
+				onHandlerStateChange={_onPinchHandlerStateChange}
+			>
+				<Animated.View style={[styles.container, {transform: [{scale: scale}]}]}>
+					<Text
+						style={{
+							alignSelf: "center",
+							color: "#B3855C",
+							fontSize: sizeConstants.eighteenScale, //20
+							fontWeight: "bold",
+							textAlign: "center",
+						}}
+					>
+						Yearly Timeline
+					</Text>
+					<Timeline
+						style={CommonStyles.list}
+						data={allGoalsforTimeline}
+						circleSize={10}
+						circleColor="#B3855C"
+						lineColor="#B3855C"
+						timeContainerStyle={CommonStyles.timeContainerStyle}
+						timeStyle={CommonStyles.timeStyle}
+						descriptionStyle={CommonStyles.descriptionStyle}
+						separator={false}
+						detailContainerStyle={[CommonStyles.detailContainerStyle]}
+						// detailContainerStyle={
+						// 	allGoalsforTimeline.color === "#588C8D"
+						// 		? styles.detailContainerStyle1
+						// 		: allGoalsforTimeline.color === "#553144"
+						// 		? styles.detailContainerStyle2
+						// 		: allGoalsforTimeline.color === "#6A5593"
+						// 		? styles.detailContainerStyle3
+						// 		: allGoalsforTimeline.color === "#B3855C"
+						// 		? styles.detailContainerStyle4
+						// 		: allGoalsforTimeline.color === "#3F6E6A"
+						// 		? styles.detailContainerStyle5
+						// 		: styles.detailContainerStyle6
+						// }
+						titleStyle={CommonStyles.titleStyle}
+						columnFormat="two-column"
+						onEventPress={(item) => {
+							setClickedGoalName(item.title)
+							var currentGoal = allGoals.find((goal) => goal.name == item.title)
+							setClickedGoal(currentGoal)
+							setClickedGoalDate(dayjs(currentGoal.targetDate))
+							refRBSheet.current.open()
+						}}
+					/>
+				</Animated.View>
+			</PinchGestureHandler>
 
 			{/* RB-Bottom Sheet */}
 			<RBSheet
