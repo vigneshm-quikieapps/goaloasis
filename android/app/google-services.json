@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "703185170692",
-    "project_id": "goal-oasis-6e8e2",
-    "storage_bucket": "goal-oasis-6e8e2.appspot.com"
+    "project_number": "1027162482988",
+    "project_id": "goal-oasis-839ca",
+    "storage_bucket": "goal-oasis-839ca.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:703185170692:android:9f291748862d803ed02051",
+        "mobilesdk_app_id": "1:1027162482988:android:ebcc7ea0d281c4cdfde489",
         "android_client_info": {
           "package_name": "com.goaloasis"
         }
       },
       "oauth_client": [
         {
-          "client_id": "703185170692-65c5qcs9fomrt63ohtrlptgcrrhlh1d5.apps.googleusercontent.com",
+          "client_id": "1027162482988-q96cca6hlts9eq7a4kjbid2qjip2lpif.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.goaloasis",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1027162482988-munmdl2ombl4ndldpi5m37mofoaefvf4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCJscdgH2-pCo7QY4O5a17YovkNM3lxiXw"
+          "current_key": "AIzaSyB6RaQyI3ehm-B2ZU6V5j_cjv9df0IoLAo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "703185170692-65c5qcs9fomrt63ohtrlptgcrrhlh1d5.apps.googleusercontent.com",
+              "client_id": "1027162482988-munmdl2ombl4ndldpi5m37mofoaefvf4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

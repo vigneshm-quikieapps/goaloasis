@@ -535,7 +535,8 @@ const MilestoneCards = ({
 				/>
 			) : null}
 
-			{upDown && firstCompletedTask && firstCompletedTask.task ? (
+			{/* {upDown && firstCompletedTask && firstCompletedTask.task ? ( */}
+			{upDown && firstCompletedTask.task ? (
 				<View style={[styles.swipeButton, styles.taskAccordion]}>
 					<Swipeout
 						left={[
