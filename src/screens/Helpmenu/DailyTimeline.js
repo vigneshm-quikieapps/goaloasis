@@ -155,7 +155,7 @@ const DailyTimeline = ({
 		// 	}).start()
 
 		// 	console.log("EVENT 1", event.nativeEvent)
-		// 	navigation.navigate("monthTimeline")
+		// 	// navigation.navigate("monthTimeline")
 		// }
 
 		if (event.nativeEvent.oldState === State.ACTIVE && 1 >= event.nativeEvent.scale) {

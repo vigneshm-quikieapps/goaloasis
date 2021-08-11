@@ -367,7 +367,6 @@ const ParticularGoal = (props) => {
 			</View>
 			<View style={styles.goalsContainer}>
 				<GestureRecognizer
-					style={{backgroundColor: "pink"}}
 					onSwipeUp={() => {
 						navigation.navigate("milestones", {
 							paramsItinerary: true,

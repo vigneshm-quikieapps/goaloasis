@@ -190,7 +190,7 @@ const MyGoals = ({
 		setTodaysAllTasks(allTodaysTask)
 	}
 	// Method to check how many task remain to complete within 24 hours
-	const [milestoneTaskCounter, setMilestoneTaskCounter] = useState()
+	const [milestoneTaskCounter, setMilestoneTaskCounter] = useState(0)
 	let counter = 0
 	const getMilestoneIfHasOneTaskToComplete = () => {
 		for (let i = 0; i < allGoals.length; i++) {
@@ -209,6 +209,11 @@ const MyGoals = ({
 			}
 		}
 	}
+	useEffect(() => {
+		if (milestoneTaskCounter > 0) {
+			scheduleNotification()
+		}
+	}, [milestoneTaskCounter])
 	useEffect(() => {
 		// console.log("ALL GOALS", allGoals[0].goalMilestone[0].taskData)
 		getTodaysTasks()
@@ -353,17 +358,19 @@ const MyGoals = ({
 		})
 	}
 
-	// const scheduleNotification = () => {
-	// 	PushNotification.localNotificationSchedule({
-	// 		message: `You have 24 Hours to left to complete ${milestoneTaskCounter} Tasks.`,
-	// 		date: new Date(Date.now() + 5 * 1000), // in 60 secs
-	// 		allowWhileIdle: true, // (optional) set notification to work while on doze, default: false
-	// 		repeatType: "day",
+	const scheduleNotification = () => {
+		PushNotification.localNotificationSchedule({
+			channelId: "com.goal-oasis",
+			ticker: "My Notification Ticker", // (optional)
+			message: `You have 24 Hours to left to complete ${milestoneTaskCounter} Tasks.`,
+			date: new Date(Date.now() + 5 * 1000), // in 60 secs
+			allowWhileIdle: true, // (optional) set notification to work while on doze, default: false
+			repeatType: "day",
 
-	// 		/* Android Only Properties */
-	// 		repeatTime: 3, // (optional) Increment of configured repeateType. Check 'Repeating Notifications' section for more info.
-	// 	})
-	// }
+			/* Android Only Properties */
+			repeatTime: 3, // (optional) Increment of configured repeateType. Check 'Repeating Notifications' section for more info.
+		})
+	}
 	return (
 		<StatusBarScreen style={styles.container}>
 			<TouchableOpacity

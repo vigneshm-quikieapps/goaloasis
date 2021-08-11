@@ -129,7 +129,7 @@ const TimelineScreen = ({
 		// 	}).start()
 
 		// 	console.log("EVENT 1", event.nativeEvent)
-		// 	navigation.navigate("mygoals")
+		// 	// navigation.navigate("mygoals")
 		// }
 	}
 	return (

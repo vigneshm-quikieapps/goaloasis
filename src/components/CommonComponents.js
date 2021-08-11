@@ -234,11 +234,7 @@ export const CustomDayComponentForCalendar = ({clickedDate, date, state, dayClic
 	let isMarked = marking && marking.marked
 	let isStart = marking && marking.start
 	let isEnd = marking && marking.end
-	// console.log("SELECTED DATE", selectedDate)
-	// console.log("isMarked", isMarked)
-	// console.log("isStart", isStart)
-	// console.log("isEnd", isEnd)
-	// console.log("TODAY", today)
+
 	return (
 		<View style={styles.mainDayContainer}>
 			{state == "disabled" ? (
@@ -345,22 +341,25 @@ const styles = StyleSheet.create({
 		backgroundColor: ColorConstants.white,
 		margin: 0,
 		padding: sizeConstants.xs,
-		borderTopLeftRadius: sizeConstants.eightyFive,
-		borderBottomLeftRadius: sizeConstants.eightyFive,
+		// borderTopLeftRadius: sizeConstants.eightyFive,
+		// borderBottomLeftRadius: sizeConstants.eightyFive,
 		borderColor: ColorConstants.white,
 	},
 	endContainer: {
 		height: sizeConstants.xxl,
 		width: width / 7.825,
 		borderRadius: 0,
+		borderTopRightRadius: -100,
+
 		justifyContent: "center",
 		alignItems: "center",
 		backgroundColor: ColorConstants.white,
+
 		margin: 0,
 		padding: sizeConstants.xs,
 		borderColor: ColorConstants.white,
-		borderTopRightRadius: sizeConstants.eightyFive,
-		borderBottomRightRadius: sizeConstants.eightyFive,
+		// borderTopRightRadius: sizeConstants.eightyFive,
+		// borderBottomRightRadius: sizeConstants.eightyFive,
 	},
 	markedDate: {
 		color: ColorConstants.greyishBlue,
