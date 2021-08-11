@@ -40,18 +40,27 @@ const Second = ({
 }) => {
 	const navigation = useNavigation()
 
-	useEffect(() => {
-		getMarkedDates()
-	}, [])
-
 	const {reoccuring, reoccuringDays, taskDate, taskName} = route.params
+	const [markedDatesArray, setMarkedDatesArray] = useState([])
 	const [tName, setTaskName] = useState(taskName)
 	const [clickedDate, setDate] = useState(
 		taskDate ? dayjs(taskDate).format(commonDateFormat) : dayjs().format(commonDateFormat)
 	)
 
+	const filterMarkedDates = (date) => {
+		let markedDates = [...markedDatesArray]
+		let isPresent = markedDates.find((item) => item == date)
+		if (isPresent) {
+			markedDates = markedDates.filter((item) => item != date)
+		} else {
+			markedDates.push(date)
+		}
+		setMarkedDatesArray(markedDates)
+		setDate(date)
+	}
+
 	const getMarkedDates = () => {
-		var markedDates = getAllDatesBetween(clickedDate, clickedGoal.targetDate)
+		var markedDates = [...markedDatesArray]
 
 		let markedObj = {
 			selected: true,
@@ -105,8 +114,6 @@ const Second = ({
 		return finalObj
 	}
 
-	const navigationCallback = () => {}
-
 	const nextScreen = () => {
 		setShowLoader(true)
 
@@ -145,6 +152,15 @@ const Second = ({
 			navigation.navigate("particulargoal")
 		})
 	}
+
+	useEffect(() => {
+		let allMarkedDates = getAllDatesBetween(
+			taskDate ? dayjs(taskDate).format(commonDateFormat) : dayjs().format(commonDateFormat),
+			clickedGoal.targetDate
+		)
+		setMarkedDatesArray(allMarkedDates)
+		console.log("First time all dates: ", allMarkedDates)
+	}, [])
 
 	return (
 		<StatusBarScreen style={CommonStyles.introContainer}>
@@ -194,11 +210,12 @@ const Second = ({
 					<View style={{paddingHorizontal: width * 0.04}}>
 						<Calendar
 							current={
-								clickedDate
-									? dayjs(clickedDate).format(commonDateFormat)
+								taskDate
+									? dayjs(taskDate).format(commonDateFormat)
 									: dayjs().format(commonDateFormat)
 							}
 							minDate={dayjs().format(commonDateFormat)}
+							maxDate={dayjs(clickedGoal.targetDate).format(commonDateFormat)}
 							onDayPress={(day) => {
 								console.log("selected day", day)
 							}}
@@ -246,8 +263,14 @@ const Second = ({
 									<CustomDayComponentForCalendar
 										date={date}
 										state={state}
-										clickedDate={clickedDate}
-										dayClick={setDate}
+										clickedDate={
+											taskDate
+												? dayjs(taskDate).format(commonDateFormat)
+												: dayjs().format(commonDateFormat)
+										}
+										dayClick={(date) => {
+											filterMarkedDates(date)
+										}}
 										marking={marking}
 									/>
 								)
