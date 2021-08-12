@@ -147,16 +147,16 @@ const DailyTimeline = ({
 	})
 
 	_onPinchHandlerStateChange = (event) => {
-		// if (event.nativeEvent.oldState === State.ACTIVE && 1 < event.nativeEvent.scale) {
-		// 	Animated.spring(this.scale, {
-		// 		toValue: 1,
-		// 		useNativeDriver: true,
-		// 		bounciness: 1,
-		// 	}).start()
+		if (event.nativeEvent.oldState === State.ACTIVE && 1 < event.nativeEvent.scale) {
+			Animated.spring(this.scale, {
+				toValue: 1,
+				useNativeDriver: true,
+				bounciness: 1,
+			}).start()
 
-		// 	console.log("EVENT 1", event.nativeEvent)
-		// 	// navigation.navigate("monthTimeline")
-		// }
+			console.log("EVENT 1", event.nativeEvent)
+			// navigation.navigate("monthTimeline")
+		}
 
 		if (event.nativeEvent.oldState === State.ACTIVE && 1 >= event.nativeEvent.scale) {
 			Animated.spring(this.scale, {
