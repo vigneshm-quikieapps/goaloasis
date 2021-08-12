@@ -8,6 +8,7 @@ import {setCurrentGoal} from "./../../redux/actions"
 import {connect} from "react-redux"
 import {CommonHomeButton, CommonPrevNextButton} from "../../components/CommonComponents"
 import {scale} from "react-native-size-matters"
+import TextInputLines from "../../components/TextInputLines"
 
 const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 	const navigation = useNavigation()
@@ -51,12 +52,22 @@ const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 								]}
 								placeholder="Type Here"
 								// multiline={true}
-								// numberOfLines={4}
+								multiline={true}
+								numberOfLines={2}
 								onChangeText={(text) => setDescription(text)}
 								maxLength={35}
-								multiline={true}
-								numberOfLines={4}
+								// numberOfLines={1}
 							/>
+							{/* <TextInputLines
+								style={[
+									CommonStyles.textInput,
+									{marginTop: sizeConstants.xxxl, height: 80, borderRadius: 30},
+								]}
+								autoFocus={true}
+								placeholder="Type Here"
+								onChangeText={(text) => setDescription(text)}
+								numberOfLines={2}
+							/> */}
 						</View>
 					</View>
 

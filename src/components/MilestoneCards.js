@@ -571,7 +571,7 @@ const MilestoneCards = ({
 							onHandlerStateChange={(event) => {
 								handleTaskLongPress(event, firstCompletedTask.task, data && data.milestone)
 							}}
-							minDurationMs={800}
+							minDurationMs={800} // 800 mili
 						>
 							<View style={[styles.swipableBtnContainer]}>
 								<TouchableOpacity
