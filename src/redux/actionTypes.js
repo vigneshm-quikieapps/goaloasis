@@ -29,3 +29,6 @@ export const SET_LOADER = "Showingloader"
 export const SET_BOOLEAN_FLAG = "booleanflag"
 
 export const SET_TODAYS_ALL_TASK = "settingTodaysAllTasks"
+
+// auth
+export const SET_USER = "settingUserInfo"

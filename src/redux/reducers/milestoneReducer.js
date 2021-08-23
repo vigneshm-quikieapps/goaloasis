@@ -15,12 +15,12 @@ const initialState = {
 	allGoals: [],
 	loading: false,
 	todayAllTasksArr: [],
+	user: null,
 }
 
 console.log("NEW MILESTONE DATA", initialState.newMileStone)
 const milestoneReducer = (state = initialState, action) => {
 	switch (action.type) {
-		
 		case actionTypes.ADD_NEW_MILESTONE:
 			console.log("adding new milestone", action.value)
 			return {
@@ -112,6 +112,11 @@ const milestoneReducer = (state = initialState, action) => {
 			return {
 				...state,
 				todayAllTasksArr: action.value,
+			}
+		case actionTypes.SET_USER:
+			return {
+				...state,
+				user: action.value,
 			}
 		default:
 			return state

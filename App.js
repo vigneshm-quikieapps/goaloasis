@@ -1,15 +1,48 @@
-import React from "react"
+import React, {useEffect} from "react"
 import Routing from "./Routing"
 import AuthState from "./src/context/auth/AuthState"
-import store from "./src/redux/store"
-import {Provider} from "react-redux"
+import {connect} from "react-redux"
+import {setShowLoader, setUserInfo} from "./src/redux/actions"
+import auth from "@react-native-firebase/auth"
 
-export default function App() {
+require("./src/firebase/authentication/googleAuth")
+
+const App = (props) => {
+	const {setUserInfo, setShowLoader} = props
+	setShowLoader(true)
+	//  waiting for firebase initialization
+	// const [initializing, setInitializing] = useState(true);
+
+	function onAuthStateChanged(user) {
+		console.log("state chaged: ", user)
+		setUserInfo(user)
+		// if (initializing) setInitializing(false);
+		setShowLoader(false)
+	}
+
+	useEffect(() => {
+		const authSubscriber = auth().onAuthStateChanged(onAuthStateChanged)
+		return authSubscriber // unsubscribe on unmount
+	}, [])
 	return (
-		<Provider store={store}>
-			<AuthState>
-				<Routing />
-			</AuthState>
-		</Provider>
+		<AuthState>
+			<Routing />
+		</AuthState>
 	)
 }
+
+const mapStateToProps = (state) => {
+	return {
+		user: state.milestone.user,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setUserInfo: (data) => dispatch(setUserInfo(data)),
+		setShowLoader: (data) => {
+			dispatch(setShowLoader(data))
+		},
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App)

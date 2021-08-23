@@ -166,6 +166,10 @@ const MyGoals = ({
 	// 	}
 	// }
 
+	const tempRoute = () => {
+		navigation.navigate("Login")
+	}
+
 	const getAllTodaysTask = () => {
 		let allTodaysTask = []
 		let todayDateStr = dayjs().format(commonDateFormat)
@@ -502,8 +506,8 @@ const MyGoals = ({
 			<CommonHomeButton
 				iconName={"file-tree-outline"}
 				size={34}
-				click={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
-				// click={goToProblem}
+				// click={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
+				click={tempRoute}
 				iconColor={ColorConstants.white}
 				bgColor={ColorConstants.lighterBlue}
 				doNotWorkBackFunctionality={true}
