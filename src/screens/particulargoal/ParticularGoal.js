@@ -303,67 +303,81 @@ const ParticularGoal = (props) => {
 				<ScrollView>
 					<Text style={styles.subTitle}>{props.clickedGoal.description}</Text>
 				</ScrollView>
-				<View style={CommonStyles.trackingcont}>
-					<ProgressCircle
-						percent={goalCompletedPercent}
-						radius={86}
-						borderWidth={5}
-						color="#588C8D"
-						shadowColor="#999"
-						bgColor="#FBF5E9"
-					>
-						<View style={CommonStyles.percentageCont}>
-							<Text style={{fontSize: sizeConstants.fourteenScale, color: "#333333"}}>
-								Target Date
-							</Text>
-							<Text
-								style={{
-									fontWeight: "bold",
-									fontSize: sizeConstants.fourteenScale,
-									color: "#333333",
-								}}
-							>
-								{dayjs(props.clickedGoal.targetDate).format(commonDateFormat)}
-							</Text>
-						</View>
-					</ProgressCircle>
 
-					<View style={{flexDirection: "row"}}>
-						<View style={{marginHorizontal: 10, alignItems: "flex-start"}}>
-							<View style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
-								<View
+				<GestureRecognizer
+					onSwipeUp={() => {
+						navigation.navigate("milestones", {
+							paramsItinerary: true,
+						})
+					}}
+					// style={{backgroundColor: "#ff0000"}}
+				>
+					<View style={CommonStyles.trackingcont}>
+						<ProgressCircle
+							percent={goalCompletedPercent}
+							radius={86}
+							borderWidth={5}
+							color="#588C8D"
+							shadowColor="#999"
+							bgColor="#FBF5E9"
+						>
+							<View style={CommonStyles.percentageCont}>
+								<Text style={{fontSize: sizeConstants.fourteenScale, color: "#333333"}}>
+									Target Date
+								</Text>
+								<Text
 									style={{
-										height: 8,
-										width: 8,
-										borderRadius: 8,
-										marginRight: 5,
-										backgroundColor: "#588C8D",
+										fontWeight: "bold",
+										fontSize: sizeConstants.fourteenScale,
+										color: "#333333",
 									}}
-								></View>
-								<Text style={styles.goalsText}>Goal</Text>
+								>
+									{dayjs(props.clickedGoal.targetDate).format(commonDateFormat)}
+								</Text>
 							</View>
+						</ProgressCircle>
 
-							<View style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+						<View style={{flexDirection: "row"}}>
+							<View style={{marginHorizontal: 10, alignItems: "flex-start"}}>
 								<View
-									style={{
-										height: 8,
-										width: 8,
-										borderRadius: 8,
-										marginRight: 5,
-										backgroundColor: "#86C7C8",
-									}}
-								></View>
-								<Text style={styles.goalsText}>Milestone</Text>
+									style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}
+								>
+									<View
+										style={{
+											height: 8,
+											width: 8,
+											borderRadius: 8,
+											marginRight: 5,
+											backgroundColor: "#588C8D",
+										}}
+									></View>
+									<Text style={styles.goalsText}>Goal</Text>
+								</View>
+
+								<View
+									style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}
+								>
+									<View
+										style={{
+											height: 8,
+											width: 8,
+											borderRadius: 8,
+											marginRight: 5,
+											backgroundColor: "#86C7C8",
+										}}
+									></View>
+									<Text style={styles.goalsText}>Milestone</Text>
+								</View>
 							</View>
-						</View>
-						<View>
-							<Text style={styles.goalsText}>{`• ${goalCompletedPercent}%`}</Text>
-							<Text
-								style={styles.goalsText}
-							>{`• ${completedMilestonesLength}/${allMilestonesLength}`}</Text>
+							<View>
+								<Text style={styles.goalsText}>{`• ${goalCompletedPercent}%`}</Text>
+								<Text
+									style={styles.goalsText}
+								>{`• ${completedMilestonesLength}/${allMilestonesLength}`}</Text>
+							</View>
 						</View>
 					</View>
-				</View>
+				</GestureRecognizer>
 			</View>
 			<View style={styles.goalsContainer}>
 				<GestureRecognizer

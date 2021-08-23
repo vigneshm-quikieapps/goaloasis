@@ -19,20 +19,8 @@ const initialState = {
 
 console.log("NEW MILESTONE DATA", initialState.newMileStone)
 const milestoneReducer = (state = initialState, action) => {
-	// console.log("ACTION FROM THE ACTION FILE", action)
 	switch (action.type) {
-		// Adding new Milestones
-		// case actionTypes.ADD_NEW_MILESTONE:
-		// 	return {
-		// 		...state,
-		// 		newMileStone: [
-		// 			...state.newMileStone,
-		// 			{
-		// 				goalName: action.value,
-		// 				mileStoneData: action.value,
-		// 			},
-		// 		],
-		// 	}
+		
 		case actionTypes.ADD_NEW_MILESTONE:
 			console.log("adding new milestone", action.value)
 			return {
@@ -58,16 +46,6 @@ const milestoneReducer = (state = initialState, action) => {
 			}
 		// for timeline
 
-		// case actionTypes.ADD_NEW_MILESTONE_TIMELINE_FLOW:
-		// 	return {
-		// 		...state1,
-		// 		milestone1: action.value,
-		// 	}
-		// case actionTypes.SET_TEST_DATA_TIMELINE_FLOW:
-		// 	return {
-		// 		...state1,
-		// 		test1: action.value,
-		// 	}
 		case actionTypes.SET_FIRSTTIME_TIMELINEFLOW:
 			return {
 				...state,
