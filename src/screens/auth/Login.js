@@ -33,6 +33,7 @@ const Login = (props) => {
 			setErrMsg("Please enter password")
 			return true
 		}
+		setErrMsg("")
 		return false
 	}
 
@@ -81,6 +82,14 @@ const Login = (props) => {
 		if (error.code === "auth/invalid-email") {
 			console.log("That email address is invalid!")
 			setErrMsg("Email address is invalid!")
+		}
+		if (error.code === "auth/wrong-password") {
+			console.log("Wrong password!")
+			setErrMsg("Wrong password!")
+		}
+		if (error.code === "auth/too-many-requests") {
+			console.log("Too many requests!")
+			setErrMsg("Too many requests! Please try later")
 		}
 
 		console.error(error)
@@ -196,7 +205,7 @@ const Login = (props) => {
 	}
 
 	useEffect(() => {
-		user ? setIsLoggedIn(true) : setIsLoggedIn(false)
+		setIsLoggedIn(user ? true : false)
 
 		return () => {
 			setIsLoggedIn(false)
@@ -240,6 +249,7 @@ const Login = (props) => {
 							<TouchableOpacity
 								onPress={() => {
 									setErrMsg("")
+									setEmail("")
 									setPass("")
 									setSignInMode(!signInMode)
 								}}
@@ -247,6 +257,22 @@ const Login = (props) => {
 								<Text style={styles.signUp}>{!signInMode ? "Sign In" : "Sign Up"}</Text>
 							</TouchableOpacity>
 						</View>
+						{/* {signInMode ? (
+							<View style={styles.bottomContainer}>
+								<Text>Forgot Password? </Text>
+								<TouchableOpacity
+									onPress={() => {
+										auth().sendPasswordResetEmail(email).then()
+										setErrMsg("")
+									
+										setPass("")
+									
+									}}
+								>
+									<Text style={styles.signUp}>Send reset mail</Text>
+								</TouchableOpacity>
+							</View>
+						) : null} */}
 					</View>
 					<View>
 						<Text style={styles.OrTxt}>Or</Text>

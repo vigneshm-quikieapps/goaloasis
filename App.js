@@ -14,7 +14,7 @@ const App = (props) => {
 	// const [initializing, setInitializing] = useState(true);
 
 	function onAuthStateChanged(user) {
-		console.log("state chaged: ", user)
+		console.log("state changed###################: ", user)
 		setUserInfo(user)
 		// if (initializing) setInitializing(false);
 		setShowLoader(false)
