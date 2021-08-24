@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
-import {Button, StyleSheet, Text, TouchableOpacity, View} from "react-native"
-import {height} from "../../core/constants"
+import {Button, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native"
+import {ColorConstants, forGoals, height, sizeConstants, width} from "../../core/constants"
 import {
 	GoogleSignin,
 	GoogleSigninButton,
@@ -11,10 +11,81 @@ import {connect} from "react-redux"
 import {setShowLoader, setUserInfo} from "../../redux/actions"
 import PropTypes from "prop-types"
 import {LoginManager, AccessToken} from "react-native-fbsdk-next"
+import {FontAwesome} from "@expo/vector-icons"
 
 const Login = (props) => {
 	const {user, setShowLoader} = props
 	const [isLoggedIn, setIsLoggedIn] = useState(false)
+	const [email, setEmail] = useState("")
+	const [pass, setPass] = useState("")
+	const [errMsg, setErrMsg] = useState("")
+	const [signInMode, setSignInMode] = useState(true)
+
+	// sign in with email and password starts
+
+	const areEmailPassEmpty = () => {
+		console.log("email: ", email, "pass: ", pass)
+		if (!email.length) {
+			setErrMsg("Please enter email")
+			return true
+		}
+		if (!pass.length) {
+			setErrMsg("Please enter password")
+			return true
+		}
+		return false
+	}
+
+	const handleEmailPassSignUp = () => {
+		setShowLoader(true)
+		if (areEmailPassEmpty()) {
+			setShowLoader(false)
+			return
+		}
+		auth()
+			.createUserWithEmailAndPassword(email, pass)
+			.then(() => {
+				setShowLoader(false)
+				setErrMsg("")
+			})
+			.catch((error) => {
+				handleError(error)
+				setShowLoader(false)
+			})
+	}
+
+	const handleEmailPassSignIn = () => {
+		setShowLoader(true)
+		if (areEmailPassEmpty()) {
+			setShowLoader(false)
+			return
+		}
+		auth()
+			.signInWithEmailAndPassword(email, pass)
+			.then(() => {
+				setShowLoader(false)
+				setErrMsg("")
+			})
+			.catch((error) => {
+				handleError(error)
+				setShowLoader(false)
+			})
+	}
+
+	const handleError = (error) => {
+		if (error.code === "auth/email-already-in-use") {
+			console.log("That email address is already in use!")
+			setErrMsg("Email address is already in use!")
+		}
+
+		if (error.code === "auth/invalid-email") {
+			console.log("That email address is invalid!")
+			setErrMsg("Email address is invalid!")
+		}
+
+		console.error(error)
+	}
+	// sign in with email and password  ends
 
 	// google sign in starts
 	const onGoogleButtonPress = async () => {
@@ -59,12 +130,20 @@ const Login = (props) => {
 	}
 	// google sign in  ends
 
+	// facebook sign in starts
 	const FacebookSignIn = () => {
 		return (
-			<Button
-				title="Facebook Sign-In"
+			<TouchableOpacity
+				style={styles.FBSignInBtn}
 				onPress={() => onFacebookButtonPress().then(() => console.log("Signed in with Facebook!"))}
-			/>
+			>
+				<View style={styles.FBIconContainer}>
+					<FontAwesome name="facebook-f" size={24} style={styles.FBIcon} />
+				</View>
+				<View style={styles.FBBtnTxtContainer}>
+					<Text style={styles.FBSignInBtnTxt}>Sign In</Text>
+				</View>
+			</TouchableOpacity>
 		)
 	}
 
@@ -90,11 +169,13 @@ const Login = (props) => {
 		return auth().signInWithCredential(facebookCredential)
 	}
 
+	// facebook sign in ends
+
 	const LogoutButton = () => {
 		return (
 			<TouchableOpacity onPress={handleLogout}>
 				<View>
-					<Text>Logout</Text>
+					<Text style={styles.logout}>Logout</Text>
 				</View>
 			</TouchableOpacity>
 		)
@@ -107,6 +188,9 @@ const Login = (props) => {
 			.then(async () => {
 				console.log("User signed out!")
 				await GoogleSignin.signOut()
+				setErrMsg("")
+				setEmail("")
+				setPass("")
 				setShowLoader(false)
 			})
 	}
@@ -122,8 +206,54 @@ const Login = (props) => {
 		<View style={styles.loginContainer}>
 			{!isLoggedIn ? (
 				<>
-					<GoogleSignIn />
-					<View style={{height: 100}}>
+					<View style={{alignSelf: "flex-start"}}>
+						<Text>{signInMode ? "Sign In" : "Sign Up"}</Text>
+					</View>
+					<View style={styles.inputContainer}>
+						<View style={styles.inputView}>
+							{errMsg.length ? <Text style={styles.errMsg}>{errMsg}</Text> : null}
+							<TextInput
+								placeholder="Email"
+								style={styles.input}
+								onChangeText={setEmail}
+								value={email}
+								keyboardType={"email-address"}
+							/>
+						</View>
+						<View style={styles.inputView}>
+							<TextInput
+								style={styles.input}
+								onChangeText={setPass}
+								value={pass}
+								placeholder="Password"
+								secureTextEntry={true}
+							/>
+						</View>
+
+						<TouchableOpacity onPress={signInMode ? handleEmailPassSignIn : handleEmailPassSignUp}>
+							<View>
+								<Text style={styles.signInBtn}>{signInMode ? "Sign In" : "Sign Up"}</Text>
+							</View>
+						</TouchableOpacity>
+						<View style={styles.bottomContainer}>
+							<Text>{signInMode ? "Already registered? " : "Not registered? "}</Text>
+							<TouchableOpacity
+								onPress={() => {
+									setErrMsg("")
+									setPass("")
+									setSignInMode(!signInMode)
+								}}
+							>
+								<Text style={styles.signUp}>{!signInMode ? "Sign In" : "Sign Up"}</Text>
+							</TouchableOpacity>
+						</View>
+					</View>
+					<View>
+						<Text style={styles.OrTxt}>Or</Text>
+					</View>
+
+					<View>
+						<GoogleSignIn />
 						<FacebookSignIn />
 					</View>
 				</>
@@ -154,6 +284,80 @@ const styles = StyleSheet.create({
 		height: height,
 		alignItems: "center",
 		justifyContent: "center",
+		marginHorizontal: "20%",
+	},
+	logout: {
+		paddingHorizontal: sizeConstants.m,
+		paddingVertical: sizeConstants.s,
+		borderColor: forGoals.sixth,
+		borderWidth: 1,
+		backgroundColor: forGoals.sixth,
+		color: ColorConstants.white,
+		borderRadius: 10,
+	},
+	inputContainer: {width: "100%"},
+	inputView: {
+		marginVertical: sizeConstants.m,
+	},
+	input: {
+		// width: "100%",
+		borderColor: ColorConstants.darkFaintBlue,
+		borderWidth: 1,
+		borderRadius: sizeConstants.m,
+		paddingHorizontal: sizeConstants.m,
+	},
+
+	OrTxt: {fontSize: sizeConstants.l, marginVertical: sizeConstants.l},
+	FBSignInBtn: {
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
+		backgroundColor: ColorConstants.fbBlue,
+		paddingHorizontal: sizeConstants.m,
+		paddingVertical: sizeConstants.s,
+		marginVertical: sizeConstants.m,
+		elevation: 2,
+		marginHorizontal: sizeConstants.s,
+		borderRadius: 3,
+	},
+	FBIconContainer: {width: "10%"},
+	FBIcon: {
+		color: ColorConstants.white,
+	},
+	FBBtnTxtContainer: {
+		alignItems: "center",
+		width: "80%",
+	},
+	FBSignInBtnTxt: {
+		color: ColorConstants.white,
+		fontWeight: "bold",
+	},
+
+	signInBtn: {
+		paddingHorizontal: sizeConstants.m,
+		paddingVertical: sizeConstants.s,
+		marginVertical: sizeConstants.m,
+		borderColor: forGoals.sixth,
+		borderWidth: 1,
+		width: "55%",
+		alignSelf: "center",
+		textAlign: "center",
+		backgroundColor: forGoals.sixth,
+		color: ColorConstants.white,
+		borderRadius: sizeConstants.s,
+	},
+	errMsg: {
+		color: forGoals.sixth,
+		fontSize: sizeConstants.m,
+		paddingVertical: sizeConstants.xs,
+	},
+
+	bottomContainer: {
+		flexDirection: "row",
+	},
+	signUp: {
+		color: ColorConstants.darkFaintBlue,
+		textDecorationLine: "underline",
 	},
 })
 
