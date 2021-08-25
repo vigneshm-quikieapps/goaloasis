@@ -35,7 +35,6 @@ const {RNTwitterSignIn} = NativeModules
 
 const Login = (props) => {
 	const {user, setShowLoader} = props
-	const [isLoggedIn, setIsLoggedIn] = useState(false)
 	const [email, setEmail] = useState("")
 	const [pass, setPass] = useState("")
 	const [errMsg, setErrMsg] = useState("")
@@ -263,90 +262,81 @@ const Login = (props) => {
 	}
 
 	useEffect(() => {
-		setIsLoggedIn(user ? true : false)
-
-		return () => {
-			setIsLoggedIn(false)
-		}
+		return () => {}
 	}, [user])
+	if (user) {
+		navigation.navigate("mygoals")
+	}
 	return (
 		<ScrollView>
 			<View style={styles.loginContainer}>
-				{!isLoggedIn ? (
-					<>
-						<View style={{alignSelf: "flex-start"}}>
-							<Text>{signInMode ? "Sign In" : "Sign Up"}</Text>
-						</View>
-						<View style={styles.inputContainer}>
-							<View style={styles.inputView}>
-								{errMsg.length ? <Text style={styles.errMsg}>{errMsg}</Text> : null}
-								<TextInput
-									placeholder="Email"
-									style={styles.input}
-									onChangeText={setEmail}
-									value={email}
-									keyboardType={"email-address"}
-								/>
-							</View>
-							<View style={styles.inputView}>
-								<TextInput
-									style={styles.input}
-									onChangeText={setPass}
-									value={pass}
-									placeholder="Password"
-									secureTextEntry={true}
-								/>
-							</View>
+				<View style={{alignSelf: "flex-start"}}>
+					<Text>{signInMode ? "Sign In" : "Sign Up"}</Text>
+				</View>
+				<View style={styles.inputContainer}>
+					<View style={styles.inputView}>
+						{errMsg.length ? <Text style={styles.errMsg}>{errMsg}</Text> : null}
+						<TextInput
+							placeholder="Email"
+							style={styles.input}
+							onChangeText={setEmail}
+							value={email}
+							keyboardType={"email-address"}
+						/>
+					</View>
+					<View style={styles.inputView}>
+						<TextInput
+							style={styles.input}
+							onChangeText={setPass}
+							value={pass}
+							placeholder="Password"
+							secureTextEntry={true}
+						/>
+					</View>
 
+					<TouchableOpacity onPress={signInMode ? handleEmailPassSignIn : handleEmailPassSignUp}>
+						<View>
+							<Text style={styles.signInBtn}>{signInMode ? "Sign In" : "Sign Up"}</Text>
+						</View>
+					</TouchableOpacity>
+					<View style={styles.bottomContainer}>
+						<Text>{signInMode ? "Already registered? " : "Not registered? "}</Text>
+						<TouchableOpacity
+							onPress={() => {
+								setErrMsg("")
+								setEmail("")
+								setPass("")
+								setSignInMode(!signInMode)
+							}}
+						>
+							<Text style={styles.signUp}>{!signInMode ? "Sign In" : "Sign Up"}</Text>
+						</TouchableOpacity>
+					</View>
+					{signInMode ? (
+						<View style={styles.bottomContainer}>
+							<Text>Forgot Password? </Text>
 							<TouchableOpacity
-								onPress={signInMode ? handleEmailPassSignIn : handleEmailPassSignUp}
+								onPress={() => {
+									// auth().sendPasswordResetEmail(email).then()
+									// setErrMsg("")
+									// setPass("")
+									navigation.navigate("ForgotPassword")
+								}}
 							>
-								<View>
-									<Text style={styles.signInBtn}>{signInMode ? "Sign In" : "Sign Up"}</Text>
-								</View>
+								<Text style={styles.signUp}>Reset</Text>
 							</TouchableOpacity>
-							<View style={styles.bottomContainer}>
-								<Text>{signInMode ? "Already registered? " : "Not registered? "}</Text>
-								<TouchableOpacity
-									onPress={() => {
-										setErrMsg("")
-										setEmail("")
-										setPass("")
-										setSignInMode(!signInMode)
-									}}
-								>
-									<Text style={styles.signUp}>{!signInMode ? "Sign In" : "Sign Up"}</Text>
-								</TouchableOpacity>
-							</View>
-							{signInMode ? (
-								<View style={styles.bottomContainer}>
-									<Text>Forgot Password? </Text>
-									<TouchableOpacity
-										onPress={() => {
-											// auth().sendPasswordResetEmail(email).then()
-											// setErrMsg("")
-											// setPass("")
-											navigation.navigate("ForgotPassword")
-										}}
-									>
-										<Text style={styles.signUp}>Reset</Text>
-									</TouchableOpacity>
-								</View>
-							) : null}
 						</View>
-						<View>
-							<Text style={styles.OrTxt}>Or</Text>
-						</View>
+					) : null}
+				</View>
+				<View>
+					<Text style={styles.OrTxt}>Or</Text>
+				</View>
 
-						<View>
-							<GoogleSignIn />
-							<FacebookSignIn />
-							<TwitterSignIn />
-						</View>
-					</>
-				) : (
-					<LogoutButton />
-				)}
+				<View>
+					<GoogleSignIn />
+					<FacebookSignIn />
+					<TwitterSignIn />
+				</View>
 			</View>
 		</ScrollView>
 	)
