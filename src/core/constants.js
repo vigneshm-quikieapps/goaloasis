@@ -1014,4 +1014,5 @@ export const CommonStyles = ScaledSheet.create({
 
 export const firebaseConstants = {
 	GOALS_COLLECTION: "Goals",
+	USERS_COLLECTION: "Users",
 }

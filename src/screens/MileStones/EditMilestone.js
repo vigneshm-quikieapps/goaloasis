@@ -7,7 +7,7 @@ import {ColorConstants, commonDateFormat, sizeConstants} from "../../core/consta
 import {setBooleanFlag, setClickedGoal, setShowLoader} from "./../../redux/actions"
 import {Calendar, LocaleConfig} from "react-native-calendars"
 import {calendarLocale, CustomDayComponentForCalendar} from "../../components/CommonComponents"
-import {addMilestoneToFirestore} from "../../firebase"
+import {addMilestoneToFirestore} from "../../firebase/goals"
 import dayjs from "dayjs"
 
 LocaleConfig.locales["en"] = calendarLocale

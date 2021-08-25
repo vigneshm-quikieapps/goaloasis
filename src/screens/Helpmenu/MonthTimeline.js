@@ -29,7 +29,7 @@ import {
 } from "../../core/constants"
 import {setAllGoals, setShowLoader, setBooleanFlag, setClickedGoal} from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
-import {addMilestoneToFirestore} from "../../firebase"
+import {addMilestoneToFirestore} from "../../firebase/goals"
 import {height} from "./../../core/constants"
 import dayjs from "dayjs"
 import GestureHandler, {PinchGestureHandler, State} from "react-native-gesture-handler"

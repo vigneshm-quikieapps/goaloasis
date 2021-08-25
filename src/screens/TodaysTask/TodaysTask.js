@@ -29,7 +29,7 @@ import {
 import {SnoozeIcon} from "../../assets/customIcons"
 import Swipeout from "rc-swipeout"
 import {connect} from "react-redux"
-import {addMilestoneToFirestore} from "../../firebase"
+import {addMilestoneToFirestore} from "../../firebase/goals"
 import {setClickedGoal, setShowLoader, setTodaysAllTasks} from "../../redux/actions"
 import dayjs from "dayjs"
 

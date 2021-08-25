@@ -29,7 +29,7 @@ import {
 	setClickedGoal,
 	setTaskFlowData,
 } from "./../../redux/actions"
-import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
+import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "../../firebase/goals"
 import {connect} from "react-redux"
 import {
 	calendarLocale,

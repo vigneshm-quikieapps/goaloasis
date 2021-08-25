@@ -30,7 +30,7 @@ import {
 } from "../../components/CommonComponents"
 import {connect} from "react-redux"
 
-import {addMilestoneToFirestore} from "../../firebase"
+import {addMilestoneToFirestore} from "../../firebase/goals"
 import {setBooleanFlag, setClickedGoal, setShowLoader} from "../../redux/actions"
 import dayjs from "dayjs"
 

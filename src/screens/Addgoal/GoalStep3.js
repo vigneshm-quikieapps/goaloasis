@@ -17,7 +17,7 @@ import {
 } from "../../core/constants"
 import firestore from "@react-native-firebase/firestore"
 import {setAllGoals, setCurrentGoal, setShowLoader} from "./../../redux/actions"
-import {addGoalToFirestore} from "./../../firebase"
+import {addGoalToFirestore} from "./../../firebase/goals"
 import {connect} from "react-redux"
 import {CommonHomeButton, CommonPrevNextButton} from "../../components/CommonComponents"
 

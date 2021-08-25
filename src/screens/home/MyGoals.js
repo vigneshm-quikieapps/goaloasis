@@ -21,7 +21,7 @@ import StatusBarScreen from "../MileStones/StatusBarScreen"
 import Constants from "expo-constants"
 import {connect} from "react-redux"
 import AsyncStorage from "@react-native-community/async-storage"
-import {getAllGoalsFromFirestore} from "./../../firebase/index"
+import {getAllGoalsFromFirestore} from "../../firebase/goals"
 
 import {
 	setTestData,

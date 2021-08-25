@@ -29,7 +29,7 @@ import {
 	width,
 } from "../../core/constants"
 import {setAllGoals, setClickedGoal, setShowLoader} from "../../redux/actions"
-import {updateGoalToFirestore} from "../../firebase"
+import {updateGoalToFirestore} from "../../firebase/goals"
 import AsyncStorage from "@react-native-community/async-storage"
 import dayjs from "dayjs"
 import {Constants} from "react-native-unimodules"

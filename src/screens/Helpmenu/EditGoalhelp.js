@@ -5,7 +5,7 @@ import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import DatePicker from "react-native-date-picker"
 import {connect} from "react-redux"
-import {updateGoalToFirestore} from "../../firebase"
+import {updateGoalToFirestore} from "../../firebase/goals"
 import {setClickedGoal, setShowLoader} from "../../redux/actions"
 
 import dayjs from "dayjs"

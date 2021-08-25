@@ -4,7 +4,7 @@ import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
 import {setBooleanFlag, setCurrentGoal, setShowLoader} from "./../../redux/actions"
 import {connect} from "react-redux"
-import {updateGoalToFirestore} from "./../../firebase/index"
+import {updateGoalToFirestore} from "../../firebase/goals"
 import {sizeConstants} from "../../core/constants"
 
 const MarkCompleted = (props) => {

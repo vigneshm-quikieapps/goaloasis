@@ -9,7 +9,7 @@ import {setClickedGoal, setClickedMilestone, setShowLoader} from "./../redux/act
 import {LongPressGestureHandler, State} from "react-native-gesture-handler"
 
 import {connect} from "react-redux"
-import {addMilestoneToFirestore} from "./../firebase/index"
+import {addMilestoneToFirestore} from "../firebase/goals"
 import {SnoozeIcon} from "../assets/customIcons"
 import dayjs from "dayjs"
 import PushNotification, {Importance} from "react-native-push-notification"

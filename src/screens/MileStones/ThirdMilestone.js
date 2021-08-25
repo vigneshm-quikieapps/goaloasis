@@ -12,7 +12,7 @@ import Constants from "expo-constants"
 import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/constants"
 import StatusBarScreen from "./StatusBarScreen"
 import {addNewMilestone, EditNewMilestone, setClickedGoal} from "./../../redux/actions"
-import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
+import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase/goals"
 import {connect} from "react-redux"
 import {
 	CommonHomeButton,
