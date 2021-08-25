@@ -150,6 +150,7 @@ export const commonImages = {
 	thirdTimeLineImage: require("././../assets/images/thirdTimeLine.png"),
 	fourthImage: require("././../assets/images/fourth.png"),
 	timelineImage: require("././../assets/images/timeline.png"),
+	googleIcon: require("./../assets/images/gIcon.png"),
 }
 
 export const ColorConstants = {
@@ -178,6 +179,7 @@ export const ColorConstants = {
 	backGroundTextDIsable: "#BFE4E4",
 	snoozeIconBg: "#7c9b96",
 	fbBlue: "#4267B2",
+	twitterBlue: "#00acee",
 }
 
 export const forGoals = {

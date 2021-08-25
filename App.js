@@ -6,6 +6,7 @@ import {setShowLoader, setUserInfo} from "./src/redux/actions"
 import auth from "@react-native-firebase/auth"
 
 require("./src/firebase/authentication/googleAuth")
+require("./src/firebase/authentication/twitterAuth")
 
 const App = (props) => {
 	const {setUserInfo, setShowLoader} = props
