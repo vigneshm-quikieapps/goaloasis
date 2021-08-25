@@ -8,6 +8,7 @@ import colors from "../../../colors"
 import AsyncStorage from "@react-native-community/async-storage"
 import {
 	ColorConstants,
+	colorsForTimeline,
 	commonDateFormat,
 	CommonStyles,
 	forGoals,
@@ -64,7 +65,7 @@ const GoalStep3 = ({
 	console.log("LOADING", loading)
 
 	const getColorForGoal = () => {
-		return goalsColorArray[allGoals.length]
+		return colorsForTimeline[allGoals.length].goal
 	}
 
 	return (

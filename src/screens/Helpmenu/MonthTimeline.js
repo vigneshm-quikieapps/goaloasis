@@ -20,7 +20,13 @@ import DatePicker from "react-native-date-picker"
 import TimelineScreen from "./Timeline"
 import {CommonHomeButton, monthNames} from "../../components/CommonComponents"
 import {connect} from "react-redux"
-import {ColorConstants, commonDateFormat, CommonStyles, sizeConstants} from "../../core/constants"
+import {
+	ColorConstants,
+	commonDateFormat,
+	CommonStyles,
+	sizeConstants,
+	width,
+} from "../../core/constants"
 import {setAllGoals, setShowLoader, setBooleanFlag, setClickedGoal} from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
 import {addMilestoneToFirestore} from "../../firebase"
@@ -47,6 +53,7 @@ const MonthTimeline = ({
 	const [oldMilestone, setOldMilestone] = useState("")
 
 	useEffect(() => {
+		console.log("ALL GOALS FROM MILESTONE", allGoals)
 		var allMiles = []
 		allGoals.forEach((goal) => {
 			goal.goalMilestone.forEach((mile) => {
@@ -60,16 +67,22 @@ const MonthTimeline = ({
 					description: "",
 					time: `${month}, ${year}`,
 					date: dayjs(mile.date).toDate(),
+					isCompleted: goal.isCompleted,
+					color: mile.color,
 				})
 			})
 		})
-
-		setAllMilestones(allMiles)
+		// allMiles.filter((item) => item.isCompleted !== true)
+		setAllMilestones(allMiles.filter((item) => item.isCompleted !== true))
+		renderDetail(allMilestones)
+		renderCircle(allMilestones)
 	}, [allGoals])
 
-	allMilestones.sort((a, b) => b.date - a.date)
-	allMilestones.reverse()
-
+	let year = dayjs().year()
+	let month = monthNames[dayjs().month()]
+	let datee = {date: dayjs().toISOString().slice(0, 10), time: `${month}, ${year}`}
+	allMilestones.push(datee)
+	allMilestones.sort((a, b) => new Date(a.date) - new Date(b.date))
 	useEffect(() => {
 		importData()
 	}, [booleanFlag])
@@ -151,6 +164,82 @@ const MonthTimeline = ({
 			navigation.navigate("timeline")
 		}
 	}
+	// const renderDetail = (rowData, sectionID, rowID) => {
+	// 	console.log("THIS is ROW DATA of MILESTONE", rowData)
+
+	// 	var desc
+	// 	if (rowData.title)
+	// 		desc = (
+	// 			<View>
+	// 				<Text>{rowData.title}</Text>
+	// 			</View>
+	// 		)
+
+	// 	return (
+	// 		<View style={{flex: 1, backgroundColor: rowData.color, padding: 10, borderRadius: 15}}>
+	// 			{desc}
+	// 		</View>
+	// 	)
+	// }
+	const renderDetail = (rowData, sectionID, rowID) => {
+		// console.log("THIS is ROW DATA", rowData)
+		// console.log("sectionID", sectionID)
+		// console.log("rowID", rowID)
+
+		let title = <Text style={[styles.title]}>{rowData.title}</Text>
+		var desc = null
+		if (rowData.description)
+			desc = (
+				<View style={[styles.descriptionContainer]}>
+					<Text>{rowData.description}</Text>
+				</View>
+			)
+
+		return (
+			<View style={{flex: 1, backgroundColor: rowData.color, padding: 10, borderRadius: 15}}>
+				{title}
+				{desc}
+			</View>
+		)
+	}
+	const renderCircle = (rowData, sectionID, rowID) => {
+		// let datadate = new Date(rowData.date)
+		console.log("THIS is ROW DATA from circle render", rowData)
+
+		let state = false
+		// console.log("datadate", rowData.date)
+		// console.log("todaysDate", new Date().toISOString().slice(0, 10))
+
+		if (new Date().toISOString().slice(0, 10).match(rowData.date) && rowData.title === undefined) {
+			state = true
+		}
+		return (
+			<View
+				style={{
+					backgroundColor: state ? "#B3855C" : "#B3855C",
+					height: 5,
+					width: 5,
+					borderRadius: 8,
+					marginVertical: 10,
+					padding: 7,
+					position: "absolute",
+					left: width * 0.5,
+					transform: [{translateX: -30}],
+					justifyContent: "center",
+				}}
+			>
+				<View
+					style={{
+						backgroundColor: state ? "white" : "#B3855C",
+						height: 8,
+						width: 8,
+						borderRadius: 4,
+						alignSelf: "center",
+					}}
+				></View>
+			</View>
+		)
+	}
 	return (
 		<ImageBackground
 			style={{width: "100%", height: "100%"}}
@@ -186,6 +275,8 @@ const MonthTimeline = ({
 						separator={false}
 						detailContainerStyle={CommonStyles.detailContainerStyle}
 						titleStyle={CommonStyles.titleStyle}
+						renderDetail={renderDetail}
+						renderCircle={renderCircle}
 						columnFormat="two-column"
 						// onEventPress={(item) => alert(`${item.title} at ${item.time}`)}
 						onEventPress={(item) => {

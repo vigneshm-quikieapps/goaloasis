@@ -38,7 +38,13 @@ const SixthMilestone = ({clickedGoal}) => {
 					color={ColorConstants.faintWhite}
 					size={38}
 					style={CommonStyles.cross}
-					onPress={() => navigation.navigate("DParticularGoal")}
+					onPress={() => {
+						if (clickedGoal.goalMilestone === null || clickedGoal.goalMilestone.length === 0) {
+							navigation.navigate("DParticularGoal")
+						} else {
+							navigation.navigate("particulargoal")
+						}
+					}}
 				/>
 			</View>
 			<Text style={[CommonStyles.milestoneText, CommonStyles.mt20]}>Enter Milestone</Text>

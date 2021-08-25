@@ -27,6 +27,7 @@ import {
 	CommonStyles,
 	height,
 	sizeConstants,
+	width,
 } from "../../core/constants"
 import {setAllGoals, setBooleanFlag, setClickedGoal, setShowLoader} from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
@@ -68,17 +69,25 @@ const DailyTimeline = ({
 							description: "",
 							time: date,
 							date: sortDate,
+							isCompleted: task.isCompleted,
+							color: task.color,
 						})
 					})
 				}
 			})
 		})
-		setAllTasks(allTasks)
+
+		setAllTasks(allTasks.filter((item) => item.isCompleted !== true))
+		renderDetail(allTasks)
+		//
+		setAllTasks(allTasks.filter((item) => item.isCompleted !== true))
+		let datee = {time: dayjs().toISOString().slice(0, 10)}
+		allTasks.push(datee)
+		renderDetail(allTasks)
+		renderCircle(allTasks)
 	}, [allGoals])
 
-	allTasks.sort((a, b) => b.date - a.date)
-
-	allTasks.reverse()
+	allTasks.sort((a, b) => new Date(a.date) - new Date(b.date))
 	useEffect(() => {
 		importData()
 	}, [booleanFlag])
@@ -169,6 +178,65 @@ const DailyTimeline = ({
 			navigation.navigate("monthTimeline")
 		}
 	}
+	const renderDetail = (rowData, sectionID, rowID) => {
+		// console.log("THIS is ROW DATA", rowData)
+		// console.log("sectionID", sectionID)
+		// console.log("rowID", rowID)
+
+		let title = <Text style={[styles.title]}>{rowData.title}</Text>
+		var desc = null
+		if (rowData.description)
+			desc = (
+				<View style={[styles.descriptionContainer]}>
+					<Text>{rowData.description}</Text>
+				</View>
+			)
+
+		return (
+			<View style={{flex: 1, backgroundColor: rowData.color, padding: 10, borderRadius: 15}}>
+				{title}
+				{desc}
+			</View>
+		)
+	}
+	const renderCircle = (rowData, sectionID, rowID) => {
+		// let datadate = new Date(rowData.date)
+
+		let state = false
+		// console.log("datadate", rowData.date)
+		// console.log("todaysDate", new Date().toISOString().slice(0, 10))
+
+		if (new Date().toISOString().slice(0, 10).match(rowData.date) && rowData.title === undefined) {
+			state = true
+		}
+		return (
+			<View
+				style={{
+					backgroundColor: state ? "#B3855C" : "#B3855C",
+					height: 5,
+					width: 5,
+					borderRadius: 8,
+					marginVertical: 10,
+					padding: 7,
+					position: "absolute",
+					left: width * 0.5,
+					transform: [{translateX: -30}],
+					justifyContent: "center",
+				}}
+			>
+				<View
+					style={{
+						backgroundColor: state ? "white" : "#B3855C",
+						height: 8,
+						width: 8,
+						borderRadius: 4,
+						alignSelf: "center",
+					}}
+				></View>
+			</View>
+		)
+	}
+
 	return (
 		<ImageBackground
 			style={{width: "100%", height: "100%"}}
@@ -203,6 +271,8 @@ const DailyTimeline = ({
 						separator={false}
 						detailContainerStyle={CommonStyles.detailContainerStyle}
 						titleStyle={CommonStyles.titleStyle}
+						renderDetail={renderDetail}
+						renderCircle={renderCircle}
 						columnFormat="two-column"
 						// onEventPress={(item) => alert(`${item.title} at ${item.time}`)}
 						onEventPress={(item) => {

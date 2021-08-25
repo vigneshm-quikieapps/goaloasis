@@ -21,7 +21,13 @@ import DatePicker from "react-native-date-picker"
 import MonthTimeline from "./MonthTimeline"
 import {CommonHomeButton} from "../../components/CommonComponents"
 import {connect} from "react-redux"
-import {ColorConstants, commonDateFormat, CommonStyles, sizeConstants} from "../../core/constants"
+import {
+	ColorConstants,
+	commonDateFormat,
+	CommonStyles,
+	sizeConstants,
+	width,
+} from "../../core/constants"
 import {setAllGoals, setClickedGoal, setShowLoader} from "../../redux/actions"
 import {updateGoalToFirestore} from "../../firebase"
 import AsyncStorage from "@react-native-community/async-storage"
@@ -43,25 +49,66 @@ const TimelineScreen = ({
 	const [clickedGoalDate, setClickedGoalDate] = useState(dayjs())
 	const [clickedGoalName, setClickedGoalName] = useState("")
 	const [allGoalsforTimeline, setAllGoalsforTimeline] = useState([])
-
+	// const [state, setSate] = useState(false)
 	useEffect(() => {
 		let timelineData = allGoals.map((goal) => {
+			console.log("GOALSSSSSSS", goal.isCompleted)
 			let year = dayjs(goal.targetDate).year()
-			let date = dayjs(goal.targetDate).toDate()
+			let date = dayjs(goal.targetDate).toISOString().slice(0, 10)
+			// date = dayjs(goal.targetDate)
 
 			return {
 				title: goal.name,
 				description: goal.description,
 				time: year,
 				date: date,
+				isCompleted: goal.isCompleted,
+				color: goal.color,
 			}
 		})
 
-		setAllGoalsforTimeline(timelineData)
-	}, [allGoals])
+		// timelineData.filter((item) => item.isCompleted !== true)
 
-	allGoalsforTimeline.sort((a, b) => b.date - a.date)
-	allGoalsforTimeline.reverse()
+		// setAllGoalsforTimeline(timelineData)
+		setAllGoalsforTimeline(timelineData.filter((item) => item.isCompleted !== true))
+		renderDetail(allGoalsforTimeline)
+		renderCircle(allGoalsforTimeline)
+		// console.log("Testing", allGoalsforTimeline[0].isCompleted)
+
+		// let notCompletedData = allGoalsforTimeline.map((item) => console.log("ITEMS", item))
+		// setAllGoalsforTimeline("notCompletedData", notCompletedData)
+		// console.log("notCompletedData", notCompletedData)
+	}, [allGoals])
+	let date = {date: dayjs().toISOString().slice(0, 10), time: dayjs().year()}
+	allGoalsforTimeline.push(date)
+	// console.log("allGoalsforTimeline", allGoalsforTimeline)
+
+	allGoalsforTimeline.sort((a, b) => new Date(a.date) - new Date(b.date))
+	// allGoalsforTimeline.reverse()
+
+	// allGoalsforTimeline.sort(function (c, d) {
+	// 	var rx = /(\d+)\/(\d+)\/(\d+)/
+	// 	var a = Number(c.date.replace(rx, "$3$1$20000"))
+	// 	var b = Number(d.date.replace(rx, "$3$1$20000"))
+	// 	return a > b ? -1 : a == b ? 0 : 1 // for newer on top
+	// 	//return a < b ? -1 : a == b ? 0 : 1; // for older on top
+	// })
+
+	// allGoalsforTimeline.sort(function (a, b) {
+	// 	var aa =
+	// 			a.date.substring(0, 10).split("/").reverse().join() +
+	// 			replaceAll(":", "", a.substring(11, 20)),
+	// 		bb =
+	// 			b.date.substring(0, 10).split("/").reverse().join() +
+	// 			replaceAll(":", "", b.substring(11, 20))
+	// 	return aa < bb ? -1 : aa > bb ? 1 : 0
+	// })
+	// console.log(
+	// 	"allGoalsforTimeline",
+	// 	allGoalsforTimeline.map((item) => {
+	// 		console.log("DATE", item.date)
+	// 	})
+	// )
 	useEffect(() => {
 		importData()
 	}, [clickedGoal])
@@ -117,7 +164,7 @@ const TimelineScreen = ({
 				bounciness: 1,
 			}).start()
 
-			console.log("EVENT 1", event.nativeEvent)
+			// console.log("EVENT 1", event.nativeEvent)
 			navigation.navigate("monthTimeline")
 		}
 
@@ -132,6 +179,68 @@ const TimelineScreen = ({
 			// navigation.navigate("mygoals")
 		}
 	}
+
+	const renderDetail = (rowData, sectionID, rowID) => {
+		// console.log("THIS is ROW DATA", rowData)
+		// console.log("sectionID", sectionID)
+		// console.log("rowID", rowID)
+
+		let title = <Text style={[styles.title]}>{rowData.title}</Text>
+		var desc = null
+		if (rowData.description)
+			desc = (
+				<View style={[styles.descriptionContainer]}>
+					<Text>{rowData.description}</Text>
+				</View>
+			)
+
+		return (
+			<View style={{flex: 1, backgroundColor: rowData.color, padding: 10, borderRadius: 15}}>
+				{title}
+				{desc}
+			</View>
+		)
+	}
+	const renderCircle = (rowData, sectionID, rowID) => {
+		// let datadate = new Date(rowData.date)
+		// console.log("THIS is ROW DATA from circle render", rowData)
+
+		let state = false
+		// console.log("datadate", rowData.date)
+		// console.log("todaysDate", new Date().toISOString().slice(0, 10))
+
+		if (new Date().toISOString().slice(0, 10).match(rowData.date) && rowData.title === undefined) {
+			state = true
+			console.log("fuckedup here")
+		}
+		return (
+			<View
+				style={{
+					backgroundColor: state ? "#B3855C" : "#B3855C",
+					height: 5,
+					width: 5,
+					borderRadius: 8,
+					marginVertical: 10,
+					padding: 7,
+					position: "absolute",
+					left: width * 0.5,
+					transform: [{translateX: -30}],
+					justifyContent: "center",
+				}}
+			>
+				<View
+					style={{
+						backgroundColor: state ? "white" : "#B3855C",
+						height: 8,
+						width: 8,
+						borderRadius: 4,
+						alignSelf: "center",
+					}}
+				></View>
+			</View>
+		)
+	}
+
 	return (
 		<ImageBackground
 			style={{
@@ -161,26 +270,16 @@ const TimelineScreen = ({
 						style={CommonStyles.list}
 						data={allGoalsforTimeline}
 						circleSize={10}
-						circleColor="#B3855C"
+						// circleColor="#B3855C"
 						lineColor="#B3855C"
 						timeContainerStyle={CommonStyles.timeContainerStyle}
 						timeStyle={CommonStyles.timeStyle}
 						descriptionStyle={CommonStyles.descriptionStyle}
 						separator={false}
 						detailContainerStyle={[CommonStyles.detailContainerStyle]}
-						// detailContainerStyle={
-						// 	allGoalsforTimeline.color === "#588C8D"
-						// 		? styles.detailContainerStyle1
-						// 		: allGoalsforTimeline.color === "#553144"
-						// 		? styles.detailContainerStyle2
-						// 		: allGoalsforTimeline.color === "#6A5593"
-						// 		? styles.detailContainerStyle3
-						// 		: allGoalsforTimeline.color === "#B3855C"
-						// 		? styles.detailContainerStyle4
-						// 		: allGoalsforTimeline.color === "#3F6E6A"
-						// 		? styles.detailContainerStyle5
-						// 		: styles.detailContainerStyle6
-						// }
+						renderDetail={renderDetail}
+						renderCircle={renderCircle}
+						// renderTime={renderTime}
 						titleStyle={CommonStyles.titleStyle}
 						columnFormat="two-column"
 						onEventPress={(item) => {
@@ -190,6 +289,7 @@ const TimelineScreen = ({
 							setClickedGoalDate(dayjs(currentGoal.targetDate))
 							refRBSheet.current.open()
 						}}
+						renderFullLine={true}
 					/>
 				</Animated.View>
 			</PinchGestureHandler>

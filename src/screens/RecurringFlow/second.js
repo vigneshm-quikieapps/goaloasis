@@ -7,10 +7,12 @@ import StatusBarScreen from "../MileStones/StatusBarScreen"
 import {Entypo} from "@expo/vector-icons"
 import {
 	ColorConstants,
+	colorsForTimeline,
 	commonDateFormat,
 	CommonStyles,
 	height,
 	sizeConstants,
+	TaskColorArray,
 	width,
 } from "../../core/constants"
 import {
@@ -37,6 +39,7 @@ const Second = ({
 	setClickedGoal,
 	setShowLoader,
 	loading,
+	allGoals,
 }) => {
 	const navigation = useNavigation()
 
@@ -123,6 +126,8 @@ const Second = ({
 		let newMilestoneItemWithTask = clickedGoal.goalMilestone.map((item) => {
 			if (item.milestone === clickedMilestone) {
 				let filteredTasks = item.taskData.filter((tsk) => tsk.task != tName)
+				let color = colorsForTimeline.find((itemColor) => itemColor.goal === clickedGoal.color)
+
 				return {
 					...item,
 					taskData: [
@@ -131,6 +136,7 @@ const Second = ({
 							isCompleted: false,
 							task: tName,
 							date: clickedDate,
+							color: color.task,
 							reoccuring: {
 								startDate: clickedDate,
 								reoccuringType: reoccuring,
@@ -176,6 +182,13 @@ const Second = ({
 							color={ColorConstants.faintWhite}
 							size={38}
 							style={CommonStyles.cross}
+							onPress={() => {
+								if (clickedGoal.goalMilestone === null || clickedGoal.goalMilestone.length === 0) {
+									navigation.navigate("DParticularGoal")
+								} else {
+									navigation.navigate("particulargoal")
+								}
+							}}
 						/>
 					</View>
 					<Text style={[CommonStyles.enterTask, {marginTop: sizeConstants.m}]}>Enter Task</Text>
@@ -312,6 +325,7 @@ const mapStateToProps = (state) => {
 		clickedMilestone: state.milestone.clickedMilestone,
 		booleanFlag: state.milestone.booleanFlag,
 		loading: state.milestone.loading,
+		allGoals: state.milestone.allGoals,
 	}
 }
 const mapDispatchToProps = (dispatch) => {

@@ -139,7 +139,11 @@ const MyGoals = (props) => {
 					if (allGoals[i].goalMilestone[j].taskData.length) {
 						let taskDatee = JSON.stringify(allGoals[i].goalMilestone[j].taskData[k].date)
 
-						if (taskDatee.match(today)) {
+						if (
+							taskDatee.match(today) &&
+							allGoals[i].isCompleted !== true &&
+							allGoals[i].goalMilestone[j].taskData[k].isCompleted !== true
+						) {
 							// console.log(
 							// 	"taskDateeee",
 							// 	JSON.stringify(allGoals[i].goalMilestone[j].taskData[0].date)
@@ -183,7 +187,13 @@ const MyGoals = (props) => {
 					if (mile.taskData.length) {
 						mile.taskData.map((task) => {
 							let tempDateStr = dayjs(task.date).format(commonDateFormat)
-							if (tempDateStr === todayDateStr) {
+
+							if (
+								tempDateStr === todayDateStr &&
+								goal.isCompleted !== true &&
+								task.isCompleted !== true
+							) {
+								console.log("CHECKING GOALS", task.isCompleted)
 								let newTaskObj = {
 									...task,
 									key: `${task.task}_${mile.milestone}_${goal.name}`,
@@ -204,13 +214,13 @@ const MyGoals = (props) => {
 		for (let i = 0; i < allGoals.length; i++) {
 			for (let j = 0; j < allGoals[i].goalMilestone.length; j++) {
 				var milestoneDay = new Date(allGoals[i].goalMilestone[j].date)
-				console.log("MILESTONE DAY", milestoneDay)
+				// console.log("MILESTONE DAY", milestoneDay)
 				if (Math.abs(milestoneDay - new Date()) < 86400000) {
 					console.log("first")
 					for (let k = 0; k < allGoals[i].goalMilestone[j].taskData.length; k++) {
 						if (allGoals[i].goalMilestone[j].taskData[k].isCompleted === false) {
 							counter++
-							console.log("hehehe", allGoals[i].goalMilestone[j].taskData[k].task)
+							// console.log("hehehe", allGoals[i].goalMilestone[j].taskData[k].task)
 						}
 					}
 				}
@@ -257,6 +267,8 @@ const MyGoals = (props) => {
 
 	useEffect(() => {
 		setShowLoader(true)
+		// console.log("ALLL GOALSSSSSSSSSSSSSSSSSSs", allGoals[0].createdAt)
+
 		importData()
 		setShowLoader(false)
 		console.log("user from mygoals: ", user)
@@ -453,15 +465,15 @@ const MyGoals = (props) => {
 							allGoals.length > 0 &&
 							allGoals.map((task, index) => {
 								let completedPercent = getGoalCompletionPercent(task)
+								// console.log("TASKKKKK", task.isCompleted)
+								// console.log("TASKKKKK", completedPercent)
 
 								return (
 									<View key={index}>
 										<TouchableOpacity
 											style={CommonStyles.logoContainer}
 											onPress={() => {
-												task.isCompleted || completedPercent == 100
-													? null
-													: handleOpenNewGoal(task.name)
+												task.isCompleted ? null : handleOpenNewGoal(task.name)
 											}}
 										>
 											<ProgressCircle

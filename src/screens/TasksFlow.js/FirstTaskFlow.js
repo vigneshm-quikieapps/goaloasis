@@ -39,6 +39,7 @@ import {
 	reoccuringDefaultDailyArray,
 } from "../../components/CommonComponents"
 import dayjs from "dayjs"
+import AppButton from "../MileStones/AppButton"
 
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"
@@ -60,14 +61,19 @@ const FirstTaskFlow = ({
 	const [clickedDate, setDate] = useState(dayjs().format(commonDateFormat))
 
 	const nextScreen = () => {
-		navigation.navigate("secondtaskflow", {
-			currentTaskData: {
-				task: taskName,
-				date: clickedDate,
-			},
+		// navigation.navigate("secondtaskflow", {
+		// 	currentTaskData: {
+		// 		task: taskName,
+		// 		date: clickedDate,
+		// 	},
+		// })
+		navigation.navigate("thirdtaskflow", {
+			// currentTaskData: {taskDate: currentTaskData.date, taskName: taskName},
+			currentTaskData: {taskDate: clickedDate, taskName: taskName},
 		})
+		// navigation.navigation("thirdtaskflow")
 	}
-
+	const [toggleCalandar, setToggleCalandar] = useState(false)
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
 		<ImageBackground
@@ -75,7 +81,7 @@ const FirstTaskFlow = ({
 			source={commonImages.secondImage}
 			resizeMode="stretch"
 		>
-			<ScrollView style={CommonStyles.mainContainer}>
+			<View style={CommonStyles.mainContainer}>
 				<StatusBarScreen>
 					<View style={CommonStyles.flexOne}>
 						<View style={CommonStyles.flexDirectionRow}>
@@ -88,103 +94,185 @@ const FirstTaskFlow = ({
 								color={ColorConstants.faintWhite}
 								size={38}
 								style={CommonStyles.cross}
-								onPress={() => navigation.navigate("DParticularGoal")}
+								onPress={() => {
+									if (
+										clickedGoal.goalMilestone === null ||
+										clickedGoal.goalMilestone.length === 0
+									) {
+										navigation.navigate("DParticularGoal")
+										console.log("clickedGoal.goalMilestone", clickedGoal)
+									} else {
+										navigation.navigate("particulargoal")
+									}
+								}}
 							/>
 						</View>
 
 						<Text style={styles.subTitle}>Enter Task</Text>
+
 						<View style={styles.centerCont}>
 							<TextInput
 								style={styles.textInput}
 								placeholder="Type Here"
 								onChangeText={(text) => setTaskName(text)}
 								maxLength={28}
+								focusable={true}
 							/>
 						</View>
-						<Text style={styles.bigTitle}>Edit target date</Text>
 
-						<View style={[CommonStyles.calendarContainer, CommonStyles.targetAndDoneContainer]}>
-							<Text style={CommonStyles.targetDate}>Target Date</Text>
+						{taskName === "" || toggleCalandar === true ? (
+							<View>
+								<Text style={styles.bigTitle}>Edit target date</Text>
 
-							<TouchableOpacity
-								activeOpacity={taskName !== "" ? 0.5 : 1}
-								onPress={() => {
-									taskName !== "" && nextScreen()
-								}}
-								style={{position: "absolute", right: 25}}
-							>
-								<Text
-									style={[
-										CommonStyles.done,
-										{color: taskName !== "" ? ColorConstants.faintWhite : ColorConstants.whiteOp50},
-									]}
-								>
-									Done
-								</Text>
-							</TouchableOpacity>
-						</View>
+								<View style={[CommonStyles.calendarContainer, CommonStyles.targetAndDoneContainer]}>
+									<Text style={CommonStyles.targetDate}>Target Date</Text>
 
-						<Calendar
-							current={dayjs().format(commonDateFormat)}
-							minDate={dayjs().format(commonDateFormat)}
-							hideArrows={false}
-							hideExtraDays={true}
-							disableMonthChange={false}
-							hideDayNames={false}
-							showWeekNumbers={false}
-							onPressArrowLeft={(subtractMonth) => subtractMonth()}
-							onPressArrowRight={(addMonth) => addMonth()}
-							disableArrowLeft={false}
-							enableSwipeMonths={true}
-							theme={{
-								backgroundColor: ColorConstants.transparent,
-								calendarBackground: ColorConstants.transparent,
-								textSectionTitleColor: ColorConstants.whitishBlue,
-								textSectionTitleDisabledColor: ColorConstants.whitishBlue,
-								selectedDayBackgroundColor: ColorConstants.whitishBlue,
-								selectedDayTextColor: ColorConstants.black,
-								todayTextColor: "#00adf5",
-								dayTextColor: ColorConstants.whitishBlue,
-								textDisabledColor: ColorConstants.whitishBlue,
-								dotColor: ColorConstants.whitishBlue,
-								selectedDotColor: ColorConstants.whitishBlue,
-								arrowColor: ColorConstants.whitishBlue,
-								disabledArrowColor: ColorConstants.whitishBlue,
-								monthTextColor: ColorConstants.whitishBlue,
-								indicatorColor: "blue",
-								textDayFontFamily: "monospace",
-								textMonthFontFamily: "monospace",
-								textDayHeaderFontFamily: "monospace",
-								textDayFontWeight: "300",
-								textMonthFontWeight: "bold",
-								textDayHeaderFontWeight: "300",
-							}}
-							dayComponent={({date, state}) => {
-								return (
-									<CustomDayComponentForCalendar
-										date={date}
-										state={state}
-										clickedDate={clickedDate}
-										dayClick={setDate}
-									/>
-								)
-							}}
-						/>
+									<TouchableOpacity
+										activeOpacity={taskName !== "" ? 0.5 : 1}
+										// onPress={() => {
+										// 	taskName !== "" && nextScreen()
+										// }}
+										style={{position: "absolute", right: 25}}
+									>
+										<Text
+											style={[
+												CommonStyles.done,
+												{
+													color:
+														// taskName !== "" ? ColorConstants.faintWhite :
+														ColorConstants.whiteOp50,
+												},
+											]}
+										>
+											Done
+										</Text>
+									</TouchableOpacity>
+								</View>
 
-						{taskName === "" ? (
-							<CommonPrevNextButton
-								right={true}
-								style={{backgroundColor: ColorConstants.whiteOp50}}
-								size={50}
-								bottom={0}
-							/>
+								<Calendar
+									current={dayjs().format(commonDateFormat)}
+									minDate={dayjs().format(commonDateFormat)}
+									hideArrows={taskName === "" ? true : false}
+									hideExtraDays={true}
+									disableMonthChange={taskName === "" ? true : false}
+									hideDayNames={false}
+									showWeekNumbers={false}
+									onPressArrowLeft={(subtractMonth) => subtractMonth()}
+									onPressArrowRight={(addMonth) => addMonth()}
+									disableArrowLeft={false}
+									enableSwipeMonths={taskName === "" ? false : true}
+									theme={{
+										backgroundColor: ColorConstants.transparent,
+										calendarBackground: ColorConstants.transparent,
+										textSectionTitleColor: ColorConstants.whitishBlue,
+										textSectionTitleDisabledColor: ColorConstants.whitishBlue,
+										selectedDayBackgroundColor: ColorConstants.whitishBlue,
+										selectedDayTextColor: ColorConstants.black,
+										todayTextColor: "#00adf5",
+										dayTextColor: ColorConstants.whitishBlue,
+										textDisabledColor: ColorConstants.whitishBlue,
+										dotColor: ColorConstants.whitishBlue,
+										selectedDotColor: ColorConstants.whitishBlue,
+										arrowColor: ColorConstants.whitishBlue,
+										disabledArrowColor: ColorConstants.whitishBlue,
+										monthTextColor: ColorConstants.whitishBlue,
+										indicatorColor: "blue",
+										textDayFontFamily: "monospace",
+										textMonthFontFamily: "monospace",
+										textDayHeaderFontFamily: "monospace",
+										textDayFontWeight: "300",
+										textMonthFontWeight: "bold",
+										textDayHeaderFontWeight: "300",
+									}}
+									dayComponent={({date, state}) => {
+										return (
+											<CustomDayComponentForCalendar
+												date={date}
+												state={state}
+												clickedDate={
+													toggleCalandar === true && taskName !== "" ? clickedDate : null
+												}
+												dayClick={setDate}
+											/>
+										)
+									}}
+								/>
+							</View>
 						) : (
-							<CommonPrevNextButton right={true} nextClick={nextScreen} size={50} bottom={0} />
+							// 				(	{taskName === "" ?
+							// 	<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter]}>
+							// 		<DisableAppButton
+							// 			title="Edit Date"
+							// 			style={{backgroundColor: ColorConstants.lightestBlue}}
+							// 		/>
+							// 	</View>
+							//  :
+							<View>
+								<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter]}>
+									<AppButton
+										onPress={() => {
+											// navigation.navigate("thirdtaskflow", {
+											// 	// currentTaskData: {taskDate: currentTaskData.date, taskName: taskName},
+											// 	currentTaskData: {taskDate: taskName},
+											// })
+											navigation.navigate("thirdtaskflow", {
+												// currentTaskData: {taskDate: currentTaskData.date, taskName: taskName},
+												currentTaskData: {taskDate: clickedDate, taskName: taskName},
+											})
+											// setToggleCalandar(true)
+										}}
+										title="Edit Date"
+										style={styles.editButton}
+									/>
+								</View>
+
+								<Text style={styles.subTitle}>
+									{tip()} adding a target date will help you stay on track. Dont't worry! You can
+									always change it.
+								</Text>
+							</View>
 						)}
 					</View>
 				</StatusBarScreen>
-			</ScrollView>
+			</View>
+			{taskName !== "" && toggleCalandar === true ? (
+				<TouchableOpacity
+					style={[CommonStyles.containerMilestone]}
+					onPress={() => {
+						navigation.navigate("first", {
+							taskDate: clickedDate,
+							taskName: taskName,
+						})
+					}}
+				>
+					<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
+				</TouchableOpacity>
+			) : null}
+			{taskName === "" ? (
+				<CommonPrevNextButton
+					right={true}
+					style={{backgroundColor: ColorConstants.whiteOp50}}
+					size={50}
+					bottom={100}
+				/>
+			) : (
+				// <CommonPrevNextButton right={true} nextClick={nextScreen} size={50} bottom={0} />
+				<View style={styles.nextBtnContainer}>
+					<View style={styles.nextBtnInner}>
+						<View></View>
+					</View>
 
+					<CommonPrevNextButton
+						right={true}
+						style={taskName === "" ? {backgroundColor: ColorConstants.whiteOp50} : {}}
+						nextClick={() => {
+							taskName === "" ? null : nextScreen()
+						}}
+						size={50}
+						bottom={100}
+					/>
+				</View>
+			)}
 			<CommonHomeButton
 				click={() => navigation.navigate("particulargoal")}
 				BackHandle={true}
@@ -291,4 +379,17 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		marginTop: sizeConstants.fourteen,
 	},
+	nextBtnContainer: {
+		position: "absolute",
+		bottom: sizeConstants.mThirty,
+		width: "100%",
+		justifyContent: "center",
+	},
+
+	nextBtnInner: {
+		flexDirection: "row",
+		justifyContent: "space-around",
+		marginBottom: sizeConstants.thirtySix,
+	},
+	editButton: {color: ColorConstants.gray, backgroundColor: ColorConstants.faintWhite},
 })

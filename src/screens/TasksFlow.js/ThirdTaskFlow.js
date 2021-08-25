@@ -19,6 +19,7 @@ import {
 	height,
 	commonDateFormat,
 	TaskColorArray,
+	colorsForTimeline,
 } from "../../core/constants"
 import StatusBarScreen from "./../MileStones/StatusBarScreen"
 import {
@@ -56,7 +57,13 @@ const ThirdTaskFlow = ({
 	// 	navigation.goBack()
 	// }
 	const [taskName, setTaskName] = useState(currentTaskData.taskName)
-	const [clickedDate, setDate] = useState(currentTaskData.taskDate)
+	const [clickedDate, setDate] = useState(
+		currentTaskData.taskDate === null ||
+			currentTaskData.taskDate === "" ||
+			currentTaskData.taskDate === undefined
+			? dayjs().format(commonDateFormat)
+			: currentTaskData.taskDate
+	)
 
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 
@@ -69,13 +76,9 @@ const ThirdTaskFlow = ({
 		let newMilestoneItemWithTask = clickedGoal.goalMilestone.map((item) => {
 			if (item.milestone == clickedMilestone) {
 				let filteredTasks = item.taskData.filter((tsk) => tsk.task != taskName)
-				let index = 0
-				for (let i = 0; i < allGoals.length; i++) {
-					if (allGoals[i].color === clickedGoal.color) {
-						index = i
-						break
-					}
-				}
+
+				let color = colorsForTimeline.find((itemColor) => itemColor.goal === clickedGoal.color)
+
 				return {
 					...item,
 					taskData: [
@@ -84,7 +87,7 @@ const ThirdTaskFlow = ({
 							isCompleted: false,
 							task: taskName,
 							date: clickedDate,
-							color: TaskColorArray[index],
+							color: color.task,
 							reoccuring: {
 								startDate: null,
 								reoccuringType: "none",
@@ -121,7 +124,13 @@ const ThirdTaskFlow = ({
 							color={ColorConstants.faintWhite}
 							size={38}
 							style={CommonStyles.cross}
-							onPress={() => navigation.navigate("DParticularGoal")}
+							onPress={() => {
+								if (clickedGoal.goalMilestone === null || clickedGoal.goalMilestone.length === 0) {
+									navigation.navigate("DParticularGoal")
+								} else {
+									navigation.navigate("particulargoal")
+								}
+							}}
 						/>
 					</View>
 					<Text style={CommonStyles.milestoneText}>Enter Task</Text>
