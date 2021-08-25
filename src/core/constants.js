@@ -177,6 +177,7 @@ export const ColorConstants = {
 	gray: "gray",
 	backGroundTextDIsable: "#BFE4E4",
 	snoozeIconBg: "#7c9b96",
+	fbBlue: "#4267B2",
 }
 
 export const forGoals = {

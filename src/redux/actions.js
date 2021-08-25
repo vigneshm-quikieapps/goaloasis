@@ -106,3 +106,10 @@ export const setTodaysAllTasks = (data) => {
 		value: data,
 	}
 }
+
+export const setUserInfo = (data) => {
+	return {
+		type: actionTypes.SET_USER,
+		value: data,
+	}
+}
