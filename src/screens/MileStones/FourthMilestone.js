@@ -15,7 +15,13 @@ import AppButton from "./AppButton"
 import {Calendar, LocaleConfig} from "react-native-calendars"
 import StatusBarScreen from "./StatusBarScreen"
 import {Entypo} from "@expo/vector-icons"
-import {ColorConstants, commonDateFormat, CommonStyles, sizeConstants} from "../../core/constants"
+import {
+	ColorConstants,
+	colorsForTimeline,
+	commonDateFormat,
+	CommonStyles,
+	sizeConstants,
+} from "../../core/constants"
 import {connect} from "react-redux"
 import {
 	calendarLocale,
@@ -23,25 +29,74 @@ import {
 	CustomDayComponentForCalendar,
 } from "../../components/CommonComponents"
 import dayjs from "dayjs"
+import {setClickedMilestone, setShowLoader} from "../../redux/actions"
+import {addNewMilestone} from "./../../redux/actions"
+import {addMilestoneToFirestore} from "../../firebase"
 
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"
 
-const FourthMilestone = ({clickedGoal, newMileStone}) => {
+const FourthMilestone = ({
+	setShowLoader,
+	setClickedMilestone,
+	clickedGoal,
+	newMileStone,
+	route,
+	addNewMilestone,
+}) => {
 	const navigation = useNavigation()
+	const {currentMilestoneData} = route.params
 	// const gotoHome = () => {
 	// 	navigation.navigate("secondMileStone")
 	// }
 	// const goBack = () => {
 	// 	navigation.goBack()
 	// }
-
+	console.log("currentMilestoneData", currentMilestoneData)
 	let temp = newMileStone && newMileStone.length && newMileStone[0].milestone
-	const [milestone, setMilestone] = useState(temp)
+	const [milestone, setMilestone] = useState(currentMilestoneData.milestoneName)
 	const [value, onChange] = useState(dayjs().format(commonDateFormat))
 	// const [date, setDate] = useState(null)
 	// console.log("DATE", date)
-	const [clickedDate, setDate] = useState(dayjs().format(commonDateFormat))
+	// const [clickedDate, setDate] = useState(dayjs().format(commonDateFormat))
+	const [clickedDate, setDate] = useState(currentMilestoneData.milestoneDate)
+	const nextScreen = () => {
+		let color = colorsForTimeline.find((itemColor) => itemColor.goal === clickedGoal.color)
+
+		let milestoneArr = [
+			...clickedGoal.goalMilestone,
+			{
+				milestone: milestone,
+				date: clickedDate,
+				taskData: [],
+				isCompleted: false,
+				color: color.mile,
+			},
+		]
+		console.log("MILESTONE ARRAY", milestoneArr)
+		let updatedObj = {
+			...clickedGoal,
+			goalMilestone: milestoneArr,
+		}
+		setClickedMilestone(milestone)
+		addNewMilestone([
+			{
+				milestone: milestone,
+				date: clickedDate,
+				taskData: [],
+			},
+		])
+		setShowLoader(true)
+
+		addMilestoneToFirestore(clickedGoal, milestoneArr, () => {
+			setShowLoader(false)
+			navigation.navigate("firsttaskflow")
+
+			setClickedGoal(updatedObj)
+		})
+
+		// navigation.navigate("IndividualGoal")
+	}
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
 		<StatusBarScreen style={CommonStyles.introContainer}>
@@ -54,7 +109,13 @@ const FourthMilestone = ({clickedGoal, newMileStone}) => {
 							color={ColorConstants.faintWhite}
 							size={38}
 							style={CommonStyles.cross}
-							onPress={() => navigation.navigate("DParticularGoal")}
+							onPress={() => {
+								if (clickedGoal.goalMilestone === null || clickedGoal.goalMilestone.length === 0) {
+									navigation.navigate("DParticularGoal")
+								} else {
+									navigation.navigate("particulargoal")
+								}
+							}}
 						/>
 					</View>
 					<Text style={CommonStyles.milestoneText}>Enter Milestone</Text>
@@ -74,7 +135,8 @@ const FourthMilestone = ({clickedGoal, newMileStone}) => {
 					<View style={[CommonStyles.calendarContainer, CommonStyles.targetAndDoneContainer]}>
 						<Text style={CommonStyles.targetDate}>Target Date</Text>
 						<TouchableOpacity
-							onPress={() => navigation.navigate("SixthMilestone")}
+							// onPress={() => navigation.navigate("SixthMilestone")}
+							onPress={() => nextScreen()}
 							style={{position: "absolute", right: 25}}
 						>
 							<Text
@@ -90,7 +152,13 @@ const FourthMilestone = ({clickedGoal, newMileStone}) => {
 
 					<Calendar
 						// // Initially visible month. Default = Date()
-						current={dayjs().format(commonDateFormat)}
+						// current={dayjs().format(commonDateFormat)}
+						current={
+							clickedDate
+								? dayjs(clickedDate).format(commonDateFormat)
+								: dayjs().format(commonDateFormat)
+						}
+						minDate={dayjs().format(commonDateFormat)}
 						// // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
 						// minDate={"2001-05-10"}
 						// // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
@@ -183,7 +251,8 @@ const FourthMilestone = ({clickedGoal, newMileStone}) => {
 					/>
 					<TouchableOpacity
 						style={CommonStyles.containerMilestone}
-						onPress={() => navigation.navigate("SixthMilestone")}
+						// onPress={() => navigation.navigate("SixthMilestone")}
+						onPress={() => nextScreen()}
 					>
 						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
 					</TouchableOpacity>
@@ -216,6 +285,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		addNewMilestone: (milestone) => dispatch(addNewMilestone(milestone)),
+		setClickedMilestone: (task) => dispatch(setClickedMilestone(task)),
+		setShowLoader: (data) => {
+			dispatch(setShowLoader(data))
+		},
 	}
 }
 

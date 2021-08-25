@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, {useEffect, version, useState} from "react"
 import {
 	StyleSheet,
 	Text,
@@ -19,12 +19,19 @@ import ProgressCircle from "react-native-progress-circle"
 import StatusBarScreen from "../MileStones/StatusBarScreen"
 import Constants from "expo-constants"
 import {LongPressGestureHandler, State} from "react-native-gesture-handler"
-import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/constants"
+import {
+	ColorConstants,
+	commonDateFormat,
+	commonImages,
+	CommonStyles,
+	sizeConstants,
+} from "../../core/constants"
 import {SnoozeIcon} from "../../assets/customIcons"
 import Swipeout from "rc-swipeout"
 import {connect} from "react-redux"
 import {addMilestoneToFirestore} from "../../firebase"
 import {setClickedGoal, setShowLoader, setTodaysAllTasks} from "../../redux/actions"
+import dayjs from "dayjs"
 
 const TodaysTask = ({
 	todayAllTasksArr,
@@ -35,6 +42,7 @@ const TodaysTask = ({
 }) => {
 	const navigation = useNavigation()
 	const backImg = commonImages.thirdImage
+	const [dayAfterTomorrowSnooze, setDayAfterTomorrowSnooze] = useState(false)
 
 	const gotoHome = () => {
 		navigation.navigate("mygoals")
@@ -50,6 +58,7 @@ const TodaysTask = ({
 				text: "Yes",
 				onPress: () => {
 					deleteTask(keyArr[0], keyArr[1], keyArr[2])
+					// snoozeTask(keyArr[0], keyArr[1], keyArr[2])
 				},
 			},
 		])
@@ -59,6 +68,7 @@ const TodaysTask = ({
 			<TouchableOpacity
 				onPress={() => {
 					deleteTaskAlert(key.split("_"))
+					console.log("Testing", key.split("_"))
 				}}
 			>
 				<MaterialCommunityIcons
@@ -98,6 +108,126 @@ const TodaysTask = ({
 		})
 	}
 
+	const snoozeTask = (task, mile, goal) => {
+		// setShowLoader(true)
+		let updatedTasksArr = todayAllTasksArr.filter(
+			(taskObj) => taskObj.key != `${task}_${mile}_${goal}`
+		)
+		console.log("updatedTasksArr", updatedTasksArr)
+		let currentGoalObj = allGoals.find((goalobj) => goalobj.name == goal)
+
+		let newMileArray1 = currentGoalObj.goalMilestone.map((mileItem) => {
+			if (mileItem.milestone == mile) {
+				return {
+					...mileItem,
+					taskData: mileItem.taskData.filter((taskItem) => taskItem.task === task),
+				}
+			}
+			return mileItem
+		})
+		console.log("READY", newMileArray1.taskData)
+		console.log("SNOOZING before modified date", newMileArray1[0].taskData[0].date)
+		let temp = newMileArray1[0].taskData[0].date
+		var myDate = new Date(temp)
+
+		var d = new Date(myDate.setDate(myDate.getDate() + 1))
+		console.log("SNOOZING modified date", d.toISOString().slice(0, 10))
+
+		// getting today's date
+		const today = new Date()
+		// initializing tomorrow with today's date
+		const tomorrow = new Date(today)
+		// increasing a day in tomorrow and setting it to tomorrow
+		tomorrow.setDate(tomorrow.getDate() + 1)
+		const dayAfterTomorrow = new Date(today)
+		dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2)
+
+		if (newMileArray1[0].date === dayAfterTomorrow.toISOString().slice(0, 10)) {
+			setDayAfterTomorrowSnooze(true)
+			console.log("MATCHED")
+			Alert.alert(
+				task,
+				"The Target Date of Milestone for this Task is Day-After-Tomorrow, Are you Sure you want to snooze this task?",
+				[
+					{
+						text: "No",
+						onPress: () => console.log("Cancel Pressed"),
+						style: "cancel",
+					},
+					{
+						text: "Yes",
+						onPress: () => {
+							let currentGoalObj = allGoals.find((goalobj) => goalobj.name == goal)
+							let newMileArray = currentGoalObj.goalMilestone.map((mileItem) => {
+								if (mileItem.milestone == mile) {
+									return {
+										...mileItem,
+										taskData: mileItem.taskData.forEach((taskItem) => {
+											if (taskItem.task == task) {
+												taskItem.date = d.toISOString().slice(0, 10)
+												console.log("new modified data", taskItem)
+											}
+										}),
+									}
+								}
+								return mileItem
+							})
+							let updatedObj = {
+								...currentGoalObj,
+								goalMilestone: newMileArray,
+							}
+
+							addMilestoneToFirestore(currentGoalObj, newMileArray, () => {
+								setClickedGoal(updatedObj)
+								setTodaysAllTasks(updatedTasksArr)
+								setShowLoader(false)
+							})
+						},
+					},
+				]
+			)
+		} else {
+			setDayAfterTomorrowSnooze(true)
+			console.log("MATCHED")
+			Alert.alert(task, "Are you Sure you want to snooze this task?", [
+				{
+					text: "No",
+					onPress: () => console.log("Cancel Pressed"),
+					style: "cancel",
+				},
+				{
+					text: "Yes",
+					onPress: () => {
+						let currentGoalObj = allGoals.find((goalobj) => goalobj.name == goal)
+						let newMileArray = currentGoalObj.goalMilestone.map((mileItem) => {
+							if (mileItem.milestone == mile) {
+								return {
+									...mileItem,
+									taskData: mileItem.taskData.filter((taskItem) => {
+										if (taskItem.task == task) {
+											task.date = d.toISOString().slice(0, 10)
+											console.log("new modified data", task.date)
+										}
+									}),
+								}
+							}
+							return mileItem
+						})
+						let updatedObj = {
+							...currentGoalObj,
+							goalMilestone: newMileArray,
+						}
+
+						addMilestoneToFirestore(currentGoalObj, newMileArray, () => {
+							setClickedGoal(updatedObj)
+							setTodaysAllTasks(updatedTasksArr)
+							// setShowLoader(false)
+						})
+					},
+				},
+			])
+		}
+	}
 	const completeTask = (task, mile, goal) => {
 		setShowLoader(true)
 		let updatedTasksArr = todayAllTasksArr.map((taskObj) => {
@@ -148,6 +278,11 @@ const TodaysTask = ({
 						),
 						onPress: () => {
 							console.log("Snoozing")
+
+							console.log("ITEMS", item.key)
+							let data = item.key.split("_")
+							snoozeTask(data[0], data[1], data[2])
+							// console.log("DAta" + data)
 						},
 						style: {backgroundColor: ColorConstants.snoozeIconBg},
 					},

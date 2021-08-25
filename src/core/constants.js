@@ -188,6 +188,40 @@ export const forGoals = {
 	sixth: "#B8534F",
 }
 
+export const colorsForTimeline = [
+	{
+		goal: ColorConstants.darkFaintBlue,
+		mile: "#7EC8C9",
+		task: "#BFE4E4",
+	},
+	{
+		goal: "#553144",
+		mile: "#553144",
+		task: "#CCC1C7",
+	},
+	{
+		goal: "#6A5593",
+		mile: "#9788B3",
+		task: "#C3BBD4",
+	},
+
+	{
+		goal: ColorConstants.timelineSkinDarker,
+		mile: "#E6AB76",
+		task: "#FFCB9C",
+	},
+	{
+		goal: "#3F6E6A",
+		mile: "#799A97",
+		task: "#B2C5C3",
+	},
+	{
+		goal: "#B8534F",
+		mile: "#799A97",
+		task: "#E3BAB9",
+	},
+]
+
 export const goalsColorArray = [
 	forGoals.first,
 	forGoals.second,
@@ -959,7 +993,7 @@ export const CommonStyles = ScaledSheet.create({
 	detailContainerStyle: {
 		marginVertical: sizeConstants.m,
 		paddingHorizontal: sizeConstants.m,
-		backgroundColor: ColorConstants.darkFaintBlue,
+		// backgroundColor: ColorConstants.darkFaintBlue,
 		borderRadius: 15,
 	},
 

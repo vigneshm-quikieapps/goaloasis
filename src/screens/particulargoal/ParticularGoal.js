@@ -116,202 +116,223 @@ const ParticularGoal = (props) => {
 	// console.log("DATA FROM", DATA)
 	return (
 		<StatusBarScreen style={styles.container}>
-			<View style={CommonStyles.titleContainer}>
-				{/* MODAL CODE START */}
-				<Modal animationType="slide" transparent={true} visible={modalVisible}>
-					<View style={[CommonStyles.mainContainer, styles.blackOp60]}>
-						<View style={styles.modalContainer}>
-							<View style={styles.modalInnerContainer}>
-								<View
-									style={[
-										styles.modalCommonStyle,
-										CommonStyles.ML30,
-										{backgroundColor: page >= 0 ? "white" : "gray"},
-									]}
-								/>
-								<View
-									style={[styles.modalCommonStyle, {backgroundColor: page >= 1 ? "white" : "gray"}]}
-								/>
-								<View
-									style={[styles.modalCommonStyle, {backgroundColor: page >= 2 ? "white" : "gray"}]}
-								/>
-								<TouchableOpacity onPress={() => closeModal()}>
-									<Text style={[styles.skipText, CommonStyles.ML30]}>Skip</Text>
-								</TouchableOpacity>
-							</View>
+			<GestureRecognizer
+				onSwipeUp={() => {
+					navigation.navigate("milestones", {
+						paramsItinerary: true,
+					})
+					console.log("why NOT WORKING")
+				}}
+				style={[CommonStyles.titleContainer]}
 
-							<View style={[styles.modalContentContainer, {marginTop: page === 0 ? 30 : 0}]}>
-								<Text style={styles.dataTextStyle}>{dataText[page]}</Text>
-								{page == 0 ? (
-									<Text style={[styles.contentText, CommonStyles.bold]}>
-										Long press
-										<Text style={CommonStyles.fontW100}> on the milestone when ready to </Text>
-										mark complete
-									</Text>
-								) : null}
-								{page == 1 ? (
-									<Text style={[styles.contentText, CommonStyles.bold]}>
-										Swipe right
-										<Text style={CommonStyles.fontW100}> on the milestone if you want to </Text>
-										add a task
-										<Text style={CommonStyles.fontW100}> within the milestone.</Text>
-									</Text>
-								) : null}
-								{page == 2 ? (
-									<Text style={[{fontSize: sizeConstants.fourteenScale}, CommonStyles.bold]}>
-										Swipe left
-										<Text style={CommonStyles.fontW100}> if you want to </Text>
-										delete or edit the milestone
-									</Text>
-								) : null}
-							</View>
-							<View style={{height: "30%", marginHorizontal: 15}}>
-								<View
-									style={{
-										width: "100%",
-										// position: "absolute",
-										alignItems: "center",
-										// bottom: -50,
-									}}
-								>
+				// style={{backgroundColor: "#ff0000"}}
+			>
+				<View>
+					{/* MODAL CODE START */}
+					<Modal animationType="slide" transparent={true} visible={modalVisible}>
+						<View style={[CommonStyles.mainContainer, styles.blackOp60]}>
+							<View style={styles.modalContainer}>
+								<View style={styles.modalInnerContainer}>
+									<View
+										style={[
+											styles.modalCommonStyle,
+											CommonStyles.ML30,
+											{backgroundColor: page >= 0 ? "white" : "gray"},
+										]}
+									/>
+									<View
+										style={[
+											styles.modalCommonStyle,
+											{backgroundColor: page >= 1 ? "white" : "gray"},
+										]}
+									/>
+									<View
+										style={[
+											styles.modalCommonStyle,
+											{backgroundColor: page >= 2 ? "white" : "gray"},
+										]}
+									/>
+									<TouchableOpacity onPress={() => closeModal()}>
+										<Text style={[styles.skipText, CommonStyles.ML30]}>Skip</Text>
+									</TouchableOpacity>
+								</View>
+
+								<View style={[styles.modalContentContainer, {marginTop: page === 0 ? 30 : 0}]}>
+									<Text style={styles.dataTextStyle}>{dataText[page]}</Text>
 									{page == 0 ? (
-										<LongPressGestureHandler
-											onHandlerStateChange={onLongPress}
-											minDurationMs={800}
-											style={{alignSelf: "center"}}
-										>
-											{/* <AppButton
+										<Text style={[styles.contentText, CommonStyles.bold]}>
+											Long press
+											<Text style={CommonStyles.fontW100}> on the milestone when ready to </Text>
+											mark complete
+										</Text>
+									) : null}
+									{page == 1 ? (
+										<Text style={[styles.contentText, CommonStyles.bold]}>
+											Swipe right
+											<Text style={CommonStyles.fontW100}> on the milestone if you want to </Text>
+											add a task
+											<Text style={CommonStyles.fontW100}> within the milestone.</Text>
+										</Text>
+									) : null}
+									{page == 2 ? (
+										<Text style={[{fontSize: sizeConstants.fourteenScale}, CommonStyles.bold]}>
+											Swipe left
+											<Text style={CommonStyles.fontW100}> if you want to </Text>
+											delete or edit the milestone
+										</Text>
+									) : null}
+								</View>
+								<View style={{height: "30%", marginHorizontal: 15}}>
+									<View
+										style={{
+											width: "100%",
+											// position: "absolute",
+											alignItems: "center",
+											// bottom: -50,
+										}}
+									>
+										{page == 0 ? (
+											<LongPressGestureHandler
+												onHandlerStateChange={onLongPress}
+												minDurationMs={800}
+												style={{alignSelf: "center"}}
+											>
+												{/* <AppButton
 												title={taskCompleted ? "MISSION COMPLETE" : buttonText[page]}
 												style={[
 													styles.appBtn,
 													{width: "80%", justifyContent: "center", borderRadius: 35, padding: 0},
 												]}
 											/> */}
-											<TouchableOpacity style={{alignSelf: "center", width: "100%"}}>
-												<View
-													style={[
-														styles.btnTextContainer,
-														{
-															borderRadius: sizeConstants.xl,
-															marginVertical: sizeConstants.xl,
-															width: "100%",
-															elevation: 7,
-															backgroundColor: taskCompleted ? "white" : ColorConstants.lighterBlue,
-														},
-													]}
-												>
-													<Text
-														style={{
-															fontSize: sizeConstants.fourteenScale,
-															fontWeight: "bold",
-															alignSelf: "center",
-															color: ColorConstants.faintBlack1,
-														}}
+												<TouchableOpacity style={{alignSelf: "center", width: "100%"}}>
+													<View
+														style={[
+															styles.btnTextContainer,
+															{
+																borderRadius: sizeConstants.xl,
+																marginVertical: sizeConstants.xl,
+																width: "100%",
+																elevation: 7,
+																backgroundColor: taskCompleted
+																	? "white"
+																	: ColorConstants.lighterBlue,
+															},
+														]}
 													>
-														{taskCompleted ? "MISSION COMPLETE!" : buttonText[page]}
-													</Text>
+														<Text
+															style={{
+																fontSize: sizeConstants.fourteenScale,
+																fontWeight: "bold",
+																alignSelf: "center",
+																color: ColorConstants.faintBlack1,
+															}}
+														>
+															{taskCompleted ? "MISSION COMPLETE!" : buttonText[page]}
+														</Text>
+													</View>
+												</TouchableOpacity>
+											</LongPressGestureHandler>
+										) : page == 1 ? (
+											<Swipeout
+												left={[
+													{
+														text: "ADD",
+														onPress: () => {},
+														style: CommonStyles.bgWhite,
+													},
+												]}
+												autoClose={true}
+												disabled={false}
+												style={[
+													CommonStyles.borderRadius20,
+													{
+														elevation: 7,
+														marginTop: sizeConstants.xxl,
+														marginBottom: sizeConstants.xxl,
+														width: "100%",
+														backgroundColor: ColorConstants.lighterBlue,
+													},
+												]}
+											>
+												<View style={styles.btnTextContainer}>
+													<Text style={styles.btnText}>{buttonText[page]}</Text>
 												</View>
-											</TouchableOpacity>
-										</LongPressGestureHandler>
-									) : page == 1 ? (
-										<Swipeout
-											left={[
-												{
-													text: "ADD",
-													onPress: () => {},
-													style: CommonStyles.bgWhite,
-												},
-											]}
-											autoClose={true}
-											disabled={false}
-											style={[
-												CommonStyles.borderRadius20,
-												{
-													elevation: 7,
-													marginTop: sizeConstants.xxl,
-													marginBottom: sizeConstants.xxl,
-													width: "100%",
-													backgroundColor: ColorConstants.lighterBlue,
-												},
-											]}
-										>
-											<View style={styles.btnTextContainer}>
-												<Text style={styles.btnText}>{buttonText[page]}</Text>
-											</View>
-										</Swipeout>
-									) : (
-										// <AppButton
-										// 	title={buttonText[page]}
-										// 	style={{
-										// 		backgroundColor: "#7EC8C9",
-										// 		fontSize: 15,
-										// 		paddingTop: 13,
-										// 		paddingBottom: 13,
-										// 		color: "#333333",
-										// 	}}
-										// />
+											</Swipeout>
+										) : (
+											// <AppButton
+											// 	title={buttonText[page]}
+											// 	style={{
+											// 		backgroundColor: "#7EC8C9",
+											// 		fontSize: 15,
+											// 		paddingTop: 13,
+											// 		paddingBottom: 13,
+											// 		color: "#333333",
+											// 	}}
+											// />
 
-										<Swipeout
-											right={[
-												{
-													text: icons(),
-													onPress: () => {},
-													style: CommonStyles.bgWhite,
-												},
-											]}
-											autoClose={true}
-											disabled={false}
-											style={[
-												CommonStyles.borderRadius20,
-												{
-													elevation: 7,
-													marginTop: sizeConstants.xxl,
-													marginBottom: sizeConstants.xxl,
-													width: "100%",
-													backgroundColor: ColorConstants.lighterBlue,
-												},
-											]}
-										>
-											<View style={styles.btnTextContainer}>
-												<Text style={[styles.btnText]}>{buttonText[page]}</Text>
-											</View>
-										</Swipeout>
-									)}
-									<AppButton
-										title="Next"
-										style={{
-											backgroundColor: ColorConstants.faintWhite,
-											color: ColorConstants.faintBlack1,
-											width: "100%",
-											paddingVertical: sizeConstants.s,
-											fontSize: sizeConstants.fourteenScale,
-											elevation: 7,
-											fontWeight: "bold",
-											alignSelf: "center",
-											color: ColorConstants.faintBlack2,
-										}}
-										onPress={() => (page === 2 ? closeModal() : setPageNo(page + 1))}
-									/>
+											<Swipeout
+												right={[
+													{
+														text: icons(),
+														onPress: () => {},
+														style: CommonStyles.bgWhite,
+													},
+												]}
+												autoClose={true}
+												disabled={false}
+												style={[
+													CommonStyles.borderRadius20,
+													{
+														elevation: 7,
+														marginTop: sizeConstants.xxl,
+														marginBottom: sizeConstants.xxl,
+														width: "100%",
+														backgroundColor: ColorConstants.lighterBlue,
+													},
+												]}
+											>
+												<View style={styles.btnTextContainer}>
+													<Text style={[styles.btnText]}>{buttonText[page]}</Text>
+												</View>
+											</Swipeout>
+										)}
+										<AppButton
+											title="Next"
+											style={{
+												backgroundColor: ColorConstants.faintWhite,
+												color: ColorConstants.faintBlack1,
+												width: "100%",
+												paddingVertical: sizeConstants.s,
+												fontSize: sizeConstants.fourteenScale,
+												elevation: 7,
+												fontWeight: "bold",
+												alignSelf: "center",
+												color: ColorConstants.faintBlack2,
+											}}
+											onPress={() => (page === 2 ? closeModal() : setPageNo(page + 1))}
+										/>
+									</View>
 								</View>
 							</View>
 						</View>
-					</View>
-				</Modal>
-				{/* MODAL CODE END */}
-				<RBBottomSheet name={props.clickedGoal.name} />
+					</Modal>
+					{/* MODAL CODE END */}
+					<RBBottomSheet name={props.clickedGoal.name} />
 
-				<ScrollView>
-					<Text style={styles.subTitle}>{props.clickedGoal.description}</Text>
-				</ScrollView>
+					<ScrollView>
+						<Text style={styles.subTitle}>{props.clickedGoal.description}</Text>
+					</ScrollView>
 
-				<GestureRecognizer
-					onSwipeUp={() => {
-						navigation.navigate("milestones", {
-							paramsItinerary: true,
-						})
-					}}
-					// style={{backgroundColor: "#ff0000"}}
-				>
+					{/* <GestureRecognizer
+						onSwipeUp={() => {
+							navigation.navigate("milestones", {
+								paramsItinerary: true,
+							})
+							console.log("why NOT WORKING")
+						}}
+
+						// style={{backgroundColor: "#ff0000"}}
+					> */}
 					<View style={CommonStyles.trackingcont}>
 						<ProgressCircle
 							percent={goalCompletedPercent}
@@ -377,8 +398,10 @@ const ParticularGoal = (props) => {
 							</View>
 						</View>
 					</View>
-				</GestureRecognizer>
-			</View>
+					{/* </GestureRecognizer> */}
+				</View>
+			</GestureRecognizer>
+
 			<View style={styles.goalsContainer}>
 				<GestureRecognizer
 					onSwipeUp={() => {

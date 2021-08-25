@@ -10,6 +10,7 @@ import {
 } from "react-native"
 import {
 	ColorConstants,
+	colorsForTimeline,
 	commonDateFormat,
 	commonImages,
 	CommonStyles,
@@ -40,6 +41,7 @@ import {
 	CustomDayComponentForCalendar,
 } from "../../components/CommonComponents"
 import dayjs from "dayjs"
+import AppButton from "./AppButton"
 
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"
@@ -53,21 +55,21 @@ const FirstMilestone = ({
 	setClickedMilestone,
 	setShowLoader,
 	loading,
-
 	allGoals,
 }) => {
 	const [milestone, setMilestone] = useState("")
 	const [clickedDate, setDate] = useState(dayjs().format(commonDateFormat))
 	const navigation = useNavigation()
 
+	const FourthMileStone = () => {
+		navigation.navigate("FourthMilestone", {
+			currentMilestoneData: {milestoneDate: clickedDate, milestoneName: milestone},
+		})
+	}
+	const [toggleCalandar, setToggleCalandar] = useState(false)
+
 	const nextScreen = () => {
-		let index = 0
-		for (let i = 0; i < allGoals.length; i++) {
-			if (allGoals[i].color === clickedGoal.color) {
-				index = i
-				break
-			}
-		}
+		let color = colorsForTimeline.find((itemColor) => itemColor.goal === clickedGoal.color)
 
 		let milestoneArr = [
 			...clickedGoal.goalMilestone,
@@ -76,10 +78,10 @@ const FirstMilestone = ({
 				date: clickedDate,
 				taskData: [],
 				isCompleted: false,
-				color: milestoneColorArray[index],
+				color: color.mile,
 			},
 		]
-
+		console.log("MILESTONE ARRAY", milestoneArr)
 		let updatedObj = {
 			...clickedGoal,
 			goalMilestone: milestoneArr,
@@ -121,7 +123,16 @@ const FirstMilestone = ({
 									color={ColorConstants.faintWhite}
 									size={38}
 									style={CommonStyles.cross}
-									onPress={() => navigation.navigate("DParticularGoal")}
+									onPress={() => {
+										if (
+											clickedGoal.goalMilestone === null ||
+											clickedGoal.goalMilestone.length === 0
+										) {
+											navigation.navigate("DParticularGoal")
+										} else {
+											navigation.navigate("particulargoal")
+										}
+									}}
 								/>
 							</View>
 
@@ -137,67 +148,98 @@ const FirstMilestone = ({
 							<Text style={styles.subTitle}>
 								{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
 							</Text>
-							<Text style={styles.bigTitle}>Edit target date</Text>
+							{milestone === "" || toggleCalandar === true ? (
+								<View>
+									<Text style={styles.bigTitle}>Edit target date</Text>
 
-							<Calendar
-								current={dayjs().format(commonDateFormat)}
-								minDate={dayjs().format(commonDateFormat)}
-								// maxDate={"2050-05-30"}
-								// onDayPress={(day) => {
-								// 	setDate(day.dateString)
-								// }}
-								hideArrows={false}
-								hideExtraDays={true}
-								disableMonthChange={false}
-								hideDayNames={false}
-								showWeekNumbers={false}
-								onPressArrowLeft={(subtractMonth) => subtractMonth()}
-								onPressArrowRight={(addMonth) => addMonth()}
-								disableArrowLeft={false}
-								enableSwipeMonths={true}
-								selectedDayBackgroundColor={ColorConstants.white}
-								theme={{
-									backgroundColor: ColorConstants.transparent,
-									calendarBackground: ColorConstants.transparent,
-									textSectionTitleColor: ColorConstants.whitishBlue,
-									textSectionTitleDisabledColor: ColorConstants.whitishBlue,
-									// selectedDayBackgroundColor: ColorConstants.whitishBlue,
-									selectedDayBackgroundColor: "pink",
-									selectedDayTextColor: ColorConstants.black,
-									todayTextColor: "#00adf5",
-									dayTextColor: ColorConstants.whitishBlue,
-									textDisabledColor: ColorConstants.whitishBlue,
-									dotColor: ColorConstants.whitishBlue,
-									selectedDotColor: ColorConstants.whitishBlue,
-									arrowColor: ColorConstants.whitishBlue,
-									disabledArrowColor: ColorConstants.whitishBlue,
-									monthTextColor: ColorConstants.whitishBlue,
-									indicatorColor: "blue",
-									textDayFontFamily: "monospace",
-									textMonthFontFamily: "monospace",
-									textDayHeaderFontFamily: "monospace",
-									textDayFontWeight: "300",
-									textMonthFontWeight: "bold",
-									textDayHeaderFontWeight: "300",
-								}}
-								style={{
-									backgroundColor: ColorConstants.transparent,
-									// height: sizeConstants.twoSeventyMX,
-								}}
-								dayComponent={({date, state}) => {
-									return (
-										<CustomDayComponentForCalendar
-											date={date}
-											state={state}
-											clickedDate={clickedDate}
-											dayClick={setDate}
+									<Calendar
+										current={dayjs().format(commonDateFormat)}
+										minDate={dayjs().format(commonDateFormat)}
+										// maxDate={"2050-05-30"}
+										// onDayPress={(day) => {
+										// 	setDate(day.dateString)
+										// }}
+										hideArrows={milestone === "" ? true : false}
+										hideExtraDays={true}
+										disableMonthChange={milestone === "" ? true : false}
+										hideDayNames={false}
+										showWeekNumbers={false}
+										onPressArrowLeft={(subtractMonth) => subtractMonth()}
+										onPressArrowRight={(addMonth) => addMonth()}
+										disableArrowLeft={false}
+										enableSwipeMonths={milestone === "" ? false : true}
+										selectedDayBackgroundColor={ColorConstants.white}
+										theme={{
+											backgroundColor: ColorConstants.transparent,
+											calendarBackground: ColorConstants.transparent,
+											textSectionTitleColor: ColorConstants.whitishBlue,
+											textSectionTitleDisabledColor: ColorConstants.whitishBlue,
+											// selectedDayBackgroundColor: ColorConstants.whitishBlue,
+											selectedDayBackgroundColor: "pink",
+											selectedDayTextColor: ColorConstants.black,
+											todayTextColor: "#00adf5",
+											dayTextColor: ColorConstants.whitishBlue,
+											textDisabledColor: ColorConstants.whitishBlue,
+											dotColor: ColorConstants.whitishBlue,
+											selectedDotColor: ColorConstants.whitishBlue,
+											arrowColor: ColorConstants.whitishBlue,
+											disabledArrowColor: ColorConstants.whitishBlue,
+											monthTextColor: ColorConstants.whitishBlue,
+											indicatorColor: "blue",
+											textDayFontFamily: "monospace",
+											textMonthFontFamily: "monospace",
+											textDayHeaderFontFamily: "monospace",
+											textDayFontWeight: "300",
+											textMonthFontWeight: "bold",
+											textDayHeaderFontWeight: "300",
+										}}
+										style={{
+											backgroundColor: ColorConstants.transparent,
+											// height: sizeConstants.twoSeventyMX,
+										}}
+										dayComponent={({date, state}) => {
+											return (
+												<CustomDayComponentForCalendar
+													date={date}
+													state={state}
+													// clickedDate={clickedDate}
+													clickedDate={
+														toggleCalandar === true && milestone !== "" ? clickedDate : null
+													}
+													dayClick={setDate}
+												/>
+											)
+										}}
+									/>
+								</View>
+							) : (
+								<View>
+									<View style={[CommonStyles.mt20, CommonStyles.alignItemsCenter]}>
+										<AppButton
+											title="Edit Date"
+											onPress={FourthMileStone}
+											style={styles.editButton}
 										/>
-									)
-								}}
-							/>
+									</View>
+									<Text style={styles.subTitle}>
+										{tip()} adding a target date will help you stay on track. Dont't worry! You can
+										always change it.
+									</Text>
+								</View>
+							)}
 						</StatusBarScreen>
 					</ScrollView>
 				</View>
+				{/* {milestone === "" ? (
+					<CommonPrevNextButton
+						right={true}
+						style={{backgroundColor: ColorConstants.whiteOp50}}
+						size={50}
+						bottom={100}
+					/>
+				) : (
+					<CommonPrevNextButton right={true} nextClick={nextScreen} size={50} bottom={0} />
+				)} */}
 				{milestone === "" ? (
 					<CommonPrevNextButton
 						right={true}
@@ -206,7 +248,22 @@ const FirstMilestone = ({
 						bottom={0}
 					/>
 				) : (
-					<CommonPrevNextButton right={true} nextClick={nextScreen} size={50} bottom={0} />
+					// <CommonPrevNextButton right={true} nextClick={nextScreen} size={50} bottom={0} />
+					<View style={styles.nextBtnContainer}>
+						<View style={styles.nextBtnInner}>
+							<View></View>
+						</View>
+
+						<CommonPrevNextButton
+							right={true}
+							style={milestone === "" ? {backgroundColor: ColorConstants.whiteOp50} : {}}
+							nextClick={() => {
+								milestone === "" ? null : FourthMileStone()
+							}}
+							size={50}
+							bottom={100}
+						/>
+					</View>
 				)}
 
 				<CommonHomeButton
@@ -328,4 +385,17 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		marginTop: sizeConstants.fourteenMX,
 	},
+	nextBtnContainer: {
+		position: "absolute",
+		bottom: sizeConstants.mThirty,
+		width: "100%",
+		justifyContent: "center",
+	},
+
+	nextBtnInner: {
+		flexDirection: "row",
+		justifyContent: "space-around",
+		marginBottom: sizeConstants.thirtySix,
+	},
+	editButton: {color: ColorConstants.gray, backgroundColor: ColorConstants.faintWhite},
 })

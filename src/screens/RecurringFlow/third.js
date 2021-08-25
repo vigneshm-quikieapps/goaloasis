@@ -12,11 +12,12 @@ import {
 	CustomDayComponentForCalendar,
 } from "../../components/CommonComponents"
 import dayjs from "dayjs"
+import {connect} from "react-redux"
 
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"
 
-const Third = () => {
+const Third = ({clickedGoal}) => {
 	const navigation = useNavigation()
 
 	// const gotoHome = () => {
@@ -34,7 +35,19 @@ const Third = () => {
 				<View style={{flex: 1}}>
 					<View style={{flexDirection: "row"}}>
 						<Text style={CommonStyles.mainTitle}>Read 1 books</Text>
-						<Entypo name="cross" color="#FDF9F2" size={38} style={CommonStyles.cross} />
+						<Entypo
+							name="cross"
+							color="#FDF9F2"
+							size={38}
+							style={CommonStyles.cross}
+							onPress={() => {
+								if (clickedGoal.goalMilestone === null || clickedGoal.goalMilestone.length === 0) {
+									navigation.navigate("DParticularGoal")
+								} else {
+									navigation.navigate("particulargoal")
+								}
+							}}
+						/>
 					</View>
 					<Text style={CommonStyles.enterTask}>Enter Task</Text>
 					<TouchableOpacity style={CommonStyles.container2}>
@@ -164,5 +177,10 @@ const Third = () => {
 		</StatusBarScreen>
 	)
 }
+const mapStateToProps = (state) => {
+	return {
+		clickedGoal: state.milestone.clickedGoal,
+	}
+}
 
-export default Third
+export default connect(mapStateToProps)(Third)

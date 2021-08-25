@@ -63,6 +63,13 @@ const AllMilestonesScreen = (props) => {
 
 	return (
 		<StatusBarScreen style={styles.container}>
+			{/* <GestureRecognizer
+				onSwipeDown={() => {
+					navigation.navigate("particulargoal", {
+						paramsItinerary: true,
+					})
+				}}
+			> */}
 			<TouchableOpacity
 				onPress={() => refRBSheet.current.open()}
 				style={[styles.threeDots, {marginTop: verticalScale(35)}]}
@@ -71,8 +78,8 @@ const AllMilestonesScreen = (props) => {
 				<View style={CommonStyles.dots} />
 				<View style={CommonStyles.dots} />
 			</TouchableOpacity>
-
 			<View style={styles.titleContainer}></View>
+			{/* </GestureRecognizer> */}
 
 			<View style={styles.goalsContainer}>
 				<GestureRecognizer
@@ -81,9 +88,8 @@ const AllMilestonesScreen = (props) => {
 							paramsItinerary: true,
 						})
 					}}
-					// style={{backgroundColor: "#ff0000"}}
 				>
-					<View style={{marginTop: sizeConstants.xxl, flexDirection: "row"}}>
+					<View style={{marginTop: sizeConstants.xxl, flexDirection: "row", paddingBottom: 10}}>
 						<View>
 							<Text style={styles.myGoalsText}>My milestones</Text>
 						</View>

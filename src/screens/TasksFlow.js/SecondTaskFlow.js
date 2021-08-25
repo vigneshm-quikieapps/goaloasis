@@ -6,6 +6,7 @@ import {Entypo} from "@expo/vector-icons"
 import Constants from "expo-constants"
 import {
 	ColorConstants,
+	colorsForTimeline,
 	commonImages,
 	CommonStyles,
 	sizeConstants,
@@ -38,6 +39,8 @@ const SecondTaskFlow = ({
 	useEffect(() => {}, [clickedGoal])
 
 	const [taskName, setTaskName] = useState(currentTaskData.task)
+	// const [taskName, setTaskName] = useState("")
+
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 
 	const navigationCallback = () => {
@@ -48,13 +51,8 @@ const SecondTaskFlow = ({
 		let newMilestoneItemWithTask = clickedGoal.goalMilestone.map((item) => {
 			if (item.milestone == clickedMilestone) {
 				let filteredTasks = item.taskData.filter((tsk) => tsk.task != taskName)
-				let index = 0
-				for (let i = 0; i < allGoals.length; i++) {
-					if (allGoals[i].color === clickedGoal.color) {
-						index = i
-						break
-					}
-				}
+				let color = colorsForTimeline.find((itemColor) => itemColor.goal === clickedGoal.color)
+
 				return {
 					...item,
 					taskData: [
@@ -63,7 +61,7 @@ const SecondTaskFlow = ({
 							isCompleted: false,
 							task: taskName,
 							date: currentTaskData.date,
-							color: TaskColorArray[index],
+							color: color[task],
 							reoccuring: {
 								startDate: null,
 								reoccuringType: "none",
@@ -108,7 +106,13 @@ const SecondTaskFlow = ({
 						top: sizeConstants.s,
 						right: sizeConstants.m,
 					}}
-					onPress={() => navigation.navigate("DParticularGoal")}
+					onPress={() => {
+						if (clickedGoal.goalMilestone === null || clickedGoal.goalMilestone.length === 0) {
+							navigation.navigate("DParticularGoal")
+						} else {
+							navigation.navigate("particulargoal")
+						}
+					}}
 				/>
 			</View>
 
@@ -241,11 +245,7 @@ const styles = StyleSheet.create({
 		height: sizeConstants.seventyFive,
 		borderRadius: sizeConstants.seventyFive,
 	},
-	nextBtn: {
-		width: sizeConstants.fiftyX,
-		height: sizeConstants.fiftyX,
-		borderRadius: sizeConstants.xxl,
-	},
+
 	textInput: {
 		width: sizeConstants.threeFourTeen,
 		height: sizeConstants.fifty,
@@ -278,6 +278,11 @@ const styles = StyleSheet.create({
 		bottom: sizeConstants.mThirty,
 		width: "100%",
 		justifyContent: "center",
+	},
+	nextBtn: {
+		width: sizeConstants.fiftyX,
+		height: sizeConstants.fiftyX,
+		borderRadius: sizeConstants.xxl,
 	},
 	nextBtnInner: {
 		flexDirection: "row",
