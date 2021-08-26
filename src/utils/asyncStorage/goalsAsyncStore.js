@@ -1,6 +1,4 @@
 import AsyncStorage from "@react-native-community/async-storage"
-import {useDispatch} from "react-redux"
-import {setClickedGoal} from "../redux/actions"
 
 export const setFirstTimeUser = async () => {
 	try {

@@ -9,7 +9,7 @@ import {ColorConstants, sizeConstants} from "../../core/constants"
 // import {setFirstTime} from "../../redux/actions"
 import {connect} from "react-redux"
 import AsyncStorage from "@react-native-community/async-storage"
-import {setisFirstTimeIndividual} from "../../utils/asyncStorage"
+import {setisFirstTimeIndividual} from "../../utils/asyncStorage/goalsAsyncStore"
 import {setFirstTimeForIndividualGoal} from "../../redux/actions"
 
 const Helpmenu = ({setFirstTime, setFirstTimeForIndividualGoal, clickedGoal}) => {

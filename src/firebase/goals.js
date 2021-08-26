@@ -1,4 +1,7 @@
-import {addGoalDataToAsyncStorage, deleteGoalDataFromAsyncStorage} from "../utils/asyncStorage"
+import {
+	addGoalDataToAsyncStorage,
+	deleteGoalDataFromAsyncStorage,
+} from "../utils/asyncStorage/goalsAsyncStore"
 import firestore from "@react-native-firebase/firestore"
 import {firebaseConstants} from "../core/constants"
 

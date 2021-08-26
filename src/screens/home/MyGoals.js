@@ -37,7 +37,7 @@ import {
 	getClickedGoalFromAsyncStorage,
 	getFirstTimeTaskTutorial,
 	getFirstTimeTimelineFlow,
-} from "./../../utils/asyncStorage"
+} from "../../utils/asyncStorage/goalsAsyncStore"
 import {
 	ColorConstants,
 	commonDateFormat,

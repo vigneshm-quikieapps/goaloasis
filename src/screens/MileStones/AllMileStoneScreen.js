@@ -10,7 +10,7 @@ import {
 	getClickedGoalFromAsyncStorage,
 	getFirstTimeIndividual,
 	setisFirstTimeIndividual,
-} from "./../../utils/asyncStorage"
+} from "../../utils/asyncStorage/goalsAsyncStore"
 import {StatusBar} from "expo-status-bar"
 import {ColorConstants, CommonStyles, sizeConstants} from "../../core/constants"
 import AppButton from "./AppButton"

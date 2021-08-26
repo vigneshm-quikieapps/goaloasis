@@ -1,5 +1,6 @@
 import firestore from "@react-native-firebase/firestore"
 import {firebaseConstants} from "../core/constants"
+import {addCurrentUserToAsyncStorage} from "../utils/asyncStorage/usersAsyncStore"
 
 const {USERS_COLLECTION} = firebaseConstants
 
@@ -9,7 +10,7 @@ export const createNewUser = (data, callback) => {
 			.collection(USERS_COLLECTION)
 			.add(data)
 			.then((user) => {
-				resolve(user)
+				resolve(data)
 			})
 			.catch((err) => {
 				reject(err)
@@ -19,6 +20,8 @@ export const createNewUser = (data, callback) => {
 	createUser
 		.then((user) => {
 			callback ? callback(user) : null
+			console.log("checking user: ", user)
+			addCurrentUserToAsyncStorage(user)
 			console.log("User added!")
 		})
 		.catch((err) => {
@@ -29,20 +32,19 @@ export const createNewUser = (data, callback) => {
 export const getUserById = async (uid, callback) => {
 	let getUser = new Promise(async (resolve, reject) => {
 		console.log("uid", uid)
-		firestore()
-			.collection(USERS_COLLECTION)
-			.where("uid", "==", uid)
-			.get()
-			.then((userObj) => {
-				resolve(userObj)
+		try {
+			let snapshot = await firestore().collection(USERS_COLLECTION).where("uid", "==", uid).get()
+			let allUsers = []
+			snapshot.forEach((user) => {
+				allUsers.push(user.data())
 			})
-			.catch((err) => {
-				reject(err)
-			})
+			resolve(allUsers)
+		} catch (err) {
+			reject(err)
+		}
 	})
 	getUser
 		.then((userData) => {
-			console.log("userData", userData)
 			callback(userData)
 		})
 		.catch((err) => {

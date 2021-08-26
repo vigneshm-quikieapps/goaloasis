@@ -4,7 +4,7 @@ import {Feather} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
 import MilestoneCards from "./MilestoneCards"
 import {connect} from "react-redux"
-import {getClickedGoalFromAsyncStorage} from "../utils/asyncStorage"
+import {getClickedGoalFromAsyncStorage} from "../utils/asyncStorage/goalsAsyncStore"
 import {sizeConstants, ColorConstants} from "../core/constants"
 
 const AllMilestones = ({data, boolean}) => {

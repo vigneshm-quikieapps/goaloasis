@@ -260,13 +260,15 @@ const Login = (props) => {
 				setShowLoader(false)
 			})
 	}
-
 	useEffect(() => {
-		return () => {}
-	}, [user])
-	if (user) {
-		navigation.navigate("mygoals")
-	}
+		console.log("cur usr------------------------------->", user)
+		if (user) {
+			console.log("cur usr inner------------------------------->", user)
+			navigation.navigate("mygoals")
+		}
+	})
+	useEffect(() => {}, [user])
+
 	return (
 		<ScrollView>
 			<View style={styles.loginContainer}>
