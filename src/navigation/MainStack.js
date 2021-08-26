@@ -42,6 +42,7 @@ import ThirdTaskFlow from "./../screens/TasksFlow.js/ThirdTaskFlow"
 import EditMilestone from "../screens/MileStones/EditMilestone"
 import DailyTimeline from "./../screens/Helpmenu/DailyTimeline"
 import Login from "../screens/auth/Login"
+import ForgotPassword from "../screens/auth/ForgotPassword"
 
 export const verticalAnimation = {
 	gestureDirection: "vertical",
@@ -73,10 +74,11 @@ const IntroStack = () => {
 				headerShown: false,
 			}}
 		>
+			<Stack.Screen name="Login" component={Login} />
 			<Stack.Screen name="mygoals" component={MyGoals} options={options} />
 			<Stack.Screen name="taskTutorialSlide1" component={TaskTutorialSlide1} />
 			<Stack.Screen name="EditMilestone" component={EditMilestone} />
-			<Stack.Screen name="Login" component={Login} />
+			<Stack.Screen name="ForgotPassword" component={ForgotPassword} />
 			<Stack.Screen name="DailyTimeline" component={DailyTimeline} />
 			<Stack.Screen name="todaysTask" component={TodaysTask} />
 			<Stack.Screen name="taskTutorialSlide2" component={TaskTutorialSlide2} />

@@ -31,7 +31,7 @@ import {
 	setClickedMilestone,
 	setShowLoader,
 } from "./../../redux/actions"
-import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase"
+import {addMilestoneToFirestore, getAllGoalsFromFirestore} from "./../../firebase/goals"
 import Constants from "expo-constants"
 import {
 	calendarLocale,

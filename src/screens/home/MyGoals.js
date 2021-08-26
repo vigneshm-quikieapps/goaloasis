@@ -21,7 +21,7 @@ import StatusBarScreen from "../MileStones/StatusBarScreen"
 import Constants from "expo-constants"
 import {connect} from "react-redux"
 import AsyncStorage from "@react-native-community/async-storage"
-import {getAllGoalsFromFirestore} from "./../../firebase/index"
+import {getAllGoalsFromFirestore} from "../../firebase/goals"
 
 import {
 	setTestData,
@@ -50,24 +50,28 @@ import {CommonHomeButton} from "../../components/CommonComponents"
 import dayjs from "dayjs"
 const Height = Dimensions.get("window").height
 import PushNotification, {Importance} from "react-native-push-notification"
+import {GoogleSignin} from "@react-native-google-signin/google-signin"
+import auth from "@react-native-firebase/auth"
 
-const MyGoals = ({
-	testData,
-	setTestData,
-	firstTime,
-	setFirstTime,
-	firstTimeTimelineFlow,
-	setClickedGoal,
-	setAllGoals,
-	allGoals,
-	currentGoal,
-	booleanFlag,
-	clickedGoal,
-	newMileStone,
-	setShowLoader,
-	loading,
-	setTodaysAllTasks,
-}) => {
+const MyGoals = (props) => {
+	const {
+		testData,
+		setTestData,
+		firstTime,
+		setFirstTime,
+		firstTimeTimelineFlow,
+		setClickedGoal,
+		setAllGoals,
+		allGoals,
+		currentGoal,
+		booleanFlag,
+		clickedGoal,
+		newMileStone,
+		setShowLoader,
+		loading,
+		setTodaysAllTasks,
+		user,
+	} = props
 	const [taskCounter, setTaskCounter] = useState(0)
 
 	useEffect(() => {
@@ -398,29 +402,48 @@ const MyGoals = ({
 			repeatTime: 3, // (optional) Increment of configured repeateType. Check 'Repeating Notifications' section for more info.
 		})
 	}
+
+	const handleLogout = () => {
+		setShowLoader(true)
+		auth()
+			.signOut()
+			.then(async () => {
+				console.log("User signed out!")
+				await GoogleSignin.signOut()
+				setShowLoader(false)
+				navigation.navigate("Login")
+			})
+	}
+
 	return (
 		<StatusBarScreen style={styles.container}>
-			<TouchableOpacity
-				style={CommonStyles.titleContainer1}
-				onPress={!firstTime ? gotoTaskTutorial : gotoTodaysTask}
-			>
-				<View style={{flexDirection: "row"}}>
-					<Text style={[CommonStyles.mainTitle, {marginBottom: sizeConstants.twelve}]}>
-						Today’s tasks
-					</Text>
-					<View
-						style={{
-							width: sizeConstants.twentyFour,
-							height: sizeConstants.twentyFour,
-							backgroundColor: "red",
-							borderRadius: sizeConstants.twentyFour,
-							justifyContent: "center",
-						}}
+			<View style={CommonStyles.titleContainer1}>
+				<View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+					<TouchableOpacity
+						style={{flexDirection: "row"}}
+						onPress={!firstTime ? gotoTaskTutorial : gotoTodaysTask}
 					>
-						<Text style={{color: "#FFFFFF", alignSelf: "center"}}>{taskCounter}</Text>
-					</View>
+						<Text style={[CommonStyles.mainTitle, {marginBottom: sizeConstants.twelve}]}>
+							Today’s tasks
+						</Text>
+						<View
+							style={{
+								width: sizeConstants.twentyFour,
+								height: sizeConstants.twentyFour,
+								backgroundColor: "red",
+								borderRadius: sizeConstants.twentyFour,
+								justifyContent: "center",
+							}}
+						>
+							<Text style={{color: "#FFFFFF", alignSelf: "center"}}>{taskCounter}</Text>
+						</View>
+					</TouchableOpacity>
+
+					<TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
+						<AntDesign name="logout" size={24} color={ColorConstants.faintWhite} />
+					</TouchableOpacity>
 				</View>
-			</TouchableOpacity>
+			</View>
 
 			{/* <View style={CommonStyles.goalsContainer}>
 				<View style={{justifyContent: "center", alignItems: "center"}}>
@@ -548,6 +571,7 @@ const mapStateToProps = (state) => {
 		booleanFlag: state.milestone.booleanFlag,
 		newMileStone: state.milestone.newMileStone,
 		loading: state.milestone.loading,
+		user: state.milestone.user,
 	}
 }
 
@@ -585,5 +609,9 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: "#588C8D",
+	},
+	logoutBtn: {
+		marginRight: sizeConstants.l,
+		alignSelf: "flex-start",
 	},
 })

@@ -1,6 +1,23 @@
 import React, {useEffect, useState} from "react"
-import {Button, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native"
-import {ColorConstants, forGoals, height, sizeConstants, width} from "../../core/constants"
+import {
+	Button,
+	Image,
+	NativeModules,
+	ScrollView,
+	StyleSheet,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	View,
+} from "react-native"
+import {
+	ColorConstants,
+	commonImages,
+	forGoals,
+	height,
+	sizeConstants,
+	width,
+} from "../../core/constants"
 import {
 	GoogleSignin,
 	GoogleSigninButton,
@@ -11,15 +28,18 @@ import {connect} from "react-redux"
 import {setShowLoader, setUserInfo} from "../../redux/actions"
 import PropTypes from "prop-types"
 import {LoginManager, AccessToken} from "react-native-fbsdk-next"
-import {FontAwesome} from "@expo/vector-icons"
+import {FontAwesome, AntDesign} from "@expo/vector-icons"
+import {useNavigation} from "@react-navigation/native"
+
+const {RNTwitterSignIn} = NativeModules
 
 const Login = (props) => {
 	const {user, setShowLoader} = props
-	const [isLoggedIn, setIsLoggedIn] = useState(false)
 	const [email, setEmail] = useState("")
 	const [pass, setPass] = useState("")
 	const [errMsg, setErrMsg] = useState("")
 	const [signInMode, setSignInMode] = useState(true)
+	const navigation = useNavigation()
 
 	// sign in with email and password starts
 
@@ -125,8 +145,8 @@ const Login = (props) => {
 
 	const GoogleSignIn = () => {
 		return (
-			<GoogleSigninButton
-				title="Google Sign-In"
+			<TouchableOpacity
+				style={[styles.FBSignInBtn, {backgroundColor: ColorConstants.white}]}
 				onPress={() => {
 					setShowLoader(true)
 					onGoogleButtonPress().then(() => {
@@ -134,7 +154,14 @@ const Login = (props) => {
 						setShowLoader(false)
 					})
 				}}
-			/>
+			>
+				<View>
+					<Image source={commonImages.googleIcon} style={{width: 24, height: 24}} />
+				</View>
+				<View style={styles.FBBtnTxtContainer}>
+					<Text style={styles.GoogleSignInBtnTxt}>Sign In</Text>
+				</View>
+			</TouchableOpacity>
 		)
 	}
 	// google sign in  ends
@@ -180,6 +207,36 @@ const Login = (props) => {
 
 	// facebook sign in ends
 
+	// twitter sign in starts
+
+	const TwitterSignIn = () => {
+		return (
+			<TouchableOpacity
+				style={[styles.FBSignInBtn, {backgroundColor: ColorConstants.twitterBlue}]}
+				onPress={() => onTwitterButtonPress().then(() => console.log("Signed in with Twitter!"))}
+			>
+				<View style={styles.FBIconContainer}>
+					<AntDesign name="twitter" size={24} style={styles.FBIcon} />
+				</View>
+				<View style={styles.FBBtnTxtContainer}>
+					<Text style={styles.FBSignInBtnTxt}>Sign In</Text>
+				</View>
+			</TouchableOpacity>
+		)
+	}
+
+	const onTwitterButtonPress = async () => {
+		// Perform the login request
+		const {authToken, authTokenSecret} = await RNTwitterSignIn.logIn()
+		console.log("authToken", authToken)
+		// Create a Twitter credential with the tokens
+		const twitterCredential = auth.TwitterAuthProvider.credential(authToken, authTokenSecret)
+
+		// Sign-in the user with the credential
+		return auth().signInWithCredential(twitterCredential)
+	}
+	// twitter sign in ends
+
 	const LogoutButton = () => {
 		return (
 			<TouchableOpacity onPress={handleLogout}>
@@ -205,104 +262,84 @@ const Login = (props) => {
 	}
 
 	useEffect(() => {
-		setIsLoggedIn(user ? true : false)
-
-		return () => {
-			setIsLoggedIn(false)
-		}
+		return () => {}
 	}, [user])
+	if (user) {
+		navigation.navigate("mygoals")
+	}
 	return (
-		<View style={styles.loginContainer}>
-			{!isLoggedIn ? (
-				<>
-					<View style={{alignSelf: "flex-start"}}>
-						<Text>{signInMode ? "Sign In" : "Sign Up"}</Text>
+		<ScrollView>
+			<View style={styles.loginContainer}>
+				<View style={{alignSelf: "flex-start"}}>
+					<Text>{signInMode ? "Sign In" : "Sign Up"}</Text>
+				</View>
+				<View style={styles.inputContainer}>
+					<View style={styles.inputView}>
+						{errMsg.length ? <Text style={styles.errMsg}>{errMsg}</Text> : null}
+						<TextInput
+							placeholder="Email"
+							style={styles.input}
+							onChangeText={setEmail}
+							value={email}
+							keyboardType={"email-address"}
+						/>
 					</View>
-					<View style={styles.inputContainer}>
-						<View style={styles.inputView}>
-							{errMsg.length ? <Text style={styles.errMsg}>{errMsg}</Text> : null}
-							<TextInput
-								placeholder="Email"
-								style={styles.input}
-								onChangeText={setEmail}
-								value={email}
-								keyboardType={"email-address"}
-							/>
-						</View>
-						<View style={styles.inputView}>
-							<TextInput
-								style={styles.input}
-								onChangeText={setPass}
-								value={pass}
-								placeholder="Password"
-								secureTextEntry={true}
-							/>
-						</View>
+					<View style={styles.inputView}>
+						<TextInput
+							style={styles.input}
+							onChangeText={setPass}
+							value={pass}
+							placeholder="Password"
+							secureTextEntry={true}
+						/>
+					</View>
 
-						<TouchableOpacity onPress={signInMode ? handleEmailPassSignIn : handleEmailPassSignUp}>
-							<View>
-								<Text style={styles.signInBtn}>{signInMode ? "Sign In" : "Sign Up"}</Text>
-							</View>
+					<TouchableOpacity onPress={signInMode ? handleEmailPassSignIn : handleEmailPassSignUp}>
+						<View>
+							<Text style={styles.signInBtn}>{signInMode ? "Sign In" : "Sign Up"}</Text>
+						</View>
+					</TouchableOpacity>
+					<View style={styles.bottomContainer}>
+						<Text>{signInMode ? "Already registered? " : "Not registered? "}</Text>
+						<TouchableOpacity
+							onPress={() => {
+								setErrMsg("")
+								setEmail("")
+								setPass("")
+								setSignInMode(!signInMode)
+							}}
+						>
+							<Text style={styles.signUp}>{!signInMode ? "Sign In" : "Sign Up"}</Text>
 						</TouchableOpacity>
+					</View>
+					{signInMode ? (
 						<View style={styles.bottomContainer}>
-							<Text>{signInMode ? "Already registered? " : "Not registered? "}</Text>
+							<Text>Forgot Password? </Text>
 							<TouchableOpacity
 								onPress={() => {
-									setErrMsg("")
-									setEmail("")
-									setPass("")
-									setSignInMode(!signInMode)
+									// auth().sendPasswordResetEmail(email).then()
+									// setErrMsg("")
+									// setPass("")
+									navigation.navigate("ForgotPassword")
 								}}
 							>
-								<Text style={styles.signUp}>{!signInMode ? "Sign In" : "Sign Up"}</Text>
+								<Text style={styles.signUp}>Reset</Text>
 							</TouchableOpacity>
 						</View>
-						{/* {signInMode ? (
-							<View style={styles.bottomContainer}>
-								<Text>Forgot Password? </Text>
-								<TouchableOpacity
-									onPress={() => {
-										auth().sendPasswordResetEmail(email).then()
-										setErrMsg("")
-									
-										setPass("")
-									
-									}}
-								>
-									<Text style={styles.signUp}>Send reset mail</Text>
-								</TouchableOpacity>
-							</View>
-						) : null} */}
-					</View>
-					<View>
-						<Text style={styles.OrTxt}>Or</Text>
-					</View>
+					) : null}
+				</View>
+				<View>
+					<Text style={styles.OrTxt}>Or</Text>
+				</View>
 
-					<View>
-						<GoogleSignIn />
-						<FacebookSignIn />
-					</View>
-				</>
-			) : (
-				<LogoutButton />
-			)}
-		</View>
+				<View>
+					<GoogleSignIn />
+					<FacebookSignIn />
+					<TwitterSignIn />
+				</View>
+			</View>
+		</ScrollView>
 	)
-}
-
-const mapStateToProps = (state) => {
-	return {
-		user: state.milestone.user,
-	}
-}
-
-const mapDispatchToProps = (dispatch) => {
-	return {
-		setUserInfo: (data) => dispatch(setUserInfo(data)),
-		setShowLoader: (data) => {
-			dispatch(setShowLoader(data))
-		},
-	}
 }
 
 const styles = StyleSheet.create({
@@ -341,12 +378,12 @@ const styles = StyleSheet.create({
 		backgroundColor: ColorConstants.fbBlue,
 		paddingHorizontal: sizeConstants.m,
 		paddingVertical: sizeConstants.s,
-		marginVertical: sizeConstants.m,
+		marginVertical: sizeConstants.s,
 		elevation: 2,
-		marginHorizontal: sizeConstants.s,
+		marginHorizontal: sizeConstants.eight,
 		borderRadius: 3,
 	},
-	FBIconContainer: {width: "10%"},
+	// FBIconContainer: {width: "10%"},
 	FBIcon: {
 		color: ColorConstants.white,
 	},
@@ -356,6 +393,10 @@ const styles = StyleSheet.create({
 	},
 	FBSignInBtnTxt: {
 		color: ColorConstants.white,
+		fontWeight: "bold",
+	},
+	GoogleSignInBtnTxt: {
+		color: ColorConstants.blackOp60,
 		fontWeight: "bold",
 	},
 
@@ -386,5 +427,20 @@ const styles = StyleSheet.create({
 		textDecorationLine: "underline",
 	},
 })
+
+const mapStateToProps = (state) => {
+	return {
+		user: state.milestone.user,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setUserInfo: (data) => dispatch(setUserInfo(data)),
+		setShowLoader: (data) => {
+			dispatch(setShowLoader(data))
+		},
+	}
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

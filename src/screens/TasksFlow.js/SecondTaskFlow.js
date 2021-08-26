@@ -20,7 +20,7 @@ import {
 } from "../../components/CommonComponents"
 import DisableAppButton from "../MileStones/DisableAppButton"
 import {connect} from "react-redux"
-import {addMilestoneToFirestore} from "../../firebase"
+import {addMilestoneToFirestore} from "../../firebase/goals"
 import {setShowLoader, setBooleanFlag, setClickedGoal} from "../../redux/actions"
 
 const SecondTaskFlow = ({

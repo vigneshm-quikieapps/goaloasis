@@ -32,8 +32,7 @@ import {
 import dayjs from "dayjs"
 import {setClickedGoal, setClickedMilestone, setShowLoader} from "../../redux/actions"
 import {addNewMilestone} from "./../../redux/actions"
-import {addMilestoneToFirestore} from "../../firebase"
-
+import {addMilestoneToFirestore} from "./../../firebase/goals"
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"
 
