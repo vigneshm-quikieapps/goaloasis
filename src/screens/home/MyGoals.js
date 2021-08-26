@@ -259,7 +259,8 @@ const MyGoals = (props) => {
 					item !== "FirsttimeIndividual" &&
 					item !== "FirsttimeTaskTutorial" &&
 					item !== "FirsttimeTimelineFlow" &&
-					item !== "Firsttime"
+					item !== "Firsttime" &&
+					item !== "currentUser"
 			)
 			let result = []
 			for (const key of keys) {

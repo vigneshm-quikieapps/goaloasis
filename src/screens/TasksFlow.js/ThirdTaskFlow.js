@@ -33,6 +33,7 @@ import {connect} from "react-redux"
 import {addMilestoneToFirestore} from "../../firebase/goals"
 import {setBooleanFlag, setClickedGoal, setShowLoader} from "../../redux/actions"
 import dayjs from "dayjs"
+import uuid from "react-native-uuid"
 
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"
@@ -84,6 +85,7 @@ const ThirdTaskFlow = ({
 					taskData: [
 						...filteredTasks,
 						{
+							_id: uuid.v4(),
 							isCompleted: false,
 							task: taskName,
 							date: clickedDate,

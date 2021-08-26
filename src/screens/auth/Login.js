@@ -261,14 +261,15 @@ const Login = (props) => {
 			})
 	}
 	useEffect(() => {
-		console.log("cur usr------------------------------->", user)
 		if (user) {
 			console.log("cur usr inner------------------------------->", user)
 			navigation.navigate("mygoals")
 		}
 	})
 	useEffect(() => {}, [user])
-
+	if (user) {
+		navigation.navigate("mygoals")
+	}
 	return (
 		<ScrollView>
 			<View style={styles.loginContainer}>

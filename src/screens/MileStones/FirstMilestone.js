@@ -42,7 +42,6 @@ import {
 } from "../../components/CommonComponents"
 import dayjs from "dayjs"
 import AppButton from "./AppButton"
-import {v4 as uuidv4} from "uuid"
 
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"
