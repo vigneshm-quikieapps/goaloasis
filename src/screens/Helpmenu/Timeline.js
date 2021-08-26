@@ -52,7 +52,7 @@ const TimelineScreen = ({
 	// const [state, setSate] = useState(false)
 	useEffect(() => {
 		let timelineData = allGoals.map((goal) => {
-			console.log("GOALSSSSSSS", goal.isCompleted)
+			// console.log("GOALSSSSSSS", goal.isCompleted)
 			let year = dayjs(goal.targetDate).year()
 			let date = dayjs(goal.targetDate).toISOString().slice(0, 10)
 			// date = dayjs(goal.targetDate)
@@ -71,8 +71,8 @@ const TimelineScreen = ({
 
 		// setAllGoalsforTimeline(timelineData)
 		setAllGoalsforTimeline(timelineData.filter((item) => item.isCompleted !== true))
-		renderDetail(allGoalsforTimeline)
-		renderCircle(allGoalsforTimeline)
+		// renderDetail(allGoalsforTimeline)
+		// renderCircle(allGoalsforTimeline)
 		// console.log("Testing", allGoalsforTimeline[0].isCompleted)
 
 		// let notCompletedData = allGoalsforTimeline.map((item) => console.log("ITEMS", item))
@@ -86,29 +86,6 @@ const TimelineScreen = ({
 	allGoalsforTimeline.sort((a, b) => new Date(a.date) - new Date(b.date))
 	// allGoalsforTimeline.reverse()
 
-	// allGoalsforTimeline.sort(function (c, d) {
-	// 	var rx = /(\d+)\/(\d+)\/(\d+)/
-	// 	var a = Number(c.date.replace(rx, "$3$1$20000"))
-	// 	var b = Number(d.date.replace(rx, "$3$1$20000"))
-	// 	return a > b ? -1 : a == b ? 0 : 1 // for newer on top
-	// 	//return a < b ? -1 : a == b ? 0 : 1; // for older on top
-	// })
-
-	// allGoalsforTimeline.sort(function (a, b) {
-	// 	var aa =
-	// 			a.date.substring(0, 10).split("/").reverse().join() +
-	// 			replaceAll(":", "", a.substring(11, 20)),
-	// 		bb =
-	// 			b.date.substring(0, 10).split("/").reverse().join() +
-	// 			replaceAll(":", "", b.substring(11, 20))
-	// 	return aa < bb ? -1 : aa > bb ? 1 : 0
-	// })
-	// console.log(
-	// 	"allGoalsforTimeline",
-	// 	allGoalsforTimeline.map((item) => {
-	// 		console.log("DATE", item.date)
-	// 	})
-	// )
 	useEffect(() => {
 		importData()
 	}, [clickedGoal])
@@ -211,7 +188,6 @@ const TimelineScreen = ({
 
 		if (new Date().toISOString().slice(0, 10).match(rowData.date) && rowData.title === undefined) {
 			state = true
-			console.log("fuckedup here")
 		}
 		return (
 			<View
@@ -279,6 +255,7 @@ const TimelineScreen = ({
 						detailContainerStyle={[CommonStyles.detailContainerStyle]}
 						renderDetail={renderDetail}
 						renderCircle={renderCircle}
+						renderFullLine={true}
 						// renderTime={renderTime}
 						titleStyle={CommonStyles.titleStyle}
 						columnFormat="two-column"

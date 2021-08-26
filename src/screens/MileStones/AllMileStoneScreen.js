@@ -78,7 +78,10 @@ const AllMilestonesScreen = (props) => {
 				<View style={CommonStyles.dots} />
 				<View style={CommonStyles.dots} />
 			</TouchableOpacity>
-			<View style={styles.titleContainer}></View>
+			<TouchableOpacity
+				style={[styles.titleContainer, {width: "85%"}]}
+				onPress={() => navigation.navigate("particulargoal")}
+			/>
 			{/* </GestureRecognizer> */}
 
 			<View style={styles.goalsContainer}>

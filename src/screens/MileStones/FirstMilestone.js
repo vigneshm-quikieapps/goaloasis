@@ -65,46 +65,49 @@ const FirstMilestone = ({
 		navigation.navigate("FourthMilestone", {
 			currentMilestoneData: {milestoneDate: clickedDate, milestoneName: milestone},
 		})
+		console.log("llllllllllllllllllllllll")
+		setMilestone("")
+		console.log("ppppppppppppppppp")
 	}
 	const [toggleCalandar, setToggleCalandar] = useState(false)
 
-	const nextScreen = () => {
-		let color = colorsForTimeline.find((itemColor) => itemColor.goal === clickedGoal.color)
+	// const nextScreen = () => {
+	// 	let color = colorsForTimeline.find((itemColor) => itemColor.goal === clickedGoal.color)
 
-		let milestoneArr = [
-			...clickedGoal.goalMilestone,
-			{
-				milestone: milestone,
-				date: clickedDate,
-				taskData: [],
-				isCompleted: false,
-				color: color.mile,
-			},
-		]
-		console.log("MILESTONE ARRAY", milestoneArr)
-		let updatedObj = {
-			...clickedGoal,
-			goalMilestone: milestoneArr,
-		}
-		setClickedMilestone(milestone)
-		addNewMilestone([
-			{
-				milestone: milestone,
-				date: clickedDate,
-				taskData: [],
-			},
-		])
-		setShowLoader(true)
+	// 	let milestoneArr = [
+	// 		...clickedGoal.goalMilestone,
+	// 		{
+	// 			milestone: milestone,
+	// 			date: clickedDate,
+	// 			taskData: [],
+	// 			isCompleted: false,
+	// 			color: color.mile,
+	// 		},
+	// 	]
+	// 	console.log("MILESTONE ARRAY", milestoneArr)
+	// 	let updatedObj = {
+	// 		...clickedGoal,
+	// 		goalMilestone: milestoneArr,
+	// 	}
+	// 	setClickedMilestone(milestone)
+	// 	addNewMilestone([
+	// 		{
+	// 			milestone: milestone,
+	// 			date: clickedDate,
+	// 			taskData: [],
+	// 		},
+	// 	])
+	// 	setShowLoader(true)
 
-		addMilestoneToFirestore(clickedGoal, milestoneArr, () => {
-			setShowLoader(false)
-			navigation.navigate("ThirdMileStone")
+	// 	addMilestoneToFirestore(clickedGoal, milestoneArr, () => {
+	// 		setShowLoader(false)
+	// 		navigation.navigate("ThirdMileStone")
 
-			setClickedGoal(updatedObj)
-		})
+	// 		setClickedGoal(updatedObj)
+	// 	})
 
-		// navigation.navigate("IndividualGoal")
-	}
+	// 	// navigation.navigate("IndividualGoal")
+	// }
 
 	const handleHomeClick = () => {
 		navigation.navigate("mygoals")

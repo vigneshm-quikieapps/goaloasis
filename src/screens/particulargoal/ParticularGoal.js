@@ -398,7 +398,6 @@ const ParticularGoal = (props) => {
 							</View>
 						</View>
 					</View>
-					{/* </GestureRecognizer> */}
 				</View>
 			</GestureRecognizer>
 

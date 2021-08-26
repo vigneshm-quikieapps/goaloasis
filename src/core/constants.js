@@ -992,10 +992,9 @@ export const CommonStyles = ScaledSheet.create({
 
 	timeContainerStyle: {minWidth: sizeConstants.xxxl},
 	detailContainerStyle: {
-		marginVertical: sizeConstants.m,
-		paddingHorizontal: sizeConstants.m,
+		// marginVertical: sizeConstants.m,
+		// paddingHorizontal: sizeConstants.m,
 		// backgroundColor: ColorConstants.darkFaintBlue,
-		borderRadius: 15,
 	},
 
 	titleStyle: {color: ColorConstants.white},

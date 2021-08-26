@@ -78,16 +78,17 @@ const DailyTimeline = ({
 		})
 
 		setAllTasks(allTasks.filter((item) => item.isCompleted !== true))
-		renderDetail(allTasks)
-		//
-		setAllTasks(allTasks.filter((item) => item.isCompleted !== true))
-		let datee = {time: dayjs().toISOString().slice(0, 10)}
-		allTasks.push(datee)
-		renderDetail(allTasks)
-		renderCircle(allTasks)
-	}, [allGoals])
 
-	allTasks.sort((a, b) => new Date(a.date) - new Date(b.date))
+		// renderDetail(allTasks)
+
+		// renderCircle(allTasks)
+	}, [allGoals])
+	let datee = {time: dayjs().toISOString().slice(0, 10)}
+	allTasks.push(datee)
+	allTasks.sort((a, b) => new Date(a.time) - new Date(b.time))
+	// allTasks.map((item) => {
+	// 	console.log(`TASK NAME = ${item.title} DATE = ${item.date} TIME =${item.time}`)
+	// })
 	useEffect(() => {
 		importData()
 	}, [booleanFlag])
@@ -163,7 +164,7 @@ const DailyTimeline = ({
 				bounciness: 1,
 			}).start()
 
-			console.log("EVENT 1", event.nativeEvent)
+			// console.log("EVENT 1", event.nativeEvent)
 			// navigation.navigate("monthTimeline")
 		}
 
@@ -174,7 +175,7 @@ const DailyTimeline = ({
 				bounciness: 1,
 			}).start()
 
-			console.log("EVENT 1", event.nativeEvent)
+			// console.log("EVENT 1", event.nativeEvent)
 			navigation.navigate("monthTimeline")
 		}
 	}
@@ -193,20 +194,23 @@ const DailyTimeline = ({
 			)
 
 		return (
-			<View style={{flex: 1, backgroundColor: rowData.color, padding: 10, borderRadius: 15}}>
+			<View
+				style={{
+					flex: 1,
+					backgroundColor: rowData.color,
+					padding: 10,
+					borderRadius: 15,
+				}}
+			>
 				{title}
 				{desc}
 			</View>
 		)
 	}
 	const renderCircle = (rowData, sectionID, rowID) => {
-		// let datadate = new Date(rowData.date)
-
 		let state = false
-		// console.log("datadate", rowData.date)
-		// console.log("todaysDate", new Date().toISOString().slice(0, 10))
 
-		if (new Date().toISOString().slice(0, 10).match(rowData.date) && rowData.title === undefined) {
+		if (dayjs().format(commonDateFormat).match(rowData.date) && rowData.title === undefined) {
 			state = true
 		}
 		return (
@@ -267,13 +271,14 @@ const DailyTimeline = ({
 						lineColor="#B3855C"
 						timeContainerStyle={CommonStyles.timeContainerStyle}
 						timeStyle={CommonStyles.timeStyle}
-						descriptionStyle={[CommonStyles.descriptionStyle, {height: 0}]}
+						descriptionStyle={[CommonStyles.descriptionStyle]}
 						separator={false}
 						detailContainerStyle={CommonStyles.detailContainerStyle}
 						titleStyle={CommonStyles.titleStyle}
 						renderDetail={renderDetail}
 						renderCircle={renderCircle}
 						columnFormat="two-column"
+						renderFullLine={true}
 						// onEventPress={(item) => alert(`${item.title} at ${item.time}`)}
 						onEventPress={(item) => {
 							let keyArr = item.key.split("_")

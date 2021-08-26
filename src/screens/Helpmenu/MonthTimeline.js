@@ -53,7 +53,7 @@ const MonthTimeline = ({
 	const [oldMilestone, setOldMilestone] = useState("")
 
 	useEffect(() => {
-		console.log("ALL GOALS FROM MILESTONE", allGoals)
+		// console.log("ALL GOALS FROM MILESTONE", allGoals)
 		var allMiles = []
 		allGoals.forEach((goal) => {
 			goal.goalMilestone.forEach((mile) => {
@@ -74,8 +74,8 @@ const MonthTimeline = ({
 		})
 		// allMiles.filter((item) => item.isCompleted !== true)
 		setAllMilestones(allMiles.filter((item) => item.isCompleted !== true))
-		renderDetail(allMilestones)
-		renderCircle(allMilestones)
+		// renderDetail(allMilestones)
+		// renderCircle(allMilestones)
 	}, [allGoals])
 
 	let year = dayjs().year()
@@ -204,7 +204,7 @@ const MonthTimeline = ({
 	}
 	const renderCircle = (rowData, sectionID, rowID) => {
 		// let datadate = new Date(rowData.date)
-		console.log("THIS is ROW DATA from circle render", rowData)
+		// console.log("THIS is ROW DATA from circle render", rowData)
 
 		let state = false
 		// console.log("datadate", rowData.date)
@@ -278,6 +278,7 @@ const MonthTimeline = ({
 						renderDetail={renderDetail}
 						renderCircle={renderCircle}
 						columnFormat="two-column"
+						renderFullLine={true}
 						// onEventPress={(item) => alert(`${item.title} at ${item.time}`)}
 						onEventPress={(item) => {
 							setClickedMilestoneName(item.title)

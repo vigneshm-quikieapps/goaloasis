@@ -25,7 +25,7 @@ const MarkCompleted = (props) => {
 		}
 		props.setShowLoader(true)
 		updateGoalToFirestore(updatedObj, null, () => {
-			console.log("TESTINNNNGNNGGG")
+			// console.log("TESTINNNNGNNGGG")
 			props.setShowLoader(false)
 			props.setBooleanFlag(!props.booleanFlag)
 			navigation.navigate("mygoals")
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
 	bottomBtnContainer: {
 		width: "100%",
 		position: "absolute",
-		bottom: sizeConstants.oneFifty,
+		bottom: sizeConstants.eightyFive,
 		justifyContent: "center",
 		alignItems: "center",
 	},
@@ -125,15 +125,25 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 
+	// HelpBtn: {
+	// 	backgroundColor: "#76BBBC",
+	// 	height: sizeConstants.seventyFive,
+	// 	width: "75%",
+	// 	borderRadius: sizeConstants.sixty,
+	// 	justifyContent: "center",
+	// 	alignItems: "center",
+	// 	elevation: 10,
+	// 	// marginVertical: sizeConstants.xl,
+	// },
 	HelpBtn: {
 		backgroundColor: "#76BBBC",
-		height: sizeConstants.seventyFive,
+		height: sizeConstants.xxxl,
 		width: "75%",
 		borderRadius: sizeConstants.sixty,
 		justifyContent: "center",
 		alignItems: "center",
 		elevation: 10,
-		marginVertical: sizeConstants.xl,
+		// marginVertical: 20,
 	},
 	btnText: {
 		fontSize: sizeConstants.eighteenScale, //20
