@@ -135,6 +135,7 @@ export const updateGoalToFirestore = (data, oldId = null, callback) => {
 
 export const addMilestoneToFirestore = (target, milestoneArr, callback) => {
 	// let targetObj = JSON.parse(target)
+	console.log("taskItem.date = tomorrow", milestoneArr[0])
 	let targetObj = target
 	let updatedObj = {
 		...targetObj,

@@ -52,8 +52,8 @@ const GoalStep2 = ({setCurrentGoal, currentGoal}) => {
 								]}
 								placeholder="Type Here"
 								// multiline={true}
-								// multiline={true}
-								// numberOfLines={2}
+								multiline={true}
+								numberOfLines={2}
 								onChangeText={(text) => setDescription(text)}
 								maxLength={35}
 								// numberOfLines={1}

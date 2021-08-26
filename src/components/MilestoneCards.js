@@ -188,6 +188,8 @@ const MilestoneCards = ({
 		data.taskData.map((i) => {})
 	}
 	handleTaskDelete = (clickedTask, currentMilestone) => {
+		setShowLoader(true)
+
 		let newMilestone = clickedGoal.goalMilestone.map((item) => {
 			if (item.milestone === currentMilestone) {
 				return {
@@ -206,7 +208,99 @@ const MilestoneCards = ({
 
 		addMilestoneToFirestore(clickedGoal, newMilestone, () => {
 			setClickedGoal(updatedObj)
+			setShowLoader(true)
 		})
+	}
+	const snoozeTask = (currentTask, currentMilestone) => {
+		let milestoneDate
+		let newMileArray1 = clickedGoal.goalMilestone.map((mileItem) => {
+			if (mileItem.milestone === currentMilestone) {
+				milestoneDate = mileItem.date
+			}
+		})
+
+		const today = dayjs().format(commonDateFormat)
+		const tomorrow = dayjs().add(1, "days").format(commonDateFormat)
+		const dayAfterTomorrow = dayjs().add(2, "days").format(commonDateFormat)
+
+		if (milestoneDate === dayAfterTomorrow) {
+			Alert.alert(
+				currentTask,
+				"The Target Date of Milestone for this Task is Day-After-Tomorrow, Are you Sure you want to snooze this task?",
+				[
+					{
+						text: "No",
+						onPress: () => console.log("Cancel Pressed"),
+						style: "cancel",
+					},
+					{
+						text: "Yes",
+						onPress: () => {
+							let newMileArray = clickedGoal.goalMilestone.map((mileItem) => {
+								if (mileItem.milestone === currentMilestone) {
+									mileItem.taskData.forEach((taskItem) => {
+										if (taskItem.task == currentTask) taskItem.date = tomorrow
+									})
+								}
+								return mileItem
+							})
+							let updatedObj = {
+								...clickedGoal,
+								goalMilestone: newMileArray,
+							}
+
+							addMilestoneToFirestore(clickedGoal, newMileArray, () => {
+								setClickedGoal(updatedObj)
+								setShowLoader(false)
+							})
+						},
+					},
+				]
+			)
+		} else {
+			Alert.alert(currentTask, "Are you Sure you want to snooze this task?", [
+				{
+					text: "No",
+					onPress: () => console.log("Cancel Pressed"),
+					style: "cancel",
+				},
+				{
+					text: "Yes",
+
+					onPress: () => {
+						let newMileArray = clickedGoal.goalMilestone.map((mileItem) => {
+							if (mileItem.milestone === currentMilestone) {
+								mileItem.taskData.forEach((taskItem) => {
+									if (taskItem.task == currentTask) {
+										console.log("before modified task Date", taskItem.date)
+										taskItem.date = tomorrow
+										// taskItem.date = dayjs(taskItem.date).add(1, "days").format(commonDateFormat)
+
+										// console.log("After modified task Date", taskItem.date)
+										// console.log(
+										// 	"tomorrow",
+										// 	dayjs(taskItem.date).add(1, "days").format(commonDateFormat)
+										// )
+									}
+								})
+							}
+							return mileItem
+						})
+
+						let updatedObj = {
+							...clickedGoal,
+							goalMilestone: newMileArray,
+						}
+
+						addMilestoneToFirestore(clickedGoal, newMileArray, () => {
+							setClickedGoal(updatedObj)
+
+							setShowLoader(false)
+						})
+					},
+				},
+			])
+		}
 	}
 	const [upDown, setUpDown] = useState(false)
 	const [upDown1, setUpDown1] = useState(false)
@@ -272,7 +366,7 @@ const MilestoneCards = ({
 
 			setAllCompleteTasks(
 				allCompletedTask.filter((task, index) => {
-					console.log("task filter", index != 0)
+					// console.log("task filter", index != 0)
 					return index != 0
 				})
 			)
@@ -412,7 +506,8 @@ const MilestoneCards = ({
 												/>
 											),
 											onPress: () => {
-												console.log("Snoozziingg")
+												console.log("Snoozziingg Clicked")
+												snoozeTask(item.item.task, data.milestone)
 											},
 											style: {backgroundColor: ColorConstants.snoozeIconBg},
 										},

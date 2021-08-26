@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
@@ -52,6 +52,7 @@ const GoalStep3 = ({
 			color: getColorForGoal(),
 			isCompleted: false,
 			userId: user && user.uid ? user.uid : null,
+			timeStamp: dayjs(),
 		}
 		setShowLoader(true)
 
@@ -63,7 +64,6 @@ const GoalStep3 = ({
 	}
 	const [date, setDate] = useState(dayjs())
 
-	// TODO
 	console.log("LOADING", loading)
 
 	const getColorForGoal = () => {

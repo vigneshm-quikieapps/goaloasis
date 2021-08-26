@@ -26,10 +26,11 @@ import {connect} from "react-redux"
 import {
 	calendarLocale,
 	CommonHomeButton,
+	CommonPrevNextButton,
 	CustomDayComponentForCalendar,
 } from "../../components/CommonComponents"
 import dayjs from "dayjs"
-import {setClickedMilestone, setShowLoader} from "../../redux/actions"
+import {setClickedGoal, setClickedMilestone, setShowLoader} from "../../redux/actions"
 import {addNewMilestone} from "./../../redux/actions"
 import {addMilestoneToFirestore} from "./../../firebase/goals"
 LocaleConfig.locales["en"] = calendarLocale
@@ -42,6 +43,7 @@ const FourthMilestone = ({
 	newMileStone,
 	route,
 	addNewMilestone,
+	setClickedGoal,
 }) => {
 	const navigation = useNavigation()
 	const {currentMilestoneData} = route.params
@@ -72,7 +74,7 @@ const FourthMilestone = ({
 				color: color.mile,
 			},
 		]
-		console.log("MILESTONE ARRAY", milestoneArr)
+		// console.log("MILESTONE ARRAY", milestoneArr)
 		let updatedObj = {
 			...clickedGoal,
 			goalMilestone: milestoneArr,
@@ -94,7 +96,7 @@ const FourthMilestone = ({
 			setClickedGoal(updatedObj)
 		})
 
-		// navigation.navigate("IndividualGoal")
+		console.log("MILESTONE ADDED")
 	}
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
@@ -248,25 +250,42 @@ const FourthMilestone = ({
 							)
 						}}
 					/>
-					<TouchableOpacity
+					{/* <TouchableOpacity
 						style={CommonStyles.containerMilestone}
 						// onPress={() => navigation.navigate("SixthMilestone")}
 						onPress={() => nextScreen()}
 					>
 						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
-					</TouchableOpacity>
+					</TouchableOpacity> */}
 					{/* <TouchableOpacity
 						style={CommonStyles.bottomBtnMilestone}
 						onPress={() => navigation.navigate("particulargoal")}
 					>
 						<MaterialCommunityIcons name="home" size={44} color="#7EC8C9" />
 					</TouchableOpacity> */}
+					<View style={{flexDirection: "row", justifyContent: "space-between"}}>
+						<CommonPrevNextButton
+							left={true}
+							// style={{backgroundColor: ColorConstants.whiteOp50}}
+							size={50}
+							bottom={0}
+							nextClick={() => navigation.navigate("FirstMilestone")}
+						/>
+						<CommonPrevNextButton
+							right={true}
+							// style={{backgroundColor: ColorConstants.whiteOp50}}
+							size={50}
+							bottom={0}
+							nextClick={nextScreen}
+						/>
+					</View>
 				</View>
 			</ScrollView>
 			<CommonHomeButton
 				click={() => navigation.navigate("particulargoal")}
 				size={44}
 				normalBack={true}
+				// doNotWorkBackFunctionality={true}
 				BackHandle={true}
 				clickforBack={() => navigation.goBack()}
 			/>
@@ -287,6 +306,9 @@ const mapDispatchToProps = (dispatch) => {
 		setClickedMilestone: (task) => dispatch(setClickedMilestone(task)),
 		setShowLoader: (data) => {
 			dispatch(setShowLoader(data))
+		},
+		setClickedGoal: (data) => {
+			dispatch(setClickedGoal(data))
 		},
 	}
 }

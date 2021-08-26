@@ -88,8 +88,8 @@ export const CommonHomeButton = ({
 }) => {
 	const [scale, setScale] = useState(1)
 	if (BackHandle) {
-		console.log("back button working")
-		const backActionHandler = () => {
+		// console.log("back button working")
+		let backActionHandler = () => {
 			if (normalBack) {
 				clickforBack()
 				return true

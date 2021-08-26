@@ -75,6 +75,7 @@ const MyGoals = (props) => {
 	const [taskCounter, setTaskCounter] = useState(0)
 
 	useEffect(() => {
+		// allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
 		fetchData()
 	}, [testData, firstTime, firstTimeTimelineFlow, allGoals])
 	const fetchData = async () => {
@@ -193,7 +194,6 @@ const MyGoals = (props) => {
 								goal.isCompleted !== true &&
 								task.isCompleted !== true
 							) {
-								console.log("CHECKING GOALS", task.isCompleted)
 								let newTaskObj = {
 									...task,
 									key: `${task.task}_${mile.milestone}_${goal.name}`,
@@ -216,7 +216,7 @@ const MyGoals = (props) => {
 				var milestoneDay = new Date(allGoals[i].goalMilestone[j].date)
 				// console.log("MILESTONE DAY", milestoneDay)
 				if (Math.abs(milestoneDay - new Date()) < 86400000) {
-					console.log("first")
+					// console.log("first")
 					for (let k = 0; k < allGoals[i].goalMilestone[j].taskData.length; k++) {
 						if (allGoals[i].goalMilestone[j].taskData[k].isCompleted === false) {
 							counter++
@@ -228,19 +228,27 @@ const MyGoals = (props) => {
 		}
 	}
 	useEffect(() => {
+		// allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
+
 		if (milestoneTaskCounter > 0) {
 			scheduleNotification()
 		}
 	}, [milestoneTaskCounter])
 	useEffect(() => {
 		// console.log("ALL GOALS", allGoals[0].goalMilestone[0].taskData)
+		// allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
+
 		getTodaysTasks()
 		setTaskCounter(count)
-		getMilestoneIfHasOneTaskToComplete()
+		//new Added
+		getAllTodaysTask()
+		// getMilestoneIfHasOneTaskToComplete()
 		setMilestoneTaskCounter(counter)
 	}, [allGoals])
 
 	useEffect(() => {
+		// allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
+
 		testFunction()
 	}, [taskCounter])
 	const importData = async () => {
@@ -259,6 +267,7 @@ const MyGoals = (props) => {
 				result.push(JSON.parse(val))
 			}
 
+			result.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
 			setAllGoals(result)
 		} catch (error) {
 			console.error(error)
@@ -267,12 +276,9 @@ const MyGoals = (props) => {
 
 	useEffect(() => {
 		setShowLoader(true)
-		// console.log("ALLL GOALSSSSSSSSSSSSSSSSSSs", allGoals[0].createdAt)
-
 		importData()
 		setShowLoader(false)
-		console.log("user from mygoals: ", user)
-	}, [currentGoal, booleanFlag, clickedGoal])
+	}, [currentGoal, booleanFlag, clickedGoal, allGoals])
 
 	const getGoalCompletionPercent = (goalObj) => {
 		let allMilestonesArrayFromCurrentGoal = [...goalObj.goalMilestone]
@@ -301,6 +307,8 @@ const MyGoals = (props) => {
 		return true
 	}
 	useEffect(() => {
+		// allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
+
 		// Add event listener for hardware back button press on Android
 		BackHandler.addEventListener("hardwareBackPress", backActionHandler)
 
@@ -310,6 +318,8 @@ const MyGoals = (props) => {
 	}, [])
 
 	useEffect(() => {
+		// allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
+
 		// CREATING THE CHANNEL FOR NOTIFICATION
 
 		PushNotification.createChannel(
@@ -542,8 +552,8 @@ const MyGoals = (props) => {
 			<CommonHomeButton
 				iconName={"file-tree-outline"}
 				size={34}
-				// click={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
-				click={tempRoute}
+				click={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
+				// click={tempRoute}
 				iconColor={ColorConstants.white}
 				bgColor={ColorConstants.lighterBlue}
 				doNotWorkBackFunctionality={true}
