@@ -55,20 +55,19 @@ const FirstMilestone = ({
 	setClickedMilestone,
 	setShowLoader,
 	loading,
+	route,
 	allGoals,
 }) => {
 	const [milestone, setMilestone] = useState("")
 	const [clickedDate, setDate] = useState(dayjs().format(commonDateFormat))
 	const navigation = useNavigation()
-
+	const {setBackEditScreen} = route.params !== undefined ? route.params : false
 	const FourthMileStone = () => {
 		navigation.navigate("FourthMilestone", {
 			currentMilestoneData: {milestoneDate: dayjs(), milestoneName: milestone},
 		})
-		console.log("llllllllllllllllllllllll")
-		setMilestone("")
-		console.log("ppppppppppppppppp")
 	}
+	console.log("setBackEditScreen", setBackEditScreen)
 	const [toggleCalandar, setToggleCalandar] = useState(false)
 
 	// const nextScreen = () => {
@@ -151,7 +150,7 @@ const FirstMilestone = ({
 							<Text style={styles.subTitle}>
 								{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
 							</Text>
-							{milestone === "" || toggleCalandar === true ? (
+							{milestone === "" || (toggleCalandar === true && setBackEditScreen === undefined) ? (
 								<View>
 									<Text style={styles.bigTitle}>Edit target date</Text>
 

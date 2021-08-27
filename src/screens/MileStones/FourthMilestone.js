@@ -271,7 +271,12 @@ const FourthMilestone = ({
 							// style={{backgroundColor: ColorConstants.whiteOp50}}
 							size={50}
 							bottom={0}
-							nextClick={() => navigation.navigate("FirstMilestone")}
+							back
+							prevClick={() =>
+								navigation.navigate("FirstMilestone", {
+									setBackEditScreen: true,
+								})
+							}
 						/>
 						<CommonPrevNextButton
 							right={true}
