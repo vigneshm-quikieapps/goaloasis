@@ -63,7 +63,7 @@ const FirstMilestone = ({
 
 	const FourthMileStone = () => {
 		navigation.navigate("FourthMilestone", {
-			currentMilestoneData: {milestoneDate: clickedDate, milestoneName: milestone},
+			currentMilestoneData: {milestoneDate: dayjs(), milestoneName: milestone},
 		})
 		console.log("llllllllllllllllllllllll")
 		setMilestone("")

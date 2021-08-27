@@ -7,6 +7,32 @@ import {firebaseConstants} from "../core/constants"
 
 const {GOALS_COLLECTION} = firebaseConstants
 
+export const getGoalsOfCurrentUser = (userId, callback) => {
+	let userGoals = new Promise(async (resolve, reject) => {
+		console.log("userId", userId)
+		try {
+			let snapshot = await firestore()
+				.collection(GOALS_COLLECTION)
+				.where("userId", "==", userId)
+				.get()
+			let allGoals = []
+			snapshot.forEach((goal) => {
+				allGoals.push(goal.data())
+			})
+			resolve(allGoals)
+		} catch (err) {
+			reject(err)
+		}
+	})
+	userGoals
+		.then((goalData) => {
+			callback(goalData)
+		})
+		.catch((err) => {
+			console.log("getGoalsOfCurrentUser failed!", err)
+		})
+}
+
 // Get All Goal Operation
 export const getAllGoalsFromFirestore = (callback) => {
 	var AllGoalArr = []

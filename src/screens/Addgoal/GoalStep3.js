@@ -23,6 +23,8 @@ import {CommonHomeButton, CommonPrevNextButton} from "../../components/CommonCom
 
 import dayjs from "dayjs"
 import {scale} from "react-native-size-matters"
+import uuid from "react-native-uuid"
+
 // const colorArray = Object.values(forGoals)
 
 const GoalStep3 = ({
@@ -53,6 +55,7 @@ const GoalStep3 = ({
 			isCompleted: false,
 			userId: user && user.uid ? user.uid : null,
 			timeStamp: dayjs(),
+			_id: uuid.v4(),
 		}
 		setShowLoader(true)
 

@@ -21,7 +21,7 @@ import StatusBarScreen from "../MileStones/StatusBarScreen"
 import Constants from "expo-constants"
 import {connect} from "react-redux"
 import AsyncStorage from "@react-native-community/async-storage"
-import {getAllGoalsFromFirestore} from "../../firebase/goals"
+import {getAllGoalsFromFirestore, getGoalsOfCurrentUser} from "../../firebase/goals"
 
 import {
 	setTestData,
@@ -267,9 +267,15 @@ const MyGoals = (props) => {
 				const val = await AsyncStorage.getItem(key)
 				result.push(JSON.parse(val))
 			}
+			user &&
+				user.uid &&
+				getGoalsOfCurrentUser(user.uid, (userGoals) => {
+					let result = [...userGoals]
 
-			result.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
-			setAllGoals(result)
+					console.log("result", result)
+					result.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
+					setAllGoals(result)
+				})
 		} catch (error) {
 			console.error(error)
 		}
@@ -279,7 +285,7 @@ const MyGoals = (props) => {
 		setShowLoader(true)
 		importData()
 		setShowLoader(false)
-	}, [currentGoal, booleanFlag, clickedGoal, allGoals])
+	}, [currentGoal, booleanFlag, clickedGoal])
 
 	const getGoalCompletionPercent = (goalObj) => {
 		let allMilestonesArrayFromCurrentGoal = [...goalObj.goalMilestone]
