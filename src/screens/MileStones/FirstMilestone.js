@@ -64,7 +64,7 @@ const FirstMilestone = ({
 	const {setBackEditScreen} = route.params !== undefined ? route.params : false
 	const FourthMileStone = () => {
 		navigation.navigate("FourthMilestone", {
-			currentMilestoneData: {milestoneDate: clickedDate, milestoneName: milestone},
+			currentMilestoneData: {milestoneDate: dayjs(), milestoneName: milestone},
 		})
 	}
 	console.log("setBackEditScreen", setBackEditScreen)

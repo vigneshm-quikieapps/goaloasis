@@ -22,7 +22,7 @@ import {
 	getClickedGoalFromAsyncStorage,
 	getFirstTimeIndividual,
 	setisFirstTimeIndividual,
-} from "./../../utils/asyncStorage"
+} from "../../utils/asyncStorage/goalsAsyncStore"
 import {setBooleanFlag, setFirstTimeForIndividualGoal} from "../../redux/actions"
 import AppButton from "../MileStones/AppButton"
 import Swipeout from "rc-swipeout"

@@ -5,7 +5,7 @@ import LottieView from "lottie-react-native"
 
 import {NavigationContainer} from "@react-navigation/native"
 import {IntroStack, MainStack} from "./src/navigation"
-import {getFirstTimeUser} from "./src/utils/asyncStorage"
+import {getFirstTimeUser} from "./src/utils/asyncStorage/goalsAsyncStore"
 import authContext from "./src/context/auth/authContext"
 import TimelineFlowSlider from "./src/components/TimelineFlowSlider"
 import SplashScreen from "./src/assets/splashScreen"

@@ -260,13 +260,31 @@ const Login = (props) => {
 				setShowLoader(false)
 			})
 	}
-
 	useEffect(() => {
-		return () => {}
+		console.log("Check for re-render-------------------------------")
+		if (user) {
+			console.log("cur usr inner------------------------------->", user)
+			navigation.navigate("mygoals")
+		}
+	})
+	useEffect(() => {
+		if (user) {
+			console.log("cur usr inner------------------------------->", user)
+			navigation.navigate("mygoals")
+		}
 	}, [user])
-	if (user) {
-		navigation.navigate("mygoals")
-	}
+	useEffect(() => {
+		setShowLoader(true)
+		if (user != null) {
+			setTimeout(() => {
+				console.log("first render")
+				navigation.navigate("mygoals")
+				setShowLoader(false)
+			}, 3000)
+		}
+
+		return () => {}
+	}, [])
 	return (
 		<ScrollView>
 			<View style={styles.loginContainer}>

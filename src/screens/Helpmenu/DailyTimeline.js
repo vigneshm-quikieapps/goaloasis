@@ -52,7 +52,9 @@ const DailyTimeline = ({
 	const [clickedTaskName, setClickedTaskName] = useState("")
 	const [clickedMilestone, setClickedMilestone] = useState("")
 	const [oldTask, setOldTask] = useState("")
-
+	console.log("====================================")
+	console.log("FROM DAILY TIMELINE")
+	console.log("====================================")
 	useEffect(() => {
 		var allTasks = []
 		allGoals.forEach((goal) => {
@@ -64,7 +66,7 @@ const DailyTimeline = ({
 						let sortDate = dayjs(task.date).toDate()
 
 						allTasks.push({
-							key: `${goal.id}_${mile.milestone}_${task.task}`,
+							key: `${goal.id}${mile.milestone}${task.task}`,
 							title: task.task,
 							description: "",
 							time: date,

@@ -9,7 +9,7 @@ import {
 } from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
-import {setisFirstTimeTaskTutorial} from "../utils/asyncStorage"
+import {setisFirstTimeTaskTutorial} from "../utils/asyncStorage/goalsAsyncStore"
 import authContext from "../context/auth/authContext"
 import StatusBarScreen from "../screens/MileStones/StatusBarScreen"
 import Constants from "expo-constants"

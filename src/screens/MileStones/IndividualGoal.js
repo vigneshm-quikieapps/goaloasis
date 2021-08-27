@@ -9,7 +9,10 @@ import {LinearGradient} from "expo-linear-gradient"
 import RBBottomSheet from "./RBBottomSheet"
 import Swipeout from "rc-swipeout"
 import {setFirstTimeForIndividualGoal} from "./../../redux/actions"
-import {getFirstTimeIndividual, setisFirstTimeIndividual} from "./../../utils/asyncStorage"
+import {
+	getFirstTimeIndividual,
+	setisFirstTimeIndividual,
+} from "../../utils/asyncStorage/goalsAsyncStore"
 import {connect} from "react-redux"
 import {ColorConstants, commonImages, CommonStyles, sizeConstants} from "../../core/constants"
 import {CommonHomeButton} from "../../components/CommonComponents"

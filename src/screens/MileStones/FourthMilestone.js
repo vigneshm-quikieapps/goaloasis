@@ -33,6 +33,7 @@ import dayjs from "dayjs"
 import {setClickedGoal, setClickedMilestone, setShowLoader} from "../../redux/actions"
 import {addNewMilestone} from "./../../redux/actions"
 import {addMilestoneToFirestore} from "./../../firebase/goals"
+import uuid from "react-native-uuid"
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"
 
@@ -67,6 +68,7 @@ const FourthMilestone = ({
 		let milestoneArr = [
 			...clickedGoal.goalMilestone,
 			{
+				_id: uuid.v4(),
 				milestone: milestone,
 				date: clickedDate,
 				taskData: [],

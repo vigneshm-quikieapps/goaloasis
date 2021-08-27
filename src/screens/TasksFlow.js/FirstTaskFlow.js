@@ -69,7 +69,7 @@ const FirstTaskFlow = ({
 		// })
 		navigation.navigate("thirdtaskflow", {
 			// currentTaskData: {taskDate: currentTaskData.date, taskName: taskName},
-			currentTaskData: {taskDate: clickedDate, taskName: taskName},
+			currentTaskData: {taskDate: dayjs(), taskName: taskName},
 		})
 		// navigation.navigation("thirdtaskflow")
 	}

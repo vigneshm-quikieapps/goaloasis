@@ -12,6 +12,8 @@ import {
 import {TimelineFlow1, TimelineFlow2, TimelineFlow3} from "./../screens/TimelineFlow"
 import TodaysTask from "../screens/TodaysTask/TodaysTask"
 
+import {useSelector} from "react-redux"
+
 import {
 	AfterModal,
 	// FifthMilestone,
@@ -68,14 +70,22 @@ const options = {
 }
 
 const IntroStack = () => {
+	const isLoggedIn = useSelector((state) => state.user)
 	return (
 		<Stack.Navigator
 			screenOptions={{
 				headerShown: false,
 			}}
 		>
-			<Stack.Screen name="Login" component={Login} />
-			<Stack.Screen name="mygoals" component={MyGoals} options={options} />
+			{isLoggedIn
+				? [
+						<Stack.Screen name="mygoals" component={MyGoals} options={options} key={"MyGoals"} />,
+						<Stack.Screen name="Login" component={Login} key={"Login"} />,
+				  ]
+				: [
+						<Stack.Screen name="Login" component={Login} key={"Login"} />,
+						<Stack.Screen name="mygoals" component={MyGoals} options={options} key={"MyGoals"} />,
+				  ]}
 			<Stack.Screen name="taskTutorialSlide1" component={TaskTutorialSlide1} />
 			<Stack.Screen name="EditMilestone" component={EditMilestone} />
 			<Stack.Screen name="ForgotPassword" component={ForgotPassword} />

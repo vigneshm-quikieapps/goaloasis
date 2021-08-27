@@ -5,12 +5,13 @@ import {connect} from "react-redux"
 import {setShowLoader, setUserInfo} from "./src/redux/actions"
 import auth from "@react-native-firebase/auth"
 import {createNewUser, getUserById} from "./src/firebase/users"
+import {getCurrentUserFromAsyncStorage} from "./src/utils/asyncStorage/usersAsyncStore"
 
 require("./src/firebase/authentication/googleAuth")
 require("./src/firebase/authentication/twitterAuth")
 
 const App = (props) => {
-	const {setUserInfo, setShowLoader} = props
+	const {setUserInfo, setShowLoader, user} = props
 	setShowLoader(true)
 	//  waiting for firebase initialization
 	// const [initializing, setInitializing] = useState(true);
@@ -19,8 +20,9 @@ const App = (props) => {
 		console.log("state changed###################: ", user)
 		setUserInfo(user)
 		user &&
+			user.uid &&
 			getUserById(user.uid, (userObj) => {
-				if (!userObj.uid) {
+				if (!userObj.length) {
 					let newUserObj = {
 						displayName: user.displayName,
 						email: user.email,
@@ -32,16 +34,18 @@ const App = (props) => {
 						tenantId: user.tenantId,
 						uid: user.uid,
 					}
-					// createNewUser(newUserObj)
+					createNewUser(newUserObj, (newUser) => {
+						console.log("user created", newUser)
+					})
 				}
 			})
-		// if (initializing) setInitializing(false);
 		setShowLoader(false)
 	}
 
 	useEffect(() => {
 		const authSubscriber = auth().onAuthStateChanged(onAuthStateChanged)
-		return authSubscriber // unsubscribe on unmount
+		return () => authSubscriber
+		// unsubscribe on unmount
 	}, [])
 	return (
 		<AuthState>

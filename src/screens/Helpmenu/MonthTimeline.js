@@ -51,7 +51,6 @@ const MonthTimeline = ({
 	const [clickedMilestoneDate, setClickedMilestoneDate] = useState(dayjs())
 	const [clickedMilestoneName, setClickedMilestoneName] = useState("")
 	const [oldMilestone, setOldMilestone] = useState("")
-
 	useEffect(() => {
 		// console.log("ALL GOALS FROM MILESTONE", allGoals)
 		var allMiles = []
