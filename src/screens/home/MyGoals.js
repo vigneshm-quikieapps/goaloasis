@@ -75,9 +75,9 @@ const MyGoals = (props) => {
 	const [taskCounter, setTaskCounter] = useState(0)
 
 	useEffect(() => {
-		// allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
 		fetchData()
 	}, [testData, firstTime, firstTimeTimelineFlow, allGoals])
+
 	const fetchData = async () => {
 		const data = await getFirstTimeTaskTutorial().catch((err) => console.log(err))
 		const data1 = await getFirstTimeTimelineFlow().catch((err) => console.log(err))
@@ -278,7 +278,7 @@ const MyGoals = (props) => {
 		setShowLoader(true)
 		importData()
 		setShowLoader(false)
-	}, [currentGoal, booleanFlag, clickedGoal, allGoals])
+	}, [currentGoal, booleanFlag, clickedGoal])
 
 	const getGoalCompletionPercent = (goalObj) => {
 		let allMilestonesArrayFromCurrentGoal = [...goalObj.goalMilestone]
@@ -307,21 +307,11 @@ const MyGoals = (props) => {
 		return true
 	}
 	useEffect(() => {
-		// allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
-
-		// Add event listener for hardware back button press on Android
 		BackHandler.addEventListener("hardwareBackPress", backActionHandler)
-
-		return () =>
-			// clear/remove event listener
-			BackHandler.removeEventListener("hardwareBackPress", backActionHandler)
+		return () => BackHandler.removeEventListener("hardwareBackPress", backActionHandler)
 	}, [])
 
 	useEffect(() => {
-		// allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
-
-		// CREATING THE CHANNEL FOR NOTIFICATION
-
 		PushNotification.createChannel(
 			{
 				channelId: "com.goal-oasis", // (required)
@@ -332,6 +322,7 @@ const MyGoals = (props) => {
 				importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
 				vibrate: true, // (optional) default: true. Creates the default vibration patten if true.import TodaysTask from './../TodaysTask/TodaysTask';
 			},
+
 			(created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
 		)
 
@@ -422,6 +413,9 @@ const MyGoals = (props) => {
 					<TouchableOpacity
 						style={{flexDirection: "row"}}
 						onPress={!firstTime ? gotoTaskTutorial : gotoTodaysTask}
+						// onPress={() => {
+						// 	!firstTime ? gotoTaskTutorial() : gotoTodaysTask()
+						// }}
 					>
 						<Text style={[CommonStyles.mainTitle, {marginBottom: sizeConstants.twelve}]}>
 							Today’s tasks
