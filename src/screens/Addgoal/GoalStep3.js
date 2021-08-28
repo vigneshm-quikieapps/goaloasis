@@ -59,10 +59,12 @@ const GoalStep3 = ({
 		}
 		setShowLoader(true)
 
-		addGoalToFirestore(currentGoalObj, () => {
-			setShowLoader(false)
-			navigation.navigate("mygoals")
-			setCurrentGoal(currentGoalObj)
+		addGoalToFirestore(currentGoalObj, (data) => {
+			updateGoalToFirestore(data, data.name, () => {
+				setShowLoader(false)
+				navigation.navigate("mygoals")
+				setCurrentGoal(currentGoalObj)
+			})
 		})
 	}
 	const [date, setDate] = useState(dayjs())

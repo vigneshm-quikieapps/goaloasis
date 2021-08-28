@@ -270,11 +270,9 @@ const MyGoals = (props) => {
 			user &&
 				user.uid &&
 				getGoalsOfCurrentUser(user.uid, (userGoals) => {
-					let result = [...userGoals]
-
-					console.log("result", result)
-					result.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
-					setAllGoals(result)
+					let allGoals = [...userGoals]
+					allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
+					setAllGoals(allGoals)
 				})
 		} catch (error) {
 			console.error(error)

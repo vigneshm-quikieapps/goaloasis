@@ -70,22 +70,14 @@ const options = {
 }
 
 const IntroStack = () => {
-	const isLoggedIn = useSelector((state) => state.user)
 	return (
 		<Stack.Navigator
 			screenOptions={{
 				headerShown: false,
 			}}
 		>
-			{isLoggedIn
-				? [
-						<Stack.Screen name="mygoals" component={MyGoals} options={options} key={"MyGoals"} />,
-						<Stack.Screen name="Login" component={Login} key={"Login"} />,
-				  ]
-				: [
-						<Stack.Screen name="Login" component={Login} key={"Login"} />,
-						<Stack.Screen name="mygoals" component={MyGoals} options={options} key={"MyGoals"} />,
-				  ]}
+			<Stack.Screen name="Login" component={Login} key={"Login"} />
+			<Stack.Screen name="mygoals" component={MyGoals} options={options} key={"MyGoals"} />
 			<Stack.Screen name="taskTutorialSlide1" component={TaskTutorialSlide1} />
 			<Stack.Screen name="EditMilestone" component={EditMilestone} />
 			<Stack.Screen name="ForgotPassword" component={ForgotPassword} />

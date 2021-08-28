@@ -29,21 +29,15 @@ import {
 	width,
 } from "../../core/constants"
 import {setAllGoals, setClickedGoal, setShowLoader} from "../../redux/actions"
-import {updateGoalToFirestore} from "../../firebase/goals"
+import {getGoalsOfCurrentUser, updateGoalToFirestore} from "../../firebase/goals"
 import AsyncStorage from "@react-native-community/async-storage"
 import dayjs from "dayjs"
 import {Constants} from "react-native-unimodules"
 import {height} from "./../../core/constants"
 import GestureHandler, {PinchGestureHandler, State} from "react-native-gesture-handler"
 
-const TimelineScreen = ({
-	setShowLoader,
-	loading,
-
-	allGoals,
-	clickedGoal,
-	setClickedGoal,
-}) => {
+const TimelineScreen = (props) => {
+	const {setShowLoader, loading, user, allGoals, clickedGoal, setClickedGoal} = props
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
 	const [clickedGoalDate, setClickedGoalDate] = useState(dayjs())
@@ -51,6 +45,7 @@ const TimelineScreen = ({
 	const [allGoalsforTimeline, setAllGoalsforTimeline] = useState([])
 	// const [state, setSate] = useState(false)
 	useEffect(() => {
+		console.log("allGoals", JSON.stringify(allGoals))
 		let timelineData = allGoals.map((goal) => {
 			// console.log("GOALSSSSSSS", goal.isCompleted)
 			let year = dayjs(goal.targetDate).year()
@@ -98,15 +93,22 @@ const TimelineScreen = ({
 					item !== "FirsttimeIndividual" &&
 					item !== "FirsttimeTaskTutorial" &&
 					item !== "FirsttimeTimelineFlow" &&
-					item !== "Firsttime"
+					item !== "Firsttime" &&
+					item !== "currentUser"
 			)
 			let result = []
 			for (const key of keys) {
 				const val = await AsyncStorage.getItem(key)
 				result.push(JSON.parse(val))
 			}
-
-			setAllGoals(result)
+			user &&
+				user.uid &&
+				getGoalsOfCurrentUser(user.uid, (userGoals) => {
+					let allGoals = [...userGoals]
+					allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
+					console.log("allGoals", JSON.stringify(allGoals))
+					setAllGoals(allGoals)
+				})
 		} catch (error) {
 			console.error(error)
 		}
@@ -412,6 +414,7 @@ const mapStateToProps = (state) => {
 		allGoals: state.milestone.allGoals,
 		clickedGoal: state.milestone.clickedGoal,
 		loading: state.milestone.loading,
+		user: state.milestone.user,
 	}
 }
 
