@@ -274,8 +274,8 @@ const Login = (props) => {
 		}
 	}, [user])
 	useEffect(() => {
-		setShowLoader(true)
 		if (user != null) {
+			setShowLoader(true)
 			setTimeout(() => {
 				console.log("first render")
 				navigation.navigate("mygoals")

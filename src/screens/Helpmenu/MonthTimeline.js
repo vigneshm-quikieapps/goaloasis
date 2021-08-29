@@ -29,21 +29,22 @@ import {
 } from "../../core/constants"
 import {setAllGoals, setShowLoader, setBooleanFlag, setClickedGoal} from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
-import {addMilestoneToFirestore} from "../../firebase/goals"
+import {addMilestoneToFirestore, getGoalsOfCurrentUser} from "../../firebase/goals"
 import {height} from "./../../core/constants"
 import dayjs from "dayjs"
 import GestureHandler, {PinchGestureHandler, State} from "react-native-gesture-handler"
 
-const MonthTimeline = ({
-	setShowLoader,
-	loading,
-
-	allGoals,
-	clickedGoal,
-	setClickedGoal,
-	// setAllGoals,
-	booleanFlag,
-}) => {
+const MonthTimeline = (props) => {
+	const {
+		setShowLoader,
+		loading,
+		user,
+		allGoals,
+		clickedGoal,
+		setClickedGoal,
+		setAllGoals,
+		booleanFlag,
+	} = props
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
 	const [date, setDate] = useState(dayjs())
@@ -86,9 +87,9 @@ const MonthTimeline = ({
 		importData()
 	}, [booleanFlag])
 
-	console.log("====================================")
-	console.log("All goals from MonthLine", allMilestones)
-	console.log("====================================")
+	// console.log("====================================")
+	// console.log("All goals from MonthLine", allMilestones)
+	// console.log("====================================")
 	const importData = async () => {
 		try {
 			let keys = await AsyncStorage.getAllKeys()
@@ -97,15 +98,21 @@ const MonthTimeline = ({
 					item !== "FirsttimeIndividual" &&
 					item !== "FirsttimeTaskTutorial" &&
 					item !== "FirsttimeTimelineFlow" &&
-					item !== "Firsttime"
+					item !== "Firsttime" &&
+					item !== "currentUser"
 			)
 			let result = []
 			for (const key of keys) {
 				const val = await AsyncStorage.getItem(key)
 				result.push(JSON.parse(val))
 			}
-
-			setAllGoals(result)
+			user &&
+				user.uid &&
+				getGoalsOfCurrentUser(user.uid, (userGoals) => {
+					let allGoals = [...userGoals]
+					allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
+					setAllGoals(allGoals)
+				})
 		} catch (error) {
 			console.error(error)
 		}
@@ -118,7 +125,7 @@ const MonthTimeline = ({
 					...milestone,
 					milestone: clickedMilestoneName,
 					// date: convertToDateString(clickedMilestoneDate),
-					date: dayjs(clickedMilestoneDate),
+					date: dayjs(clickedMilestoneDate).format(commonDateFormat),
 				}
 			}
 			return milestone
@@ -336,7 +343,10 @@ const MonthTimeline = ({
 						<DatePicker
 							androidVariant="iosClone"
 							date={clickedMilestoneDate}
-							onDateChange={setClickedMilestoneDate}
+							onDateChange={(date) => {
+								console.log(date)
+								setClickedMilestoneDate(date)
+							}}
 							mode="date"
 							textColor="#FDF9F2"
 							locale="en"
@@ -434,6 +444,7 @@ const mapStateToProps = (state) => {
 		clickedGoal: state.milestone.clickedGoal,
 		booleanFlag: state.milestone.booleanFlag,
 		loading: state.milestone.loading,
+		user: state.milestone.user,
 	}
 }
 

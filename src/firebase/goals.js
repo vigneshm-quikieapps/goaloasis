@@ -113,7 +113,7 @@ export const addGoalToFirestore = (data, callback) => {
 		.then((Obj) => {
 			addGoalDataToAsyncStorage(Obj) // adding data to Async Storage
 			console.log("FB obj added to async", Obj)
-			callback ? callback() : null
+			callback ? callback(Obj) : null
 		})
 		.catch((err) => {
 			console.log("FB async goal add error", err)

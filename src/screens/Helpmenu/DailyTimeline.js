@@ -31,19 +31,21 @@ import {
 } from "../../core/constants"
 import {setAllGoals, setBooleanFlag, setClickedGoal, setShowLoader} from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
-import {addMilestoneToFirestore} from "../../firebase/goals"
+import {addMilestoneToFirestore, getGoalsOfCurrentUser} from "../../firebase/goals"
 import dayjs from "dayjs"
 import GestureHandler, {PinchGestureHandler, State} from "react-native-gesture-handler"
 
-const DailyTimeline = ({
-	allGoals,
-	clickedGoal,
-	setClickedGoal,
-	// setAllGoals
-	booleanFlag,
-	setShowLoader,
-	loading,
-}) => {
+const DailyTimeline = (props) => {
+	const {
+		allGoals,
+		clickedGoal,
+		setClickedGoal,
+		// setAllGoals,
+		booleanFlag,
+		setShowLoader,
+		loading,
+		user,
+	} = props
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
 	const [date, setDate] = useState(dayjs())
@@ -105,15 +107,21 @@ const DailyTimeline = ({
 					item !== "FirsttimeIndividual" &&
 					item !== "FirsttimeTaskTutorial" &&
 					item !== "FirsttimeTimelineFlow" &&
-					item !== "Firsttime"
+					item !== "Firsttime" &&
+					item !== "currentUser"
 			)
 			let result = []
 			for (const key of keys) {
 				const val = await AsyncStorage.getItem(key)
 				result.push(JSON.parse(val))
 			}
-
-			setAllGoals(result)
+			user &&
+				user.uid &&
+				getGoalsOfCurrentUser(user.uid, (userGoals) => {
+					let allGoals = [...userGoals]
+					allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
+					setAllGoals(allGoals)
+				})
 		} catch (error) {
 			console.error(error)
 		}
@@ -127,7 +135,7 @@ const DailyTimeline = ({
 					taskData: mile.taskData.map((task) => {
 						if (task.task == oldTask) {
 							// let date = convertToDateString(new Date(clickedTaskDate))
-							let date = dayjs(clickedTaskDate)
+							let date = dayjs(clickedTaskDate).format(commonDateFormat)
 							return {
 								...task,
 								date: date,
@@ -438,6 +446,7 @@ const mapStateToProps = (state) => {
 		clickedGoal: state.milestone.clickedGoal,
 		booleanFlag: state.milestone.booleanFlag,
 		loading: state.milestone.loading,
+		user: state.milestone.user,
 	}
 }
 
