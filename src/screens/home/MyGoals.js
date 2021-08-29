@@ -36,7 +36,7 @@ import {
 import {
 	getClickedGoalFromAsyncStorage,
 	getFirstTimeTaskTutorial,
-	getFirstTimeTimelineFlow,
+	FirsttimeTimelineFlow,
 } from "../../utils/asyncStorage/goalsAsyncStore"
 import {
 	ColorConstants,
@@ -78,9 +78,15 @@ const MyGoals = (props) => {
 		fetchData()
 	}, [testData, firstTime, firstTimeTimelineFlow, allGoals])
 
+	let checkingIfTimeLineIsFirstTimeOrNot = null
 	const fetchData = async () => {
 		const data = await getFirstTimeTaskTutorial().catch((err) => console.log(err))
-		const data1 = await getFirstTimeTimelineFlow().catch((err) => console.log(err))
+		const data1 = await FirsttimeTimelineFlow().catch((err) => console.log(err))
+		checkingIfTimeLineIsFirstTimeOrNot = data1
+		console.log("====================================")
+		console.log("data", data)
+		console.log("data1", data1)
+		console.log("checkingIfTimeLineIsFirstTimeOrNot", checkingIfTimeLineIsFirstTimeOrNot)
 
 		setFirstTime(data)
 		setFirstTimeForTimeLine(data1)
@@ -127,8 +133,6 @@ const MyGoals = (props) => {
 	}
 
 	const colorArray = Object.values(forGoals)
-
-	// console.log("loadinggggggg", loading)
 
 	let count = 0
 
@@ -227,13 +231,16 @@ const MyGoals = (props) => {
 			}
 		}
 	}
-	useEffect(() => {
-		// allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
+	// useEffect(() => {
+	// 	// allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
 
-		if (milestoneTaskCounter > 0) {
-			scheduleNotification()
-		}
-	}, [milestoneTaskCounter])
+	// 	if (milestoneTaskCounter > 0) {
+	// 		scheduleNotification()
+	// 	}
+	// }, [milestoneTaskCounter])
+	useEffect(() => {
+		scheduleNotification()
+	}, [])
 	useEffect(() => {
 		// console.log("ALL GOALS", allGoals[0].goalMilestone[0].taskData)
 		// allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
@@ -242,7 +249,7 @@ const MyGoals = (props) => {
 		setTaskCounter(count)
 		//new Added
 		getAllTodaysTask()
-		// getMilestoneIfHasOneTaskToComplete()
+		getMilestoneIfHasOneTaskToComplete()
 		setMilestoneTaskCounter(counter)
 	}, [allGoals])
 
@@ -501,12 +508,14 @@ const MyGoals = (props) => {
 														color: getColor(index),
 														fontWeight: "bold",
 														padding: sizeConstants.eight,
+														// backgroundColor: "pink",
+														// alignSelf: "center",
 													}}
 												>
 													{task.isCompleted ? "100%" : `${completedPercent}%`}
 												</Text>
 											</ProgressCircle>
-											<Text style={CommonStyles.goalText}>{task.name}</Text>
+											<Text style={[CommonStyles.goalText, {maxWidth: 120}]}>{task.name}</Text>
 										</TouchableOpacity>
 									</View>
 								)
@@ -538,23 +547,14 @@ const MyGoals = (props) => {
 						</View>
 					</View>
 				</ScrollView>
-
-				{/* <View style={CommonStyles.bottomBtnContainer}>
-					<TouchableOpacity
-						style={CommonStyles.bottomBtn2}
-						// onPress={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
-						onPress={() => navigation.navigate("DParticularGoal")}
-					>
-						<MaterialCommunityIcons name="file-tree-outline" size={34} color="white" />
-					</TouchableOpacity>
-				</View> */}
 			</View>
 
 			<CommonHomeButton
 				iconName={"file-tree-outline"}
 				size={34}
-				click={!firstTimeTimelineFlow ? gotoTimelineTutorial : gotoTimelineScreen}
-				// click={tempRoute}
+				click={
+					checkingIfTimeLineIsFirstTimeOrNot === null ? gotoTimelineTutorial : gotoTimelineScreen
+				}
 				iconColor={ColorConstants.white}
 				bgColor={ColorConstants.lighterBlue}
 				doNotWorkBackFunctionality={true}

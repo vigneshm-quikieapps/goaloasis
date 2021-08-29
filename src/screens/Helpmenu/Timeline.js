@@ -14,6 +14,7 @@ import {useNavigation} from "@react-navigation/native"
 import Timeline from "react-native-timeline-flatlist"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {AntDesign} from "@expo/vector-icons"
+import {scale} from "react-native-size-matters"
 
 import RBSheet from "react-native-raw-bottom-sheet"
 import {Calendar, LocaleConfig} from "react-native-calendars"
@@ -89,6 +90,9 @@ const TimelineScreen = ({
 	useEffect(() => {
 		importData()
 	}, [clickedGoal])
+	console.log("====================================")
+	console.log("All goals from Timeline", allGoalsforTimeline)
+	console.log("====================================")
 
 	const importData = async () => {
 		try {
@@ -128,7 +132,7 @@ const TimelineScreen = ({
 		})
 	}
 
-	scale = new Animated.Value(1)
+	let scale = new Animated.Value(1)
 	_onPinchGestureEvent = Animated.event([{nativeEvent: {scale: scale}}], {
 		useNativeDriver: true,
 	})
@@ -152,7 +156,7 @@ const TimelineScreen = ({
 				bounciness: 1,
 			}).start()
 
-			console.log("EVENT 1", event.nativeEvent)
+			// console.log("EVENT 1", event.nativeEvent)
 			// navigation.navigate("mygoals")
 		}
 	}

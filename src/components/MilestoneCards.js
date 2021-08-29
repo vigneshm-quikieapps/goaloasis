@@ -491,6 +491,8 @@ const MilestoneCards = ({
 						let bottomItem = item.item.reoccuring
 							? item.item.reoccuring.reoccuringType == "Daily"
 								? "Reoccuring Daily"
+								: item.item.reoccuring.reoccuringType == "Weekly"
+								? "Reoccuring Weekly"
 								: dateStr
 							: dateStr
 

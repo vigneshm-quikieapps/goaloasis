@@ -92,11 +92,17 @@ const AllMilestonesScreen = (props) => {
 						})
 					}}
 				>
-					<View style={{marginTop: sizeConstants.xxl, flexDirection: "row", paddingBottom: 10}}>
+					<View
+						style={{
+							marginTop: sizeConstants.xxl,
+							flexDirection: "row",
+							paddingBottom: 10,
+						}}
+					>
 						<View>
 							<Text style={styles.myGoalsText}>My milestones</Text>
 						</View>
-						<View style={styles.viewTap}>
+						<View style={[styles.viewTap]}>
 							<Entypo
 								name="plus"
 								size={33}
@@ -232,9 +238,10 @@ const styles = StyleSheet.create({
 
 	myGoalsText: {
 		fontSize: sizeConstants.twentyTwoScale, //25
-
+		// backgroundColor: "pink",
 		fontWeight: "bold",
 		color: "black",
+		width: "110%",
 		marginHorizontal: sizeConstants.twentyX,
 	},
 

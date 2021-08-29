@@ -33,6 +33,9 @@ import {setBooleanFlag, setFirstTimeForIndividualGoal} from "../../redux/actions
 import {height} from "./../../core/constants"
 
 const DParticularGoals = (props) => {
+	console.log("====================================")
+	console.log("PROSP", props)
+	console.log("====================================")
 	const navigation = useNavigation()
 	const [modalVisible, setModalVisible] = useState(false)
 	const [taskCompleted, setCompleted] = useState(false)
@@ -160,7 +163,9 @@ const DParticularGoals = (props) => {
 							size={33}
 							color="#66A3A4"
 							onPress={() => {
-								navigation.navigate("FirstMilestone")
+								navigation.navigate("FirstMilestone", {
+									setBackEditScreen: true,
+								})
 							}}
 							style={{fontWeight: "bold"}}
 						/>
@@ -438,6 +443,8 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		color: "#333333",
 		marginHorizontal: verticalScale(20),
+		width: "80%",
+		// backgroundColor: "pink",
 	},
 	myGoalsubtext: {
 		fontSize: sizeConstants.fourteenScale,

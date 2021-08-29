@@ -58,13 +58,14 @@ const ThirdTaskFlow = ({
 	// 	navigation.goBack()
 	// }
 	const [taskName, setTaskName] = useState(currentTaskData.taskName)
-	const [clickedDate, setDate] = useState(
-		currentTaskData.taskDate === null ||
-			currentTaskData.taskDate === "" ||
-			currentTaskData.taskDate === undefined
-			? dayjs().format(commonDateFormat)
-			: currentTaskData.taskDate
-	)
+	// const [clickedDate, setDate] = useState(
+	// 	currentTaskData.taskDate === null ||
+	// 		currentTaskData.taskDate === "" ||
+	// 		currentTaskData.taskDate === undefined
+	// 		? dayjs().format(commonDateFormat)
+	// 		: currentTaskData.taskDate
+	// )
+	const [clickedDate, setDate] = useState(dayjs().format(commonDateFormat))
 
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 

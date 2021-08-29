@@ -18,11 +18,9 @@ const initialState = {
 	user: null,
 }
 
-console.log("NEW MILESTONE DATA", initialState.newMileStone)
 const milestoneReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.ADD_NEW_MILESTONE:
-			console.log("adding new milestone", action.value)
 			return {
 				...state,
 				newMileStone: action.value,

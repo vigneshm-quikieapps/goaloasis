@@ -723,11 +723,12 @@ export const CommonStyles = ScaledSheet.create({
 		flexWrap: "wrap",
 		// justifyContent: "center",
 		width: "100%",
+		// backgroundColor: "green",
 	},
 	logoContainer: {
 		marginLeft: sizeConstants.fifty, //TODO
 		marginTop: sizeConstants.xl,
-		// backgroundColor: "green",
+		// backgroundColor: "blue",
 	},
 	goalText: {
 		fontSize: sizeConstants.sixteenX,

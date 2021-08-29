@@ -147,5 +147,7 @@ const styles = StyleSheet.create({
 		color: "black",
 		alignSelf: "center",
 		textAlign: "center",
+		// backgroundColor: "pink",
+		maxWidth: "70%",
 	},
 })

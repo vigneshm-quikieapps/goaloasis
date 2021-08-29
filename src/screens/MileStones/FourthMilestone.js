@@ -97,8 +97,7 @@ const FourthMilestone = ({
 
 			setClickedGoal(updatedObj)
 		})
-
-		console.log("MILESTONE ADDED")
+		setMilestone("")
 	}
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
@@ -274,7 +273,7 @@ const FourthMilestone = ({
 							back
 							prevClick={() =>
 								navigation.navigate("FirstMilestone", {
-									setBackEditScreen: true,
+									// setBackEditScreen: true,
 								})
 							}
 						/>

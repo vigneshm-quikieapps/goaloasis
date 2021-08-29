@@ -11,10 +11,11 @@ import {connect} from "react-redux"
 import {setFirstTimeForTimeLine} from "../redux/actions"
 import {ColorConstants, CommonStyles, sizeConstants} from "./../core/constants"
 
-const TimelineFlowSlider = ({data, setFirstTimeForTimeLine}) => {
+const TimelineFlowSlider = ({data, setFirstTimeForTimeLine, firstTimeTimelineFlow, firstTime}) => {
 	const navigation = useNavigation()
 	const {
 		title,
+		// firstTimeTimelineFlow,
 		subTitle1,
 		subTitle2,
 		first,
@@ -51,12 +52,12 @@ const TimelineFlowSlider = ({data, setFirstTimeForTimeLine}) => {
 			backImg = require("../assets/images/firstTimeLine.png")
 			break
 	}
+
 	const setLoggedIn = async () => {
 		await setisFirstTimeTimelineFlow()
-		console.log("CAME HEREEEEE 1")
 
 		setFirstTimeForTimeLine("visited")
-		console.log("CAME HEREEEEE 2")
+
 		gotoTimeLine()
 	}
 	const gotoTimeLine = () => {
@@ -146,7 +147,12 @@ const TimelineFlowSlider = ({data, setFirstTimeForTimeLine}) => {
 						>
 							{/* 20 */}
 							<Text
-								style={{color: "white", alignSelf: "center", fontSize: sizeConstants.eighteenScale}}
+								style={{
+									maxWidth: 90,
+									color: "white",
+									alignSelf: "center",
+									fontSize: sizeConstants.sixteenX,
+								}}
 							>
 								Milestone
 							</Text>
@@ -229,6 +235,7 @@ const TimelineFlowSlider = ({data, setFirstTimeForTimeLine}) => {
 const mapStateToProps = (state) => {
 	return {
 		firstTime: state.milestone.firstTime,
+		firstTimeTimelineFlow: state.milestone.firstTimeTimelineFlow,
 	}
 }
 

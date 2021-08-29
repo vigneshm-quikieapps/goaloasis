@@ -39,7 +39,7 @@ const DailyTimeline = ({
 	allGoals,
 	clickedGoal,
 	setClickedGoal,
-	setAllGoals,
+	// setAllGoals
 	booleanFlag,
 	setShowLoader,
 	loading,
@@ -66,7 +66,9 @@ const DailyTimeline = ({
 						let sortDate = dayjs(task.date).toDate()
 
 						allTasks.push({
+							// key: `${goal.id}_${mile.milestone}_${task.task}`,
 							key: `${goal.id}${mile.milestone}${task.task}`,
+
 							title: task.task,
 							description: "",
 							time: date,
@@ -187,13 +189,13 @@ const DailyTimeline = ({
 		// console.log("rowID", rowID)
 
 		let title = <Text style={[styles.title]}>{rowData.title}</Text>
-		var desc = null
-		if (rowData.description)
-			desc = (
-				<View style={[styles.descriptionContainer]}>
-					<Text>{rowData.description}</Text>
-				</View>
-			)
+		// var desc = null
+		// if (rowData.description)
+		// 	desc = (
+		// 		<View style={[styles.descriptionContainer]}>
+		// 			<Text>{rowData.description}</Text>
+		// 		</View>
+		// 	)
 
 		return (
 			<View
@@ -205,7 +207,7 @@ const DailyTimeline = ({
 				}}
 			>
 				{title}
-				{desc}
+				{/* {desc} */}
 			</View>
 		)
 	}

@@ -177,9 +177,10 @@ const First = ({route, clickedMilestone}) => {
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={CommonStyles.cancelReoccuring}
-						onPress={() => {
-							navigation.goBack()
-						}}
+						// onPress={() => {
+						// 	navigation.goBack()
+						// }}
+						onPress={() => navigation.navigate("firsttaskflow")}
 					>
 						<Text style={CommonStyles.cancelReoccuringText}>Cancel</Text>
 					</TouchableOpacity>

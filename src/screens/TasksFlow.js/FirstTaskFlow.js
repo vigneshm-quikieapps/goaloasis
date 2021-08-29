@@ -53,26 +53,21 @@ const FirstTaskFlow = ({
 	setBooleanFlag,
 	setClickedGoal,
 }) => {
+	const [taskName, setTaskName] = useState("")
+
 	useEffect(() => {
-		console.log("newMileStone", newMileStone)
+		setTaskName("")
 	}, [])
 	const navigation = useNavigation()
-	const [taskName, setTaskName] = useState("")
 	const [clickedDate, setDate] = useState(dayjs().format(commonDateFormat))
 
 	const nextScreen = () => {
-		// navigation.navigate("secondtaskflow", {
-		// 	currentTaskData: {
-		// 		task: taskName,
-		// 		date: clickedDate,
-		// 	},
-		// })
 		navigation.navigate("thirdtaskflow", {
-			// currentTaskData: {taskDate: currentTaskData.date, taskName: taskName},
-			currentTaskData: {taskDate: dayjs(), taskName: taskName},
+			currentTaskData: {taskDate: dayjs().format(commonDateFormat), taskName: taskName},
 		})
-		// navigation.navigation("thirdtaskflow")
+		setTaskName("")
 	}
+
 	const [toggleCalandar, setToggleCalandar] = useState(false)
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 	return (
@@ -117,6 +112,7 @@ const FirstTaskFlow = ({
 								onChangeText={(text) => setTaskName(text)}
 								maxLength={28}
 								focusable={true}
+								defaultValue=""
 							/>
 						</View>
 

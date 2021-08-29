@@ -58,17 +58,40 @@ const FirstMilestone = ({
 	route,
 	allGoals,
 }) => {
-	const [milestone, setMilestone] = useState("")
 	const [clickedDate, setDate] = useState(dayjs().format(commonDateFormat))
 	const navigation = useNavigation()
-	const {setBackEditScreen} = route.params !== undefined ? route.params : false
+	const [toggleCalandar, setToggleCalandar] = useState(false)
+
+	const [milestone, setMilestone] = useState("")
+	useEffect(() => {
+		if (milestone !== null || milestone !== "") {
+			setMilestone("")
+			console.log("====================================")
+			console.log("MIELSTONE NAMEeeee", milestone)
+			console.log("====================================")
+		}
+	}, [])
+
+	useEffect(() => {
+		console.log("MIELSTONE_NAME ", milestone)
+	}, [])
+	console.log("popopopopopopopopopopooopopoop ", milestone)
+
+	// setBackEditScreen === true ? setMilestone("") : setMilestone("")
 	const FourthMileStone = () => {
 		navigation.navigate("FourthMilestone", {
-			currentMilestoneData: {milestoneDate: dayjs(), milestoneName: milestone},
+			currentMilestoneData: {
+				milestoneDate: dayjs().format(commonDateFormat),
+				milestoneName: milestone,
+			},
 		})
+
+		// setToggleCalandar(true)
 	}
-	console.log("setBackEditScreen", setBackEditScreen)
-	const [toggleCalandar, setToggleCalandar] = useState(false)
+
+	// useEffect(() => {
+	// 	route.params.setBackEditScreen ? setMilestone("") : setMilestone("")
+	// }, [])
 
 	// const nextScreen = () => {
 	// 	let color = colorsForTimeline.find((itemColor) => itemColor.goal === clickedGoal.color)
@@ -145,12 +168,13 @@ const FirstMilestone = ({
 									placeholder="Type Here"
 									onChangeText={(text) => setMilestone(text)}
 									maxLength={28}
+									defaultValue=""
 								/>
 							</View>
 							<Text style={styles.subTitle}>
 								{tip()} Think of milestones as a mini goal that helps you reach your ultimate goal.
 							</Text>
-							{milestone === "" || (toggleCalandar === true && setBackEditScreen === undefined) ? (
+							{milestone === "" ? (
 								<View>
 									<Text style={styles.bigTitle}>Edit target date</Text>
 

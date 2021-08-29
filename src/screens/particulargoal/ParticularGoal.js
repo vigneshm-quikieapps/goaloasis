@@ -28,6 +28,7 @@ import AppButton from "../MileStones/AppButton"
 import Swipeout from "rc-swipeout"
 import {LongPressGestureHandler, State} from "react-native-gesture-handler"
 import dayjs from "dayjs"
+import FirstMilestone from "../MileStones/FirstMilestone"
 
 const ParticularGoal = (props) => {
 	const navigation = useNavigation()
@@ -59,14 +60,13 @@ const ParticularGoal = (props) => {
 		console.log("isFirst", isFirst)
 		setModalVisible(isFirst)
 	}
-
+	let dummy = ""
 	const closeModal = async () => {
 		await setisFirstTimeIndividual()
 		props.setFirstTimeForIndividualGoal("visited")
 		setModalVisible(false)
 		// navigation.navigate("milestones")
 	}
-
 	const dataText = ["Congrats! You're one step closer to your goal.", "", ""]
 	const buttonText = [
 		"Long Press to mark complete",
@@ -121,7 +121,6 @@ const ParticularGoal = (props) => {
 					navigation.navigate("milestones", {
 						paramsItinerary: true,
 					})
-					console.log("why NOT WORKING")
 				}}
 				style={[CommonStyles.titleContainer]}
 
@@ -412,13 +411,15 @@ const ParticularGoal = (props) => {
 				>
 					<View style={[styles.addMileStone]}>
 						<Text style={styles.myGoalsText}>Add Milestones</Text>
-						<View style={styles.viewTap}>
+						<View style={[styles.viewTap]}>
 							<Entypo
 								name="plus"
 								size={33}
 								color="#66A3A4"
 								onPress={() => {
-									navigation.navigate("FirstMilestone")
+									navigation.navigate("FirstMilestone", {
+										setBackEditScreen: true,
+									})
 								}}
 								style={{fontWeight: "bold"}}
 							/>
@@ -426,19 +427,19 @@ const ParticularGoal = (props) => {
 					</View>
 				</GestureRecognizer>
 				<View>
-					<View>
-						{/* <Text style={styles.myGoalsubtext}>
+					{/* <View> */}
+					{/* <Text style={styles.myGoalsubtext}>
 						It looks like you don’t have a plan to achieve your goal yet. Don’t worry! Tap (+) to
 						add a milestone and get on your way.
 					</Text> */}
-						<ScrollView>
-							<MilestoneCards
-								style={{backgroundColor: ColorConstants.lighterBlue}}
-								data={DATA[DATA.length - 1]}
-								style={{marginTop: 0}}
-							/>
-						</ScrollView>
-						{/* <View
+					<ScrollView>
+						<MilestoneCards
+							style={{backgroundColor: ColorConstants.lighterBlue}}
+							data={DATA[DATA.length - 1]}
+							style={{marginTop: 0}}
+						/>
+					</ScrollView>
+					{/* <View
 							style={{
 								alignItems: "center",
 								flexDirection: "row",
@@ -460,7 +461,7 @@ const ParticularGoal = (props) => {
 								</TouchableOpacity>
 							</View>
 						</View> */}
-					</View>
+					{/* </View> */}
 
 					{/* <View style={styles.bottomBtnContainer}>
 					<TouchableOpacity style={styles.bottomBtn} onPress={goBack}>
@@ -548,6 +549,7 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		color: "black",
 		marginHorizontal: verticalScale(20),
+		width: "80%",
 	},
 	myGoalsubtext: {
 		fontSize: sizeConstants.fourteenScale,
