@@ -11,6 +11,7 @@ import {setClickedGoal, setShowLoader} from "../../redux/actions"
 import dayjs from "dayjs"
 import {sizeConstants} from "../../core/constants"
 import {scale} from "react-native-size-matters"
+import {commonDateFormat} from "./../../core/constants"
 
 const EditGoalhelp = ({clickedGoal, setClickedGoal, setShowLoader, loading}) => {
 	console.log(clickedGoal)
@@ -25,11 +26,12 @@ const EditGoalhelp = ({clickedGoal, setClickedGoal, setShowLoader, loading}) => 
 	const goBack = () => {
 		navigation.goBack()
 	}
+
 	const updateGoal = () => {
 		let updatedObj = {
 			...clickedGoal,
 			name: goalName,
-			targetDate: targetDate,
+			targetDate: dayjs(targetDate).format(commonDateFormat),
 		}
 		setShowLoader(true)
 		updateGoalToFirestore(updatedObj, clickedGoal.name, () => {

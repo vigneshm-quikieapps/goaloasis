@@ -36,7 +36,7 @@ import {
 import {
 	getClickedGoalFromAsyncStorage,
 	getFirstTimeTaskTutorial,
-	FirsttimeTimelineFlow,
+	getFirstTimeTimelineFlow,
 } from "../../utils/asyncStorage/goalsAsyncStore"
 import {
 	ColorConstants,
@@ -60,6 +60,7 @@ const MyGoals = (props) => {
 		firstTime,
 		setFirstTime,
 		firstTimeTimelineFlow,
+		setFirstTimeForTimeLine,
 		setClickedGoal,
 		setAllGoals,
 		allGoals,
@@ -78,18 +79,18 @@ const MyGoals = (props) => {
 		fetchData()
 	}, [testData, firstTime, firstTimeTimelineFlow, allGoals])
 
-	let checkingIfTimeLineIsFirstTimeOrNot = null
+	// let checkingIfTimeLineIsFirstTimeOrNot = null
 	const fetchData = async () => {
 		const data = await getFirstTimeTaskTutorial().catch((err) => console.log(err))
-		const data1 = await FirsttimeTimelineFlow().catch((err) => console.log(err))
-		checkingIfTimeLineIsFirstTimeOrNot = data1
-		console.log("====================================")
-		console.log("data", data)
-		console.log("data1", data1)
-		console.log("checkingIfTimeLineIsFirstTimeOrNot", checkingIfTimeLineIsFirstTimeOrNot)
+		const data1 = await getFirstTimeTimelineFlow().catch((err) => console.log(err))
+		// checkingIfTimeLineIsFirstTimeOrNot = data1
+		// console.log("checkingIfTimeLineIsFirstTimeOrNot", checkingIfTimeLineIsFirstTimeOrNot)
 
 		setFirstTime(data)
 		setFirstTimeForTimeLine(data1)
+		console.log("====================================")
+		console.log("FIRST TIME TIMELINE FLOW", firstTimeTimelineFlow)
+		console.log("====================================")
 	}
 
 	const navigation = useNavigation()
@@ -277,9 +278,11 @@ const MyGoals = (props) => {
 			user &&
 				user.uid &&
 				getGoalsOfCurrentUser(user.uid, (userGoals) => {
-					let allGoals = [...userGoals]
-					allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
-					setAllGoals(allGoals)
+					let result = [...userGoals]
+
+					console.log("result", result)
+					result.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
+					setAllGoals(result)
 				})
 		} catch (error) {
 			console.error(error)
@@ -550,9 +553,7 @@ const MyGoals = (props) => {
 			<CommonHomeButton
 				iconName={"file-tree-outline"}
 				size={34}
-				click={
-					checkingIfTimeLineIsFirstTimeOrNot === null ? gotoTimelineTutorial : gotoTimelineScreen
-				}
+				click={firstTimeTimelineFlow === null ? gotoTimelineTutorial : gotoTimelineScreen}
 				iconColor={ColorConstants.white}
 				bgColor={ColorConstants.lighterBlue}
 				doNotWorkBackFunctionality={true}

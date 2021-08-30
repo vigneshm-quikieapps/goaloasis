@@ -344,7 +344,6 @@ const MonthTimeline = (props) => {
 							androidVariant="iosClone"
 							date={clickedMilestoneDate}
 							onDateChange={(date) => {
-								console.log(date)
 								setClickedMilestoneDate(date)
 							}}
 							mode="date"

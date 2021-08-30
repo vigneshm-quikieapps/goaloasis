@@ -68,8 +68,11 @@ const GoalStep3 = ({
 		})
 	}
 	const [date, setDate] = useState(dayjs())
-
-	console.log("LOADING", loading)
+	useEffect(() => {
+		console.log("====================================")
+		console.log(dayjs())
+		console.log("====================================")
+	}, [])
 
 	const getColorForGoal = () => {
 		return colorsForTimeline[allGoals.length].goal

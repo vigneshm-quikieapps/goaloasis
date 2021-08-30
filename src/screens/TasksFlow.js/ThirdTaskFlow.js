@@ -75,6 +75,7 @@ const ThirdTaskFlow = ({
 	}
 
 	const nextScreen = () => {
+		setShowLoader(true)
 		let newMilestoneItemWithTask = clickedGoal.goalMilestone.map((item) => {
 			if (item.milestone == clickedMilestone) {
 				let filteredTasks = item.taskData.filter((tsk) => tsk.task != taskName)
@@ -107,7 +108,6 @@ const ThirdTaskFlow = ({
 			goalMilestone: newMilestoneItemWithTask,
 		}
 
-		setShowLoader(true)
 		addMilestoneToFirestore(clickedGoal, newMilestoneItemWithTask, () => {
 			setShowLoader(false)
 
@@ -115,7 +115,12 @@ const ThirdTaskFlow = ({
 			navigationCallback()
 		})
 	}
-
+	const nextScreen1 = () => {
+		navigation.navigate("first", {
+			taskDate: clickedDate,
+			taskName: taskName,
+		})
+	}
 	return (
 		<StatusBarScreen style={CommonStyles.introContainer}>
 			<ScrollView>
@@ -159,7 +164,7 @@ const ThirdTaskFlow = ({
 						<TouchableOpacity
 							activeOpacity={taskName !== "" ? 0.5 : 1}
 							onPress={() => {
-								taskName != "" && nextScreen()
+								taskName != "" && nextScreen1()
 							}}
 							style={{position: "absolute", right: 25}}
 						>
@@ -253,10 +258,7 @@ const ThirdTaskFlow = ({
 					<TouchableOpacity
 						style={[CommonStyles.containerMilestone, {marginTop: sizeConstants.s}]}
 						onPress={() => {
-							navigation.navigate("first", {
-								taskDate: clickedDate,
-								taskName: taskName,
-							})
+							taskName != "" && nextScreen1()
 						}}
 					>
 						<Text style={CommonStyles.reoccuring}>Set reoccuring</Text>
@@ -266,7 +268,7 @@ const ThirdTaskFlow = ({
 						right={true}
 						style={taskName === "" ? {backgroundColor: ColorConstants.whiteOp50} : {}}
 						nextClick={() => {
-							taskName != "" && nextScreen()
+							taskName != "" && nextScreen1()
 						}}
 						size={50}
 						bottom={0}

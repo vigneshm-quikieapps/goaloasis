@@ -112,7 +112,7 @@ const DParticularGoals = (props) => {
 							<Text style={{fontSize: sizeConstants.fourteenScale, color: "#333333"}}>
 								Target Date
 							</Text>
-							<Text style={{fontWeight: "bold"}}>
+							<Text style={{fontWeight: "bold", color: "#333333"}}>
 								{dayjs(props.clickedGoal.targetDate).format(commonDateFormat)}
 							</Text>
 						</View>

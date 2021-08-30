@@ -348,7 +348,7 @@ const ParticularGoal = (props) => {
 								<Text
 									style={{
 										fontWeight: "bold",
-										fontSize: sizeConstants.fourteenScale,
+										// fontSize: sizeConstants.fourteenScale,
 										color: "#333333",
 									}}
 								>

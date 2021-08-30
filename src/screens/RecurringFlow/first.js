@@ -24,7 +24,10 @@ const First = ({route, clickedMilestone}) => {
 	const [tName, setTaskName] = useState(taskName)
 
 	const [reoccuringDays, setReoccuringDays] = useState([])
-
+	// console.log("====================================")
+	// console.log("FROM first", tName)
+	// console.log("FROM first", taskDate)
+	// console.log("====================================")
 	const options = [
 		{label: "Daily", value: "Daily"},
 		{label: "Weekly", value: "Weekly"},

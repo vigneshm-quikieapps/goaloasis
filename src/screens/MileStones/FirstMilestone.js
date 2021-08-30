@@ -63,21 +63,14 @@ const FirstMilestone = ({
 	const [toggleCalandar, setToggleCalandar] = useState(false)
 
 	const [milestone, setMilestone] = useState("")
-	useEffect(() => {
-		if (milestone !== null || milestone !== "") {
-			setMilestone("")
-			console.log("====================================")
-			console.log("MIELSTONE NAMEeeee", milestone)
-			console.log("====================================")
-		}
-	}, [])
+	// useEffect(() => {
+	// 	setMilestone("")
+	// 	console.log("====================================")
+	// 	console.log(milestone)
+	// 	console.log(route.params.setBackEditScreen)
+	// 	console.log("====================================")
+	// }, [newMileStone, route.params.setBackEditScreen])
 
-	useEffect(() => {
-		console.log("MIELSTONE_NAME ", milestone)
-	}, [])
-	console.log("popopopopopopopopopopooopopoop ", milestone)
-
-	// setBackEditScreen === true ? setMilestone("") : setMilestone("")
 	const FourthMileStone = () => {
 		navigation.navigate("FourthMilestone", {
 			currentMilestoneData: {
@@ -85,6 +78,7 @@ const FirstMilestone = ({
 				milestoneName: milestone,
 			},
 		})
+		setMilestone("")
 
 		// setToggleCalandar(true)
 	}
@@ -168,7 +162,7 @@ const FirstMilestone = ({
 									placeholder="Type Here"
 									onChangeText={(text) => setMilestone(text)}
 									maxLength={28}
-									defaultValue=""
+									value={milestone}
 								/>
 							</View>
 							<Text style={styles.subTitle}>

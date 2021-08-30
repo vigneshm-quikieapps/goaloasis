@@ -63,7 +63,6 @@ const DailyTimeline = (props) => {
 			goal.goalMilestone.forEach((mile) => {
 				if (mile.taskData.length) {
 					mile.taskData.forEach((task) => {
-						// let date = convertToDateString(new Date(task.date))
 						let date = dayjs(task.date).format(commonDateFormat)
 						let sortDate = dayjs(task.date).toDate()
 
@@ -134,7 +133,6 @@ const DailyTimeline = (props) => {
 					...mile,
 					taskData: mile.taskData.map((task) => {
 						if (task.task == oldTask) {
-							// let date = convertToDateString(new Date(clickedTaskDate))
 							let date = dayjs(clickedTaskDate).format(commonDateFormat)
 							return {
 								...task,

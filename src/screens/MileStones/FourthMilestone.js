@@ -62,6 +62,7 @@ const FourthMilestone = ({
 	// console.log("DATE", date)
 	// const [clickedDate, setDate] = useState(dayjs().format(commonDateFormat))
 	const [clickedDate, setDate] = useState(currentMilestoneData.milestoneDate)
+
 	const nextScreen = () => {
 		let color = colorsForTimeline.find((itemColor) => itemColor.goal === clickedGoal.color)
 

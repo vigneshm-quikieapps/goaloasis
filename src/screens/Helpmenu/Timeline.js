@@ -121,7 +121,7 @@ const TimelineScreen = (props) => {
 	const updateGoal = () => {
 		let updatedObj = {
 			...clickedGoal,
-			targetDate: clickedGoalDate,
+			targetDate: dayjs(clickedGoalDate).format(commonDateFormat),
 			name: clickedGoalName,
 		}
 		setShowLoader(true)

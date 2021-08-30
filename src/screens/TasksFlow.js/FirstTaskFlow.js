@@ -112,7 +112,7 @@ const FirstTaskFlow = ({
 								onChangeText={(text) => setTaskName(text)}
 								maxLength={28}
 								focusable={true}
-								defaultValue=""
+								value={taskName}
 							/>
 						</View>
 
