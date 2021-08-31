@@ -47,12 +47,14 @@ import {
 } from "../../core/constants"
 import firestore from "@react-native-firebase/firestore"
 import {CommonHomeButton} from "../../components/CommonComponents"
-import dayjs from "dayjs"
+
 const Height = Dimensions.get("window").height
 import PushNotification, {Importance} from "react-native-push-notification"
 import {GoogleSignin} from "@react-native-google-signin/google-signin"
 import auth from "@react-native-firebase/auth"
-
+import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 const MyGoals = (props) => {
 	const {
 		testData,

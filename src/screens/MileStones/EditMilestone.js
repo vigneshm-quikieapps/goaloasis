@@ -9,6 +9,8 @@ import {Calendar, LocaleConfig} from "react-native-calendars"
 import {calendarLocale, CustomDayComponentForCalendar} from "../../components/CommonComponents"
 import {addMilestoneToFirestore} from "../../firebase/goals"
 import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"
