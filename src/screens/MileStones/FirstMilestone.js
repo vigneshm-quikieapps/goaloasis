@@ -40,9 +40,11 @@ import {
 	CommonPrevNextButton,
 	CustomDayComponentForCalendar,
 } from "../../components/CommonComponents"
-import dayjs from "dayjs"
-import AppButton from "./AppButton"
 
+import AppButton from "./AppButton"
+import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"
 

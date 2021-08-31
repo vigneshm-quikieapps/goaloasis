@@ -32,9 +32,11 @@ import {
 import {setAllGoals, setBooleanFlag, setClickedGoal, setShowLoader} from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
 import {addMilestoneToFirestore, getGoalsOfCurrentUser} from "../../firebase/goals"
-import dayjs from "dayjs"
 import GestureHandler, {PinchGestureHandler, State} from "react-native-gesture-handler"
 
+import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 const DailyTimeline = (props) => {
 	const {
 		allGoals,
@@ -48,9 +50,9 @@ const DailyTimeline = (props) => {
 	} = props
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
-	const [date, setDate] = useState(dayjs())
+	const [date, setDate] = useState(dayjs().utc().format())
 	const [allTasks, setAllTasks] = useState([])
-	const [clickedTaskDate, setClickedTaskDate] = useState(dayjs())
+	const [clickedTaskDate, setClickedTaskDate] = useState(dayjs().utc().format())
 	const [clickedTaskName, setClickedTaskName] = useState("")
 	const [clickedMilestone, setClickedMilestone] = useState("")
 	const [oldTask, setOldTask] = useState("")
@@ -353,7 +355,7 @@ const DailyTimeline = (props) => {
 							locale="en"
 							fadeToColor="none"
 							dividerHeight={0}
-							minimumDate={dayjs()}
+							minimumDate={dayjs().utc().format()}
 						/>
 					</View>
 					<View style={styles.cnfrmBtnContainer}>

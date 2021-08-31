@@ -13,8 +13,10 @@ import {
 	CustomDayComponentForCalendar,
 } from "../../components/CommonComponents"
 import {ColorConstants, commonDateFormat} from "../../core/constants"
-import dayjs from "dayjs"
 import {height} from "./../../core/constants"
+import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"

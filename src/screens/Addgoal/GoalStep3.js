@@ -24,8 +24,8 @@ import {CommonHomeButton, CommonPrevNextButton} from "../../components/CommonCom
 import dayjs from "dayjs"
 import {scale} from "react-native-size-matters"
 import uuid from "react-native-uuid"
-
-// const colorArray = Object.values(forGoals)
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 
 const GoalStep3 = ({
 	setCurrentGoal,
@@ -54,11 +54,11 @@ const GoalStep3 = ({
 			color: getColorForGoal(),
 			isCompleted: false,
 			userId: user && user.uid ? user.uid : null,
-			timeStamp: dayjs(),
+			timeStamp: dayjs().utc().format(),
 			_id: uuid.v4(),
 		}
-		setShowLoader(true)
 
+		setShowLoader(true)
 		addGoalToFirestore(currentGoalObj, (data) => {
 			updateGoalToFirestore(data, data.name, () => {
 				setShowLoader(false)
@@ -67,12 +67,7 @@ const GoalStep3 = ({
 			})
 		})
 	}
-	const [date, setDate] = useState(dayjs())
-	useEffect(() => {
-		console.log("====================================")
-		console.log(dayjs())
-		console.log("====================================")
-	}, [])
+	const [date, setDate] = useState(dayjs().utc().format())
 
 	const getColorForGoal = () => {
 		return colorsForTimeline[allGoals.length].goal
@@ -106,7 +101,7 @@ const GoalStep3 = ({
 								locale="en"
 								fadeToColor="none"
 								dividerHeight={0}
-								minimumDate={dayjs()}
+								minimumDate={dayjs().utc().format()}
 								maximumDate={dayjs("2090-01-01")}
 							/>
 						</View>

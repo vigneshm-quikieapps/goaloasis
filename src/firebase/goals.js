@@ -4,6 +4,7 @@ import {
 } from "../utils/asyncStorage/goalsAsyncStore"
 import firestore from "@react-native-firebase/firestore"
 import {firebaseConstants} from "../core/constants"
+import dayjs from "dayjs"
 
 const {GOALS_COLLECTION} = firebaseConstants
 

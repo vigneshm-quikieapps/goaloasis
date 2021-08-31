@@ -9,14 +9,16 @@ import Constants from "expo-constants"
 import RBSheet from "react-native-raw-bottom-sheet"
 import {commonImages} from "../../core/constants"
 import {CommonHomeButton} from "../../components/CommonComponents"
-import dayjs from "dayjs"
-import {height} from "./../../core/constants"
 
+import {height} from "./../../core/constants"
+import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 const SecondAfterModal = () => {
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
 
-	const [date, setDate] = useState(dayjs())
+	const [date, setDate] = useState(dayjs().utc().format())
 	const tip = () => <Text style={{fontWeight: "bold"}}>Tip:</Text>
 
 	return (

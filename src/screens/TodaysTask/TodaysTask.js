@@ -32,6 +32,8 @@ import {connect} from "react-redux"
 import {addMilestoneToFirestore} from "../../firebase/goals"
 import {setClickedGoal, setShowLoader, setTodaysAllTasks} from "../../redux/actions"
 import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 
 const TodaysTask = ({
 	todayAllTasksArr,

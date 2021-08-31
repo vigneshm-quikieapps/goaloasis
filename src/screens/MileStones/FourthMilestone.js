@@ -15,6 +15,7 @@ import AppButton from "./AppButton"
 import {Calendar, LocaleConfig} from "react-native-calendars"
 import StatusBarScreen from "./StatusBarScreen"
 import {Entypo} from "@expo/vector-icons"
+
 import {
 	ColorConstants,
 	colorsForTimeline,
@@ -29,11 +30,14 @@ import {
 	CommonPrevNextButton,
 	CustomDayComponentForCalendar,
 } from "../../components/CommonComponents"
-import dayjs from "dayjs"
+
 import {setClickedGoal, setClickedMilestone, setShowLoader} from "../../redux/actions"
 import {addNewMilestone} from "./../../redux/actions"
 import {addMilestoneToFirestore} from "./../../firebase/goals"
 import uuid from "react-native-uuid"
+import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"
 

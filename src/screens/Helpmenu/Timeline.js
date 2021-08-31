@@ -32,16 +32,19 @@ import {
 import {setAllGoals, setClickedGoal, setShowLoader} from "../../redux/actions"
 import {getGoalsOfCurrentUser, updateGoalToFirestore} from "../../firebase/goals"
 import AsyncStorage from "@react-native-community/async-storage"
-import dayjs from "dayjs"
 import {Constants} from "react-native-unimodules"
 import {height} from "./../../core/constants"
 import GestureHandler, {PinchGestureHandler, State} from "react-native-gesture-handler"
+
+import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 
 const TimelineScreen = (props) => {
 	const {setShowLoader, loading, user, allGoals, clickedGoal, setClickedGoal} = props
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
-	const [clickedGoalDate, setClickedGoalDate] = useState(dayjs())
+	const [clickedGoalDate, setClickedGoalDate] = useState(dayjs().utc().format())
 	const [clickedGoalName, setClickedGoalName] = useState("")
 	const [allGoalsforTimeline, setAllGoalsforTimeline] = useState([])
 	// const [state, setSate] = useState(false)
@@ -325,7 +328,7 @@ const TimelineScreen = (props) => {
 							locale="en"
 							fadeToColor="none"
 							dividerHeight={0}
-							minimumDate={dayjs()}
+							minimumDate={dayjs().utc().format()}
 						/>
 					</View>
 					<View style={styles.cnfrmBtnContainer}>

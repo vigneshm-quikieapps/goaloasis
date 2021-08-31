@@ -11,8 +11,10 @@ import {
 	CommonHomeButton,
 	CustomDayComponentForCalendar,
 } from "../../components/CommonComponents"
-import dayjs from "dayjs"
 import {connect} from "react-redux"
+import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"

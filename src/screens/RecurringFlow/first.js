@@ -183,7 +183,7 @@ const First = ({route, clickedMilestone}) => {
 						// onPress={() => {
 						// 	navigation.goBack()
 						// }}
-						onPress={() => navigation.navigate("firsttaskflow")}
+						onPress={() => navigation.navigate("thirdtaskflow")}
 					>
 						<Text style={CommonStyles.cancelReoccuringText}>Cancel</Text>
 					</TouchableOpacity>

@@ -74,6 +74,7 @@ const MyGoals = (props) => {
 		user,
 	} = props
 	const [taskCounter, setTaskCounter] = useState(0)
+	const [milestoneTaskCounter, setMilestoneTaskCounter] = useState(0)
 
 	useEffect(() => {
 		fetchData()
@@ -83,14 +84,9 @@ const MyGoals = (props) => {
 	const fetchData = async () => {
 		const data = await getFirstTimeTaskTutorial().catch((err) => console.log(err))
 		const data1 = await getFirstTimeTimelineFlow().catch((err) => console.log(err))
-		// checkingIfTimeLineIsFirstTimeOrNot = data1
-		// console.log("checkingIfTimeLineIsFirstTimeOrNot", checkingIfTimeLineIsFirstTimeOrNot)
 
 		setFirstTime(data)
 		setFirstTimeForTimeLine(data1)
-		console.log("====================================")
-		console.log("FIRST TIME TIMELINE FLOW", firstTimeTimelineFlow)
-		console.log("====================================")
 	}
 
 	const navigation = useNavigation()
@@ -135,32 +131,6 @@ const MyGoals = (props) => {
 
 	const colorArray = Object.values(forGoals)
 
-	let count = 0
-
-	const getTodaysTasks = () => {
-		var today = dayjs().format(commonDateFormat)
-		for (let i = 0; i < allGoals.length; i++) {
-			for (let j = 0; j < allGoals[i].goalMilestone.length; j++) {
-				for (let k = 0; k < allGoals[i].goalMilestone[j].taskData.length; k++) {
-					if (allGoals[i].goalMilestone[j].taskData.length) {
-						let taskDatee = JSON.stringify(allGoals[i].goalMilestone[j].taskData[k].date)
-
-						if (
-							taskDatee.match(today) &&
-							allGoals[i].isCompleted !== true &&
-							allGoals[i].goalMilestone[j].taskData[k].isCompleted !== true
-						) {
-							// console.log(
-							// 	"taskDateeee",
-							// 	JSON.stringify(allGoals[i].goalMilestone[j].taskData[0].date)
-							// )
-							count = count + 1
-						}
-					}
-				}
-			}
-		}
-	}
 	// console.log("ALL GOALS DATA", allGoals[0].goalMilestone[0].date)
 	// var today = new Date(allGoals[0].goalMilestone[0].date)
 	// console.log("CURRENT DATE", new Date())
@@ -179,10 +149,9 @@ const MyGoals = (props) => {
 	// 		}
 	// 	}
 	// }
-
-	const tempRoute = () => {
-		navigation.navigate("Login")
-	}
+	// const tempRoute = () => {
+	// 	navigation.navigate("Login")
+	// }
 
 	const getAllTodaysTask = () => {
 		let allTodaysTask = []
@@ -212,53 +181,82 @@ const MyGoals = (props) => {
 		})
 		setTodaysAllTasks(allTodaysTask)
 	}
-	// Method to check how many task remain to complete within 24 hours
-	const [milestoneTaskCounter, setMilestoneTaskCounter] = useState(0)
-	let counter = 0
-	const getMilestoneIfHasOneTaskToComplete = () => {
+
+	let count = 0
+	const getTodaysTasks = () => {
+		var today = dayjs().format(commonDateFormat)
 		for (let i = 0; i < allGoals.length; i++) {
 			for (let j = 0; j < allGoals[i].goalMilestone.length; j++) {
-				var milestoneDay = new Date(allGoals[i].goalMilestone[j].date)
-				// console.log("MILESTONE DAY", milestoneDay)
-				if (Math.abs(milestoneDay - new Date()) < 86400000) {
-					// console.log("first")
-					for (let k = 0; k < allGoals[i].goalMilestone[j].taskData.length; k++) {
-						if (allGoals[i].goalMilestone[j].taskData[k].isCompleted === false) {
-							counter++
-							// console.log("hehehe", allGoals[i].goalMilestone[j].taskData[k].task)
+				for (let k = 0; k < allGoals[i].goalMilestone[j].taskData.length; k++) {
+					if (allGoals[i].goalMilestone[j].taskData.length) {
+						let taskDatee = JSON.stringify(allGoals[i].goalMilestone[j].taskData[k].date)
+
+						if (
+							taskDatee.match(today) &&
+							allGoals[i].isCompleted !== true &&
+							allGoals[i].goalMilestone[j].taskData[k].isCompleted !== true
+						) {
+							// console.log(
+							// 	"taskDateeee",
+							// 	JSON.stringify(allGoals[i].goalMilestone[j].taskData[0].date)
+							// )
+							count = count + 1
 						}
 					}
 				}
 			}
 		}
 	}
-	// useEffect(() => {
-	// 	// allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
+	// Method to check how many task remain to complete within 48 hours
+	let counter = 0
+	const getMilestoneIfHasOneTaskToComplete = () => {
+		for (let i = 0; i < allGoals.length; i++) {
+			for (let j = 0; j < allGoals[i].goalMilestone.length; j++) {
+				var milestoneDay = new Date(allGoals[i].goalMilestone[j].date)
 
-	// 	if (milestoneTaskCounter > 0) {
-	// 		scheduleNotification()
-	// 	}
-	// }, [milestoneTaskCounter])
-	useEffect(() => {
-		scheduleNotification()
-	}, [])
+				let checkingNegative = milestoneDay.getTime() - new Date().getTime()
+				let diffMilliseconds = Math.abs(milestoneDay.getTime() - new Date().getTime())
+				let temp = Math.ceil(diffMilliseconds / (1000 * 60 * 60 * 24))
+				if (
+					checkingNegative > 0 ||
+					dayjs(milestoneDay).format(commonDateFormat) === dayjs().format(commonDateFormat)
+				) {
+					if (temp <= 2) {
+						let taskCout = 0
+						for (let k = 0; k < allGoals[i].goalMilestone[j].taskData.length; k++) {
+							if (allGoals[i].goalMilestone[j].taskData[k].isCompleted === false) {
+								taskCout++
+							}
+						}
+						if (taskCout === 1) {
+							counter++
+						}
+					}
+				}
+			}
+		}
+	}
+
 	useEffect(() => {
 		// console.log("ALL GOALS", allGoals[0].goalMilestone[0].taskData)
 		// allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
 
 		getTodaysTasks()
+		getMilestoneIfHasOneTaskToComplete()
 		setTaskCounter(count)
+		setMilestoneTaskCounter(counter)
+
 		//new Added
 		getAllTodaysTask()
-		getMilestoneIfHasOneTaskToComplete()
-		setMilestoneTaskCounter(counter)
 	}, [allGoals])
 
 	useEffect(() => {
-		// allGoals.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
-
-		testFunction()
+		taskCounter > 0 ? testFunction() : null
 	}, [taskCounter])
+	useEffect(() => {
+		milestoneTaskCounter > 0 ? scheduleNotification() : null
+	}, [milestoneTaskCounter])
+
 	const importData = async () => {
 		try {
 			let keys = await AsyncStorage.getAllKeys()
@@ -279,8 +277,6 @@ const MyGoals = (props) => {
 				user.uid &&
 				getGoalsOfCurrentUser(user.uid, (userGoals) => {
 					let result = [...userGoals]
-
-					console.log("result", result)
 					result.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
 					setAllGoals(result)
 				})
@@ -289,6 +285,9 @@ const MyGoals = (props) => {
 		}
 	}
 
+	console.log("====================================")
+	console.log("RESULTS", allGoals)
+	console.log("====================================")
 	useEffect(() => {
 		setShowLoader(true)
 		importData()
@@ -394,18 +393,18 @@ const MyGoals = (props) => {
 			message: `You have ${taskCounter} task to Complete by Today, All the Best`, // (required)
 		})
 	}
-
+	// localNotificationSchedule
 	const scheduleNotification = () => {
-		PushNotification.localNotificationSchedule({
+		PushNotification.localNotification({
 			channelId: "com.goal-oasis",
 			ticker: "My Notification Ticker", // (optional)
-			message: `You have 24 Hours to left to complete ${milestoneTaskCounter} Tasks.`,
-			date: new Date(Date.now() + 5 * 1000), // in 60 secs
-			allowWhileIdle: true, // (optional) set notification to work while on doze, default: false
-			repeatType: "day",
-
+			message: `You have ${milestoneTaskCounter} Milestone, that has only 1 Tasks Left to complete.`,
+			// date: new Date(Date.now() + 60 * 1000), // in 60 secs
+			// date: new Date(), // in 60 secs
+			// allowWhileIdle: true, // (optional) set notification to work while on doze, default: false
+			// repeatType: "day",
 			/* Android Only Properties */
-			repeatTime: 3, // (optional) Increment of configured repeateType. Check 'Repeating Notifications' section for more info.
+			// repeatTime: 3, // (optional) Increment of configured repeateType. Check 'Repeating Notifications' section for more info.
 		})
 	}
 

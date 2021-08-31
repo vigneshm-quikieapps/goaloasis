@@ -32,9 +32,10 @@ import {connect} from "react-redux"
 
 import {addMilestoneToFirestore} from "../../firebase/goals"
 import {setBooleanFlag, setClickedGoal, setShowLoader} from "../../redux/actions"
-import dayjs from "dayjs"
 import uuid from "react-native-uuid"
-
+import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"
 
@@ -164,7 +165,7 @@ const ThirdTaskFlow = ({
 						<TouchableOpacity
 							activeOpacity={taskName !== "" ? 0.5 : 1}
 							onPress={() => {
-								taskName != "" && nextScreen1()
+								taskName != "" && nextScreen()
 							}}
 							style={{position: "absolute", right: 25}}
 						>
@@ -268,7 +269,7 @@ const ThirdTaskFlow = ({
 						right={true}
 						style={taskName === "" ? {backgroundColor: ColorConstants.whiteOp50} : {}}
 						nextClick={() => {
-							taskName != "" && nextScreen1()
+							taskName != "" && nextScreen()
 						}}
 						size={50}
 						bottom={0}

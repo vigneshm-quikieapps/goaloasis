@@ -479,6 +479,9 @@ export const CommonStyles = ScaledSheet.create({
 		fontSize: sizeConstants.twentyX, //19
 		fontWeight: "bold",
 		color: "#333333",
+		maxWidth: "70%",
+		alignSelf: "center",
+		textAlign: "center",
 	},
 
 	firstSubTitle: {
