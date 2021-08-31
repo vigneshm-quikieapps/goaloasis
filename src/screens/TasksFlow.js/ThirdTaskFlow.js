@@ -164,7 +164,7 @@ const ThirdTaskFlow = ({
 						<TouchableOpacity
 							activeOpacity={taskName !== "" ? 0.5 : 1}
 							onPress={() => {
-								taskName != "" && nextScreen1()
+								taskName != "" && nextScreen()
 							}}
 							style={{position: "absolute", right: 25}}
 						>
@@ -268,7 +268,7 @@ const ThirdTaskFlow = ({
 						right={true}
 						style={taskName === "" ? {backgroundColor: ColorConstants.whiteOp50} : {}}
 						nextClick={() => {
-							taskName != "" && nextScreen1()
+							taskName != "" && nextScreen()
 						}}
 						size={50}
 						bottom={0}

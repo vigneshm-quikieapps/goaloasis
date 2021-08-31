@@ -16,6 +16,7 @@ const initialState = {
 	loading: false,
 	todayAllTasksArr: [],
 	user: null,
+	internet: false,
 }
 
 const milestoneReducer = (state = initialState, action) => {
@@ -30,7 +31,11 @@ const milestoneReducer = (state = initialState, action) => {
 				...state,
 				editMileStone: action.value,
 			}
-
+		case actionTypes.SET_NET_INFO:
+			return {
+				...state,
+				internet: action.value,
+			}
 		// Testing for the first time
 		case actionTypes.SET_TEST_DATA:
 			return {

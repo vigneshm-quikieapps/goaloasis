@@ -17,13 +17,15 @@ import {
 } from "../../core/constants"
 import firestore from "@react-native-firebase/firestore"
 import {setAllGoals, setCurrentGoal, setShowLoader} from "./../../redux/actions"
-import {addGoalToFirestore} from "./../../firebase/goals"
+import {addGoalToFirestore, updateGoalToFirestore} from "./../../firebase/goals"
 import {connect} from "react-redux"
 import {CommonHomeButton, CommonPrevNextButton} from "../../components/CommonComponents"
 
-import dayjs from "dayjs"
 import {scale} from "react-native-size-matters"
 import uuid from "react-native-uuid"
+import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 
 // const colorArray = Object.values(forGoals)
 
@@ -54,20 +56,24 @@ const GoalStep3 = ({
 			color: getColorForGoal(),
 			isCompleted: false,
 			userId: user && user.uid ? user.uid : null,
-			timeStamp: dayjs(),
+			timeStamp: dayjs().utc().format(),
 			_id: uuid.v4(),
 		}
+
+		console.log("currentGoalObj", currentGoalObj)
+
 		setShowLoader(true)
 
 		addGoalToFirestore(currentGoalObj, (data) => {
 			updateGoalToFirestore(data, data.name, () => {
+				console.log("dataa###", data)
 				setShowLoader(false)
 				navigation.navigate("mygoals")
 				setCurrentGoal(currentGoalObj)
 			})
 		})
 	}
-	const [date, setDate] = useState(dayjs())
+	const [date, setDate] = useState(dayjs().utc().format())
 	useEffect(() => {
 		console.log("====================================")
 		console.log(dayjs())

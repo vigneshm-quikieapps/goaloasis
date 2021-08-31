@@ -32,3 +32,6 @@ export const SET_TODAYS_ALL_TASK = "settingTodaysAllTasks"
 
 // auth
 export const SET_USER = "settingUserInfo"
+
+// network
+export const SET_NET_INFO = "settingInternetInfo"

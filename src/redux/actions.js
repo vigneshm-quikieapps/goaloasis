@@ -113,3 +113,10 @@ export const setUserInfo = (data) => {
 		value: data,
 	}
 }
+
+export const setNetInfo = (data) => {
+	return {
+		type: actionTypes.SET_NET_INFO,
+		value: data,
+	}
+}

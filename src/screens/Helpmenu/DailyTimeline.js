@@ -67,8 +67,8 @@ const DailyTimeline = (props) => {
 						let sortDate = dayjs(task.date).toDate()
 
 						allTasks.push({
-							// key: `${goal.id}_${mile.milestone}_${task.task}`,
-							key: `${goal.id}${mile.milestone}${task.task}`,
+							key: `${goal.id}_${mile.milestone}_${task.task}`,
+							// key: `${goal.id}${mile.milestone}${task.task}`,
 
 							title: task.task,
 							description: "",
@@ -292,7 +292,6 @@ const DailyTimeline = (props) => {
 						// onEventPress={(item) => alert(`${item.title} at ${item.time}`)}
 						onEventPress={(item) => {
 							let keyArr = item.key.split("_")
-
 							setClickedTaskName(item.title)
 							setOldTask(keyArr[2])
 							var currentGoal = allGoals.find((goal) => goal.id == keyArr[0])

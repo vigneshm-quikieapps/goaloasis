@@ -2,10 +2,11 @@ import React, {useEffect} from "react"
 import Routing from "./Routing"
 import AuthState from "./src/context/auth/AuthState"
 import {connect} from "react-redux"
-import {setShowLoader, setUserInfo} from "./src/redux/actions"
+import {setNetInfo, setShowLoader, setUserInfo} from "./src/redux/actions"
 import auth from "@react-native-firebase/auth"
 import {createNewUser, getUserById} from "./src/firebase/users"
 import {getCurrentUserFromAsyncStorage} from "./src/utils/asyncStorage/usersAsyncStore"
+import NetInfo from "@react-native-community/netinfo"
 
 require("./src/firebase/authentication/googleAuth")
 require("./src/firebase/authentication/twitterAuth")
@@ -43,8 +44,13 @@ const App = (props) => {
 	}
 
 	useEffect(() => {
+		const unsubscribeNetInfo = NetInfo.addEventListener((state) => {
+			setNetInfo(state.isConnected)
+			console.log("Connection type", state.type)
+			console.log("Is connected?", state.isConnected)
+		})
 		const authSubscriber = auth().onAuthStateChanged(onAuthStateChanged)
-		return () => authSubscriber
+		return () => [authSubscriber, unsubscribeNetInfo]
 		// unsubscribe on unmount
 	}, [])
 	return (
@@ -65,6 +71,9 @@ const mapDispatchToProps = (dispatch) => {
 		setUserInfo: (data) => dispatch(setUserInfo(data)),
 		setShowLoader: (data) => {
 			dispatch(setShowLoader(data))
+		},
+		setNetInfo: (data) => {
+			dispatch(setNetInfo(data))
 		},
 	}
 }
