@@ -14,6 +14,7 @@ import {
 } from "../../core/constants"
 import AppButton from "./../MileStones/AppButton"
 import {
+	checkInternetConnectionAlert,
 	CommonHomeButton,
 	CommonPrevNextButton,
 	reoccuringDefaultDailyArray,
@@ -23,16 +24,18 @@ import {connect} from "react-redux"
 import {addMilestoneToFirestore} from "../../firebase/goals"
 import {setShowLoader, setBooleanFlag, setClickedGoal} from "../../redux/actions"
 
-const SecondTaskFlow = ({
-	setShowLoader,
-	loading,
-	clickedGoal,
-	clickedMilestone,
-	route,
-	setClickedGoal,
-	setBooleanFlag,
-	allGoals,
-}) => {
+const SecondTaskFlow = (props) => {
+	const {
+		setShowLoader,
+		loading,
+		clickedGoal,
+		clickedMilestone,
+		route,
+		setClickedGoal,
+		setBooleanFlag,
+		internet,
+		allGoals,
+	} = props
 	const navigation = useNavigation()
 	const {currentTaskData} = route.params
 
@@ -48,6 +51,10 @@ const SecondTaskFlow = ({
 		navigation.navigate("particulargoal")
 	}
 	const nextScreen = () => {
+		if (!internet) {
+			checkInternetConnectionAlert(() => {})
+			return
+		}
 		let newMilestoneItemWithTask = clickedGoal.goalMilestone.map((item) => {
 			if (item.milestone == clickedMilestone) {
 				let filteredTasks = item.taskData.filter((tsk) => tsk.task != taskName)
@@ -184,6 +191,7 @@ const mapStateToProps = (state) => {
 		clickedMilestone: state.milestone.clickedMilestone,
 		loading: state.milestone.loading,
 		allGoals: state.milestone.allGoals,
+		internet: state.milestone.internet,
 	}
 }
 

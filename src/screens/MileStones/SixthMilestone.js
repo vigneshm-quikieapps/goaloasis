@@ -18,11 +18,13 @@ import {
 import {connect} from "react-redux"
 import {verticalScale} from "react-native-size-matters"
 import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 const SixthMilestone = ({clickedGoal}) => {
 	const navigation = useNavigation()
 	let temp = clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].milestone
 	const [milestone, setMilestone] = useState(temp)
-	const [date, setDate] = useState(dayjs())
+	const [date, setDate] = useState(dayjs().utc().format())
 	const tip = () => <Text style={CommonStyles.fontWBold}>Tip:</Text>
 
 	return (

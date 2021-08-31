@@ -8,6 +8,7 @@ import {
 	ImageBackground,
 	Animated,
 	Dimensions,
+	Alert,
 } from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
@@ -20,7 +21,7 @@ import RBSheet from "react-native-raw-bottom-sheet"
 import {Calendar, LocaleConfig} from "react-native-calendars"
 import DatePicker from "react-native-date-picker"
 import MonthTimeline from "./MonthTimeline"
-import {CommonHomeButton} from "../../components/CommonComponents"
+import {checkInternetConnectionAlert, CommonHomeButton} from "../../components/CommonComponents"
 import {connect} from "react-redux"
 import {
 	ColorConstants,
@@ -32,16 +33,19 @@ import {
 import {setAllGoals, setClickedGoal, setShowLoader} from "../../redux/actions"
 import {getGoalsOfCurrentUser, updateGoalToFirestore} from "../../firebase/goals"
 import AsyncStorage from "@react-native-community/async-storage"
-import dayjs from "dayjs"
 import {Constants} from "react-native-unimodules"
 import {height} from "./../../core/constants"
 import GestureHandler, {PinchGestureHandler, State} from "react-native-gesture-handler"
 
+import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
+
 const TimelineScreen = (props) => {
-	const {setShowLoader, loading, user, allGoals, clickedGoal, setClickedGoal} = props
+	const {setShowLoader, loading, user, allGoals, clickedGoal, setClickedGoal, internet} = props
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
-	const [clickedGoalDate, setClickedGoalDate] = useState(dayjs())
+	const [clickedGoalDate, setClickedGoalDate] = useState(dayjs().utc().format())
 	const [clickedGoalName, setClickedGoalName] = useState("")
 	const [allGoalsforTimeline, setAllGoalsforTimeline] = useState([])
 	// const [state, setSate] = useState(false)
@@ -119,13 +123,17 @@ const TimelineScreen = (props) => {
 	}
 
 	const updateGoal = () => {
+		if (!internet) {
+			checkInternetConnectionAlert(() => {})
+			return
+		}
 		let updatedObj = {
 			...clickedGoal,
 			targetDate: dayjs(clickedGoalDate).format(commonDateFormat),
 			name: clickedGoalName,
 		}
-		setShowLoader(true)
 
+		setShowLoader(true)
 		updateGoalToFirestore(updatedObj, clickedGoal.name, () => {
 			setShowLoader(false)
 
@@ -325,7 +333,7 @@ const TimelineScreen = (props) => {
 							locale="en"
 							fadeToColor="none"
 							dividerHeight={0}
-							minimumDate={dayjs()}
+							minimumDate={dayjs().utc().format()}
 						/>
 					</View>
 					<View style={styles.cnfrmBtnContainer}>
@@ -419,6 +427,7 @@ const mapStateToProps = (state) => {
 		clickedGoal: state.milestone.clickedGoal,
 		loading: state.milestone.loading,
 		user: state.milestone.user,
+		internet: state.milestone.internet,
 	}
 }
 

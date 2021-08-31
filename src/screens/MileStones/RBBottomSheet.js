@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
 	bottomText: {
 		fontSize: sizeConstants.twentyX,
 		fontWeight: "bold",
-		color: "black",
+		color: "#333333",
 		alignSelf: "center",
 		textAlign: "center",
 		// backgroundColor: "pink",

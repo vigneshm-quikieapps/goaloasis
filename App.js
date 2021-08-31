@@ -12,7 +12,7 @@ require("./src/firebase/authentication/googleAuth")
 require("./src/firebase/authentication/twitterAuth")
 
 const App = (props) => {
-	const {setUserInfo, setShowLoader, user} = props
+	const {setUserInfo, setShowLoader, user, setNetInfo, internet} = props
 	setShowLoader(true)
 	//  waiting for firebase initialization
 	// const [initializing, setInitializing] = useState(true);
@@ -45,7 +45,7 @@ const App = (props) => {
 
 	useEffect(() => {
 		const unsubscribeNetInfo = NetInfo.addEventListener((state) => {
-			setNetInfo(state.isConnected)
+			internet !== state.isConnected && setNetInfo(state.isConnected)
 			console.log("Connection type", state.type)
 			console.log("Is connected?", state.isConnected)
 		})
@@ -63,6 +63,7 @@ const App = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		user: state.milestone.user,
+		internet: state.milestone.internet,
 	}
 }
 

@@ -1,11 +1,12 @@
 import React from "react"
-import {StyleSheet, Text, View, TouchableOpacity} from "react-native"
+import {StyleSheet, Text, View, TouchableOpacity, Alert} from "react-native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
 import {useNavigation} from "@react-navigation/native"
 import {setBooleanFlag, setCurrentGoal, setShowLoader} from "./../../redux/actions"
 import {connect} from "react-redux"
 import {updateGoalToFirestore} from "../../firebase/goals"
 import {sizeConstants} from "../../core/constants"
+import {checkInternetConnectionAlert} from "../../components/CommonComponents"
 
 const MarkCompleted = (props) => {
 	const navigation = useNavigation()
@@ -19,6 +20,10 @@ const MarkCompleted = (props) => {
 	}
 
 	const gotoHome = () => {
+		if (!props.internet) {
+			checkInternetConnectionAlert(() => {})
+			return
+		}
 		let updatedObj = {
 			...currentGoalObj,
 			isCompleted: true,
@@ -73,6 +78,7 @@ const mapStateToProps = (state) => {
 		clickedGoal: state.milestone.clickedGoal,
 		booleanFlag: state.milestone.booleanFlag,
 		loading: state.milestone.loading,
+		internet: state.milestone.internet,
 	}
 }
 

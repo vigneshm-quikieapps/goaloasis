@@ -38,8 +38,10 @@ import {
 	CustomDayComponentForCalendar,
 	reoccuringDefaultDailyArray,
 } from "../../components/CommonComponents"
-import dayjs from "dayjs"
 import AppButton from "../MileStones/AppButton"
+import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"

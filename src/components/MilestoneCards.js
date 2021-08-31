@@ -13,18 +13,21 @@ import {addMilestoneToFirestore} from "../firebase/goals"
 import {SnoozeIcon} from "../assets/customIcons"
 import dayjs from "dayjs"
 import PushNotification, {Importance} from "react-native-push-notification"
+import {checkInternetConnectionAlert} from "./CommonComponents"
 
-const MilestoneCards = ({
-	data,
-	setClickedMilestone,
-	setClickedGoal,
-	clickedMilestone,
-	clickedGoal,
-	style,
-	allGoals,
-	setShowLoader,
-	loading,
-}) => {
+const MilestoneCards = (props) => {
+	const {
+		data,
+		setClickedMilestone,
+		setClickedGoal,
+		clickedMilestone,
+		clickedGoal,
+		style,
+		allGoals,
+		setShowLoader,
+		loading,
+		internet,
+	} = props
 	const navigation = useNavigation()
 	const [isMilestoneCompleted, setIsMilestoneCompleted] = useState(false)
 	// console.log("CLICKED GOAL", clickedGoal.goalMilestone[0].taskData)
@@ -79,6 +82,10 @@ const MilestoneCards = ({
 			{
 				text: "Yes",
 				onPress: () => {
+					if (!internet) {
+						checkInternetConnectionAlert(() => {})
+						return
+					}
 					setShowLoader(true)
 					let filteredMilestoneArr = clickedGoal.goalMilestone.filter(
 						(mile) => mile.milestone != milestoneName
@@ -119,6 +126,10 @@ const MilestoneCards = ({
 		])
 	}
 	const onLongPress = (event, name) => {
+		if (!internet) {
+			checkInternetConnectionAlert(() => {})
+			return
+		}
 		if (event === "allTasksCompleted" || event.nativeEvent.state === State.ACTIVE) {
 			// clickedGoal.goalMilestone[clickedGoal.goalMilestone.length - 1].isCompleted = true
 			console.log("CAME HERE")
@@ -156,6 +167,10 @@ const MilestoneCards = ({
 		}
 	}
 	handleTaskLongPress = (event, clickedTask, currentMilestone) => {
+		if (!internet) {
+			checkInternetConnectionAlert(() => {})
+			return
+		}
 		if (event.nativeEvent.state === State.ACTIVE) {
 			let newMilestone = clickedGoal.goalMilestone.map((item) => {
 				if (item.milestone === currentMilestone) {
@@ -188,6 +203,10 @@ const MilestoneCards = ({
 		data.taskData.map((i) => {})
 	}
 	handleTaskDelete = (clickedTask, currentMilestone) => {
+		if (!internet) {
+			checkInternetConnectionAlert(() => {})
+			return
+		}
 		setShowLoader(true)
 
 		let newMilestone = clickedGoal.goalMilestone.map((item) => {
@@ -236,6 +255,10 @@ const MilestoneCards = ({
 					{
 						text: "Yes",
 						onPress: () => {
+							if (!internet) {
+								checkInternetConnectionAlert(() => {})
+								return
+							}
 							let newMileArray = clickedGoal.goalMilestone.map((mileItem) => {
 								if (mileItem.milestone === currentMilestone) {
 									mileItem.taskData.forEach((taskItem) => {
@@ -268,6 +291,10 @@ const MilestoneCards = ({
 					text: "Yes",
 
 					onPress: () => {
+						if (!internet) {
+							checkInternetConnectionAlert(() => {})
+							return
+						}
 						let newMileArray = clickedGoal.goalMilestone.map((mileItem) => {
 							if (mileItem.milestone === currentMilestone) {
 								mileItem.taskData.forEach((taskItem) => {
@@ -706,6 +733,7 @@ const mapStateToProps = (state) => {
 		clickedGoal: state.milestone.clickedGoal,
 		loading: state.milestone.loading,
 		allGoals: state.milestone.allGoals,
+		internet: state.milestone.internet,
 	}
 }
 

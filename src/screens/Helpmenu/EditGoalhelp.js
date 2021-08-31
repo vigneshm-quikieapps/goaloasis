@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import {StyleSheet, Text, TouchableOpacity, View, TextInput} from "react-native"
+import {StyleSheet, Text, TouchableOpacity, View, TextInput, Alert} from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
@@ -12,8 +12,10 @@ import dayjs from "dayjs"
 import {sizeConstants} from "../../core/constants"
 import {scale} from "react-native-size-matters"
 import {commonDateFormat} from "./../../core/constants"
+import {checkInternetConnectionAlert} from "../../components/CommonComponents"
 
-const EditGoalhelp = ({clickedGoal, setClickedGoal, setShowLoader, loading}) => {
+const EditGoalhelp = (props) => {
+	const {clickedGoal, setClickedGoal, setShowLoader, loading, internet} = props
 	console.log(clickedGoal)
 	const [goalName, setGoalName] = useState(clickedGoal.name)
 	const [targetDate, setTargetDate] = useState(dayjs(clickedGoal.targetDate))
@@ -28,6 +30,10 @@ const EditGoalhelp = ({clickedGoal, setClickedGoal, setShowLoader, loading}) => 
 	}
 
 	const updateGoal = () => {
+		if (!internet) {
+			checkInternetConnectionAlert(() => {})
+			return
+		}
 		let updatedObj = {
 			...clickedGoal,
 			name: goalName,
@@ -92,6 +98,7 @@ const mapStateToProps = (state) => {
 	return {
 		clickedGoal: state.milestone.clickedGoal,
 		loading: state.milestone.loading,
+		internet: state.milestone.internet,
 	}
 }
 

@@ -6,22 +6,28 @@ import {connect} from "react-redux"
 import {ColorConstants, commonDateFormat, sizeConstants} from "../../core/constants"
 import {setBooleanFlag, setClickedGoal, setShowLoader} from "./../../redux/actions"
 import {Calendar, LocaleConfig} from "react-native-calendars"
-import {calendarLocale, CustomDayComponentForCalendar} from "../../components/CommonComponents"
+import {
+	calendarLocale,
+	checkInternetConnectionAlert,
+	CustomDayComponentForCalendar,
+} from "../../components/CommonComponents"
 import {addMilestoneToFirestore} from "../../firebase/goals"
 import dayjs from "dayjs"
 
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"
 
-const EditMilestone = ({
-	route,
-	clickedGoal,
-	setClickedGoal,
-	setBooleanFlag,
-	booleanFlag,
-	setShowLoader,
-	loading,
-}) => {
+const EditMilestone = (props) => {
+	const {
+		route,
+		clickedGoal,
+		setClickedGoal,
+		setBooleanFlag,
+		booleanFlag,
+		setShowLoader,
+		loading,
+		internet,
+	} = props
 	const {milestoneName, date: mileDate} = route.params
 
 	const navigation = useNavigation()
@@ -33,6 +39,10 @@ const EditMilestone = ({
 	}, [])
 
 	const handleMilestoneEdit = () => {
+		if (!internet) {
+			checkInternetConnectionAlert(() => {})
+			return
+		}
 		setShowLoader(true)
 		let newMilestoneArr = clickedGoal.goalMilestone.map((item) => {
 			if (item.milestone == milestoneName) {
@@ -158,6 +168,7 @@ const mapStateToProps = (state) => {
 		clickedGoal: state.milestone.clickedGoal,
 		booleanFlag: state.milestone.booleanFlag,
 		loading: state.milestone.loading,
+		internet: state.milestone.internet,
 	}
 }
 

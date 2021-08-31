@@ -443,7 +443,7 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		color: "#333333",
 		marginHorizontal: verticalScale(20),
-		width: "80%",
+		width: "77%",
 		// backgroundColor: "pink",
 	},
 	myGoalsubtext: {

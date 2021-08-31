@@ -19,7 +19,11 @@ import RBSheet from "react-native-raw-bottom-sheet"
 import {Calendar, LocaleConfig} from "react-native-calendars"
 import DatePicker from "react-native-date-picker"
 import TimelineScreen from "./Timeline"
-import {CommonHomeButton, monthNames} from "../../components/CommonComponents"
+import {
+	checkInternetConnectionAlert,
+	CommonHomeButton,
+	monthNames,
+} from "../../components/CommonComponents"
 import {connect} from "react-redux"
 import {
 	ColorConstants,
@@ -32,9 +36,11 @@ import {
 import {setAllGoals, setBooleanFlag, setClickedGoal, setShowLoader} from "../../redux/actions"
 import AsyncStorage from "@react-native-community/async-storage"
 import {addMilestoneToFirestore, getGoalsOfCurrentUser} from "../../firebase/goals"
-import dayjs from "dayjs"
 import GestureHandler, {PinchGestureHandler, State} from "react-native-gesture-handler"
 
+import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 const DailyTimeline = (props) => {
 	const {
 		allGoals,
@@ -45,12 +51,13 @@ const DailyTimeline = (props) => {
 		setShowLoader,
 		loading,
 		user,
+		internet,
 	} = props
 	const navigation = useNavigation()
 	const refRBSheet = useRef()
-	const [date, setDate] = useState(dayjs())
+	const [date, setDate] = useState(dayjs().utc().format())
 	const [allTasks, setAllTasks] = useState([])
-	const [clickedTaskDate, setClickedTaskDate] = useState(dayjs())
+	const [clickedTaskDate, setClickedTaskDate] = useState(dayjs().utc().format())
 	const [clickedTaskName, setClickedTaskName] = useState("")
 	const [clickedMilestone, setClickedMilestone] = useState("")
 	const [oldTask, setOldTask] = useState("")
@@ -127,6 +134,10 @@ const DailyTimeline = (props) => {
 	}
 
 	const updateTask = () => {
+		if (!internet) {
+			checkInternetConnectionAlert(() => {})
+			return
+		}
 		var newMilestoneArray = clickedGoal.goalMilestone.map((mile) => {
 			if (mile.milestone == clickedMilestone) {
 				return {
@@ -352,7 +363,7 @@ const DailyTimeline = (props) => {
 							locale="en"
 							fadeToColor="none"
 							dividerHeight={0}
-							minimumDate={dayjs()}
+							minimumDate={dayjs().utc().format()}
 						/>
 					</View>
 					<View style={styles.cnfrmBtnContainer}>
@@ -444,6 +455,7 @@ const mapStateToProps = (state) => {
 		booleanFlag: state.milestone.booleanFlag,
 		loading: state.milestone.loading,
 		user: state.milestone.user,
+		internet: state.milestone.internet,
 	}
 }
 

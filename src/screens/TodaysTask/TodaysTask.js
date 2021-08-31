@@ -32,14 +32,13 @@ import {connect} from "react-redux"
 import {addMilestoneToFirestore} from "../../firebase/goals"
 import {setClickedGoal, setShowLoader, setTodaysAllTasks} from "../../redux/actions"
 import dayjs from "dayjs"
+import {checkInternetConnectionAlert} from "../../components/CommonComponents"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 
-const TodaysTask = ({
-	todayAllTasksArr,
-	allGoals,
-	setClickedGoal,
-	setTodaysAllTasks,
-	setShowLoader,
-}) => {
+const TodaysTask = (props) => {
+	const {todayAllTasksArr, allGoals, setClickedGoal, setTodaysAllTasks, setShowLoader, internet} =
+		props
 	const navigation = useNavigation()
 	const backImg = commonImages.thirdImage
 
@@ -79,6 +78,10 @@ const TodaysTask = ({
 		</View>
 	)
 	const deleteTask = (task, mile, goal) => {
+		if (!internet) {
+			checkInternetConnectionAlert(() => {})
+			return
+		}
 		setShowLoader(true)
 		let updatedTasksArr = todayAllTasksArr.filter(
 			(taskObj) => taskObj.key != `${task}_${mile}_${goal}`
@@ -109,6 +112,10 @@ const TodaysTask = ({
 	}
 
 	const snoozeTask = (task, mile, goal) => {
+		if (!internet) {
+			checkInternetConnectionAlert(() => {})
+			return
+		}
 		setShowLoader(true)
 		let updatedTasksArr = todayAllTasksArr.filter(
 			(taskObj) => taskObj.key !== `${task}_${mile}_${goal}`
@@ -226,6 +233,10 @@ const TodaysTask = ({
 					// 	})
 					// },
 					onPress: () => {
+						if (!internet) {
+							checkInternetConnectionAlert(() => {})
+							return
+						}
 						let currentGoalObj = allGoals.find((goalobj) => goalobj.name == goal)
 						let newMileArray = currentGoalObj.goalMilestone.map((mileItem) => {
 							if (mileItem.milestone === mile) {
@@ -255,6 +266,10 @@ const TodaysTask = ({
 		}
 	}
 	const completeTask = (task, mile, goal) => {
+		if (!internet) {
+			checkInternetConnectionAlert(() => {})
+			return
+		}
 		setShowLoader(true)
 		let updatedTasksArr = todayAllTasksArr.map((taskObj) => {
 			if (taskObj.key == `${task}_${mile}_${goal}`) {
@@ -413,6 +428,7 @@ const mapStateToProps = (state) => {
 		allGoals: state.milestone.allGoals,
 		clickedGoal: state.milestone.clickedGoal,
 		loading: state.milestone.loading,
+		internet: state.milestone.internet,
 	}
 }
 

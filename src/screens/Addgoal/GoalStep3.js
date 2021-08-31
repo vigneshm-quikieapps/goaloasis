@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native"
+import {Alert, StyleSheet, Text, TouchableOpacity, View} from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
 import {MaterialCommunityIcons} from "@expo/vector-icons"
@@ -19,7 +19,11 @@ import firestore from "@react-native-firebase/firestore"
 import {setAllGoals, setCurrentGoal, setShowLoader} from "./../../redux/actions"
 import {addGoalToFirestore, updateGoalToFirestore} from "./../../firebase/goals"
 import {connect} from "react-redux"
-import {CommonHomeButton, CommonPrevNextButton} from "../../components/CommonComponents"
+import {
+	checkInternetConnectionAlert,
+	CommonHomeButton,
+	CommonPrevNextButton,
+} from "../../components/CommonComponents"
 
 import {scale} from "react-native-size-matters"
 import uuid from "react-native-uuid"
@@ -29,15 +33,17 @@ dayjs.extend(utc)
 
 // const colorArray = Object.values(forGoals)
 
-const GoalStep3 = ({
-	setCurrentGoal,
-	currentGoal,
-	setShowLoader,
-	loading,
-	setAllGoals,
-	allGoals,
-	user,
-}) => {
+const GoalStep3 = (props) => {
+	const {
+		setCurrentGoal,
+		currentGoal,
+		setShowLoader,
+		loading,
+		setAllGoals,
+		allGoals,
+		user,
+		internet,
+	} = props
 	const navigation = useNavigation()
 
 	const gotoHome = () => {
@@ -48,6 +54,10 @@ const GoalStep3 = ({
 	}
 
 	const storeData = () => {
+		if (!internet) {
+			checkInternetConnectionAlert(() => {})
+			return
+		}
 		let currentGoalObj = {
 			...currentGoal,
 			targetDate: date,
@@ -59,11 +69,7 @@ const GoalStep3 = ({
 			timeStamp: dayjs().utc().format(),
 			_id: uuid.v4(),
 		}
-
-		console.log("currentGoalObj", currentGoalObj)
-
 		setShowLoader(true)
-
 		addGoalToFirestore(currentGoalObj, (data) => {
 			updateGoalToFirestore(data, data.name, () => {
 				console.log("dataa###", data)
@@ -74,11 +80,6 @@ const GoalStep3 = ({
 		})
 	}
 	const [date, setDate] = useState(dayjs().utc().format())
-	useEffect(() => {
-		console.log("====================================")
-		console.log(dayjs())
-		console.log("====================================")
-	}, [])
 
 	const getColorForGoal = () => {
 		return colorsForTimeline[allGoals.length].goal
@@ -112,7 +113,7 @@ const GoalStep3 = ({
 								locale="en"
 								fadeToColor="none"
 								dividerHeight={0}
-								minimumDate={dayjs()}
+								minimumDate={dayjs(new Date())}
 								maximumDate={dayjs("2090-01-01")}
 							/>
 						</View>
@@ -174,6 +175,7 @@ const mapStateToProps = (state) => {
 		loading: state.milestone.loading,
 		allGoals: state.milestone.allGoals,
 		user: state.milestone.user,
+		internet: state.milestone.internet,
 	}
 }
 

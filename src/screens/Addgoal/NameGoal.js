@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {StyleSheet, Text, TouchableOpacity, View, TextInput, ImageBackground} from "react-native"
 import {LinearGradient} from "expo-linear-gradient"
 import {useNavigation} from "@react-navigation/native"
@@ -11,6 +11,7 @@ import {connect} from "react-redux"
 import {CommonHomeButton, CommonPrevNextButton} from "../../components/CommonComponents"
 import {ColorConstants} from "./../../core/constants"
 import {scale} from "react-native-size-matters"
+import dayjs from "dayjs"
 
 const NameGoal = ({setCurrentGoal, currentGoal}) => {
 	const navigation = useNavigation()
@@ -27,6 +28,11 @@ const NameGoal = ({setCurrentGoal, currentGoal}) => {
 		setCurrentGoal(currentGoalObj)
 		navigation.navigate("goal2")
 	}
+	// useEffect(() => {
+	// console.log("====================================")
+	// console.log(dayjs())
+	// console.log("====================================")
+	// }, [])
 	return (
 		<View style={styles.introContainer}>
 			<LinearGradient colors={["#588C8D", "#7EC8C9"]} style={{flex: 1}}>

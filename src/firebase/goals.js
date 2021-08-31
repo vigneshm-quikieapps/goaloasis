@@ -4,6 +4,7 @@ import {
 } from "../utils/asyncStorage/goalsAsyncStore"
 import firestore from "@react-native-firebase/firestore"
 import {firebaseConstants} from "../core/constants"
+import dayjs from "dayjs"
 
 const {GOALS_COLLECTION} = firebaseConstants
 
@@ -27,6 +28,7 @@ export const getGoalsOfCurrentUser = (userId, callback) => {
 	userGoals
 		.then((goalData) => {
 			callback(goalData)
+			console.log("getGoalsOfCurrentUser success!")
 		})
 		.catch((err) => {
 			console.log("getGoalsOfCurrentUser failed!", err)

@@ -406,3 +406,14 @@ const styles = StyleSheet.create({
 
 	// ---- styles for Day Component ends -----
 })
+
+export const checkInternetConnectionAlert = (callback) => {
+	Alert.alert("Alert!", "No internet connection!", [
+		{
+			text: "Ok",
+			onPress: () => {
+				callback ? callback() : null
+			},
+		},
+	])
+}

@@ -17,6 +17,7 @@ import {
 } from "../../core/constants"
 import {
 	calendarLocale,
+	checkInternetConnectionAlert,
 	CommonHomeButton,
 	CustomDayComponentForCalendar,
 	getAllDatesBetween,
@@ -31,17 +32,19 @@ import uuid from "react-native-uuid"
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"
 
-const Second = ({
-	route,
-	clickedGoal,
-	clickedMilestone,
-	setBooleanFlag,
-	booleanFlag,
-	setClickedGoal,
-	setShowLoader,
-	loading,
-	allGoals,
-}) => {
+const Second = (props) => {
+	const {
+		route,
+		clickedGoal,
+		clickedMilestone,
+		setBooleanFlag,
+		booleanFlag,
+		setClickedGoal,
+		setShowLoader,
+		loading,
+		allGoals,
+		internet,
+	} = props
 	const navigation = useNavigation()
 
 	const {reoccuring, reoccuringDays, taskDate, taskName} = route.params
@@ -122,6 +125,10 @@ const Second = ({
 	}
 
 	const nextScreen = () => {
+		if (!internet) {
+			checkInternetConnectionAlert(() => {})
+			return
+		}
 		setShowLoader(true)
 
 		let newMilestoneItemWithTask = clickedGoal.goalMilestone.map((item) => {
@@ -328,6 +335,7 @@ const mapStateToProps = (state) => {
 		booleanFlag: state.milestone.booleanFlag,
 		loading: state.milestone.loading,
 		allGoals: state.milestone.allGoals,
+		internet: state.milestone.internet,
 	}
 }
 const mapDispatchToProps = (dispatch) => {

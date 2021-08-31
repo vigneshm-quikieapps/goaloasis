@@ -27,27 +27,31 @@ import {
 	CustomDayComponentForCalendar,
 	CommonPrevNextButton,
 	calendarLocale,
+	checkInternetConnectionAlert,
 } from "../../components/CommonComponents"
 import {connect} from "react-redux"
 
 import {addMilestoneToFirestore} from "../../firebase/goals"
 import {setBooleanFlag, setClickedGoal, setShowLoader} from "../../redux/actions"
-import dayjs from "dayjs"
 import uuid from "react-native-uuid"
-
+import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"
 
-const ThirdTaskFlow = ({
-	setShowLoader,
-	loading,
-	clickedGoal,
-	route,
-	clickedMilestone,
-	setBooleanFlag,
-	setClickedGoal,
-	allGoals,
-}) => {
+const ThirdTaskFlow = (props) => {
+	const {
+		setShowLoader,
+		loading,
+		clickedGoal,
+		route,
+		clickedMilestone,
+		setBooleanFlag,
+		setClickedGoal,
+		allGoals,
+		internet,
+	} = props
 	const navigation = useNavigation()
 	const {currentTaskData} = route.params
 
@@ -75,6 +79,10 @@ const ThirdTaskFlow = ({
 	}
 
 	const nextScreen = () => {
+		if (!internet) {
+			checkInternetConnectionAlert(() => {})
+			return
+		}
 		setShowLoader(true)
 		let newMilestoneItemWithTask = clickedGoal.goalMilestone.map((item) => {
 			if (item.milestone == clickedMilestone) {
@@ -291,6 +299,7 @@ const mapStateToProps = (state) => {
 		clickedMilestone: state.milestone.clickedMilestone,
 		loading: state.milestone.loading,
 		allGoals: state.milestone.allGoals,
+		internet: state.milestone.internet,
 	}
 }
 const mapDispatchToProps = (dispatch) => {

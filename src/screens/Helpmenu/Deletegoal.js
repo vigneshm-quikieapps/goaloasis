@@ -7,6 +7,7 @@ import {deleteGoalFromFirestore} from "../../firebase/goals"
 import {connect} from "react-redux"
 import {sizeConstants} from "../../core/constants"
 import {setBooleanFlag, setShowLoader} from "./../../redux/actions"
+import {checkInternetConnectionAlert} from "../../components/CommonComponents"
 
 const Deletegoal = (props) => {
 	const navigation = useNavigation()
@@ -20,6 +21,10 @@ const Deletegoal = (props) => {
 	}
 
 	const deleteConfirm = () => {
+		if (!props.internet) {
+			checkInternetConnectionAlert(() => {})
+			return
+		}
 		props.setShowLoader(true)
 		deleteGoalFromFirestore(props.clickedGoal, () => {
 			props.setShowLoader(false)
@@ -67,6 +72,7 @@ const mapStateToProps = (state) => {
 		clickedGoal: state.milestone.clickedGoal,
 		booleanFlag: state.milestone.booleanFlag,
 		loading: state.milestone.loading,
+		internet: state.milestone.internet,
 	}
 }
 
