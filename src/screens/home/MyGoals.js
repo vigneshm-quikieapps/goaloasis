@@ -404,6 +404,7 @@ const MyGoals = (props) => {
 		PushNotification.localNotification({
 			channelId: "com.goal-oasis",
 			ticker: "My Notification Ticker", // (optional)
+			title: "Milestone Tasks",
 			message: `You have ${milestoneTaskCounter} Milestone, that has only 1 Tasks Left to complete.`,
 			// date: new Date(Date.now() + 60 * 1000), // in 60 secs
 			// date: new Date(), // in 60 secs
