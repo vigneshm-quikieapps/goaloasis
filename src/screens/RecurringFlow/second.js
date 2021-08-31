@@ -51,7 +51,9 @@ const Second = ({
 	const [clickedDate, setDate] = useState(
 		taskDate ? dayjs(taskDate).format(commonDateFormat) : dayjs().format(commonDateFormat)
 	)
-
+	console.log("====================================")
+	console.log("TASK NAME", tName)
+	console.log("====================================")
 	const filterMarkedDates = (date) => {
 		let markedDates = [...markedDatesArray]
 		let isPresent = markedDates.find((item) => item == date)
@@ -200,7 +202,7 @@ const Second = ({
 							style={CommonStyles.textInput}
 							placeholder="Type Here"
 							onChangeText={(text) => setTaskName(text)}
-							value={taskName}
+							value={tName}
 							maxLength={28}
 						/>
 					</View>

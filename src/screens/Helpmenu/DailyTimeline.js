@@ -56,9 +56,6 @@ const DailyTimeline = (props) => {
 	const [clickedTaskName, setClickedTaskName] = useState("")
 	const [clickedMilestone, setClickedMilestone] = useState("")
 	const [oldTask, setOldTask] = useState("")
-	console.log("====================================")
-	console.log("FROM DAILY TIMELINE")
-	console.log("====================================")
 	useEffect(() => {
 		var allTasks = []
 		allGoals.forEach((goal) => {
@@ -69,8 +66,8 @@ const DailyTimeline = (props) => {
 						let sortDate = dayjs(task.date).toDate()
 
 						allTasks.push({
-							// key: `${goal.id}_${mile.milestone}_${task.task}`,
-							key: `${goal.id}${mile.milestone}${task.task}`,
+							key: `${goal.id}_${mile.milestone}_${task.task}`,
+							// key: `${goal.id}${mile.milestone}${task.task}`,
 
 							title: task.task,
 							description: "",
@@ -127,7 +124,11 @@ const DailyTimeline = (props) => {
 			console.error(error)
 		}
 	}
-
+	useEffect(() => {
+		console.log("====================================")
+		console.log("CLICKED GOAL", clickedGoal)
+		console.log("====================================")
+	}, [])
 	const updateTask = () => {
 		var newMilestoneArray = clickedGoal.goalMilestone.map((mile) => {
 			if (mile.milestone == clickedMilestone) {
@@ -135,10 +136,9 @@ const DailyTimeline = (props) => {
 					...mile,
 					taskData: mile.taskData.map((task) => {
 						if (task.task == oldTask) {
-							let date = dayjs(clickedTaskDate).format(commonDateFormat)
 							return {
 								...task,
-								date: date,
+								date: dayjs(clickedTaskDate).format(commonDateFormat),
 								task: clickedTaskName,
 							}
 						}

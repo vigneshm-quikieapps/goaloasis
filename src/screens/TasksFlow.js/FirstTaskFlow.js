@@ -113,12 +113,11 @@ const FirstTaskFlow = ({
 								placeholder="Type Here"
 								onChangeText={(text) => setTaskName(text)}
 								maxLength={28}
-								focusable={true}
 								value={taskName}
 							/>
 						</View>
 
-						{taskName === "" || toggleCalandar === true ? (
+						{taskName === "" ? (
 							<View>
 								<Text style={styles.bigTitle}>Edit target date</Text>
 

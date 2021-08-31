@@ -126,7 +126,6 @@ const MonthTimeline = (props) => {
 				return {
 					...milestone,
 					milestone: clickedMilestoneName,
-					// date: convertToDateString(clickedMilestoneDate),
 					date: dayjs(clickedMilestoneDate).format(commonDateFormat),
 				}
 			}
