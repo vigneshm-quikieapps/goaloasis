@@ -44,7 +44,9 @@ const GoalStep3 = ({
 	const goBack = () => {
 		navigation.goBack()
 	}
-
+	console.log("====================================")
+	console.log("DATE USING UTC", dayjs().utc().format())
+	console.log("====================================")
 	const storeData = () => {
 		let currentGoalObj = {
 			...currentGoal,
@@ -101,7 +103,7 @@ const GoalStep3 = ({
 								locale="en"
 								fadeToColor="none"
 								dividerHeight={0}
-								minimumDate={dayjs().utc().format()}
+								minimumDate={dayjs()}
 								maximumDate={dayjs("2090-01-01")}
 							/>
 						</View>

@@ -279,17 +279,21 @@ const MyGoals = (props) => {
 				user.uid &&
 				getGoalsOfCurrentUser(user.uid, (userGoals) => {
 					let result = [...userGoals]
+
 					result.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
+
 					setAllGoals(result)
+					allGoals.map((item) => {
+						console.log("====================================")
+						console.log("CHRCKING TIMESTAMP", item.timeStamp)
+						console.log("====================================")
+					})
 				})
 		} catch (error) {
 			console.error(error)
 		}
 	}
 
-	console.log("====================================")
-	console.log("RESULTS", allGoals)
-	console.log("====================================")
 	useEffect(() => {
 		setShowLoader(true)
 		importData()

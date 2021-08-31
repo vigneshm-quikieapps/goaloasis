@@ -70,6 +70,7 @@ const EditGoalhelp = ({clickedGoal, setClickedGoal, setShowLoader, loading}) => 
 								locale="en"
 								fadeToColor="none"
 								dividerHeight={0}
+								minimumDate={dayjs()}
 							/>
 						</View>
 					</View>

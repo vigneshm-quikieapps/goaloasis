@@ -328,7 +328,7 @@ const TimelineScreen = (props) => {
 							locale="en"
 							fadeToColor="none"
 							dividerHeight={0}
-							minimumDate={dayjs().utc().format()}
+							minimumDate={dayjs()}
 						/>
 					</View>
 					<View style={styles.cnfrmBtnContainer}>
