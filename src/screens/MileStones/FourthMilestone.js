@@ -150,7 +150,7 @@ const FourthMilestone = (props) => {
 						<Text style={CommonStyles.targetDate}>Target Date</Text>
 						<TouchableOpacity
 							// onPress={() => navigation.navigate("SixthMilestone")}
-							onPress={() => nextScreen()}
+							onPress={() => milestone !== "" && nextScreen()}
 							style={{position: "absolute", right: 25}}
 						>
 							<Text

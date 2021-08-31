@@ -52,7 +52,9 @@ const GoalStep3 = (props) => {
 	const goBack = () => {
 		navigation.goBack()
 	}
-
+	console.log("====================================")
+	console.log("DATE USING UTC", dayjs().utc().format())
+	console.log("====================================")
 	const storeData = () => {
 		if (!internet) {
 			checkInternetConnectionAlert(() => {})
@@ -114,7 +116,7 @@ const GoalStep3 = (props) => {
 								fadeToColor="none"
 								dividerHeight={0}
 								minimumDate={dayjs(new Date())}
-								maximumDate={dayjs("2090-01-01")}
+								maximumDate={dayjs(new Date("2090-01-01"))}
 							/>
 						</View>
 					</View>

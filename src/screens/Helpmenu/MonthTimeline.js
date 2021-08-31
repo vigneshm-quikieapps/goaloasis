@@ -135,7 +135,6 @@ const MonthTimeline = (props) => {
 				return {
 					...milestone,
 					milestone: clickedMilestoneName,
-					// date: convertToDateString(clickedMilestoneDate),
 					date: dayjs(clickedMilestoneDate).format(commonDateFormat),
 				}
 			}
@@ -362,7 +361,7 @@ const MonthTimeline = (props) => {
 							locale="en"
 							fadeToColor="none"
 							dividerHeight={0}
-							minimumDate={dayjs().utc().format()}
+							minimumDate={dayjs()}
 						/>
 					</View>
 					<View style={styles.cnfrmBtnContainer}>

@@ -28,11 +28,7 @@ const NameGoal = ({setCurrentGoal, currentGoal}) => {
 		setCurrentGoal(currentGoalObj)
 		navigation.navigate("goal2")
 	}
-	// useEffect(() => {
-	// console.log("====================================")
-	// console.log(dayjs())
-	// console.log("====================================")
-	// }, [])
+
 	return (
 		<View style={styles.introContainer}>
 			<LinearGradient colors={["#588C8D", "#7EC8C9"]} style={{flex: 1}}>

@@ -26,9 +26,10 @@ import {
 import {connect} from "react-redux"
 import {setClickedGoal, setBooleanFlag, setShowLoader} from "../../redux/actions"
 import {addMilestoneToFirestore} from "../../firebase/goals"
-import dayjs from "dayjs"
 import uuid from "react-native-uuid"
-
+import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 LocaleConfig.locales["en"] = calendarLocale
 LocaleConfig.defaultLocale = "en"
 
@@ -53,7 +54,9 @@ const Second = (props) => {
 	const [clickedDate, setDate] = useState(
 		taskDate ? dayjs(taskDate).format(commonDateFormat) : dayjs().format(commonDateFormat)
 	)
-
+	console.log("====================================")
+	console.log("TASK NAME", tName)
+	console.log("====================================")
 	const filterMarkedDates = (date) => {
 		let markedDates = [...markedDatesArray]
 		let isPresent = markedDates.find((item) => item == date)
@@ -206,7 +209,7 @@ const Second = (props) => {
 							style={CommonStyles.textInput}
 							placeholder="Type Here"
 							onChangeText={(text) => setTaskName(text)}
-							value={taskName}
+							value={tName}
 							maxLength={28}
 						/>
 					</View>

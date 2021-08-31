@@ -61,9 +61,6 @@ const DailyTimeline = (props) => {
 	const [clickedTaskName, setClickedTaskName] = useState("")
 	const [clickedMilestone, setClickedMilestone] = useState("")
 	const [oldTask, setOldTask] = useState("")
-	console.log("====================================")
-	console.log("FROM DAILY TIMELINE")
-	console.log("====================================")
 	useEffect(() => {
 		var allTasks = []
 		allGoals.forEach((goal) => {
@@ -132,7 +129,11 @@ const DailyTimeline = (props) => {
 			console.error(error)
 		}
 	}
-
+	useEffect(() => {
+		console.log("====================================")
+		console.log("CLICKED GOAL", clickedGoal)
+		console.log("====================================")
+	}, [])
 	const updateTask = () => {
 		if (!internet) {
 			checkInternetConnectionAlert(() => {})
@@ -144,10 +145,9 @@ const DailyTimeline = (props) => {
 					...mile,
 					taskData: mile.taskData.map((task) => {
 						if (task.task == oldTask) {
-							let date = dayjs(clickedTaskDate).format(commonDateFormat)
 							return {
 								...task,
-								date: date,
+								date: dayjs(clickedTaskDate).format(commonDateFormat),
 								task: clickedTaskName,
 							}
 						}
@@ -363,7 +363,7 @@ const DailyTimeline = (props) => {
 							locale="en"
 							fadeToColor="none"
 							dividerHeight={0}
-							minimumDate={dayjs().utc().format()}
+							minimumDate={dayjs()}
 						/>
 					</View>
 					<View style={styles.cnfrmBtnContainer}>

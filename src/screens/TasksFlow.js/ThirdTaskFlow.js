@@ -172,7 +172,7 @@ const ThirdTaskFlow = (props) => {
 						<TouchableOpacity
 							activeOpacity={taskName !== "" ? 0.5 : 1}
 							onPress={() => {
-								taskName != "" && nextScreen()
+								taskName !== "" && nextScreen()
 							}}
 							style={{position: "absolute", right: 25}}
 						>

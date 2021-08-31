@@ -47,12 +47,14 @@ import {
 } from "../../core/constants"
 import firestore from "@react-native-firebase/firestore"
 import {CommonHomeButton} from "../../components/CommonComponents"
-import dayjs from "dayjs"
+
 const Height = Dimensions.get("window").height
 import PushNotification, {Importance} from "react-native-push-notification"
 import {GoogleSignin} from "@react-native-google-signin/google-signin"
 import auth from "@react-native-firebase/auth"
-
+import dayjs from "dayjs"
+var utc = require("dayjs/plugin/utc")
+dayjs.extend(utc)
 const MyGoals = (props) => {
 	const {
 		testData,
@@ -277,18 +279,21 @@ const MyGoals = (props) => {
 				user.uid &&
 				getGoalsOfCurrentUser(user.uid, (userGoals) => {
 					let result = [...userGoals]
+
 					result.sort((a, b) => dayjs(a.timeStamp) - dayjs(b.timeStamp))
 
 					setAllGoals(result)
+					allGoals.map((item) => {
+						console.log("====================================")
+						console.log("CHRCKING TIMESTAMP", item.timeStamp)
+						console.log("====================================")
+					})
 				})
 		} catch (error) {
 			console.error(error)
 		}
 	}
 
-	console.log("====================================")
-	console.log("RESULTS", allGoals)
-	console.log("====================================")
 	useEffect(() => {
 		setShowLoader(true)
 		importData()
@@ -399,6 +404,7 @@ const MyGoals = (props) => {
 		PushNotification.localNotification({
 			channelId: "com.goal-oasis",
 			ticker: "My Notification Ticker", // (optional)
+			title: "Milestone Tasks",
 			message: `You have ${milestoneTaskCounter} Milestone, that has only 1 Tasks Left to complete.`,
 			// date: new Date(Date.now() + 60 * 1000), // in 60 secs
 			// date: new Date(), // in 60 secs

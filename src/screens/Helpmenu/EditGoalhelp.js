@@ -76,6 +76,7 @@ const EditGoalhelp = (props) => {
 								locale="en"
 								fadeToColor="none"
 								dividerHeight={0}
+								minimumDate={dayjs()}
 							/>
 						</View>
 					</View>
