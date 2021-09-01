@@ -318,7 +318,7 @@ const Login = (props) => {
 						</View>
 					</TouchableOpacity>
 					<View style={styles.bottomContainer}>
-						<Text>{signInMode ? "Already registered? " : "Not registered? "}</Text>
+						<Text>{!signInMode ? "Already registered? " : "Not registered? "}</Text>
 						<TouchableOpacity
 							onPress={() => {
 								setErrMsg("")
