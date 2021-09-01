@@ -34,6 +34,8 @@ const App = (props) => {
 						providerId: user.providerId,
 						tenantId: user.tenantId,
 						uid: user.uid,
+						isActive: true,
+						usertype: "tester",
 					}
 					createNewUser(newUserObj, (newUser) => {
 						console.log("user created", newUser)
