@@ -111,7 +111,10 @@ const Login = (props) => {
 			console.log("Too many requests!")
 			setErrMsg("Too many requests! Please try later")
 		}
-
+		if (error.code === 'auth/user-not-found'){
+			console.log("No user found! Please sign up")
+			setErrMsg("No user found! Please sign up")
+		}
 		console.error(error)
 	}
 	// sign in with email and password  ends
