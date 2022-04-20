@@ -149,22 +149,22 @@ const TimelineScreen = (props) => {
 
 	_onPinchHandlerStateChange = (event) => {
 		if (event.nativeEvent.oldState === State.ACTIVE && 1 < event.nativeEvent.scale) {
-			Animated.spring(this.scale, {
-				toValue: 1,
-				useNativeDriver: true,
-				bounciness: 1,
-			}).start()
+			// Animated.spring(event.scale, {
+			// 	toValue: 1,
+			// 	useNativeDriver: true,
+			// 	bounciness: 1,
+			// }).start()
 
 			// console.log("EVENT 1", event.nativeEvent)
 			navigation.navigate("monthTimeline")
 		}
 
 		if (event.nativeEvent.oldState === State.ACTIVE && 1 >= event.nativeEvent.scale) {
-			Animated.spring(this.scale, {
-				toValue: 1,
-				useNativeDriver: true,
-				bounciness: 1,
-			}).start()
+			// Animated.spring(this.scale, {
+			// 	toValue: 1,
+			// 	useNativeDriver: true,
+			// 	bounciness: 1,
+			// }).start()
 
 			// console.log("EVENT 1", event.nativeEvent)
 			// navigation.navigate("mygoals")
@@ -280,7 +280,7 @@ const TimelineScreen = (props) => {
 							setClickedGoalDate(dayjs(currentGoal.targetDate))
 							refRBSheet.current.open()
 						}}
-						renderFullLine={true}
+						// renderFullLine={true}
 					/>
 				</Animated.View>
 			</PinchGestureHandler>
